@@ -1,12 +1,13 @@
 <h1 align='center'>NextCare 🩺</h2>
-
-# BCA Final Year Project
+<hr>
 
 > ## Important Docs
 
 - [Techstack](./docs/TECHSTACK.md)
 - [Installation](./docs/INSTALLATION.md)
 - [Todos](./docs/TODOS.md)
+
+<hr>
 
 > ## Team Members
 
@@ -15,4 +16,6 @@
 - [Aman Dutt](https://github.com/adgamerx)
 - [Amardeep Anand](#null)
 
-## 👷 WORK IN PROGRESS (WIP)
+<hr>
+
+<h2 align='center'>👷 WORK IN PROGRESS (WIP)</h2>

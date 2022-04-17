@@ -1,8 +1,8 @@
 #
 
-## 1. Installation
+## 1. Installation for frontend
 
-- `yarn install` (don't use npm)
+- `yarn install` (don't use npm) (use this command in frontend root directory)
 
 ## 2. Run SvelteKIT
 

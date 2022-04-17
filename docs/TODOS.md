@@ -1,10 +1,13 @@
-# NextCare
+#
 
-Book Medical Appointments Online Without any hassle
+<h2 align='center'>TODO'S</h2>
+<hr>
 
-## TASK #1 (Frontend)
+## TASKS (Frontend)
 
 - [ ] Create Home Page
 - [ ] Create Login
 - [ ] Create Signup (USER ONLY)
 - [ ] Create signup (Clinic / Hospital)
+
+<hr>
