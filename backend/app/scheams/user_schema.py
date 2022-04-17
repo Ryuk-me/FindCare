@@ -1,21 +1,22 @@
 from datetime import datetime, date
 from pydantic import BaseModel, EmailStr, constr
+from typing import Literal
 
 
 class UserCreate(BaseModel):
     name: str
     email: EmailStr
     phone: constr(max_length=10, min_length=10)
-    gender: str
+    gender: Literal['male', 'female','other']
     dob: date
     password: str
 
 
 class UserOut(BaseModel):
     id: int
-    name: str   
+    name: str
     email: EmailStr
-    profile_image : str
+    profile_image: str
     gender: str
     phone:  str
     dob: date

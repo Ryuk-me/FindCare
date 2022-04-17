@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Literal
 from pydantic import BaseModel, EmailStr, constr
 from datetime import datetime, date
 
@@ -7,7 +7,7 @@ class DoctorCreate(BaseModel):
     name: str
     email: EmailStr
     phone: constr(max_length=10, min_length=10)
-    gender: str
+    gender: Literal['male', 'female','other']
     dob: date
     password: str
     about: str
