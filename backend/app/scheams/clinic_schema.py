@@ -1,9 +1,10 @@
 from typing import Optional
 from pydantic import BaseModel, constr
 from datetime import time
+from app.scheams import doctor_schema
 
 
-class ClinicAddress(BaseModel):
+class _ClinicAddress(BaseModel):
     pincode: constr(max_length=6, min_length=6)
     address: str
     city: str
@@ -16,9 +17,8 @@ class ClinicCreate(BaseModel):
     session_time: str
     opens_at: time
     closes_at: time
-    slots: Optional[int] = 0
     is_open: Optional[bool] = False
-    address:  ClinicAddress
+    address:  _ClinicAddress
 
 
 class ClinicOut(BaseModel):
@@ -31,7 +31,8 @@ class ClinicOut(BaseModel):
     closes_at: time
     slots: int
     is_open: bool
-    address: ClinicAddress
+    address: _ClinicAddress
+    doctor: doctor_schema.DoctorOut
 
     class Config:
         orm_mode = True

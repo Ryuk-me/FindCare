@@ -1,6 +1,8 @@
 #
 
-## 1. Installation for frontend
+## 1. Installation
+
+- `npm install --global yarn` (INSTALL YARN IF NOT INSTALLED)
 
 - `yarn install` (don't use npm) (use this command in frontend root directory)
 

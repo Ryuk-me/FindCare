@@ -2,12 +2,12 @@
 
 > ## Start server
 
-- uvicorn app.main:app --port 8009 --reload
+- `uvicorn app.main:app --port 8009 --reload` or `uvicorn_start.bat`
 
 > ## Migration
 
-- alembic revision --autogenerate -m "comment"
-- alembic upgrade head
+- `alembic revision --autogenerate -m "comment"`
+- `alembic upgrade head`
 
 > ## Seed in DB it will be done in env.py alembic
 

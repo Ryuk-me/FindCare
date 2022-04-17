@@ -13,6 +13,7 @@ class Doctor(Base):
     password = Column(String, nullable=False)
     gender = Column(String, nullable=False)
     dob = Column(Date, nullable=False)
+    age = Column(Integer, nullable=False)
     profile_image = Column(
         String, nullable=False,
         server_default='https://www.pinclipart.com/picdir/middle/351-3519728_png-file-svg-default-profile-picture-free-clipart.png')

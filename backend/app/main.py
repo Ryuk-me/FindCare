@@ -2,9 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.Config import settings
 from app.routers import root
-from app.models import user_model,clinic_model,doctor_model
+from app.models import user_model, clinic_model, doctor_model
 from app.database import engine
-from app.routers.v1 import auth, user_router,doctor_router
+from app.routers.v1 import auth, user_router, doctor_router, clinic_router
 
 user_model.Base.metadata.create_all(bind=engine)
 clinic_model.Base.metadata.create_all(bind=engine)
@@ -29,8 +29,10 @@ app = FastAPI(
     openapi_url=settings.BASE_API_V1 + "/openapi.json",
 )
 
-origins = ["http://localhost:3000",
-           'http://127.0.0.1:8009', 'http://127.0.0.1:8009/*']
+# origins = ["http://localhost:3000",
+#            'http://127.0.0.1:8009', 'http://127.0.0.1:8009/*']
+
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -44,3 +46,4 @@ app.include_router(root.router)
 app.include_router(user_router.router)
 app.include_router(auth.router)
 app.include_router(doctor_router.router)
+app.include_router(clinic_router.router)

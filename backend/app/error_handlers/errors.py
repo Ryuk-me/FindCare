@@ -13,3 +13,6 @@ TOKEN_CREDENTIALS_ERROR = HTTPException(
 
 FORBIDDEN_ACTION_ERROR = HTTPException(
     status_code=status.HTTP_403_FORBIDDEN, detail="not authorised to perform this action")
+
+ALREADY_EXIST_CLINIC = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="clinic already exist for this doctor")

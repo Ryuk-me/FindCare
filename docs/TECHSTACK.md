@@ -16,6 +16,12 @@
 
 <hr>
 
+## API Platform
+
+- POSTMAN
+
+<hr>
+
 ## Package Manager
 
 - YARN (PACKAGE MANAGER)

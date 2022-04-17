@@ -160,7 +160,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\" :\"Doctor kumar\",\r\n    \"email\" : \"doctor@gmail.com\",\r\n    \"phone\" : \"7091207348\",\r\n    \"gender\" : \"Male\",\r\n    \"dob\" : \"1996-04-26\",\r\n    \"password\" : \"123\",\r\n    \"about\" : \"hello adhgajhgdah djasgd gasjd\",\r\n    \"experience_year\" : 4,\r\n    \"speciality\" : \"Cardiologist\",\r\n    \"registration_number\" : \"7326473\"\r\n     \r\n}",
+					"raw": "{\r\n    \"name\" :\"Doctor kumar\",\r\n    \"email\" : \"doctor@gmail.com\",\r\n    \"phone\" : \"7091207348\",\r\n    \"gender\" : \"male\",\r\n    \"dob\" : \"1996-04-26\",\r\n    \"password\" : \"123\",\r\n    \"about\" : \"hello adhgajhgdah djasgd gasjd\",\r\n    \"experience_year\" : 4,\r\n    \"speciality\" : \"Cardiologist\",\r\n    \"registration_number\" : \"7326473\"\r\n     \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -249,6 +249,70 @@
 					"path": [
 						"doctor",
 						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createClinic",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{doctor_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"test Clinic\",\r\n    \"fees\" : \"250\",\r\n    \"session_time\" : \"20\",\r\n    \"opens_at\" : \"09:00:00\",\r\n    \"closes_at\" : \"17:00:00\",\r\n    \"is_open\" : true,\r\n    \"address\":{\r\n        \"pincode\" : \"800006\",\r\n        \"address\" : \"shahganj professor colony nahar road\",\r\n        \"city\" : \"Patna\",\r\n        \"state\" : \"Bihar\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/clinic",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"clinic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getClinic of the current doctor",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{doctor_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/doctor/clinic",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"doctor",
+						"clinic"
 					]
 				}
 			},

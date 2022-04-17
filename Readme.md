@@ -1,13 +1,23 @@
 <h1 align='center'>NextCare 🩺</h2>
-<hr>
 
-> ## Important Docs
+> ## Techstack
 
 - [Techstack](./docs/TECHSTACK.md)
-- [Installation](./docs/INSTALLATION.md)
-- [Todos](./docs/TODOS.md)
 
-<hr>
+> ## Installation
+
+- [FRONTEND](/frontend/docs/INSTALLATION.md)
+- [BACKEND](/backend/docs/INSTALLATION.md)
+
+> ## TODO'S
+
+- [FRONTEND](./frontend/docs/TODO.md)
+- [BACKEND](./backend/docs/TODO.md)
+
+> ## DATABASE SCHEMA
+
+- [SCHEMA URL](https://dbdiagram.io/d/6257933e2514c979032a5f7d)
+- [SCHEMA IMAGE](databse_schema.png)
 
 > ## Team Members
 
@@ -17,5 +27,4 @@
 - [Amardeep Anand](#null)
 
 <hr>
-
 <h2 align='center'>👷 WORK IN PROGRESS (WIP)</h2>
