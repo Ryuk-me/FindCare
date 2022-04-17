@@ -1,10 +1,16 @@
-from typing import Optional, Literal
-from pydantic import BaseModel, EmailStr, constr
-from datetime import datetime, date, time
+from typing import Optional
+from pydantic import BaseModel, constr
+from datetime import time
+
+
+class ClinicAddress(BaseModel):
+    pincode: constr(max_length=6, min_length=6)
+    address: str
+    city: str
+    state: str
 
 
 class ClinicCreate(BaseModel):
-    doctor_id: int
     name: str
     fees: str
     session_time: str
@@ -12,14 +18,7 @@ class ClinicCreate(BaseModel):
     closes_at: time
     slots: Optional[int] = 0
     is_open: Optional[bool] = False
-
-
-class ClinicAddress(BaseModel):
-    clinic_id: int
-    pincode: constr(max_length=6, min_length=6)
-    address: str
-    city: str
-    state: str
+    address:  ClinicAddress
 
 
 class ClinicOut(BaseModel):
