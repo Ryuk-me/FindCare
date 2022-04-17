@@ -1,13 +1,17 @@
 # NextCare Backend in Python Fast-API
 
-## Setup your virtual environment for python fast-api
+> ## Setup your virtual environment for python fast-api
 
 - `py -3 -m venv next-care` (run this in backend directory)
 
-## Setup Env
+> ## Setup Env
 
 - Create a file called `.env`  and copy all data from `env.example to .env` and change value accordingly
 
-## Software requirements
+> ## Software requirements
 
 - Download Postgres Sql and install it to run postgres.
+
+> ## Database
+
+### [Database Schema](https://dbdiagram.io/d/6257933e2514c979032a5f7d)

@@ -1,14 +1,14 @@
 <h1 align='center'>NextCare 🩺</h2>
 
-# BCA Final Year Project
+> # BCA Final Year Project
 
-## Important Docs
+> ## Important Docs
 
 - [Techstack](./docs/TECHSTACK.md)
 - [Installation](./docs/INSTALLATION.md)
 - [Todos](./docs/TODOS.md)
 
-## Team Members
+> ## Team Members
 
 - [Neeraj Kumar](https://github.com/Ryuk-me)
 - [Nitin Shivam](https://github.com/nitinshivam)
