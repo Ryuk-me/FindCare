@@ -1,6 +1,7 @@
 from datetime import datetime, date
 from pydantic import BaseModel, EmailStr, constr
-from typing import Literal
+from typing import List, Literal
+from app.scheams import appointment_schema
 
 
 class UserCreate(BaseModel):
@@ -23,6 +24,7 @@ class UserOut(BaseModel):
     age: int
     created_at: datetime
     updated_at: datetime
+    appointments: List[appointment_schema.AppointmentOut]
 
     class Config:
         orm_mode = True

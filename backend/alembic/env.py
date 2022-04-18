@@ -3,7 +3,7 @@ from app.Config import settings
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from app.database import Base
-from app.models import clinic_model, user_model, doctor_model
+from app.models import clinic_model, user_model, doctor_model, appointment_model
 from alembic import context
 
 # this is the Alembic Config object, which provides

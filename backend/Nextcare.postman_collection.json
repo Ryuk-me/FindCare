@@ -316,6 +316,71 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "createAppointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"clinic_id\" : 1,\r\n    \"schedule\" : \"2019-11-01 13:00:03.478039\",\r\n    \"fees_paid\" : true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/user/appointment",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"user",
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAppointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/user/appointment",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"user",
+						"appointment"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {

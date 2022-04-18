@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Date, Boolean
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
+from sqlalchemy.orm import relationship
 from app.database import Base
 
 
@@ -16,6 +17,7 @@ class User(Base):
     password = Column(String, nullable=False)
     profile_image = Column(
         String, nullable=True, default='https://www.pinclipart.com/picdir/middle/351-3519728_png-file-svg-default-profile-picture-free-clipart.png')
+    appointments = relationship('Appointment')
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
     updated_at = Column(TIMESTAMP(timezone=True),

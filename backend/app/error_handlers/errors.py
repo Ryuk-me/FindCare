@@ -16,3 +16,9 @@ FORBIDDEN_ACTION_ERROR = HTTPException(
 
 ALREADY_EXIST_CLINIC = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="clinic already exist for this doctor")
+
+NO_DOCTOR_FOUND_WITH_THIS_ID = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, detail="no doctor found with this id")
+
+CLINIC_NOT_FOUND = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, detail="clinic not found")

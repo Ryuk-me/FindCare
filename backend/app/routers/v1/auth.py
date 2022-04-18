@@ -23,6 +23,7 @@ async def user_login(user_credentials: OAuth2PasswordRequestForm = Depends(), db
             return {"access_token": token, "token_type": "bearer"}
     raise errors.INVALID_CREDENTIALS_ERROR
 
+
 #! DOCTOR LOGIN
 @router.post('/doctor', response_model=token_schema.BaseToken)
 async def doctor_login(doctor_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(_services.get_db)):

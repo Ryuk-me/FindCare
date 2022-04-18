@@ -32,10 +32,10 @@ async def get_user_me(db: Session = Depends(_services.get_db), current_user: use
         status_code=status.HTTP_404_NOT_FOUND, detail=f'please login first')
 
 #! GET USER BY ID (TEMPORARY ROUTE JUST TO CHECK AUTH IT WILL BE REMOVED)
-@router.get('/{id}', status_code=status.HTTP_200_OK, response_model=user_schema.UserOut)
-async def get_user(id: int, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
-    user = _services.get_user(db, id)
-    if user:
-        return user
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND, detail=f'user with id {id} does not exist')
+# @router.get('/{id}', status_code=status.HTTP_200_OK, response_model=user_schema.UserOut)
+# async def get_user(id: int, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
+#     user = _services.get_user(db, id)
+#     if user:
+#         return user
+#     raise HTTPException(
+#         status_code=status.HTTP_404_NOT_FOUND, detail=f'user with id {id} does not exist')

@@ -1,9 +1,9 @@
 from app.database import SessionLocal
 from app.models import user_model
 from sqlalchemy.orm import Session
-from app.scheams import user_schema, doctor_schema, clinic_schema
+from app.scheams import user_schema, doctor_schema, clinic_schema, appointment_schema
 from passlib.hash import bcrypt
-from app.models import user_model, doctor_model, clinic_model
+from app.models import user_model, doctor_model, clinic_model, appointment_model
 from app.error_handlers import errors
 from datetime import date, datetime
 
@@ -16,6 +16,7 @@ def get_db():
         db.close()
 
 #####################################################################
+
 #! USER SERVICES
 
 
@@ -41,6 +42,7 @@ def is_user_exist(db: Session, email: str):
 
 
 #####################################################
+
 #! DOCTOR SERVICES
 def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate):
     hash = hash_password(doctor.password)
@@ -65,7 +67,8 @@ def is_doctor_exist(db: Session, email: str):
 
 
 ######################################################
-#! CLINIC
+
+#! CLINIC SERVICES
 def add_clinic(db: Session, clinic: clinic_schema.ClinicCreate, doctor_id: int):
     if not is_clinic_exist(db, clinic, doctor_id):
         clinic = clinic_model.Clinic(doctor_id=doctor_id, slots=calculate_slots(
@@ -91,8 +94,37 @@ def is_clinic_exist(db: Session, clinic: clinic_schema.ClinicCreate, doctor_id: 
     return clinic
 
 
+def is_clinic_exist_by_id(db: Session, clinic_id: int):
+    clinic = db.query(clinic_model.Clinic).filter(
+        clinic_model.Clinic.id == clinic_id).first()
+    return clinic
+
+
+#####################################################
+
+#! APPOINTMENT SERVICES
+def add_appointment(db: Session, appointment: appointment_schema.CreateAppointment, user_id: int):
+    if is_clinic_exist_by_id(db, appointment.clinic_id):
+        appointment = appointment_model.Appointment(
+            user_id=user_id, **appointment.dict())
+        db.add(appointment)
+        db.commit()
+        db.refresh(appointment)
+        return appointment
+
+    raise errors.CLINIC_NOT_FOUND
+
+
+def get_appointment_by_user_id(db: Session, user_id: int):
+    appointment = db.query(appointment_model.Appointment).filter(
+        appointment_model.Appointment.user_id == user_id).all()
+    return appointment
+
 ######################################################
-#! PASSWORDS
+
+#! HASHING
+
+
 def hash_password(password: str):
     return bcrypt.hash(password)
 
@@ -102,6 +134,7 @@ def verify_hash(password, hash):
 
 
 ######################################################
+
 #! UTILITY FUNCTIONS
 def calculate_age(birthDate):
     today = date.today()
