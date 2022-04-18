@@ -13,7 +13,7 @@ router = APIRouter(
 )
 
 
-#! User SIGNUP
+#! USER LOGIN
 @router.post('/user', response_model=token_schema.BaseToken)
 async def user_login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(_services.get_db)):
     user_exist = _services.is_user_exist(db, user_credentials.username)
@@ -23,7 +23,7 @@ async def user_login(user_credentials: OAuth2PasswordRequestForm = Depends(), db
             return {"access_token": token, "token_type": "bearer"}
     raise errors.INVALID_CREDENTIALS_ERROR
 
-#! DOCTOR SIGNUP
+#! DOCTOR LOGIN
 @router.post('/doctor', response_model=token_schema.BaseToken)
 async def doctor_login(doctor_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(_services.get_db)):
     doctor_exist = _services.is_doctor_exist(db, doctor_credentials.username)

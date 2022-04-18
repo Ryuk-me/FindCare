@@ -113,13 +113,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{URL}}/user/me",
+					"raw": "{{URL}}/user",
 					"host": [
 						"{{URL}}"
 					],
 					"path": [
-						"user",
-						"me"
+						"user"
 					]
 				}
 			},
@@ -242,13 +241,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{URL}}/doctor/me",
+					"raw": "{{URL}}/doctor",
 					"host": [
 						"{{URL}}"
 					],
 					"path": [
-						"doctor",
-						"me"
+						"doctor"
 					]
 				}
 			},
@@ -279,11 +277,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/clinic",
+					"raw": "{{URL}}/doctor/clinic",
 					"host": [
 						"{{URL}}"
 					],
 					"path": [
+						"doctor",
 						"clinic"
 					]
 				}

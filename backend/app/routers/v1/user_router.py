@@ -23,7 +23,7 @@ async def create_user(user: user_schema.UserCreate, db: Session = Depends(_servi
             status_code=status.HTTP_409_CONFLICT, detail="user already exist")
 
 #! GET CURRENT USER DETAILS
-@router.get('/me', status_code=status.HTTP_200_OK, response_model=user_schema.UserOut)
+@router.get('/', status_code=status.HTTP_200_OK, response_model=user_schema.UserOut)
 async def get_user_me(db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
     user = _services.get_user(db, current_user.id)
     if user:
