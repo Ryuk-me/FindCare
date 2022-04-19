@@ -1,10 +1,8 @@
 from fastapi import APIRouter, status, Depends
 from app.Config import settings
-from typing import Dict, List, Optional
+from typing import List, Optional
 from app.scheams import clinic_schema
-from app.models import clinic_model, user_model
 from sqlalchemy.orm import Session
-from app.oauth2 import get_current_user
 from app import services as _services
 
 router = APIRouter(

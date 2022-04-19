@@ -1,10 +1,386 @@
 {
 	"info": {
 		"_postman_id": "0b15e668-24ab-4959-a1d0-9135af5957e4",
-		"name": "Nextcare",
+		"name": "NextCare",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "createUser",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"22@gmail.com\",\r\n    \"name\" : \"Neeraj Kumar\",\r\n    \"phone\" : \"8825384544\",\r\n    \"password\" : \"123\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2002-09-21\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loginUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"user_token\", pm.response.json().access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "22@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/auth/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserMe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createAppointmentUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clinic_id\" : 1,\r\n    \"schedule\" : \"2019-11-01 13:00:03.478039\",\r\n    \"fees_paid\" : true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user/appointment",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								"appointment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAppointmentUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/user/appointment",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								"appointment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "public",
+			"item": [
+				{
+					"name": "searchClinic",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/search/doctors?city=patna&speciality=Cardiologist",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"search",
+								"doctors"
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "patna"
+								},
+								{
+									"key": "speciality",
+									"value": "Cardiologist"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "doctor",
+			"item": [
+				{
+					"name": "createDoctor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" :\"Doctor kumar\",\r\n    \"email\" : \"doctor@gmail.com\",\r\n    \"phone\" : \"7091207348\",\r\n    \"gender\" : \"male\",\r\n    \"dob\" : \"1996-04-26\",\r\n    \"password\" : \"123\",\r\n    \"about\" : \"hello adhgajhgdah djasgd gasjd\",\r\n    \"experience_year\" : 4,\r\n    \"speciality\" : \"Cardiologist\",\r\n    \"registration_number\" : \"7326473\"\r\n     \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/doctor",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "doctorLogin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"doctor_token\", pm.response.json().access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "doctor@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/auth/doctor",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"doctor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDoctorMe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/doctor",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createClinic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"test Clinic\",\r\n    \"fees\" : \"250\",\r\n    \"session_time\" : \"20\",\r\n    \"opens_at\" : \"09:00:00\",\r\n    \"closes_at\" : \"17:00:00\",\r\n    \"is_open\" : true,\r\n    \"address\":{\r\n        \"pincode\" : \"800006\",\r\n        \"address\" : \"shahganj professor colony nahar road\",\r\n        \"city\" : \"Patna\",\r\n        \"state\" : \"Bihar\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/doctor/clinic",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor",
+								"clinic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getClinic of the current doctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/doctor/clinic",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor",
+								"clinic"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "root",
 			"request": {
@@ -20,402 +396,6 @@
 						"1"
 					],
 					"port": "8009"
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "createUser",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\" : \"22@gmail.com\",\r\n    \"name\" : \"Neeraj Kumar\",\r\n    \"phone\" : \"8825384544\",\r\n    \"password\" : \"123\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2002-09-21\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{URL}}/user",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "login",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.environment.set(\"user_token\", pm.response.json().access_token);"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "password",
-							"value": "123",
-							"type": "text"
-						},
-						{
-							"key": "username",
-							"value": "22@gmail.com",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "{{URL}}/auth/user",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"auth",
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getUserMe",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{user_token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{URL}}/user",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"user"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "finduser",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{user_token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{URL}}/user/1",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"user",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "createDoctor",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\" :\"Doctor kumar\",\r\n    \"email\" : \"doctor@gmail.com\",\r\n    \"phone\" : \"7091207348\",\r\n    \"gender\" : \"male\",\r\n    \"dob\" : \"1996-04-26\",\r\n    \"password\" : \"123\",\r\n    \"about\" : \"hello adhgajhgdah djasgd gasjd\",\r\n    \"experience_year\" : 4,\r\n    \"speciality\" : \"Cardiologist\",\r\n    \"registration_number\" : \"7326473\"\r\n     \r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{URL}}/doctor",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"doctor"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "doctorLogin",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.environment.set(\"doctor_token\", pm.response.json().access_token);"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "username",
-							"value": "doctor@gmail.com",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "123",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "{{URL}}/auth/doctor",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"auth",
-						"doctor"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getDoctorMe",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{doctor_token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{URL}}/doctor",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"doctor"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "createClinic",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{doctor_token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\" : \"test Clinic\",\r\n    \"fees\" : \"250\",\r\n    \"session_time\" : \"20\",\r\n    \"opens_at\" : \"09:00:00\",\r\n    \"closes_at\" : \"17:00:00\",\r\n    \"is_open\" : true,\r\n    \"address\":{\r\n        \"pincode\" : \"800006\",\r\n        \"address\" : \"shahganj professor colony nahar road\",\r\n        \"city\" : \"Patna\",\r\n        \"state\" : \"Bihar\"\r\n    }\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{URL}}/doctor/clinic",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"doctor",
-						"clinic"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getClinic of the current doctor",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{doctor_token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{URL}}/doctor/clinic",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"doctor",
-						"clinic"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "createAppointment",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{user_token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"clinic_id\" : 1,\r\n    \"schedule\" : \"2019-11-01 13:00:03.478039\",\r\n    \"fees_paid\" : true\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{URL}}/user/appointment",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"user",
-						"appointment"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getAppointment",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{user_token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{URL}}/user/appointment",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"user",
-						"appointment"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "searchClinic",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{user_token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{URL}}/search/doctors?city=patna&speciality=Cardiologist",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"search",
-						"doctors"
-					],
-					"query": [
-						{
-							"key": "city",
-							"value": "patna"
-						},
-						{
-							"key": "speciality",
-							"value": "Cardiologist"
-						}
-					]
 				}
 			},
 			"response": []
