@@ -23,8 +23,9 @@
 - [x] implement only user can cancel his/her appointment no other user can
 - [x] appointment cancellation by doctor/clinic
 - [x] appointment skipped flag by doctor/clinic
-- [ ] appointment completion  flag by doctor/clinic
-- [ ] clinic on/off flag
+- [x] appointment completion  flag by doctor / clinic
+- [ ] implemnet available_days update and remove ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
+- [ ] clinic on / off flag
 - [ ] IMPLEMENT UPDATE FEATURE FOR USER LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE)
 - [ ] IMPLEMENT UPDATE FEATURE FOR DOCTOR LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE,PROFILE_IMAGE)
 - [ ] IMPLEMENT UPDATE FEATURE ON DOCTOR CLINIC (WHICH WILL CHANGE OPENS AT,CLOSES AT,SESSION_TIME,AND IS_OPEN AND SLOTS WILL BE CALCULATED ACCORDINGLY)
