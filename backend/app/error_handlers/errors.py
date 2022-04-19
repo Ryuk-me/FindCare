@@ -25,3 +25,6 @@ CLINIC_NOT_FOUND = HTTPException(
 
 NO_APPOINTMENT_AVAILABLE_ERROR = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND, detail="no appointment available")
+
+CLINIC_IS_NOT_SERVICEABLE = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, detail="clinic is not servicable currently")

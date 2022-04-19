@@ -105,13 +105,16 @@ def is_clinic_exist_by_id(db: Session, clinic_id: int):
 #! APPOINTMENT SERVICES
 def add_appointment(db: Session, appointment: appointment_schema.CreateAppointment, user_id: int):
     clinic = is_clinic_exist_by_id(db, appointment.clinic_id)
+
     if clinic:
-        appointment = appointment_model.Appointment(
-            user_id=user_id, doctor_id=clinic.doctor_id, **appointment.dict())
-        db.add(appointment)
-        db.commit()
-        db.refresh(appointment)
-        return appointment
+        if clinic.is_open:
+            appointment = appointment_model.Appointment(
+                user_id=user_id, doctor_id=clinic.doctor_id, **appointment.dict())
+            db.add(appointment)
+            db.commit()
+            db.refresh(appointment)
+            return appointment
+        raise errors.CLINIC_IS_NOT_SERVICEABLE
 
     raise errors.CLINIC_NOT_FOUND
 

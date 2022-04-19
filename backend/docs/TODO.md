@@ -15,12 +15,18 @@
 - [X] GET CURRENT CLINIC WITH DOCTOR DETAILS
 - [x] Slots will be automatically calculated in python using calculate_slots function
 - [x] ADD AGE COLUMN IN DATABASE for both user and doctor (AGE WILL BE calculated in python services before adding it to db)
-- [ ] IMPLEMENT UPDATE FEATURE FOR USER LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE)
-- [ ] IMPLEMENT UPDATE FEATURE FOR DOCTOR LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE,PROFILE_IMAGE)
-- [ ] IMPLEMENT UPDATE FEATURE ON DOCTOR CLINIC (WHICH WILL CHANGE OPENS AT,CLOSES AT,SESSION_TIME,AND IS_OPEN AND SLOTS WILL BE CALCULATED ACCORDINGLY)
 - [x] added post and get appointment route for user
 - [x] added search for clinics / doctor (public route)
 - [x] need to implement get all appointments of a clinic
+- [x] book appointments only if clinic is_open=True
+- [ ] appointment cancellation by user
+- [ ] appointment cancellation by doctor/clinic
+- [ ] appointment skipped flag by doctor/clinic
+- [ ] appointment completion  flag by doctor/clinic
+- [ ] clinic on/off flag
+- [ ] IMPLEMENT UPDATE FEATURE FOR USER LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE)
+- [ ] IMPLEMENT UPDATE FEATURE FOR DOCTOR LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE,PROFILE_IMAGE)
+- [ ] IMPLEMENT UPDATE FEATURE ON DOCTOR CLINIC (WHICH WILL CHANGE OPENS AT,CLOSES AT,SESSION_TIME,AND IS_OPEN AND SLOTS WILL BE CALCULATED ACCORDINGLY)
 
 ## HOW SLOT WILL BE CALCULATED
 
