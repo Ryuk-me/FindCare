@@ -195,7 +195,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/user/appointment/cancel?id=4",
+							"raw": "{{URL}}/user/appointment/cancel?id=6",
 							"host": [
 								"{{URL}}"
 							],
@@ -207,7 +207,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "4"
+									"value": "6"
 								}
 							]
 						}
@@ -465,7 +465,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/doctor/clinic/appointment/cancel?id=4",
+							"raw": "{{URL}}/doctor/clinic/appointment/cancel?id=6",
 							"host": [
 								"{{URL}}"
 							],
@@ -478,7 +478,43 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "4"
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SKIPaPPOINTMENT",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/doctor/clinic/appointment/skip?id=6",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor",
+								"clinic",
+								"appointment",
+								"skip"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6"
 								}
 							]
 						}

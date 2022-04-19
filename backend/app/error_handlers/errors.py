@@ -31,3 +31,9 @@ CLINIC_IS_NOT_SERVICEABLE = HTTPException(
 
 APPOINTNEMT_ALREADY_CANCELLED = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="appointment is already cancelled")
+
+APPOINTMENT_ALREADY_SKIPPED = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="appointment is already skipped")
+
+APPOINTMENT_ALREADY_CANCELLED_BY_DR = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="appointment is already cancelled by the doctor")

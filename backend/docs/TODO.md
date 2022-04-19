@@ -21,8 +21,8 @@
 - [x] book appointments only if clinic is_open=True
 - [x] appointment cancellation by user
 - [x] implement only user can cancel his/her appointment no other user can
-- [ ] appointment cancellation by doctor/clinic
-- [ ] appointment skipped flag by doctor/clinic
+- [x] appointment cancellation by doctor/clinic
+- [x] appointment skipped flag by doctor/clinic
 - [ ] appointment completion  flag by doctor/clinic
 - [ ] clinic on/off flag
 - [ ] IMPLEMENT UPDATE FEATURE FOR USER LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE)
