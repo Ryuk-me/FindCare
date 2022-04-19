@@ -65,6 +65,12 @@
 									"key": "username",
 									"value": "22@gmail.com",
 									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "222@gmail.com",
+									"type": "text",
+									"disabled": true
 								}
 							]
 						},
@@ -125,7 +131,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"clinic_id\" : 1,\r\n    \"schedule\" : \"2019-11-01 13:00:03.478039\",\r\n    \"fees_paid\" : true\r\n}",
+							"raw": "{\r\n    \"clinic_id\" : 2,\r\n    \"schedule\" : \"2019-11-01 13:00:03.478039\",\r\n    \"fees_paid\" : true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -168,6 +174,41 @@
 							"path": [
 								"user",
 								"appointment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancelAppointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/user/appointment/cancel?id=4",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								"appointment",
+								"cancel"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "4"
+								}
 							]
 						}
 					},
