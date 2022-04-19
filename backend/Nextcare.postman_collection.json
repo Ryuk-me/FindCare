@@ -465,7 +465,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/doctor/clinic/appointment/cancel?id=6",
+							"raw": "{{URL}}/doctor/clinic/appointment/cancel?id=8",
 							"host": [
 								"{{URL}}"
 							],
@@ -478,7 +478,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "6"
+									"value": "8"
 								}
 							]
 						}
@@ -501,7 +501,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/doctor/clinic/appointment/skip?id=6",
+							"raw": "{{URL}}/doctor/clinic/appointment/skip?id=8",
 							"host": [
 								"{{URL}}"
 							],
@@ -514,7 +514,43 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "6"
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "COMPLTEappointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/doctor/clinic/appointment/completed?id=8",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor",
+								"clinic",
+								"appointment",
+								"completed"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "8"
 								}
 							]
 						}
