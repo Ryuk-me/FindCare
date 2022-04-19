@@ -10,6 +10,9 @@ class Appointment(Base):
     user_id = Column(Integer, ForeignKey(
         "users.id"
     ), nullable=False)
+    doctor_id = Column(Integer, ForeignKey(
+        "doctors.id"
+    ), nullable=False)
     clinic_id = Column(Integer, nullable=False)
     schedule = Column(DateTime, nullable=False)
     fees_paid = Column(Boolean, server_default='False', nullable=False)

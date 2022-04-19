@@ -212,7 +212,7 @@
 			]
 		},
 		{
-			"name": "doctor",
+			"name": "doctor and clinic",
 			"item": [
 				{
 					"name": "createDoctor",
@@ -374,6 +374,35 @@
 							"path": [
 								"doctor",
 								"clinic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clinic appointments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/doctor/clinic/appointments",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor",
+								"clinic",
+								"appointments"
 							]
 						}
 					},

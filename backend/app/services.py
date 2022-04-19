@@ -104,9 +104,10 @@ def is_clinic_exist_by_id(db: Session, clinic_id: int):
 
 #! APPOINTMENT SERVICES
 def add_appointment(db: Session, appointment: appointment_schema.CreateAppointment, user_id: int):
-    if is_clinic_exist_by_id(db, appointment.clinic_id):
+    clinic = is_clinic_exist_by_id(db, appointment.clinic_id)
+    if clinic:
         appointment = appointment_model.Appointment(
-            user_id=user_id, **appointment.dict())
+            user_id=user_id, doctor_id=clinic.doctor_id, **appointment.dict())
         db.add(appointment)
         db.commit()
         db.refresh(appointment)
@@ -115,10 +116,20 @@ def add_appointment(db: Session, appointment: appointment_schema.CreateAppointme
     raise errors.CLINIC_NOT_FOUND
 
 
+def get_clinic_appointments(db: Session, doctor_id: int):
+    appointments = db.query(appointment_model.Appointment).filter(
+        appointment_model.Appointment.doctor_id == doctor_id).all()
+    if appointments:
+        return appointments
+    raise errors.NO_APPOINTMENT_AVAILABLE_ERROR
+
+
 def get_appointment_by_user_id(db: Session, user_id: int):
     appointment = db.query(appointment_model.Appointment).filter(
         appointment_model.Appointment.user_id == user_id).all()
-    return appointment
+    if len(appointment) > 0:
+        return appointment
+    raise errors.NO_APPOINTMENT_AVAILABLE_ERROR
 
 
 ######################################################

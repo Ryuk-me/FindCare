@@ -23,3 +23,5 @@ NO_DOCTOR_FOUND_WITH_THIS_ID = HTTPException(
 CLINIC_NOT_FOUND = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND, detail="clinic not found")
 
+NO_APPOINTMENT_AVAILABLE_ERROR = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, detail="no appointment available")

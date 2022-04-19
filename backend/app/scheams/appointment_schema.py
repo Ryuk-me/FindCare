@@ -16,6 +16,7 @@ class CreateAppointment(BaseAppointment):
 class AppointmentOut(BaseModel):
     id: int
     user_id: int
+    doctor_id: int
     clinic_id: int
     schedule: datetime
     fees_paid: bool
