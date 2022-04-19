@@ -123,6 +123,8 @@ def add_appointment(db: Session, appointment: appointment_schema.CreateAppointme
 def cancel_appointments(db: Session, appointment: appointment_schema.AppointmentOutUser | appointment_schema.AppointmentOut, is_User=False):
     appointment: appointment_schema.AppointmentOutUser | appointment_schema.AppointmentOut = db.query(appointment_model.Appointment).filter(
         appointment_model.Appointment.id == appointment.id).first()
+    if appointment.is_completed:
+        raise errors.APPOINTMENT_ALREADY_COMPLETED
     if appointment.is_skipped:
         raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
     if appointment.is_cancelled:
@@ -139,14 +141,31 @@ def cancel_appointments(db: Session, appointment: appointment_schema.Appointment
 def skip_appointment(db: Session, appointment: appointment_schema.AppointmentOut):
     appointment: appointment_schema.AppointmentOut = db.query(appointment_model.Appointment).filter(
         appointment_model.Appointment.id == appointment.id).first()
-    if not appointment.is_cancelled:
-        if not appointment.is_skipped:
-            appointment.is_skipped = True
-            appointment.when_skipped = datetime.now()
-            db.commit()
-            return {"detail": "appointment skipped sucessfully"}
-        raise errors.APPOINTMENT_ALREADY_SKIPPED
-    raise errors.APPOINTNEMT_ALREADY_CANCELLED
+    if appointment.is_completed:
+        raise errors.APPOINTMENT_ALREADY_COMPLETED
+    if appointment.is_cancelled:
+        raise errors.APPOINTNEMT_ALREADY_CANCELLED
+    if appointment.is_skipped:
+        raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
+    appointment.is_skipped = True
+    appointment.when_skipped = datetime.now()
+    db.commit()
+    return {"detail": "appointment skipped sucessfully"}
+
+
+def appointment_completed(db: Session, appointment: appointment_schema.AppointmentOut):
+    appointment: appointment_schema.AppointmentOut = db.query(appointment_model.Appointment).filter(
+        appointment_model.Appointment.id == appointment.id).first()
+    if appointment.is_completed:
+        raise errors.APPOINTMENT_ALREADY_COMPLETED
+    if appointment.is_cancelled:
+        raise errors.APPOINTNEMT_ALREADY_CANCELLED
+    if appointment.is_skipped:
+        raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
+
+    appointment.is_completed = True
+    db.commit()
+    return {"detail": "appointment completed sucessfully"}
 
 
 def get_clinic_appointments(db: Session, doctor_id: int):

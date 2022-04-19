@@ -37,3 +37,6 @@ APPOINTMENT_ALREADY_SKIPPED = HTTPException(
 
 APPOINTMENT_ALREADY_CANCELLED_BY_DR = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="appointment is already cancelled by the doctor")
+
+APPOINTMENT_ALREADY_COMPLETED = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="appointment is already completed")

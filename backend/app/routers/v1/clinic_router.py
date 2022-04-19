@@ -49,3 +49,10 @@ async def skip_appointment(id: int, db: Session = Depends(_services.get_db), cur
     appointment = _services.get_appointment_by_doctor_id(
         db, id, current_doctor.id)
     return _services.skip_appointment(db, appointment)
+
+
+@router.get('/appointment/completed', status_code=status.HTTP_202_ACCEPTED)
+async def completed_appointment(id: int, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):
+    appointment = _services.get_appointment_by_doctor_id(
+        db, id, current_doctor.id)
+    return _services.appointment_completed(db, appointment)
