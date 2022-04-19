@@ -120,8 +120,24 @@ def get_appointment_by_user_id(db: Session, user_id: int):
         appointment_model.Appointment.user_id == user_id).all()
     return appointment
 
-######################################################
 
+######################################################
+#! SEARCH CLINICS
+
+def search_doctor_clinics(city: str, speciality: str | None, db: Session):
+    if not speciality:
+        clinic = db.query(clinic_model.Clinic).filter(
+            clinic_model.Clinic.address["city"].astext == city).all()
+        if clinic:
+            return clinic
+        raise errors.NOT_FOUND_ERROR
+    clinic = db.query(clinic_model.Clinic).filter(
+        clinic_model.Clinic.address["city"].astext == city, doctor_model.Doctor.speciality == speciality).all()
+    if clinic:
+        return clinic
+    raise errors.NOT_FOUND_ERROR
+
+######################################################
 #! HASHING
 
 

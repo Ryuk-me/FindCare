@@ -3,6 +3,7 @@ from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP, JSON
 from app.database import Base
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import JSONB
 
 
 class Clinic(Base):
@@ -18,7 +19,7 @@ class Clinic(Base):
     closes_at = Column(Time, nullable=False)
     slots = Column(Integer, nullable=False)
     is_open = Column(Boolean, server_default='False', nullable=False)
-    address = Column(JSON, nullable=False)
+    address = Column(JSONB, nullable=False)
     doctor = relationship('Doctor')
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))

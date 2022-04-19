@@ -381,6 +381,44 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "searchClinic",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/search/doctors?city=patna&speciality=Cardiologist",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"search",
+						"doctors"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "patna"
+						},
+						{
+							"key": "speciality",
+							"value": "Cardiologist"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
