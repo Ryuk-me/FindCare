@@ -18,7 +18,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"22@gmail.com\",\r\n    \"name\" : \"Neeraj Kumar\",\r\n    \"phone\" : \"8825384544\",\r\n    \"password\" : \"123\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2002-09-21\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"22@gmail.com\",\r\n    \"name\" : \"Neeraj Kumar\",\r\n    \"phone\" : \"8825384544\",\r\n    \"password\" : \"123\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2002-04-26\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -131,7 +131,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"clinic_id\" : 2,\r\n    \"schedule\" : \"2019-11-01 13:00:03.478039\",\r\n    \"fees_paid\" : true\r\n}",
+							"raw": "{\r\n    \"clinic_id\" : 1,\r\n    \"schedule\" : \"2019-11-01 13:00:03.478039\",\r\n    \"fees_paid\" : true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -444,6 +444,42 @@
 								"doctor",
 								"clinic",
 								"appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "canceAppointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/doctor/clinic/appointment/cancel?id=4",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor",
+								"clinic",
+								"appointment",
+								"cancel"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "4"
+								}
 							]
 						}
 					},
