@@ -24,12 +24,12 @@ async def create_appointment(appointment: appointment_schema.CreateAppointment, 
 #! GET A LIST OF APPOINTMENTS
 @router.get('/', status_code=status.HTTP_200_OK, response_model=List[appointment_schema.AppointmentOutUser])
 async def get_appointment(db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
-    appointment = _services.get_appointment_by_user_id(db, current_user.id)
+    appointment = _services.get_all_appointment_by_user_id(db, current_user.id)
     return appointment
 
 
 #! CANCEL USER APPOINTMENT
 @router.get('/cancel', status_code=status.HTTP_202_ACCEPTED)
 async def delete_appointment(id: int, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
-    appointment = _services.get_appointment_by_id(db, id, current_user.id)
-    return _services.remove_appointments(db, appointment)
+    appointment = _services.get_appointment_by_user_id(db, id, current_user.id)
+    return _services.cancel_appointments(db, appointment, is_User=True)

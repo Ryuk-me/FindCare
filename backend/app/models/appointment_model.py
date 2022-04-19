@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Boolean, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, Boolean, DateTime, ForeignKey,String
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from app.database import Base
@@ -23,7 +23,7 @@ class Appointment(Base):
     is_completed = Column(Boolean, server_default='False', nullable=False)
     is_skipped = Column(Boolean, server_default='False', nullable=False)
     when_skipped = Column(DateTime, nullable=True)
-    is_cancelled = Column(Boolean, server_default='False', nullable=False)
+    is_cancelled = Column(String, nullable=True)
     clinic = relationship('Clinic')
     when_cancelled = Column(DateTime, nullable=True)
     created_at = Column(TIMESTAMP(timezone=True),

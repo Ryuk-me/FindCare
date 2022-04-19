@@ -119,12 +119,27 @@ def add_appointment(db: Session, appointment: appointment_schema.CreateAppointme
     raise errors.CLINIC_NOT_FOUND
 
 
-def remove_appointments(db: Session, appointment):
-    query = db.query(appointment_model.Appointment).filter(
-        appointment_model.Appointment.id == appointment.id)
-    query.delete(synchronize_session=False)
+def cancel_appointments(db: Session, appointment: appointment_schema.AppointmentOutUser | appointment_schema.AppointmentOut, is_User=False):
+    appointment: appointment_schema.AppointmentOutUser | appointment_schema.AppointmentOut = db.query(appointment_model.Appointment).filter(
+        appointment_model.Appointment.id == appointment.id).first()
+    if appointment.is_cancelled:
+        raise errors.APPOINTNEMT_ALREADY_CANCELLED
+    if is_User:
+        appointment.is_cancelled = 'U'
+    else:
+        appointment.is_cancelled = 'D'
+    appointment.when_cancelled = datetime.now()
     db.commit()
-    return {"detail": "removed"}
+    return {"detail": "appointment cancelled sucessfully"}
+
+
+def skip_appointment(db: Session, appointment: appointment_schema.AppointmentOut):
+    appointment: appointment_schema.AppointmentOut = db.query(appointment_model.Appointment).filter(
+        appointment_model.Appointment.id == appointment.id).first()
+    appointment.is_skipped = True
+    appointment.when_skipped = datetime.now()
+    db.commit()
+    return {"detail": "appointment skipped sucessfully"}
 
 
 def get_clinic_appointments(db: Session, doctor_id: int):
@@ -135,7 +150,7 @@ def get_clinic_appointments(db: Session, doctor_id: int):
     raise errors.NO_APPOINTMENT_FOUND_ERROR
 
 
-def get_appointment_by_user_id(db: Session, user_id: int):
+def get_all_appointment_by_user_id(db: Session, user_id: int):
     appointment = db.query(appointment_model.Appointment).filter(
         appointment_model.Appointment.user_id == user_id).all()
     if len(appointment) > 0:
@@ -143,12 +158,21 @@ def get_appointment_by_user_id(db: Session, user_id: int):
     raise errors.NO_APPOINTMENT_FOUND_ERROR
 
 
-def get_appointment_by_id(db: Session, id: int, user_id: int):
+def get_appointment_by_user_id(db: Session, id: int, user_id: int):
     appointment = db.query(appointment_model.Appointment).filter(
         appointment_model.Appointment.id == id, appointment_model.Appointment.user_id == user_id).first()
     if appointment:
         return appointment
     raise errors.NO_APPOINTMENT_FOUND_ERROR
+
+
+def get_appointment_by_doctor_id(db: Session, id: int, doctor_id: int):
+    appointment = db.query(appointment_model.Appointment).filter(
+        appointment_model.Appointment.id == id, appointment_model.Appointment.doctor_id == doctor_id).first()
+    if appointment:
+        return appointment
+    raise errors.NO_APPOINTMENT_FOUND_ERROR
+
 
 ######################################################
 #! SEARCH CLINICS

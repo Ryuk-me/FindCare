@@ -29,3 +29,5 @@ NO_APPOINTMENT_FOUND_ERROR = HTTPException(
 CLINIC_IS_NOT_SERVICEABLE = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND, detail="clinic is not servicable currently")
 
+APPOINTNEMT_ALREADY_CANCELLED = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="appointment is already cancelled")

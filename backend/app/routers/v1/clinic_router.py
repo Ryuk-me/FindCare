@@ -33,3 +33,11 @@ async def get_doctor_clinic(db: Session = Depends(_services.get_db), current_doc
 async def get_clinic_appointments(db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):
     appointments = _services.get_clinic_appointments(db, current_doctor.id)
     return appointments
+
+
+#! CANCEL A APPOINTMENT VIA DOCTOR / CLINIC
+@router.get('/appointment/cancel', status_code=status.HTTP_202_ACCEPTED)
+async def cancel_appointment(id: int, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):
+    appointment = _services.get_appointment_by_doctor_id(
+        db, id, current_doctor.id)
+    return _services.cancel_appointments(db, appointment, is_User=False)

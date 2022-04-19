@@ -24,7 +24,7 @@ class AppointmentOut(BaseModel):
     is_completed: bool
     is_skipped: bool
     when_skipped: Union[datetime, None]
-    is_cancelled: bool
+    is_cancelled: Union[str, None]
     when_cancelled: Union[datetime, None]
     created_at: datetime
 
@@ -42,7 +42,7 @@ class AppointmentOutUser(BaseModel):
     is_completed: bool
     is_skipped: bool
     when_skipped: Union[datetime, None]
-    is_cancelled: bool
+    is_cancelled: Union[str, None]
     when_cancelled: Union[datetime, None]
     clinic: clinic_schema.ClinicOut
     created_at: datetime
