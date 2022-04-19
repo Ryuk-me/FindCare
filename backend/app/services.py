@@ -109,7 +109,7 @@ def add_appointment(db: Session, appointment: appointment_schema.CreateAppointme
     if clinic:
         if clinic.is_open:
             appointment = appointment_model.Appointment(
-                user_id=user_id, doctor_id=clinic.doctor_id, **appointment.dict())
+                user_id=user_id, doctor_id=clinic.doctor_id, cid=clinic.id, **appointment.dict())
             db.add(appointment)
             db.commit()
             db.refresh(appointment)
@@ -119,12 +119,20 @@ def add_appointment(db: Session, appointment: appointment_schema.CreateAppointme
     raise errors.CLINIC_NOT_FOUND
 
 
+def remove_appointments(db: Session, appointment):
+    query = db.query(appointment_model.Appointment).filter(
+        appointment_model.Appointment.id == appointment.id)
+    query.delete(synchronize_session=False)
+    db.commit()
+    return {"detail": "removed"}
+
+
 def get_clinic_appointments(db: Session, doctor_id: int):
     appointments = db.query(appointment_model.Appointment).filter(
         appointment_model.Appointment.doctor_id == doctor_id).all()
     if appointments:
         return appointments
-    raise errors.NO_APPOINTMENT_AVAILABLE_ERROR
+    raise errors.NO_APPOINTMENT_FOUND_ERROR
 
 
 def get_appointment_by_user_id(db: Session, user_id: int):
@@ -132,11 +140,19 @@ def get_appointment_by_user_id(db: Session, user_id: int):
         appointment_model.Appointment.user_id == user_id).all()
     if len(appointment) > 0:
         return appointment
-    raise errors.NO_APPOINTMENT_AVAILABLE_ERROR
+    raise errors.NO_APPOINTMENT_FOUND_ERROR
 
+
+def get_appointment_by_id(db: Session, id: int, user_id: int):
+    appointment = db.query(appointment_model.Appointment).filter(
+        appointment_model.Appointment.id == id, appointment_model.Appointment.user_id == user_id).first()
+    if appointment:
+        return appointment
+    raise errors.NO_APPOINTMENT_FOUND_ERROR
 
 ######################################################
 #! SEARCH CLINICS
+
 
 def search_doctor_clinics(city: str, speciality: str | None, db: Session):
     if not speciality:

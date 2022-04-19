@@ -19,7 +19,8 @@
 - [x] added search for clinics / doctor (public route)
 - [x] need to implement get all appointments of a clinic
 - [x] book appointments only if clinic is_open=True
-- [ ] appointment cancellation by user
+- [x] appointment cancellation by user
+- [x] implement only user can cancel his/her appointment no other user can
 - [ ] appointment cancellation by doctor/clinic
 - [ ] appointment skipped flag by doctor/clinic
 - [ ] appointment completion  flag by doctor/clinic
