@@ -131,7 +131,7 @@ def search_doctor_clinics(city: str, speciality: str | None, db: Session):
         if clinic:
             return clinic
         raise errors.NOT_FOUND_ERROR
-    clinic = db.query(clinic_model.Clinic).filter(
+    clinic = db.query(clinic_model.Clinic).join(doctor_model.Doctor).filter(
         clinic_model.Clinic.address["city"].astext == city, doctor_model.Doctor.speciality == speciality).all()
     if clinic:
         return clinic

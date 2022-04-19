@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, Depends
 from app.Config import settings
-from typing import List, Optional
+from typing import Dict, List, Optional
 from app.scheams import clinic_schema
 from app.models import clinic_model, user_model
 from sqlalchemy.orm import Session
@@ -14,7 +14,7 @@ router = APIRouter(
 
 
 @router.get('/doctors', status_code=status.HTTP_200_OK, response_model=List[clinic_schema.ClinicOut])
-async def search_doctors_clinics(city: str, speciality: Optional[str] = None, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
+async def search_doctors_clinics(city: str, speciality: Optional[str] = None, db: Session = Depends(_services.get_db)):
     city = city.capitalize()
     if speciality:
         speciality = speciality.capitalize()
