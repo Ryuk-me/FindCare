@@ -131,7 +131,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"clinic_id\" : 1,\r\n    \"schedule\" : \"2019-11-01 13:00:03.478039\",\r\n    \"fees_paid\" : true\r\n}",
+							"raw": "{\r\n    \"clinic_id\" : 1,\r\n    \"schedule\" : \"2020-11-01 13:00:03.478039\",\r\n    \"fees_paid\" : true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -537,7 +537,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/doctor/clinic/appointment/completed?id=8",
+							"raw": "{{URL}}/doctor/clinic/appointment/completed?id=7",
 							"host": [
 								"{{URL}}"
 							],
@@ -550,7 +550,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "8"
+									"value": "7"
 								}
 							]
 						}

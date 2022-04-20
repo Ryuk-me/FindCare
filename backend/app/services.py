@@ -285,6 +285,30 @@ def get_admin_me(db: Session, admin_id: int):
 def get_all_clinics(db: Session):
     clinics = db.query(clinic_model.Clinic).all()
     if len(clinics) > 0:
+        for clinic in clinics:
+            clinic: clinic_schema.ClinicOutAdminPanel
+            clinic_id = clinic.id
+            appointments = db.query(appointment_model.Appointment).filter(
+                appointment_model.Appointment.clinic_id == clinic_id).all()
+            if len(appointments) > 0:
+                total_appointments = len(appointments)
+                completed_appointments = 0
+                skipped_appointments = 0
+                cancelled_appointments = 0
+                for appointment in appointments:
+                    if appointment.is_completed:
+                        completed_appointments += 1
+                    if appointment.is_skipped:
+                        skipped_appointments += 1
+                    if appointment.is_cancelled:
+                        cancelled_appointments += 1
+                clinic.total_appointments = total_appointments
+                clinic.completed_appointments = completed_appointments
+                clinic.skipped_appointments = skipped_appointments
+                clinic.cancelled_appointments = cancelled_appointments
+                clinic.pending_appointments = total_appointments - \
+                    (cancelled_appointments +
+                     skipped_appointments + completed_appointments)
         return clinics
     raise errors.CLINIC_NOT_FOUND
 

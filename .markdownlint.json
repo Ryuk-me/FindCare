@@ -4,6 +4,6 @@
       "allowed_elements": [ "h1", "h3", "HR", "p" ,"h2","br"]
     },
     "MD013": {
-      "line_length": 200
+      "line_length": 250
     }
   }

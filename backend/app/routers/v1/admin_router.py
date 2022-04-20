@@ -39,7 +39,7 @@ async def get_admin(db: Session = Depends(_services.get_db), current_admin: admi
 
 # ***********************************************************************************
 #! GET ALL CLINICS
-@router.get('/clinics', status_code=status.HTTP_200_OK, response_model=List[clinic_schema.ClinicOut])
+@router.get('/clinics', status_code=status.HTTP_200_OK, response_model=List[clinic_schema.ClinicOutAdminPanel])
 async def get_all_clinics(db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     clinics = _services.get_all_clinics(db)
     return clinics

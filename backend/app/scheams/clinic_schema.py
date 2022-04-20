@@ -36,3 +36,25 @@ class ClinicOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class ClinicOutAdminPanel(BaseModel):
+    id: int
+    doctor_id: int
+    name: str
+    fees: str
+    session_time: str
+    opens_at: time
+    closes_at: time
+    slots: int
+    is_open: bool
+    address: _ClinicAddress
+    doctor: doctor_schema.DoctorOut
+    total_appointments: int = 0
+    completed_appointments: int = 0
+    skipped_appointments: int = 0
+    cancelled_appointments: int = 0
+    pending_appointments: int = 0
+
+    class Config:
+        orm_mode = True
