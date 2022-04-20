@@ -4,7 +4,7 @@ from fastapi import Depends
 from sqlalchemy.orm import Session
 from app.error_handlers import errors
 from fastapi.security import OAuth2PasswordBearer
-from app.models import user_model, doctor_model
+from app.models import user_model, doctor_model, admin_model
 from app.scheams import token_schema
 from app.Config import settings
 from app import services as _services
@@ -54,3 +54,12 @@ def get_current_doctor(token: str = Depends(oauth2_scheme), db: Session = Depend
     if not doctor:
         raise errors.TOKEN_CREDENTIALS_ERROR
     return doctor
+
+
+def get_current_admin(token: str = Depends(oauth2_scheme), db: Session = Depends(_services.get_db)):
+    token = verify_token(token)
+    admin = db.query(admin_model.Admin).filter(
+        admin_model.Admin.id == token.id).first()
+    if not admin:
+        raise errors.TOKEN_CREDENTIALS_ERROR
+    return admin

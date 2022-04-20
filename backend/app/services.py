@@ -1,26 +1,30 @@
 from app.database import SessionLocal
 from app.models import user_model
 from sqlalchemy.orm import Session
-from app.scheams import user_schema, doctor_schema, clinic_schema, appointment_schema
+from app.scheams import user_schema, doctor_schema, clinic_schema, appointment_schema, admin_schema
 from passlib.hash import bcrypt
-from app.models import user_model, doctor_model, clinic_model, appointment_model
+from app.models import user_model, doctor_model, clinic_model, appointment_model, admin_model
 from app.error_handlers import errors
 from datetime import date, datetime
+from app.Config import settings
 import uuid
 
 
 def get_db():
     db = SessionLocal()
+    create_first_admin(db)
     try:
         yield db
     finally:
         db.close()
 
+
+####################################################################
+
+
 #####################################################################
 
 #! USER SERVICES
-
-
 def create_user(db: Session, user: user_schema.UserCreate):
     hash = hash_password(user.password)
     user.password = hash
@@ -202,26 +206,56 @@ def get_appointment_by_doctor_id(db: Session, id: int, doctor_id: int):
 
 
 ######################################################
+
 #! SEARCH CLINICS
-
-
 def search_doctor_clinics(city: str, speciality: str | None, db: Session):
     if not speciality:
-        clinic = db.query(clinic_model.Clinic).filter(
-            clinic_model.Clinic.address["city"].astext == city).all()
+        clinic = db.query(clinic_model.Clinic).join(doctor_model.Doctor).filter(
+            clinic_model.Clinic.address["city"].astext == city, doctor_model.Doctor.is_verified == True).all()
         if clinic:
             return clinic
         raise errors.NOT_FOUND_ERROR
     clinic = db.query(clinic_model.Clinic).join(doctor_model.Doctor).filter(
-        clinic_model.Clinic.address["city"].astext == city, doctor_model.Doctor.speciality == speciality).all()
+        clinic_model.Clinic.address["city"].astext == city, doctor_model.Doctor.speciality == speciality, doctor_model.Doctor.is_verified == True).all()
     if clinic:
         return clinic
     raise errors.NOT_FOUND_ERROR
 
+
+#####################################################
+
+#! ADMIN SERVICES
+def is_admin_exist(db: Session, email: str):
+    admin = db.query(admin_model.Admin).filter(
+        admin_model.Admin.email == email).first()
+    return admin
+
+
+def create_first_admin(db: Session):
+    admin = is_admin_exist(db, settings.FIRST_SUPERUSER_EMAIL)
+    if not admin:
+        admin_in = admin_schema.CreateAdmin(
+            email=settings.FIRST_SUPERUSER_EMAIL,
+            password=settings.FIRST_SUPERUSER_PASSWORD,
+            name=settings.FIRST_SUPERUSER_NAME,
+            is_super_admin=True
+        )
+        admin = create_admin(db, admin_in)
+
+
+def create_admin(db: Session, admin: admin_schema.CreateAdmin):
+    hash = hash_password(admin.password)
+    admin.password = hash
+    admin = admin_model.Admin(**admin.dict())
+    db.add(admin)
+    db.commit()
+    db.refresh(admin)
+    return admin
+
+
 ######################################################
+
 #! HASHING
-
-
 def hash_password(password: str):
     return bcrypt.hash(password)
 

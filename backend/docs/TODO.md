@@ -25,6 +25,9 @@
 - [x] appointment skipped flag by doctor/clinic
 - [x] appointment completion  flag by doctor / clinic
 - [x] create a slug for doctor profile ex-> dr-doctor-name-uuid
+- [ ] set password length minimun to 8 for doctor user and admin
+- [ ] create admin table and add admin login route
+- [ ] create superadmin route / auth / list all doctors and verify doctors
 - [ ] implemnet available_days update and remove ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
 - [ ] clinic on / off flag
 - [ ] IMPLEMENT UPDATE FEATURE FOR USER LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE)

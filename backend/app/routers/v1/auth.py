@@ -33,3 +33,14 @@ async def doctor_login(doctor_credentials: OAuth2PasswordRequestForm = Depends()
             token = create_access_token(data={"id": doctor_exist.id})
             return {"access_token": token, "token_type": "bearer"}
     raise errors.INVALID_CREDENTIALS_ERROR
+
+
+#! ADMIN LOGIN
+@router.post('/admin', response_model=token_schema.BaseToken)
+async def doctor_login(admin_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(_services.get_db)):
+    admin_exist = _services.is_admin_exist(db, admin_credentials.username)
+    if admin_exist:
+        if _services.verify_hash(admin_credentials.password, admin_exist.password):
+            token = create_access_token(data={"id": admin_exist.id})
+            return {"access_token": token, "token_type": "bearer"}
+    raise errors.INVALID_CREDENTIALS_ERROR

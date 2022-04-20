@@ -262,7 +262,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" :\"Doctor kumar\",\r\n    \"email\" : \"doctor@gmail.com\",\r\n    \"phone\" : \"7091207348\",\r\n    \"gender\" : \"male\",\r\n    \"dob\" : \"1996-04-26\",\r\n    \"password\" : \"123\",\r\n    \"about\" : \"hello adhgajhgdah djasgd gasjd\",\r\n    \"experience_year\" : 4,\r\n    \"speciality\" : \"Cardiologist\",\r\n    \"registration_number\" : \"7326473\"\r\n     \r\n}",
+							"raw": "{\r\n    \"name\" :\"Dr. Neeraj Kumar\",\r\n    \"email\" : \"doctor@gmail.com\",\r\n    \"phone\" : \"7091207348\",\r\n    \"gender\" : \"male\",\r\n    \"dob\" : \"1996-04-26\",\r\n    \"password\" : \"123\",\r\n    \"about\" : \"hello adhgajhgdah djasgd gasjd\",\r\n    \"experience_year\" : 4,\r\n    \"speciality\" : \"Cardiologist\",\r\n    \"registration_number\" : \"7326473\"\r\n     \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -552,6 +552,92 @@
 									"key": "id",
 									"value": "8"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "createAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"asdNeeraj Kumar\",\r\n    \"email\" : \"aasdasdasddmin@gmail.com\",\r\n    \"password\" : \"123\",\r\n    \"is_super_admin\" : false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/admin/createadmin",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"createadmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loginAdmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"admin_token\", pm.response.json().access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/auth/admin",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"admin"
 							]
 						}
 					},

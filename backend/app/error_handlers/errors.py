@@ -40,3 +40,6 @@ APPOINTMENT_ALREADY_CANCELLED_BY_DR = HTTPException(
 
 APPOINTMENT_ALREADY_COMPLETED = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="appointment is already completed")
+
+NOT_A_SUPER_ADMIN = HTTPException(
+    status_code=status.HTTP_403_FORBIDDEN, detail="you dont have enough permission to perform this action")
