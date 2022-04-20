@@ -6,6 +6,7 @@ from passlib.hash import bcrypt
 from app.models import user_model, doctor_model, clinic_model, appointment_model
 from app.error_handlers import errors
 from datetime import date, datetime
+import uuid
 
 
 def get_db():
@@ -48,7 +49,7 @@ def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate):
     hash = hash_password(doctor.password)
     doctor.password = hash
     doctor = doctor_model.Doctor(
-        age=calculate_age(doctor.dob), **doctor.dict())
+        age=calculate_age(doctor.dob), slug=generate_slug(doctor.name), **doctor.dict())
     db.add(doctor)
     db.commit()
     db.refresh(doctor)
@@ -238,6 +239,14 @@ def calculate_age(birthDate):
         ((today.month, today.day) < (birthDate.month, birthDate.day))
 
     return age
+
+
+def generate_slug(full_name: str):
+    full_name = full_name.lower().split()
+    full_name[0] = full_name[0].replace('.', '')
+    rnd_uuid = str(uuid.uuid4())
+    slug = '-'.join(full_name) + "-" + str(rnd_uuid)
+    return slug
 
 
 def calculate_slots(opens_at, closes_at, session_time):

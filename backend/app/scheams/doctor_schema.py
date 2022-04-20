@@ -30,6 +30,7 @@ class DoctorOut(BaseModel):
     speciality: str
     registration_number: str
     is_verified: bool
+    slug: str
     created_at: datetime
     updated_at: datetime
 

@@ -24,6 +24,7 @@
 - [x] appointment cancellation by doctor/clinic
 - [x] appointment skipped flag by doctor/clinic
 - [x] appointment completion  flag by doctor / clinic
+- [x] create a slug for doctor profile ex-> dr-doctor-name-uuid
 - [ ] implemnet available_days update and remove ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
 - [ ] clinic on / off flag
 - [ ] IMPLEMENT UPDATE FEATURE FOR USER LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE)
