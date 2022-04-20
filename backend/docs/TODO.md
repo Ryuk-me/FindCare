@@ -27,6 +27,7 @@
 - [x] create a slug for doctor profile ex-> dr-doctor-name-uuid
 - [x] create admin table and add admin login route
 - [x] create superadmin route / auth / list all doctors and verify doctors
+- [ ] while sending back all clinic details in `admin/clinics` send back total_no of appointments ,upcoming appointments,cancelled appointments(either cancelled by user or doctor side) with clinic data
 - [ ] implemnet available_days update and remove ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
 - [ ] clinic on / off flag
 - [ ] IMPLEMENT UPDATE FEATURE FOR USER LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE)
