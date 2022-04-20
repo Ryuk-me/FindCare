@@ -13,6 +13,7 @@ router = APIRouter(
 )
 
 
+# ***********************************************************************************
 #! DOCTOR SIGNUP
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=doctor_schema.DoctorOut)
 async def create_doctor(doctor: doctor_schema.DoctorCreate, db: Session = Depends(_services.get_db)):
@@ -24,6 +25,7 @@ async def create_doctor(doctor: doctor_schema.DoctorCreate, db: Session = Depend
             status_code=status.HTTP_409_CONFLICT, detail="user already exist")
 
 
+# ***********************************************************************************
 #! GET CURRENT DOCTOR I.E DOCTOR/ME
 @router.get('/', status_code=status.HTTP_200_OK, response_model=doctor_schema.DoctorOut)
 async def get_doctor_me(db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):

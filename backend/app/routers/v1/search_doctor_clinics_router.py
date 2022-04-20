@@ -11,6 +11,8 @@ router = APIRouter(
 )
 
 
+# ***********************************************************************************
+#! GET ALL DOCTORS / CLINICS PUBLIC ROUTE
 @router.get('/doctors', status_code=status.HTTP_200_OK, response_model=List[clinic_schema.ClinicOut])
 async def search_doctors_clinics(city: str, speciality: Optional[str] = None, db: Session = Depends(_services.get_db)):
     city = city.capitalize()

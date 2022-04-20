@@ -14,6 +14,7 @@ router = APIRouter(
 )
 
 
+# ***********************************************************************************
 #! CREATE CLINIC
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=clinic_schema.ClinicOut)
 async def create_clinic(clinic: clinic_schema.ClinicCreate, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):
@@ -21,6 +22,7 @@ async def create_clinic(clinic: clinic_schema.ClinicCreate, db: Session = Depend
     return clinic
 
 
+# ***********************************************************************************
 #! GET CLINIC DETAILS
 @router.get('/', status_code=status.HTTP_200_OK, response_model=clinic_schema.ClinicOut)
 async def get_doctor_clinic(db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):
@@ -28,6 +30,7 @@ async def get_doctor_clinic(db: Session = Depends(_services.get_db), current_doc
     return clinic
 
 
+# ***********************************************************************************
 #! GET ALL APPOINTMENTS OF A CLINC
 @router.get('/appointments', status_code=status.HTTP_200_OK, response_model=List[appointment_schema.AppointmentOut])
 async def get_clinic_appointments(db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):
@@ -35,6 +38,7 @@ async def get_clinic_appointments(db: Session = Depends(_services.get_db), curre
     return appointments
 
 
+# ***********************************************************************************
 #! CANCEL A APPOINTMENT VIA DOCTOR / CLINIC
 @router.get('/appointment/cancel', status_code=status.HTTP_202_ACCEPTED)
 async def cancel_appointment(id: int, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):
@@ -43,6 +47,7 @@ async def cancel_appointment(id: int, db: Session = Depends(_services.get_db), c
     return _services.cancel_appointments(db, appointment, is_User=False)
 
 
+# ***********************************************************************************
 #! SKIP A APPOINTMENT VIA DOCTOR / CLINIC
 @router.get('/appointment/skip', status_code=status.HTTP_202_ACCEPTED)
 async def skip_appointment(id: int, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):
@@ -51,6 +56,8 @@ async def skip_appointment(id: int, db: Session = Depends(_services.get_db), cur
     return _services.skip_appointment(db, appointment)
 
 
+# ***********************************************************************************
+#! MARK APPOINTMENT AS COMPLETED
 @router.get('/appointment/completed', status_code=status.HTTP_202_ACCEPTED)
 async def completed_appointment(id: int, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):
     appointment = _services.get_appointment_by_doctor_id(

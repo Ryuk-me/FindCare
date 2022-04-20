@@ -12,6 +12,8 @@ router = APIRouter(
     tags=['Users']
 )
 
+
+# ***********************************************************************************
 #! USER SIGNUP
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=user_schema.UserOut)
 async def create_user(user: user_schema.UserCreate, db: Session = Depends(_services.get_db)):
@@ -22,6 +24,8 @@ async def create_user(user: user_schema.UserCreate, db: Session = Depends(_servi
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT, detail="user already exist")
 
+
+# ***********************************************************************************
 #! GET CURRENT USER DETAILS
 @router.get('/', status_code=status.HTTP_200_OK, response_model=user_schema.UserOut)
 async def get_user_me(db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
@@ -31,6 +35,8 @@ async def get_user_me(db: Session = Depends(_services.get_db), current_user: use
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND, detail=f'please login first')
 
+
+# ***********************************************************************************
 #! GET USER BY ID (TEMPORARY ROUTE JUST TO CHECK AUTH IT WILL BE REMOVED)
 # @router.get('/{id}', status_code=status.HTTP_200_OK, response_model=user_schema.UserOut)
 # async def get_user(id: int, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):

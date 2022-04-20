@@ -25,14 +25,14 @@
 - [x] appointment skipped flag by doctor/clinic
 - [x] appointment completion  flag by doctor / clinic
 - [x] create a slug for doctor profile ex-> dr-doctor-name-uuid
-- [ ] set password length minimun to 8 for doctor user and admin
-- [ ] create admin table and add admin login route
-- [ ] create superadmin route / auth / list all doctors and verify doctors
+- [x] create admin table and add admin login route
+- [x] create superadmin route / auth / list all doctors and verify doctors
 - [ ] implemnet available_days update and remove ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
 - [ ] clinic on / off flag
 - [ ] IMPLEMENT UPDATE FEATURE FOR USER LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE)
 - [ ] IMPLEMENT UPDATE FEATURE FOR DOCTOR LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE,PROFILE_IMAGE)
 - [ ] IMPLEMENT UPDATE FEATURE ON DOCTOR CLINIC (WHICH WILL CHANGE OPENS AT,CLOSES AT,SESSION_TIME,AND IS_OPEN AND SLOTS WILL BE CALCULATED ACCORDINGLY)
+- [ ] set password length minimun to 8 for doctor user and admin (IN LAST)
 
 ## HOW SLOT WILL BE CALCULATED
 

@@ -19,12 +19,13 @@ def get_db():
         db.close()
 
 
-####################################################################
+# ***********************************************************************************
+
+        #! USER SERVICES
+
+# ***********************************************************************************
 
 
-#####################################################################
-
-#! USER SERVICES
 def create_user(db: Session, user: user_schema.UserCreate):
     hash = hash_password(user.password)
     user.password = hash
@@ -46,9 +47,13 @@ def is_user_exist(db: Session, email: str):
     return user
 
 
-#####################################################
+# ***********************************************************************************
 
-#! DOCTOR SERVICES
+    #! DOCTOR SERVICES
+
+# ***********************************************************************************
+
+
 def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate):
     hash = hash_password(doctor.password)
     doctor.password = hash
@@ -71,9 +76,13 @@ def is_doctor_exist(db: Session, email: str):
     return doctor
 
 
-######################################################
+# ***********************************************************************************
 
-#! CLINIC SERVICES
+    #! CLINIC SERVICES
+
+# ***********************************************************************************
+
+
 def add_clinic(db: Session, clinic: clinic_schema.ClinicCreate, doctor_id: int):
     if not is_clinic_exist(db, clinic, doctor_id):
         clinic = clinic_model.Clinic(doctor_id=doctor_id, slots=calculate_slots(
@@ -105,9 +114,13 @@ def is_clinic_exist_by_id(db: Session, clinic_id: int):
     return clinic
 
 
-#####################################################
+# ***********************************************************************************
 
-#! APPOINTMENT SERVICES
+    #! APPOINTMENT SERVICES
+
+# ***********************************************************************************
+
+
 def add_appointment(db: Session, appointment: appointment_schema.CreateAppointment, user_id: int):
     clinic: clinic_schema.ClinicOut = is_clinic_exist_by_id(
         db, appointment.clinic_id)
@@ -205,9 +218,13 @@ def get_appointment_by_doctor_id(db: Session, id: int, doctor_id: int):
     raise errors.NO_APPOINTMENT_FOUND_ERROR
 
 
-######################################################
+# ***********************************************************************************
 
-#! SEARCH CLINICS
+    #! SEARCH CLINICS
+
+# ***********************************************************************************
+
+
 def search_doctor_clinics(city: str, speciality: str | None, db: Session):
     if not speciality:
         clinic = db.query(clinic_model.Clinic).join(doctor_model.Doctor).filter(
@@ -222,9 +239,13 @@ def search_doctor_clinics(city: str, speciality: str | None, db: Session):
     raise errors.NOT_FOUND_ERROR
 
 
-#####################################################
+# ***********************************************************************************
 
-#! ADMIN SERVICES
+    #! ADMIN SERVICES
+
+# ***********************************************************************************
+
+
 def is_admin_exist(db: Session, email: str):
     admin = db.query(admin_model.Admin).filter(
         admin_model.Admin.email == email).first()
@@ -253,9 +274,40 @@ def create_admin(db: Session, admin: admin_schema.CreateAdmin):
     return admin
 
 
-######################################################
+def get_admin_me(db: Session, admin_id: int):
+    admin = db.query(admin_model.Admin).filter(
+        admin_model.Admin.id == admin_id).first()
+    if admin:
+        return admin
+    raise errors.NOT_FOUND_ERROR
 
-#! HASHING
+
+def get_all_clinics(db: Session):
+    clinics = db.query(clinic_model.Clinic).all()
+    if len(clinics) > 0:
+        return clinics
+    raise errors.CLINIC_NOT_FOUND
+
+
+def verify_doctor(db: Session, doctor_id: int):
+    doctor: doctor_schema.DoctorOut = db.query(doctor_model.Doctor).filter(
+        doctor_model.Doctor.id == doctor_id).first()
+    if doctor:
+        if doctor.is_verified:
+            raise errors.DOCTOR_IS_ALREADY_VERIFIED
+        doctor.is_verified = True
+        db.commit()
+        return {"detail": "doctor verified successfully"}
+    raise errors.NO_DOCTOR_FOUND_WITH_THIS_ID
+
+
+# ***********************************************************************************
+
+    #! HASHING
+
+# ***********************************************************************************
+
+
 def hash_password(password: str):
     return bcrypt.hash(password)
 
@@ -264,9 +316,13 @@ def verify_hash(password, hash):
     return bcrypt.verify(password, hash)
 
 
-######################################################
+# ***********************************************************************************
 
-#! UTILITY FUNCTIONS
+    #! UTILITY FUNCTIONS
+
+# ***********************************************************************************
+
+
 def calculate_age(birthDate):
     today = date.today()
     age = today.year - birthDate.year - \

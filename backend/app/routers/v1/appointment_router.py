@@ -14,6 +14,7 @@ router = APIRouter(
 )
 
 
+# ***********************************************************************************
 #! CREATE APPOINTMENT
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=appointment_schema.AppointmentOutUser)
 async def create_appointment(appointment: appointment_schema.CreateAppointment, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
@@ -21,6 +22,7 @@ async def create_appointment(appointment: appointment_schema.CreateAppointment, 
     return appointment
 
 
+# ***********************************************************************************
 #! GET A LIST OF APPOINTMENTS
 @router.get('/', status_code=status.HTTP_200_OK, response_model=List[appointment_schema.AppointmentOutUser])
 async def get_appointment(db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
@@ -28,6 +30,7 @@ async def get_appointment(db: Session = Depends(_services.get_db), current_user:
     return appointment
 
 
+# ***********************************************************************************
 #! CANCEL USER APPOINTMENT
 @router.get('/cancel', status_code=status.HTTP_202_ACCEPTED)
 async def delete_appointment(id: int, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):

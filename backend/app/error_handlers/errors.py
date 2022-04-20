@@ -43,3 +43,6 @@ APPOINTMENT_ALREADY_COMPLETED = HTTPException(
 
 NOT_A_SUPER_ADMIN = HTTPException(
     status_code=status.HTTP_403_FORBIDDEN, detail="you dont have enough permission to perform this action")
+
+DOCTOR_IS_ALREADY_VERIFIED = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="doctor is already verified")
