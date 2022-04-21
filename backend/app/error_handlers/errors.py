@@ -35,11 +35,19 @@ APPOINTNEMT_ALREADY_CANCELLED = HTTPException(
 APPOINTMENT_ALREADY_SKIPPED = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="appointment is already skipped")
 
+APPOINTNEMT_ALREADY_CANCELLED_BY_USER = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="appointment is already cancelled by the user")
+
 APPOINTMENT_ALREADY_CANCELLED_BY_DR = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="appointment is already cancelled by the doctor")
 
 APPOINTMENT_ALREADY_COMPLETED = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="appointment is already completed")
+
+APPOINTMENT_SKIPPED_CANCELLATION = HTTPException(
+    status_code=status.HTTP_409_CONFLICT,
+    detail="appointment cancelled due to patient was not on time"
+)
 
 NOT_A_SUPER_ADMIN = HTTPException(
     status_code=status.HTTP_403_FORBIDDEN, detail="you dont have enough permission to perform this action")

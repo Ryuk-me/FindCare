@@ -144,12 +144,18 @@ def cancel_appointments(db: Session, appointment: appointment_schema.Appointment
     if appointment.is_completed:
         raise errors.APPOINTMENT_ALREADY_COMPLETED
     if appointment.is_skipped:
-        raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
-    if appointment.is_cancelled:
-        raise errors.APPOINTNEMT_ALREADY_CANCELLED
+        raise errors.APPOINTMENT_SKIPPED_CANCELLATION
     if is_User:
+        if appointment.is_cancelled == 'U':
+            raise errors.APPOINTNEMT_ALREADY_CANCELLED
+        if appointment.is_cancelled == 'D':
+            raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
         appointment.is_cancelled = 'U'
     else:
+        if appointment.is_cancelled == 'U':
+            raise errors.APPOINTNEMT_ALREADY_CANCELLED_BY_USER
+        if appointment.is_cancelled == 'D':
+            raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
         appointment.is_cancelled = 'D'
     appointment.when_cancelled = datetime.now()
     db.commit()
@@ -161,10 +167,12 @@ def skip_appointment(db: Session, appointment: appointment_schema.AppointmentOut
         appointment_model.Appointment.id == appointment.id).first()
     if appointment.is_completed:
         raise errors.APPOINTMENT_ALREADY_COMPLETED
-    if appointment.is_cancelled:
-        raise errors.APPOINTNEMT_ALREADY_CANCELLED
-    if appointment.is_skipped:
+    if appointment.is_cancelled == 'U':
+        raise errors.APPOINTNEMT_ALREADY_CANCELLED_BY_USER
+    if appointment.is_cancelled == 'D':
         raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
+    if appointment.is_skipped:
+        raise errors.APPOINTMENT_SKIPPED_CANCELLATION
     appointment.is_skipped = True
     appointment.when_skipped = datetime.now()
     db.commit()
@@ -176,10 +184,12 @@ def appointment_completed(db: Session, appointment: appointment_schema.Appointme
         appointment_model.Appointment.id == appointment.id).first()
     if appointment.is_completed:
         raise errors.APPOINTMENT_ALREADY_COMPLETED
-    if appointment.is_cancelled:
-        raise errors.APPOINTNEMT_ALREADY_CANCELLED
-    if appointment.is_skipped:
+    if appointment.is_cancelled == 'U':
+        raise errors.APPOINTNEMT_ALREADY_CANCELLED_BY_USER
+    if appointment.is_cancelled == 'D':
         raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
+    if appointment.is_skipped:
+        raise errors.APPOINTMENT_SKIPPED_CANCELLATION
 
     appointment.is_completed = True
     db.commit()
