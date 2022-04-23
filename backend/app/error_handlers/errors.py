@@ -1,4 +1,3 @@
-# from fastapi.responses import JSONResponse
 from fastapi import HTTPException, status
 
 
@@ -54,3 +53,6 @@ NOT_A_SUPER_ADMIN = HTTPException(
 
 DOCTOR_IS_ALREADY_VERIFIED = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="doctor is already verified")
+
+PASSWORD_CANNOT_BE_SAME = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="password cannot be same as the old one")

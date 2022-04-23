@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from app.scheams import user_schema
 from app.oauth2 import get_current_user
 from app.models import user_model
-
+from app.error_handlers import errors
 
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/user',
@@ -26,7 +26,7 @@ async def create_user(user: user_schema.UserCreate, db: Session = Depends(_servi
 
 
 # ***********************************************************************************
-#! GET CURRENT USER DETAILS
+#! GET CURRENT USER DETAILS WITH ALL APPOINTMENTS
 @router.get('/', status_code=status.HTTP_200_OK, response_model=user_schema.UserOut)
 async def get_user_me(db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
     user = _services.get_user(db, current_user.id)
@@ -37,11 +37,8 @@ async def get_user_me(db: Session = Depends(_services.get_db), current_user: use
 
 
 # ***********************************************************************************
-#! GET USER BY ID (TEMPORARY ROUTE JUST TO CHECK AUTH IT WILL BE REMOVED)
-# @router.get('/{id}', status_code=status.HTTP_200_OK, response_model=user_schema.UserOut)
-# async def get_user(id: int, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
-#     user = _services.get_user(db, id)
-#     if user:
-#         return user
-#     raise HTTPException(
-#         status_code=status.HTTP_404_NOT_FOUND, detail=f'user with id {id} does not exist')
+#! GET CURRENT USER DETAILS WITH ALL APPOINTMENTS
+@router.post('/change-password', status_code=status.HTTP_202_ACCEPTED)
+async def change_password(user_p: user_schema.ChangePassword, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
+    user = _services.get_user(db, current_user.id)
+    return _services.change_password(db, user_p.password, user)

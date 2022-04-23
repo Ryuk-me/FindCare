@@ -5,9 +5,10 @@ from app.scheams import user_schema, doctor_schema, clinic_schema, appointment_s
 from passlib.hash import bcrypt
 from app.models import user_model, doctor_model, clinic_model, appointment_model, admin_model
 from app.error_handlers import errors
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from app.Config import settings
 import uuid
+from jose import JWTError, jwt
 
 
 def get_db():
@@ -20,9 +21,9 @@ def get_db():
 
 
 # ***********************************************************************************
-
-        #! USER SERVICES
-
+#                                                                                   #
+#                              USER SERVICES                                        #
+#                                                                                   #
 # ***********************************************************************************
 
 
@@ -47,10 +48,19 @@ def is_user_exist(db: Session, email: str):
     return user
 
 
+def change_password(db: Session, password: str, user: user_schema.ChangePassword):
+    if verify_hash(password, user.password):
+        raise errors.PASSWORD_CANNOT_BE_SAME
+    hash = hash_password(password)
+    user.password = hash
+    db.commit()
+    return {"details": "password changed successfully"}
+
+
 # ***********************************************************************************
-
-    #! DOCTOR SERVICES
-
+#                                                                                   #
+#                             DOCTOR SERVICES                                       #
+#                                                                                   #
 # ***********************************************************************************
 
 
@@ -77,9 +87,9 @@ def is_doctor_exist(db: Session, email: str):
 
 
 # ***********************************************************************************
-
-    #! CLINIC SERVICES
-
+#                                                                                   #
+#                            CLINIC SERVICES                                        #
+#                                                                                   #
 # ***********************************************************************************
 
 
@@ -115,9 +125,9 @@ def is_clinic_exist_by_id(db: Session, clinic_id: int):
 
 
 # ***********************************************************************************
-
-    #! APPOINTMENT SERVICES
-
+#                                                                                   #
+#                        APPOINTMENT SERVICES                                       #
+#                                                                                   #
 # ***********************************************************************************
 
 
@@ -229,9 +239,9 @@ def get_appointment_by_doctor_id(db: Session, id: int, doctor_id: int):
 
 
 # ***********************************************************************************
-
-    #! SEARCH CLINICS
-
+#                                                                                   #
+#                              SEARCH CLINICS                                       #
+#                                                                                   #
 # ***********************************************************************************
 
 
@@ -250,9 +260,9 @@ def search_doctor_clinics(city: str, speciality: str | None, db: Session):
 
 
 # ***********************************************************************************
-
-    #! ADMIN SERVICES
-
+#                                                                                   #
+#                             ADMIN SERVICES                                        #
+#                                                                                   #
 # ***********************************************************************************
 
 
@@ -336,9 +346,9 @@ def verify_doctor(db: Session, doctor_id: int):
 
 
 # ***********************************************************************************
-
-    #! HASHING
-
+#                                                                                   #
+#                               HASHING                                             #
+#                                                                                   #
 # ***********************************************************************************
 
 
@@ -351,9 +361,9 @@ def verify_hash(password, hash):
 
 
 # ***********************************************************************************
-
-    #! UTILITY FUNCTIONS
-
+#                                                                                   #
+#                       UTILITY FUNCTIONS                                           #
+#                                                                                   #
 # ***********************************************************************************
 
 
