@@ -1,14 +1,13 @@
 from app.database import SessionLocal
 from app.models import user_model
 from sqlalchemy.orm import Session
-from app.scheams import user_schema, doctor_schema, clinic_schema, appointment_schema, admin_schema
+from app.scheams import user_schema, doctor_schema, clinic_schema, appointment_schema, admin_schema, change_password_schema
 from passlib.hash import bcrypt
 from app.models import user_model, doctor_model, clinic_model, appointment_model, admin_model
 from app.error_handlers import errors
 from datetime import date, datetime, timedelta
 from app.Config import settings
 import uuid
-from jose import JWTError, jwt
 
 
 def get_db():
@@ -46,15 +45,6 @@ def is_user_exist(db: Session, email: str):
     user = db.query(user_model.User).filter(
         user_model.User.email == email).first()
     return user
-
-
-def change_password(db: Session, password: str, user: user_schema.ChangePassword):
-    if verify_hash(password, user.password):
-        raise errors.PASSWORD_CANNOT_BE_SAME
-    hash = hash_password(password)
-    user.password = hash
-    db.commit()
-    return {"details": "password changed successfully"}
 
 
 # ***********************************************************************************
@@ -343,6 +333,21 @@ def verify_doctor(db: Session, doctor_id: int):
         db.commit()
         return {"detail": "doctor verified successfully"}
     raise errors.NO_DOCTOR_FOUND_WITH_THIS_ID
+
+# ***********************************************************************************
+#                                                                                   #
+#                         PASSWORD SERVICES                                         #
+#                                                                                   #
+# ***********************************************************************************
+
+
+def change_password(db: Session, password: str, obj: change_password_schema.ChangePassword):
+    if verify_hash(password, obj.password):
+        raise errors.PASSWORD_CANNOT_BE_SAME
+    hash = hash_password(password)
+    obj.password = hash
+    db.commit()
+    return {"details": "password changed successfully"}
 
 
 # ***********************************************************************************

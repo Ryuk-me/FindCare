@@ -13,10 +13,6 @@ class UserCreate(BaseModel):
     password: str
 
 
-class ChangePassword(BaseModel):
-    password: str
-
-
 class UserOut(BaseModel):
     id: int
     name: str

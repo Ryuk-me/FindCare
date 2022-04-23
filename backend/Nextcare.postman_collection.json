@@ -58,7 +58,7 @@
 							"formdata": [
 								{
 									"key": "password",
-									"value": "123",
+									"value": "12345",
 									"type": "text"
 								},
 								{
@@ -195,7 +195,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/user/appointment/cancel?id=6",
+							"raw": "{{URL}}/user/appointment/cancel?id=4",
 							"host": [
 								"{{URL}}"
 							],
@@ -207,8 +207,51 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "6"
+									"value": "4"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "password",
+								"value": "123",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\" : \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user/change-password",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								"change-password"
 							]
 						}
 					},
@@ -310,7 +353,7 @@
 								},
 								{
 									"key": "password",
-									"value": "123",
+									"value": "1234",
 									"type": "text"
 								}
 							]
@@ -465,7 +508,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/doctor/clinic/appointment/cancel?id=8",
+							"raw": "{{URL}}/doctor/clinic/appointment/cancel?id=11",
 							"host": [
 								"{{URL}}"
 							],
@@ -478,7 +521,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "8"
+									"value": "11"
 								}
 							]
 						}
@@ -501,7 +544,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/doctor/clinic/appointment/skip?id=8",
+							"raw": "{{URL}}/doctor/clinic/appointment/skip?id=11",
 							"host": [
 								"{{URL}}"
 							],
@@ -514,7 +557,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "8"
+									"value": "11"
 								}
 							]
 						}
@@ -537,7 +580,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/doctor/clinic/appointment/completed?id=7",
+							"raw": "{{URL}}/doctor/clinic/appointment/completed?id=11",
 							"host": [
 								"{{URL}}"
 							],
@@ -550,8 +593,45 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "7"
+									"value": "11"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\" : \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/doctor/change-password",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor",
+								"change-password"
 							]
 						}
 					},

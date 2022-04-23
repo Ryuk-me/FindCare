@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.Config import settings
 from app import services as _services
 from app.models import doctor_model
-from app.scheams import doctor_schema, clinic_schema
+from app.scheams import doctor_schema, change_password_schema
 from app.oauth2 import get_current_doctor
 from app.error_handlers import errors
 
@@ -33,3 +33,11 @@ async def get_doctor_me(db: Session = Depends(_services.get_db), current_doctor:
     if doctor:
         return doctor
     raise errors.INVALID_CREDENTIALS_ERROR
+
+
+# ***********************************************************************************
+#! GET CURRENT USER DETAILS WITH ALL APPOINTMENTS
+@router.post('/change-password', status_code=status.HTTP_202_ACCEPTED)
+async def change_password(doctor_p: change_password_schema.ChangePassword, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):
+    doctor = _services.get_doctor(db, current_doctor.id)
+    return _services.change_password(db, doctor_p.password, doctor)
