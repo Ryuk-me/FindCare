@@ -17,28 +17,33 @@ router = APIRouter(
 #! USER SIGNUP
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=user_schema.UserOut)
 async def create_user(user: user_schema.UserCreate, db: Session = Depends(_services.get_db)):
-    if not _services.is_user_exist(db, user.email):
-        user = _services.create_user(db, user)
-        return user
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT, detail="user already exist")
+    return _services.create_user(db, user)
 
 
 # ***********************************************************************************
 #! GET CURRENT USER DETAILS WITH ALL APPOINTMENTS
 @router.get('/', status_code=status.HTTP_200_OK, response_model=user_schema.UserOut)
 async def get_user_me(db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
-    user = _services.get_user(db, current_user.id)
-    if user:
-        return user
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND, detail=f'please login first')
+    return _services.get_user(db, current_user.id)
 
 
 # ***********************************************************************************
-#! GET CURRENT USER DETAILS WITH ALL APPOINTMENTS
+#! CHANGE USER PASSWORD
 @router.post('/change-password', status_code=status.HTTP_202_ACCEPTED)
 async def change_password(user_p: change_password_schema.ChangePassword, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
     user = _services.get_user(db, current_user.id)
     return _services.change_password(db, user_p.password, user)
+
+
+# ***********************************************************************************
+# #! UPDATE USER DETAILS
+# @router.put('/', status_code=status.HTTP_202_ACCEPTED)
+# async def update_user_details(user: user_schema.UpdateUserDetails, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
+#     if user.name:
+#         current_user.name = user.name
+#     if user.email:
+#         current_user.email = user.email
+#     if user.phone:
+#         current_user.phone = user.phone
+    # user = _services.get_user(db, current_user.id)
+    # return _services.change_password(db, user_p.password, user)

@@ -1,6 +1,6 @@
 from datetime import datetime, date
 from pydantic import BaseModel, EmailStr, constr
-from typing import List, Literal
+from typing import List, Literal, Optional
 from app.scheams import appointment_schema
 
 
@@ -28,3 +28,12 @@ class UserOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class UpdateUserDetails(BaseModel):
+    name: Optional[str]
+    email: Optional[str]
+    phone: Optional[constr(max_length=10, min_length=10)]
+    gender: Optional[Literal['male', 'female', 'other']]
+    dob: Optional[date]
+    password: Optional[str]

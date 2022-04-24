@@ -7,6 +7,24 @@ INVALID_CREDENTIALS_ERROR = HTTPException(
 NOT_FOUND_ERROR = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND, detail="not found")
 
+USER_ALREADY_EXIST = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="user already exist")
+
+DOCTOR_ALREADY_EXIST = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="doctor already exist")
+
+DOCTOR_NOT_FOUND = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, detail=f'doctor not found')
+
+PHONE_NUMBER_ALREADY_EXIST = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="an account with this number already exist")
+
+PLEASE_LOGIN_FIRST = HTTPException(
+    status_code=status.HTTP_403_FORBIDDEN, detail=f'please login first')
+
+USER_NOT_FOUND = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, detail=f'user not found')
+
 TOKEN_CREDENTIALS_ERROR = HTTPException(
     status_code=status.HTTP_403_FORBIDDEN, detail="could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
 

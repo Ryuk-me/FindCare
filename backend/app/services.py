@@ -27,13 +27,17 @@ def get_db():
 
 
 def create_user(db: Session, user: user_schema.UserCreate):
-    hash = hash_password(user.password)
-    user.password = hash
-    user = user_model.User(age=calculate_age(user.dob), **user.dict())
-    db.add(user)
-    db.commit()
-    db.refresh(user)
-    return user
+    if not is_user_exist(db, user.email):
+        if not get_user_by_phone_no(db, user.phone):
+            hash = hash_password(user.password)
+            user.password = hash
+            user = user_model.User(age=calculate_age(user.dob), **user.dict())
+            db.add(user)
+            db.commit()
+            db.refresh(user)
+            return user
+        raise errors.PHONE_NUMBER_ALREADY_EXIST
+    raise errors.USER_ALREADY_EXIST
 
 
 def get_user(db: Session, id: int):
@@ -44,6 +48,14 @@ def get_user(db: Session, id: int):
 def is_user_exist(db: Session, email: str):
     user = db.query(user_model.User).filter(
         user_model.User.email == email).first()
+    if user:
+        return user
+    raise errors.USER_NOT_FOUND
+
+
+def get_user_by_phone_no(db: Session, phone: str):
+    user = db.query(user_model.User).filter(
+        user_model.User.phone == phone).first()
     return user
 
 
@@ -55,14 +67,18 @@ def is_user_exist(db: Session, email: str):
 
 
 def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate):
-    hash = hash_password(doctor.password)
-    doctor.password = hash
-    doctor = doctor_model.Doctor(
-        age=calculate_age(doctor.dob), slug=generate_slug(doctor.name), **doctor.dict())
-    db.add(doctor)
-    db.commit()
-    db.refresh(doctor)
-    return doctor
+    if not is_doctor_exist(db, doctor.email):
+        if not get_doctor_by_phone_no(db, doctor.phone):
+            hash = hash_password(doctor.password)
+            doctor.password = hash
+            doctor = doctor_model.Doctor(
+                age=calculate_age(doctor.dob), slug=generate_slug(doctor.name), **doctor.dict())
+            db.add(doctor)
+            db.commit()
+            db.refresh(doctor)
+            return doctor
+        raise errors.PHONE_NUMBER_ALREADY_EXIST
+    raise errors.DOCTOR_ALREADY_EXIST
 
 
 def get_doctor(db: Session, id: int):
@@ -73,8 +89,15 @@ def get_doctor(db: Session, id: int):
 def is_doctor_exist(db: Session, email: str):
     doctor = db.query(doctor_model.Doctor).filter(
         doctor_model.Doctor.email == email).first()
-    return doctor
+    if doctor:
+        return doctor
+    raise errors.DOCTOR_NOT_FOUND
 
+
+def get_doctor_by_phone_no(db: Session, phone: str):
+    doctor = db.query(doctor_model.Doctor).filter(
+        doctor_model.Doctor.phone == phone).first()
+    return doctor
 
 # ***********************************************************************************
 #                                                                                   #
