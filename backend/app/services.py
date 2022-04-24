@@ -48,9 +48,7 @@ def get_user(db: Session, id: int):
 def is_user_exist(db: Session, email: str):
     user = db.query(user_model.User).filter(
         user_model.User.email == email).first()
-    if user:
-        return user
-    raise errors.USER_NOT_FOUND
+    return user
 
 
 def get_user_by_phone_no(db: Session, phone: str):
@@ -69,14 +67,16 @@ def get_user_by_phone_no(db: Session, phone: str):
 def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate):
     if not is_doctor_exist(db, doctor.email):
         if not get_doctor_by_phone_no(db, doctor.phone):
-            hash = hash_password(doctor.password)
-            doctor.password = hash
-            doctor = doctor_model.Doctor(
-                age=calculate_age(doctor.dob), slug=generate_slug(doctor.name), **doctor.dict())
-            db.add(doctor)
-            db.commit()
-            db.refresh(doctor)
-            return doctor
+            if not get_doctor_by_rgnum(db, doctor.registration_number):
+                hash = hash_password(doctor.password)
+                doctor.password = hash
+                doctor = doctor_model.Doctor(
+                    age=calculate_age(doctor.dob), slug=generate_slug(doctor.name), **doctor.dict())
+                db.add(doctor)
+                db.commit()
+                db.refresh(doctor)
+                return doctor
+            raise errors.DOCTOR_WITH_THIS_REGISTRATION_NUM_ALREADY_EXIST
         raise errors.PHONE_NUMBER_ALREADY_EXIST
     raise errors.DOCTOR_ALREADY_EXIST
 
@@ -89,14 +89,18 @@ def get_doctor(db: Session, id: int):
 def is_doctor_exist(db: Session, email: str):
     doctor = db.query(doctor_model.Doctor).filter(
         doctor_model.Doctor.email == email).first()
-    if doctor:
-        return doctor
-    raise errors.DOCTOR_NOT_FOUND
+    return doctor
 
 
 def get_doctor_by_phone_no(db: Session, phone: str):
     doctor = db.query(doctor_model.Doctor).filter(
         doctor_model.Doctor.phone == phone).first()
+    return doctor
+
+
+def get_doctor_by_rgnum(db: Session, registration_number: str):
+    doctor = db.query(doctor_model.Doctor).filter(
+        doctor_model.Doctor.registration_number == registration_number).first()
     return doctor
 
 # ***********************************************************************************

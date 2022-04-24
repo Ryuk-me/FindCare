@@ -44,6 +44,7 @@ async def change_password(user_p: change_password_schema.ChangePassword, db: Ses
 #     if user.email:
 #         current_user.email = user.email
 #     if user.phone:
+#         if not _services.
 #         current_user.phone = user.phone
-    # user = _services.get_user(db, current_user.id)
-    # return _services.change_password(db, user_p.password, user)
+#     user = _services.get_user(db, current_user.id)
+#     return _services.change_password(db, user.password, user)

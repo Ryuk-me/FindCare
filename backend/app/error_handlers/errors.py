@@ -34,6 +34,8 @@ NO_DOCTOR_FOUND_WITH_THIS_ID = HTTPException(
 DOCTOR_IS_ALREADY_VERIFIED = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="doctor is already verified")
 
+DOCTOR_WITH_THIS_REGISTRATION_NUM_ALREADY_EXIST = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="doctor with this registration number already exist")
 
 # ***********************************************************************************
 #                                                                                   #
