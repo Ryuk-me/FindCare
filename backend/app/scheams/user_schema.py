@@ -36,4 +36,3 @@ class UpdateUserDetails(BaseModel):
     phone: Optional[constr(max_length=10, min_length=10)]
     gender: Optional[Literal['male', 'female', 'other']]
     dob: Optional[date]
-    password: Optional[str]

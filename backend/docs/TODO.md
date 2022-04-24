@@ -29,10 +29,10 @@
 1. - [x] create superadmin route / auth / list all doctors and verify doctors
 1. - [x] while sending back all clinic details in `admin/clinics` send back total_no of appointments ,upcoming appointments,cancelled appointments,skipped_appointments,pending_appointments (either cancelled by user or doctor side) with clinic data
 1. - [x] categorise `error_handlers/errors.py` based on user/doctor/mixed
+1. - [x] IMPLEMENT UPDATE FEATURE FOR USER LIKE (MAIL,PHONE NUMBER,DOB,AGE) (password will be changed on a different route)
 1. - [ ] verify user/doctor on signup and send a verification email [after frontend ez created]
 1. - [ ] clinic on / off flag
 1. - [ ] implemnet available_days update and remove ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
-1. - [ ] IMPLEMENT UPDATE FEATURE FOR USER LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE)
 1. - [ ] IMPLEMENT UPDATE FEATURE FOR DOCTOR LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE,PROFILE_IMAGE)
 1. - [ ] IMPLEMENT UPDATE FEATURE ON DOCTOR CLINIC (WHICH WILL CHANGE OPENS AT,CLOSES AT,SESSION_TIME,AND IS_OPEN AND SLOTS WILL BE CALCULATED ACCORDINGLY)
 1. - [ ] set password length minimun to 8 for doctor user and admin (IN LAST)

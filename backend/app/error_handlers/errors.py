@@ -120,8 +120,10 @@ NOT_FOUND_ERROR = HTTPException(
 
 
 PHONE_NUMBER_ALREADY_EXIST = HTTPException(
-    status_code=status.HTTP_409_CONFLICT, detail="an account with this number already exist")
+    status_code=status.HTTP_409_CONFLICT, detail="an account with this phone number already exist")
 
+EMAIL_ALREADY_EXIST = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="an account with this email already exist")
 
 PASSWORD_CANNOT_BE_SAME = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="password cannot be same as the old one")

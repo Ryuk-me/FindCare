@@ -18,7 +18,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"22@gmail.com\",\r\n    \"name\" : \"Neeraj Kumar\",\r\n    \"phone\" : \"8825384544\",\r\n    \"password\" : \"123\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2002-04-26\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"222@gmail.com\",\r\n    \"name\" : \"Neeraj Kumar\",\r\n    \"phone\" : \"8125384544\",\r\n    \"password\" : \"123\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2002-04-26\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -58,12 +58,12 @@
 							"formdata": [
 								{
 									"key": "password",
-									"value": "12345",
+									"value": "123",
 									"type": "text"
 								},
 								{
 									"key": "username",
-									"value": "22@gmail.com",
+									"value": "222@gmail.com",
 									"type": "text"
 								},
 								{
@@ -256,6 +256,42 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "updateUserDetails",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"222@gmail.com\",\r\n    \"name\" : \"Neeraj Kumar\",\r\n    \"phone\" : \"8125384544\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2020-04-26\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -305,7 +341,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" :\"Dr. Neeraj Kumar\",\r\n    \"email\" : \"doctor@gmail.com\",\r\n    \"phone\" : \"7091207348\",\r\n    \"gender\" : \"male\",\r\n    \"dob\" : \"1996-04-26\",\r\n    \"password\" : \"123\",\r\n    \"about\" : \"hello adhgajhgdah djasgd gasjd\",\r\n    \"experience_year\" : 4,\r\n    \"speciality\" : \"Cardiologist\",\r\n    \"registration_number\" : \"7326473\"\r\n     \r\n}",
+							"raw": "{\r\n    \"name\" :\"Dr. Neeraj Kumar\",\r\n    \"email\" : \"doctodr@gmail.com\",\r\n    \"phone\" : \"7091107348\",\r\n    \"gender\" : \"male\",\r\n    \"dob\" : \"1996-04-26\",\r\n    \"password\" : \"123\",\r\n    \"about\" : \"hello adhgajhgdah djasgd gasjd\",\r\n    \"experience_year\" : 4,\r\n    \"speciality\" : \"Cardiologist\",\r\n    \"registration_number\" : \"7326473\"\r\n     \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
