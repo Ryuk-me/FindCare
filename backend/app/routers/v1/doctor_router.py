@@ -29,7 +29,7 @@ async def get_doctor_me(db: Session = Depends(_services.get_db), current_doctor:
 
 # ***********************************************************************************
 #! GET CURRENT USER DETAILS WITH ALL APPOINTMENTS
-@router.post('/change-password', status_code=status.HTTP_202_ACCEPTED)
+@router.put('/change-password', status_code=status.HTTP_202_ACCEPTED)
 async def change_password(doctor_p: change_password_schema.ChangePassword, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):
     doctor = _services.get_doctor(db, current_doctor.id)
     return _services.change_password(db, doctor_p.password, doctor)

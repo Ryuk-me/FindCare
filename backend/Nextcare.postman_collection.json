@@ -227,7 +227,7 @@
 								}
 							]
 						},
-						"method": "POST",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "password",
@@ -274,7 +274,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"222@gmail.com\",\r\n    \"name\" : \"Neeraj Kumar\",\r\n    \"phone\" : \"8125384544\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2020-04-26\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"222@gmail.com\",\r\n    \"name\" : \"Neerajs Kumar\",\r\n    \"phone\" : \"8125384544\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2002-04-26\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -649,7 +649,7 @@
 								}
 							]
 						},
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
