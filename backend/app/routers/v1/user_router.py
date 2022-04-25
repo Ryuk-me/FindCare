@@ -1,3 +1,4 @@
+from datetime import datetime
 from fastapi import APIRouter, Depends, status, HTTPException
 from app.Config import settings
 from app import services as _services
@@ -6,6 +7,7 @@ from app.scheams import user_schema
 from app.oauth2 import get_current_user
 from app.models import user_model
 from app.scheams import change_password_schema
+from app.error_handlers import errors
 
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/user',
@@ -17,28 +19,45 @@ router = APIRouter(
 #! USER SIGNUP
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=user_schema.UserOut)
 async def create_user(user: user_schema.UserCreate, db: Session = Depends(_services.get_db)):
-    if not _services.is_user_exist(db, user.email):
-        user = _services.create_user(db, user)
-        return user
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT, detail="user already exist")
+    return _services.create_user(db, user)
 
 
 # ***********************************************************************************
 #! GET CURRENT USER DETAILS WITH ALL APPOINTMENTS
 @router.get('/', status_code=status.HTTP_200_OK, response_model=user_schema.UserOut)
 async def get_user_me(db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
-    user = _services.get_user(db, current_user.id)
-    if user:
-        return user
-    raise HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND, detail=f'please login first')
+    return _services.get_user(db, current_user.id)
 
 
 # ***********************************************************************************
-#! GET CURRENT USER DETAILS WITH ALL APPOINTMENTS
+#! CHANGE USER PASSWORD
 @router.post('/change-password', status_code=status.HTTP_202_ACCEPTED)
 async def change_password(user_p: change_password_schema.ChangePassword, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
     user = _services.get_user(db, current_user.id)
     return _services.change_password(db, user_p.password, user)
+
+
+# ***********************************************************************************
+#! UPDATE USER DETAILS
+@router.put('/', status_code=status.HTTP_202_ACCEPTED, response_model=user_schema.UserOut)
+async def update_user_details(user: user_schema.UpdateUserDetails, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
+    if user.name:
+        current_user.name = user.name
+    if user.email and user.email != current_user.email:
+        if not _services.is_user_exist(db, user.email):
+            current_user.email = user.email
+        else:
+            raise errors.EMAIL_ALREADY_EXIST
+    if user.phone and user.phone != current_user.phone:
+        if not _services.get_user_by_phone_no(db, user.phone):
+            current_user.phone = user.phone
+        else:
+            raise errors.PHONE_NUMBER_ALREADY_EXIST
+    if user.dob:
+        current_user.dob = user.dob
+        current_user.age = _services.calculate_age(user.dob)
+    if user.gender:
+        current_user.gender = user.gender
+    current_user.updated_at = datetime.now()
+    db.commit()
+    return current_user

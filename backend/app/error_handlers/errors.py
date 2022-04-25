@@ -1,11 +1,51 @@
 from fastapi import HTTPException, status
 
 
+# ***********************************************************************************
+#                                                                                   #
+#                              USER ERRORS                                          #
+#                                                                                   #
+# ***********************************************************************************
+
+
+USER_NOT_FOUND = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, detail=f'user not found')
+
+USER_ALREADY_EXIST = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="user already exist")
+
+
+# ***********************************************************************************
+#                                                                                   #
+#                              DOCTOR ERRORS                                        #
+#                                                                                   #
+# ***********************************************************************************
+
+
+DOCTOR_ALREADY_EXIST = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="doctor already exist")
+
+DOCTOR_NOT_FOUND = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, detail=f'doctor not found')
+
+NO_DOCTOR_FOUND_WITH_THIS_ID = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, detail="no doctor found with this id")
+
+DOCTOR_IS_ALREADY_VERIFIED = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="doctor is already verified")
+
+DOCTOR_WITH_THIS_REGISTRATION_NUM_ALREADY_EXIST = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="doctor with this registration number already exist")
+
+# ***********************************************************************************
+#                                                                                   #
+#                      FORBIDDEN ACTIONS ERRORS                                     #
+#                                                                                   #
+# ***********************************************************************************
+
+
 INVALID_CREDENTIALS_ERROR = HTTPException(
     status_code=status.HTTP_403_FORBIDDEN, detail="invalid credentials")
-
-NOT_FOUND_ERROR = HTTPException(
-    status_code=status.HTTP_404_NOT_FOUND, detail="not found")
 
 TOKEN_CREDENTIALS_ERROR = HTTPException(
     status_code=status.HTTP_403_FORBIDDEN, detail="could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
@@ -13,20 +53,36 @@ TOKEN_CREDENTIALS_ERROR = HTTPException(
 FORBIDDEN_ACTION_ERROR = HTTPException(
     status_code=status.HTTP_403_FORBIDDEN, detail="not authorised to perform this action")
 
+PLEASE_LOGIN_FIRST = HTTPException(
+    status_code=status.HTTP_403_FORBIDDEN, detail=f'please login first')
+
+NOT_A_SUPER_ADMIN = HTTPException(
+    status_code=status.HTTP_403_FORBIDDEN, detail="you dont have enough permission to perform this action")
+
+
+# ***********************************************************************************
+#                                                                                   #
+#                              CLINIC ERRORS                                        #
+#                                                                                   #
+# ***********************************************************************************
+
+
 ALREADY_EXIST_CLINIC = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="clinic already exist for this doctor")
-
-NO_DOCTOR_FOUND_WITH_THIS_ID = HTTPException(
-    status_code=status.HTTP_404_NOT_FOUND, detail="no doctor found with this id")
 
 CLINIC_NOT_FOUND = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND, detail="clinic not found")
 
-NO_APPOINTMENT_FOUND_ERROR = HTTPException(
-    status_code=status.HTTP_404_NOT_FOUND, detail="no appointment found")
-
 CLINIC_IS_NOT_SERVICEABLE = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND, detail="clinic is not servicable currently")
+
+
+# ***********************************************************************************
+#                                                                                   #
+#                         APPOINTMENT ERRORS                                        #
+#                                                                                   #
+# ***********************************************************************************
+
 
 APPOINTNEMT_ALREADY_CANCELLED = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="appointment is already cancelled")
@@ -48,11 +104,26 @@ APPOINTMENT_SKIPPED_CANCELLATION = HTTPException(
     detail="appointment cancelled due to patient was not on time"
 )
 
-NOT_A_SUPER_ADMIN = HTTPException(
-    status_code=status.HTTP_403_FORBIDDEN, detail="you dont have enough permission to perform this action")
+NO_APPOINTMENT_FOUND_ERROR = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, detail="no appointment found")
 
-DOCTOR_IS_ALREADY_VERIFIED = HTTPException(
-    status_code=status.HTTP_409_CONFLICT, detail="doctor is already verified")
+
+# ***********************************************************************************
+#                                                                                   #
+#                              MISC ERRORS                                          #
+#                                                                                   #
+# ***********************************************************************************
+
+
+NOT_FOUND_ERROR = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, detail="not found")
+
+
+PHONE_NUMBER_ALREADY_EXIST = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="an account with this phone number already exist")
+
+EMAIL_ALREADY_EXIST = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="an account with this email already exist")
 
 PASSWORD_CANNOT_BE_SAME = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="password cannot be same as the old one")

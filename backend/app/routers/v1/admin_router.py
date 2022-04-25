@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, Depends, HTTPException
 from app.Config import settings
-from app.scheams import admin_schema, clinic_schema
+from app.scheams import admin_schema, clinic_schema, change_password_schema
 from sqlalchemy.orm import Session
 from app import services as _services
 from app.oauth2 import get_current_admin
@@ -38,7 +38,22 @@ async def get_admin(db: Session = Depends(_services.get_db), current_admin: admi
 
 
 # ***********************************************************************************
+# #! CHANGE ADMIN PASSWORD
+# @router.post('/change-password', status_code=status.HTTP_202_ACCEPTED)
+# async def create_admin(admin_p: change_password_schema.ChangePassword, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+#     if not _services.is_admin_exist(db, admin.email):
+#         if not current_admin.is_super_admin:
+#             raise errors.NOT_A_SUPER_ADMIN
+#         admin = _services.create_admin(db, admin)
+#         return admin
+#     else:
+#         raise HTTPException(
+#             status_code=status.HTTP_409_CONFLICT, detail="admin already exist")
+
+# ***********************************************************************************
 #! GET ALL CLINICS
+
+
 @router.get('/clinics', status_code=status.HTTP_200_OK, response_model=List[clinic_schema.ClinicOutAdminPanel])
 async def get_all_clinics(db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     clinics = _services.get_all_clinics(db)

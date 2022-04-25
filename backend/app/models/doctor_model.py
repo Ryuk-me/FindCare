@@ -20,7 +20,7 @@ class Doctor(Base):
     about = Column(String, nullable=True)
     experience_year = Column(Integer, nullable=False)
     speciality = Column(String, nullable=False)
-    registration_number = Column(String, nullable=False)
+    registration_number = Column(String, nullable=False, unique=True)
     is_verified = Column(Boolean, server_default='False', nullable=False)
     slug = Column(String, nullable=False, unique=True,)
     created_at = Column(TIMESTAMP(timezone=True),
