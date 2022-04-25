@@ -46,9 +46,15 @@
 							placeholder="********"
 							class="block border rounded py-2 pt-3 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 							id="password"
+							autocomplete="off"
 						/>
 						<span>
-							<i class="fa fa-eye" aria-hidden="true" id="eye" on:click={showpass} />
+							<i
+								class="fa fa-eye hover:cursor-pointer"
+								aria-hidden="true"
+								id="eye"
+								on:click={showpass}
+							/>
 						</span>
 					</div>
 				</div>
