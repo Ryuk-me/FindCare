@@ -6,6 +6,6 @@
 ## TASKS
 
 - [ ] Create Home Page
-- [ ] Create Login
+- [X] Create Login
 - [ ] Create Signup (USER ONLY)
 - [ ] Create signup (Clinic / Hospital)
