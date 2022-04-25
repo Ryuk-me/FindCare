@@ -30,12 +30,15 @@
 						type="email"
 						class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 						placeholder="your@domain.com"
+						autocomplete="on"
 					/>
 				</div>
 				<div class="w-full mb-3">
 					<div class="flex justify-between">
 						<label for="password">Password</label>
-						<a href="reset" class="text-primary cursor-pointer">Forgot Password?</a>
+						<a href="reset" class="text-primary cursor-pointer hover:text-blue-700"
+							>Forgot Password?</a
+						>
 					</div>
 					<div class="relative">
 						<input
@@ -54,7 +57,7 @@
 						class="bg-primary hover:bg-blue-700 text-white mb-3 font-bold py-2 px-28 rounded focus:outline-none focus:shadow-outline"
 						>Login</button
 					>
-					<a href="./signup">Don't Have An Account? Sign Up</a>
+					<p>Don't Have An Account? <a href="./signup" class="hover:text-blue-700">Sign Up</a></p>
 				</div>
 			</form>
 
