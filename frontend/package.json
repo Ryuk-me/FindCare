@@ -35,6 +35,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@sveltejs/adapter-netlify": "^1.0.0-next.56",
 		"svelte-use-form": "^2.4.3"
 	}
 }
