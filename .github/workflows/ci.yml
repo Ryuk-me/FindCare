@@ -18,7 +18,7 @@ jobs:
     - name: Activate application namespace
       uses: okteto/namespace@latest
       with:
-        namespace: okteto_username
+        namespace: ryuk-me
 
     - name: Build and deploy application image to Okteto
       if: ${{ github.event_name == 'push' }}
