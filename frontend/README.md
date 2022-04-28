@@ -9,7 +9,7 @@
 
 > Preview
 
-- [WEBISTE](https://shorturl.at/deqD4)
+- [WEBISTE](https://jazzy-starship-22dd57.netlify.app)
 
 <hr>
 

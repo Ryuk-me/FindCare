@@ -22,7 +22,7 @@
 > ## Preview
 
 - BACKEND  -> [API](https://bit.ly/3xZRVmx)
-- FRONTEND ->  [WEBISTE](https://shorturl.at/deqD4)
+- FRONTEND ->  [WEBISTE](https://jazzy-starship-22dd57.netlify.app)
 
 > ## Team Members
 
