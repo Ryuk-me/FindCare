@@ -22,7 +22,7 @@
 > ## Preview
 
 - BACKEND  -> [API](https://bit.ly/3xZRVmx)
-- FRONTEND ->  
+- FRONTEND ->  [WEBISTE](https://shorturl.at/deqD4)
 
 > ## Team Members
 
