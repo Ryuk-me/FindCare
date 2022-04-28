@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status, Depends, HTTPException
+from fastapi import APIRouter, status, Depends
 from app.Config import settings
 from app.scheams import admin_schema, clinic_schema, change_password_schema
 from sqlalchemy.orm import Session

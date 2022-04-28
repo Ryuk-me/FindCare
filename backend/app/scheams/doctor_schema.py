@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Literal, Optional
 from pydantic import BaseModel, EmailStr, constr
 from datetime import datetime, date
 
@@ -36,3 +36,11 @@ class DoctorOut(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class UpdateDoctorDetails(BaseModel):
+    email: Optional[EmailStr]
+    phone: Optional[constr(max_length=10, min_length=10)]
+    about: Optional[str]
+    profile_image: Optional[str]
+    experience_year: Optional[int]

@@ -37,6 +37,9 @@ DOCTOR_IS_ALREADY_VERIFIED = HTTPException(
 DOCTOR_WITH_THIS_REGISTRATION_NUM_ALREADY_EXIST = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="doctor with this registration number already exist")
 
+NOT_POSSIBLE_EXPERINCE_YEAR = HTTPException(
+    status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="experince year not acceptable please try lower value")
+
 
 # ***********************************************************************************
 #                                                                                   #
