@@ -7,9 +7,9 @@ on:
     branches: [ master ]
 
 jobs:
- build:
-  runs-on: ubuntu-latest
-  steps:
+  build:
+    runs-on: ubuntu-latest
+    steps:
 
     - uses: actions/checkout@v2
     - name: Install python
@@ -18,19 +18,22 @@ jobs:
         python-version: 3.10.2
 
     - name: Install python dependencies
-      working-directory: backend 
+      working-directory: backend
       run: pip install -r requirements.txt
-      
 
-    - name: Set context to Okteto Cloud
-      uses: okteto/context@latest
+    - name: Login to Okteto Cloud
+      uses: okteto/login@master
       with:
         token: ${{ secrets.OKTETO_TOKEN }}
 
+    - name: Activate application namespace
+      uses: okteto/namespace@master
+      with:
+        namespace: nextcare
 
-    - name: Build and deploy application container to Okteto nextcare Namespace
+    - name: Build and deploy application image to Production Okteto Namespace
       if: ${{ github.event_name == 'push' }}
       uses: okteto/deploy-stack@master
       with:
-        name: nextcare-api
+        name: okteto-nextcare-api
         build: true
