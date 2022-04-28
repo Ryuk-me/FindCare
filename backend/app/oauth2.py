@@ -10,7 +10,9 @@ from app.Config import settings
 from app import services as _services
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='auth')
+oauth2_scheme_user = OAuth2PasswordBearer(tokenUrl=settings.BASE_API_V1 + '/auth/user',scheme_name="USER LOGIN")
+oauth2_scheme_doctor = OAuth2PasswordBearer(tokenUrl=settings.BASE_API_V1 + '/auth/doctor',scheme_name="DOCTOR LOGIN")
+oauth2_scheme_admin = OAuth2PasswordBearer(tokenUrl=settings.BASE_API_V1 + '/auth/admin',scheme_name="ADMIN LOGIN")
 
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
@@ -38,7 +40,7 @@ def verify_token(token: str):
     return token_data
 
 
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(_services.get_db)):
+def get_current_user(token: str = Depends(oauth2_scheme_user), db: Session = Depends(_services.get_db)):
     token = verify_token(token)
     user = db.query(user_model.User).filter(
         user_model.User.id == token.id).first()
@@ -47,7 +49,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     return user
 
 
-def get_current_doctor(token: str = Depends(oauth2_scheme), db: Session = Depends(_services.get_db)):
+def get_current_doctor(token: str = Depends(oauth2_scheme_doctor), db: Session = Depends(_services.get_db)):
     token = verify_token(token)
     doctor = db.query(doctor_model.Doctor).filter(
         doctor_model.Doctor.id == token.id).first()
@@ -56,7 +58,7 @@ def get_current_doctor(token: str = Depends(oauth2_scheme), db: Session = Depend
     return doctor
 
 
-def get_current_admin(token: str = Depends(oauth2_scheme), db: Session = Depends(_services.get_db)):
+def get_current_admin(token: str = Depends(oauth2_scheme_admin), db: Session = Depends(_services.get_db)):
     token = verify_token(token)
     admin = db.query(admin_model.Admin).filter(
         admin_model.Admin.id == token.id).first()

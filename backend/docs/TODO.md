@@ -32,7 +32,7 @@
 1. - [x] IMPLEMENT UPDATE FEATURE FOR USER LIKE (MAIL,PHONE NUMBER,DOB,AGE) (password will be changed on a different route)
 1. - [x] host backend with docker
 1. - [x] implement ci/cd for backend
-1. - [ ] host frontend with docker
+1. - [x] host frontend with netlify
 1. - [ ] verify user/doctor on signup and send a verification email [after frontend ez created]
 1. - [ ] clinic on / off flag
 1. - [ ] implemnet available_days update and remove ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
@@ -44,3 +44,9 @@
 
 > `int(int(closes_at - opens_at) * 60))` (slots will be calculated using calculate_slots in services.py file)
 > `int(total_minutes // session_time)`
+
+## New todo
+
+- [ ] doctor reason cancellation new model [required]
+- [ ] manage user admin
+- [ ] user active (flag) for email verification
