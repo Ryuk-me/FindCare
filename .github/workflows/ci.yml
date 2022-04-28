@@ -1,0 +1,28 @@
+name: nextcare
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set context to Okteto Cloud
+      uses: okteto/context@latest
+      with:
+        token: ${{ secrets.OKTETO_TOKEN }}
+
+    - name: Activate application namespace
+      uses: okteto/namespace@latest
+      with:
+        namespace: ryuk-me
+
+    - name: Build and deploy application image to Okteto
+      if: ${{ github.event_name == 'push' }}
+      uses: okteto/deploy-stack@latest
+      with:
+        name: nexcare-api
+        build: true
