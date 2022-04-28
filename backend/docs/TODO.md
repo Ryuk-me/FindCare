@@ -31,6 +31,7 @@
 1. - [x] categorise `error_handlers/errors.py` based on user/doctor/mixed
 1. - [x] IMPLEMENT UPDATE FEATURE FOR USER LIKE (MAIL,PHONE NUMBER,DOB,AGE) (password will be changed on a different route)
 1. - [x] host backend with docker
+1. - [x] implement ci/cd for backend
 1. - [ ] host frontend with docker
 1. - [ ] verify user/doctor on signup and send a verification email [after frontend ez created]
 1. - [ ] clinic on / off flag
