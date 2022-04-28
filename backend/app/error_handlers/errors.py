@@ -37,6 +37,14 @@ DOCTOR_IS_ALREADY_VERIFIED = HTTPException(
 DOCTOR_WITH_THIS_REGISTRATION_NUM_ALREADY_EXIST = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="doctor with this registration number already exist")
 
+
+# ***********************************************************************************
+#                                                                                   #
+#                              ADMIN ERRORS                                         #
+#                                                                                   #
+# ***********************************************************************************
+
+
 # ***********************************************************************************
 #                                                                                   #
 #                      FORBIDDEN ACTIONS ERRORS                                     #

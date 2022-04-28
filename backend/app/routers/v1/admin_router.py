@@ -19,14 +19,10 @@ router = APIRouter(
 #! CREATE ADMIN (CURRENT_ADMIN MUST BE SUPER ADMIN TO CREATE OTHER ADMINS)
 @router.post('/createadmin', status_code=status.HTTP_201_CREATED, response_model=admin_schema.AdminOut)
 async def create_admin(admin: admin_schema.CreateAdmin, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
-    if not _services.is_admin_exist(db, admin.email):
-        if not current_admin.is_super_admin:
-            raise errors.NOT_A_SUPER_ADMIN
-        admin = _services.create_admin(db, admin)
-        return admin
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT, detail="admin already exist")
+    if not current_admin.is_super_admin:
+        raise errors.NOT_A_SUPER_ADMIN
+    admin = _services.create_admin(db, admin)
+    return admin
 
 
 # ***********************************************************************************
@@ -38,17 +34,11 @@ async def get_admin(db: Session = Depends(_services.get_db), current_admin: admi
 
 
 # ***********************************************************************************
-# #! CHANGE ADMIN PASSWORD
-# @router.post('/change-password', status_code=status.HTTP_202_ACCEPTED)
-# async def create_admin(admin_p: change_password_schema.ChangePassword, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
-#     if not _services.is_admin_exist(db, admin.email):
-#         if not current_admin.is_super_admin:
-#             raise errors.NOT_A_SUPER_ADMIN
-#         admin = _services.create_admin(db, admin)
-#         return admin
-#     else:
-#         raise HTTPException(
-#             status_code=status.HTTP_409_CONFLICT, detail="admin already exist")
+#! CHANGE ADMIN PASSWORD
+@router.put('/change-password', status_code=status.HTTP_202_ACCEPTED)
+async def change_password(admin_p: change_password_schema.ChangePassword, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+    admin = _services.get_admin_me(db, current_admin.id)
+    return _services.change_password(db, admin_p.password, admin, current_admin)
 
 
 # ***********************************************************************************

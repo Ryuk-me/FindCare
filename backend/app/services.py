@@ -78,7 +78,7 @@ def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate):
                 return doctor
             raise errors.DOCTOR_WITH_THIS_REGISTRATION_NUM_ALREADY_EXIST
         raise errors.PHONE_NUMBER_ALREADY_EXIST
-    raise errors.DOCTOR_ALREADY_EXIST
+    raise errors.EMAIL_ALREADY_EXIST
 
 
 def get_doctor(db: Session, id: int):
@@ -282,6 +282,17 @@ def search_doctor_clinics(city: str, speciality: str | None, db: Session):
 #                                                                                   #
 # ***********************************************************************************
 
+def create_admin(db: Session, admin: admin_schema.CreateAdmin):
+    if not is_admin_exist(db, admin.email):
+        hash = hash_password(admin.password)
+        admin.password = hash
+        admin = admin_model.Admin(**admin.dict())
+        db.add(admin)
+        db.commit()
+        db.refresh(admin)
+        return admin
+    raise errors.EMAIL_ALREADY_EXIST
+
 
 def is_admin_exist(db: Session, email: str):
     admin = db.query(admin_model.Admin).filter(
@@ -298,17 +309,7 @@ def create_first_admin(db: Session):
             name=settings.FIRST_SUPERUSER_NAME,
             is_super_admin=True
         )
-        admin = create_admin(db, admin_in)
-
-
-def create_admin(db: Session, admin: admin_schema.CreateAdmin):
-    hash = hash_password(admin.password)
-    admin.password = hash
-    admin = admin_model.Admin(**admin.dict())
-    db.add(admin)
-    db.commit()
-    db.refresh(admin)
-    return admin
+        create_admin(db, admin_in)
 
 
 def get_admin_me(db: Session, admin_id: int):
@@ -365,6 +366,7 @@ def verify_doctor(db: Session, doctor_id: int):
         return {"detail": "doctor verified successfully"}
     raise errors.NO_DOCTOR_FOUND_WITH_THIS_ID
 
+
 # ***********************************************************************************
 #                                                                                   #
 #                         PASSWORD SERVICES                                         #
@@ -372,11 +374,12 @@ def verify_doctor(db: Session, doctor_id: int):
 # ***********************************************************************************
 
 
-def change_password(db: Session, password: str, obj: change_password_schema.ChangePassword):
+def change_password(db: Session, password: str, obj: change_password_schema.ChangePassword, current_db_obj=None):
     if verify_hash(password, obj.password):
         raise errors.PASSWORD_CANNOT_BE_SAME
     hash = hash_password(password)
     obj.password = hash
+    current_db_obj.updated_at = datetime.now()
     db.commit()
     return {"details": "password changed successfully"}
 
