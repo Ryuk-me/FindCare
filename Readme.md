@@ -21,7 +21,7 @@
 
 > ## Preview
 
-- BACKEND  -> [API](https://bit.ly/3kiAg1o)
+- BACKEND  -> [API](https://bit.ly/3xZRVmx)
 - FRONTEND ->  
 
 > ## Team Members
