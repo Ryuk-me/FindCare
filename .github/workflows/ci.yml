@@ -1,4 +1,4 @@
-name: Okteto Flask REST API CI
+name: NextCare API
 
 on:
   push:
@@ -15,7 +15,7 @@ jobs:
     - name: Install python
       uses: actions/setup-python@v2
       with:
-        python-version: 3
+        python-version: 3.10
 
     - name: Install python dependencies
       working-directory: backend 
@@ -27,15 +27,6 @@ jobs:
       with:
         token: ${{ secrets.OKTETO_TOKEN }}
 
-    - name: Deploy your preview environment
-      uses: okteto/deploy-preview@latest
-      env:
-        GITHUB_TOKEN: ${{ secrets.ITHUB_TOKEN }}
-      with:
-        name: staging-${{ github.event.number }}-ryuk-me
-        scope: personal
-        timeout: 15m
-
 
     - uses: nev7n/wait_for_response@v1
       with:
@@ -44,9 +35,9 @@ jobs:
         timeout: 4000
 
 
-    - name: Build and deploy application container to Okteto Flask Namespace
+    - name: Build and deploy application container to Okteto Nextcare Namespace
       if: ${{ github.event_name == 'push' }}
       uses: okteto/deploy-stack@master
       with:
-        name: okteto-flask-app
+        name: nextcare-api
         build: true
