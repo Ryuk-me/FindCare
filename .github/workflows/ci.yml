@@ -1,4 +1,4 @@
-name: nextcare
+name: Okteto Flask REST API CI
 
 on:
   push:
@@ -18,11 +18,11 @@ jobs:
     - name: Activate application namespace
       uses: okteto/namespace@latest
       with:
-        namespace: ryuk-me
+        namespace: okteto_username
 
     - name: Build and deploy application image to Okteto
       if: ${{ github.event_name == 'push' }}
       uses: okteto/deploy-stack@latest
       with:
-        name: nexcare-api
+        name: okteto-flask-app
         build: true
