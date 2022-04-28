@@ -19,6 +19,11 @@
 - [SCHEMA URL](https://dbdiagram.io/d/6257933e2514c979032a5f7d)
 - [SCHEMA IMAGE](databse_schema.png)
 
+> ## Preview
+
+- BACKEND  -> [API](https://bit.ly/3vHQrdO)
+- FRONTEND ->  
+
 > ## Team Members
 
 - [Neeraj Kumar](https://github.com/Ryuk-me)
