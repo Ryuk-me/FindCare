@@ -6,28 +6,30 @@ from app.models import user_model, clinic_model, doctor_model, appointment_model
 from app.database import engine
 from app.routers.v1 import auth, user_router, doctor_router, clinic_router, appointment_router, search_doctor_clinics_router, admin_router
 
+
 user_model.Base.metadata.create_all(bind=engine)
 clinic_model.Base.metadata.create_all(bind=engine)
 doctor_model.Base.metadata.create_all(bind=engine)
 appointment_model.Base.metadata.create_all(bind=engine)
 
+
 app = FastAPI(
     title="NextCare-API",
     version="1.0",
-    terms_of_service="http://example.com/terms/",
-    contact={
-        "name": "NextCare-API",
-        "url": "http://x-force.example.com/contact/",
-        "email": "dp@x-force.example.com",
-    },
-    license_info={
-        "name": "Apache 2.0",
-        "url": "https://www.apache.org/licenses/LICENSE-2.0.html",
-    },
+    # terms_of_service="http://example.com/terms/",
+    # contact={
+    #     "name": "NextCare-API",
+    #     "url": "http://x-force.example.com/contact/",
+    #     "email": "dp@x-force.example.com",
+    # },
+    # license_info={
+    #     "name": "Apache 2.0",
+    #     "url": "https://www.apache.org/licenses/LICENSE-2.0.html",
+    # },
     # root_path=settings.BASE_API_V1
     # redoc_url=None,
-    docs_url=settings.BASE_API_V1 + "/docs",
-    openapi_url=settings.BASE_API_V1 + "/openapi.json",
+    # docs_url="/docs",
+    # openapi_url="/openapi.json",
 )
 
 # origins = ["http://localhost:3000",

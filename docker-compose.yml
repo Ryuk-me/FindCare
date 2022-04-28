@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  nextcare-api:
+    restart: always
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8009
+    ports:
+      - 8009:8009
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_PASSWORD=ryuk
+      - POSTGRES_DB=nextcare
+    expose:
+      - 5432
+
+volumes:
+  postgres_data:

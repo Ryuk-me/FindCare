@@ -1,4 +1,10 @@
 from pydantic import BaseSettings
+import os
+
+try:
+    ENV = os.environ['ENV']
+except:
+    ENV = None
 
 
 class Settings(BaseSettings):
@@ -20,3 +26,6 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+
+if ENV == 'prod':
+    settings.DATABASE_HOSTNAME = "postgres"
