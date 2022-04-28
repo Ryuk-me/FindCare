@@ -331,20 +331,24 @@ def get_all_clinics(db: Session):
                 total_appointments = len(appointments)
                 completed_appointments = 0
                 skipped_appointments = 0
-                cancelled_appointments = 0
+                cancelled_appointments_by_doctor = 0
+                cancelled_appointments_by_user = 0
                 for appointment in appointments:
                     if appointment.is_completed:
                         completed_appointments += 1
                     if appointment.is_skipped:
                         skipped_appointments += 1
-                    if appointment.is_cancelled:
-                        cancelled_appointments += 1
+                    if appointment.is_cancelled == "D":
+                        cancelled_appointments_by_doctor += 1
+                    if appointment.is_cancelled == "U":
+                        cancelled_appointments_by_user += 1
                 clinic.total_appointments = total_appointments
                 clinic.completed_appointments = completed_appointments
                 clinic.skipped_appointments = skipped_appointments
-                clinic.cancelled_appointments = cancelled_appointments
+                clinic.cancelled_appointments_by_user = cancelled_appointments_by_user
+                clinic.cancelled_appointments_by_doctor = cancelled_appointments_by_doctor
                 clinic.pending_appointments = total_appointments - \
-                    (cancelled_appointments +
+                    (cancelled_appointments_by_user + cancelled_appointments_by_doctor +
                      skipped_appointments + completed_appointments)
         return clinics
     raise errors.CLINIC_NOT_FOUND
