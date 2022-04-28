@@ -7,22 +7,44 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
+ build:
+  runs-on: ubuntu-latest
+  steps:
+
+    - uses: actions/checkout@v2
+    - name: Install python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3
+
+    - name: Install python dependencies
+      run: pip install -r requirements.txt
+
     - name: Set context to Okteto Cloud
       uses: okteto/context@latest
       with:
         token: ${{ secrets.OKTETO_TOKEN }}
 
-    - name: Activate application namespace
-      uses: okteto/namespace@latest
+    - name: Deploy your preview environment
+      uses: okteto/deploy-preview@latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.ITHUB_TOKEN }}
       with:
-        namespace: ryuk-me
+        name: staging-${{ github.event.number }}-ryuk-me
+        scope: personal
+        timeout: 15m
 
-    - name: Build and deploy application image to Okteto
+
+    - uses: nev7n/wait_for_response@v1
+      with:
+        url: https://api-staging-${{ github.event.number }}-ryuk-me.cloud.okteto.net
+        responseCode: 200
+        timeout: 4000
+
+
+    - name: Build and deploy application container to Okteto Flask Namespace
       if: ${{ github.event_name == 'push' }}
-      uses: okteto/deploy-stack@latest
+      uses: okteto/deploy-stack@master
       with:
         name: okteto-flask-app
         build: true
