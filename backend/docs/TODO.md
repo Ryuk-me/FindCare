@@ -34,7 +34,10 @@
 1. - [x] implement ci/cd for backend
 1. - [x] host frontend with netlify
 1. - [x] IMPLEMENT UPDATE FEATURE FOR DOCTOR LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE,PROFILE_IMAGE)
-1. - [ ] verify user/doctor on signup and send a verification email [after frontend ez created]
+1. - [x] verify user/doctor on signup and send a verification email
+1. - [ ] implement password reset token for doctor user and admin
+1. - [ ] change host api url to frontend webiste url and get token as slug and then call on api to verify it [after frontend ez created]
+1. - [ ] send a welcome to user after creating new accounting (can be implmeneted later)
 1. - [ ] clinic on / off flag
 1. - [ ] implemnet available_days update and remove ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
 1. - [ ] IMPLEMENT UPDATE FEATURE ON DOCTOR CLINIC (WHICH WILL CHANGE OPENS AT,CLOSES AT,SESSION_TIME,AND IS_OPEN AND SLOTS WILL BE CALCULATED ACCORDINGLY)
@@ -49,4 +52,4 @@
 
 - [ ] doctor reason cancellation new model [required]
 - [ ] manage user admin
-- [ ] user active (flag) for email verification
+- [x] user active  and doctor active(flag) for email verification

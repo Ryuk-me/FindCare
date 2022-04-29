@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from app.Config import settings
 from app.oauth2 import verify_token
 from app.error_handlers import errors
@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 
-@router.get('/verify-email')
+@router.get('/verify-email', status_code=status.HTTP_202_ACCEPTED)
 async def verify_email(token: str, db: Session = Depends(_services.get_db)):
     token = verify_token(token, is_email_verification_token=True)
     if not token:
@@ -22,6 +22,15 @@ async def verify_email(token: str, db: Session = Depends(_services.get_db)):
             user_model.User.id == token.id).first()
         if not user.is_active:
             user.is_active = True
+            db.commit()
+            return {"details": "email verified successfully"}
+        raise errors.EMAIL_ALREADY_VERIFIED
+    if token.is_doctor:
+        doctor = db.query(doctor_model.Doctor).filter(
+            doctor_model.Doctor.id == token.id
+        ).first()
+        if not doctor.is_active:
+            doctor.is_active = True
             db.commit()
             return {"details": "email verified successfully"}
         raise errors.EMAIL_ALREADY_VERIFIED

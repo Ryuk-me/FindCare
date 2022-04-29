@@ -69,25 +69,3 @@ def get_current_admin(token: str = Depends(oauth2_scheme_admin), db: Session = D
     if not admin:
         raise errors.TOKEN_CREDENTIALS_ERROR
     return admin
-
-
-# #! IMPLEMNETATION IN PROCESS
-# def create_email_verification_token(data: dict, expires_delta: timedelta | None = None):
-#     to_encode = data.copy()
-#     if expires_delta:
-#         expire = datetime.utcnow() + expires_delta
-#     else:
-#         expire = datetime.utcnow() + timedelta(minutes=int(5))
-#     to_encode.update({"exp": expire})
-#     encoded_jwt = jwt.encode(
-#         to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
-#     return encoded_jwt
-
-
-# def verify_email_verification_token(token: str):
-#     try:
-#         decoded_token = jwt.decode(
-#             token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-#         return decoded_token["email"]
-#     except JWTError:
-#         return None

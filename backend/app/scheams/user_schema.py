@@ -22,6 +22,7 @@ class UserOut(BaseModel):
     phone:  str
     dob: date
     age: int
+    is_active: bool
     created_at: datetime
     updated_at: datetime
     appointments: List[appointment_schema.AppointmentOut]

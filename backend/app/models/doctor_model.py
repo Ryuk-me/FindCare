@@ -22,7 +22,8 @@ class Doctor(Base):
     speciality = Column(String, nullable=False)
     registration_number = Column(String, nullable=False, unique=True)
     is_verified = Column(Boolean, server_default='False', nullable=False)
-    slug = Column(String, nullable=False, unique=True,)
+    slug = Column(String, nullable=False, unique=True)
+    is_active = Column(Boolean, server_default='FALSE', nullable=False)
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
     updated_at = Column(TIMESTAMP(timezone=True),
