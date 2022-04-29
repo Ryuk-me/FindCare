@@ -12,9 +12,13 @@ from app.Config import settings
 import uuid
 from pathlib import Path
 
+conf = None
+
 def get_db():
     db = SessionLocal()
     create_first_admin(db)
+    global conf
+    conf = login_mail()
     try:
         yield db
     finally:
@@ -434,20 +438,6 @@ def calculate_slots(opens_at, closes_at, session_time):
 
 
 async def send_email(subject: str, recipients: str, token: str, token_url: str):
-    conf = ConnectionConfig(
-        MAIL_USERNAME=settings.MAIL_USERNAME,
-        MAIL_PASSWORD=settings.MAIL_PASSWORD,
-        MAIL_FROM=settings.MAIL_FROM,
-        MAIL_PORT=settings.MAIL_PORT,
-        MAIL_SERVER=settings.MAIL_SERVER,
-        MAIL_FROM_NAME=settings.MAIL_FROM_NAME,
-        MAIL_TLS=True,
-        MAIL_SSL=False,
-        USE_CREDENTIALS=True,
-        VALIDATE_CERTS=True,
-        TEMPLATE_FOLDER = Path(__file__).parent / 'email-templates',
-    )
-
     message = MessageSchema(
         subject=subject,
         recipients=[recipients],
@@ -461,3 +451,19 @@ async def send_email(subject: str, recipients: str, token: str, token_url: str):
 
     #! CHANGE THIS TO EMAIL SENT SUCCESSFULLY PLEASE VERIFY
     return {"details": "email sent successfully"}
+
+def login_mail():
+    config = ConnectionConfig(
+        MAIL_USERNAME=settings.MAIL_USERNAME,
+        MAIL_PASSWORD=settings.MAIL_PASSWORD,
+        MAIL_FROM=settings.MAIL_FROM,
+        MAIL_PORT=settings.MAIL_PORT,
+        MAIL_SERVER=settings.MAIL_SERVER,
+        MAIL_FROM_NAME=settings.MAIL_FROM_NAME,
+        MAIL_TLS=True,
+        MAIL_SSL=False,
+        USE_CREDENTIALS=True,
+        VALIDATE_CERTS=True,
+        TEMPLATE_FOLDER = Path(__file__).parent / 'email-templates',
+    )
+    return config
