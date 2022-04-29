@@ -50,7 +50,7 @@
 						/>
 						<span>
 							<i
-								class="fa fa-eye-slash hover:cursor-pointer"
+								class="fa fa-eye-slash hover:cursor-pointer text-slate-600"
 								aria-hidden="true"
 								id="eye"
 								on:click={showpass}
@@ -60,7 +60,7 @@
 				</div>
 				<div class="flex flex-col justify-center items-center w-full my-3">
 					<button
-						class="bg-primary hover:bg-blue-700 text-white mb-3 font-bold py-2 px-28 rounded focus:outline-none focus:shadow-outline"
+						class="bg-primary hover:bg-[#524af4] text-white mb-3 font-bold py-2 px-28 rounded focus:outline-none focus:shadow-outline"
 						>Login</button
 					>
 					<p>Don't Have An Account? <a href="./signup" class="text-primary">Sign Up</a></p>
