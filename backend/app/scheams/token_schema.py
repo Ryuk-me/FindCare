@@ -9,3 +9,5 @@ class BaseToken(BaseModel):
 
 class TokenData(BaseModel):
     id: Optional[int] = None
+    is_user: Optional[bool] = False
+    is_doctor: Optional[bool] = False

@@ -6,6 +6,7 @@ from app import services as _services
 from app.error_handlers import errors
 from app.oauth2 import create_access_token
 from app.scheams import token_schema
+from datetime import timedelta
 
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/auth',
@@ -20,7 +21,10 @@ async def user_login(user_credentials: OAuth2PasswordRequestForm = Depends(), db
     user_exist = _services.is_user_exist(db, user_credentials.username)
     if user_exist:
         if _services.verify_hash(user_credentials.password, user_exist.password):
-            token = create_access_token(data={"id": user_exist.id})
+            expire_time = timedelta(minutes=int(
+                settings.ACCESS_TOKEN_EXPIRE_MINUTES))
+            token = create_access_token(
+                data={"id": user_exist.id}, expires_delta=expire_time)
             return {"access_token": token, "token_type": "bearer"}
     raise errors.INVALID_CREDENTIALS_ERROR
 

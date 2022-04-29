@@ -4,3 +4,4 @@ __pycache__
 .vscode
 nextcare-venv
 alembic/versions/*.py
+.env.local

@@ -10,32 +10,36 @@ from app.Config import settings
 from app import services as _services
 
 
-oauth2_scheme_user = OAuth2PasswordBearer(tokenUrl=settings.BASE_API_V1 + '/auth/user',scheme_name="USER LOGIN")
-oauth2_scheme_doctor = OAuth2PasswordBearer(tokenUrl=settings.BASE_API_V1 + '/auth/doctor',scheme_name="DOCTOR LOGIN")
-oauth2_scheme_admin = OAuth2PasswordBearer(tokenUrl=settings.BASE_API_V1 + '/auth/admin',scheme_name="ADMIN LOGIN")
+oauth2_scheme_user = OAuth2PasswordBearer(
+    tokenUrl=settings.BASE_API_V1 + '/auth/user', scheme_name="USER LOGIN")
+oauth2_scheme_doctor = OAuth2PasswordBearer(
+    tokenUrl=settings.BASE_API_V1 + '/auth/doctor', scheme_name="DOCTOR LOGIN")
+oauth2_scheme_admin = OAuth2PasswordBearer(
+    tokenUrl=settings.BASE_API_V1 + '/auth/admin', scheme_name="ADMIN LOGIN")
 
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.utcnow() + expires_delta
-    else:
-        expire = datetime.utcnow() + timedelta(minutes=int(settings.ACCESS_TOKEN_EXPIRE_MINUTES))
+    expire = datetime.utcnow() + expires_delta
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(
         to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
     return encoded_jwt
 
 
-def verify_token(token: str):
+def verify_token(token: str, is_email_verification_token: bool = False):
     try:
         payload = jwt.decode(token, settings.SECRET_KEY,
                              algorithms=[settings.ALGORITHM])
         id = payload.get("id")
         if id is None:
+            if is_email_verification_token:
+                raise errors.VERIFICATION_LINK_EXPIRED
             raise errors.TOKEN_CREDENTIALS_ERROR
-        token_data = token_schema.TokenData(id=id)
+        token_data = token_schema.TokenData(**payload)
     except JWTError:
+        if is_email_verification_token:
+            raise errors.VERIFICATION_LINK_EXPIRED
         raise errors.TOKEN_CREDENTIALS_ERROR
     return token_data
 
@@ -65,3 +69,25 @@ def get_current_admin(token: str = Depends(oauth2_scheme_admin), db: Session = D
     if not admin:
         raise errors.TOKEN_CREDENTIALS_ERROR
     return admin
+
+
+# #! IMPLEMNETATION IN PROCESS
+# def create_email_verification_token(data: dict, expires_delta: timedelta | None = None):
+#     to_encode = data.copy()
+#     if expires_delta:
+#         expire = datetime.utcnow() + expires_delta
+#     else:
+#         expire = datetime.utcnow() + timedelta(minutes=int(5))
+#     to_encode.update({"exp": expire})
+#     encoded_jwt = jwt.encode(
+#         to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
+#     return encoded_jwt
+
+
+# def verify_email_verification_token(token: str):
+#     try:
+#         decoded_token = jwt.decode(
+#             token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+#         return decoded_token["email"]
+#     except JWTError:
+#         return None

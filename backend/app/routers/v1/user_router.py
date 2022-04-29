@@ -4,10 +4,12 @@ from app.Config import settings
 from app import services as _services
 from sqlalchemy.orm import Session
 from app.scheams import user_schema
-from app.oauth2 import get_current_user
+from app.oauth2 import get_current_user, create_access_token
 from app.models import user_model
 from app.scheams import change_password_schema
 from app.error_handlers import errors
+from datetime import timedelta
+
 
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/user',
@@ -17,30 +19,45 @@ router = APIRouter(
 
 # ***********************************************************************************
 #! USER SIGNUP
-@router.post('/', status_code=status.HTTP_201_CREATED, response_model=user_schema.UserOut)
+@router.post('/', status_code=status.HTTP_201_CREATED)
 async def create_user(user: user_schema.UserCreate, db: Session = Depends(_services.get_db)):
-    return _services.create_user(db, user)
+    user = _services.create_user(db, user)
+    expire_time = timedelta(minutes=int(
+        settings.EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES))
+    token = create_access_token(
+        data={"id": user.id, "is_user": True}, expires_delta=expire_time)
+    token_url = f"{settings.API_HOSTED_ROOT_URL+settings.BASE_API_V1+'/email/verify-email?token='+token}"
+    
+    return await _services.send_email(subject="Email Verification",
+                                      recipients=user.email, token=token, token_url=token_url)
 
 
 # ***********************************************************************************
 #! GET CURRENT USER DETAILS WITH ALL APPOINTMENTS
 @router.get('/', status_code=status.HTTP_200_OK, response_model=user_schema.UserOut)
 async def get_user_me(db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
-    return _services.get_user(db, current_user.id)
+    if current_user.is_active:
+        return _services.get_user(db, current_user.id)
+    raise errors.PLEASE_VERIFY_YOUR_EMAIL
 
 
 # ***********************************************************************************
 #! CHANGE USER PASSWORD
 @router.put('/change-password', status_code=status.HTTP_202_ACCEPTED)
 async def change_password(user_p: change_password_schema.ChangePassword, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
-    user = _services.get_user(db, current_user.id)
-    return _services.change_password(db, user_p.password, user, current_user)
+    if current_user.is_active:
+        user = _services.get_user(db, current_user.id)
+        return _services.change_password(db, user_p.password, user, current_user)
+    raise errors.PLEASE_VERIFY_YOUR_EMAIL
 
 
 # ***********************************************************************************
 #! UPDATE USER DETAILS
 @router.put('/', status_code=status.HTTP_202_ACCEPTED, response_model=user_schema.UserOut)
 async def update_user_details(user: user_schema.UpdateUserDetails, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
+    if not current_user.is_active:
+        raise errors.PLEASE_VERIFY_YOUR_EMAIL
+
     is_something_changed: bool = False
 
     if user.name and user.name != current_user.name:

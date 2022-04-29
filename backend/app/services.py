@@ -1,3 +1,4 @@
+from typing import List
 from app.database import SessionLocal
 from app.models import user_model
 from sqlalchemy.orm import Session
@@ -6,9 +7,10 @@ from passlib.hash import bcrypt
 from app.models import user_model, doctor_model, clinic_model, appointment_model, admin_model
 from app.error_handlers import errors
 from datetime import date, datetime, timedelta
+from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from app.Config import settings
 import uuid
-
+from pathlib import Path
 
 def get_db():
     db = SessionLocal()
@@ -429,3 +431,33 @@ def calculate_slots(opens_at, closes_at, session_time):
     total_minutes = int(int(t[0])*60+int(t[1])*1 + int(t[2])/60)
     slots = total_minutes // int(session_time)
     return slots
+
+
+async def send_email(subject: str, recipients: str, token: str, token_url: str):
+    conf = ConnectionConfig(
+        MAIL_USERNAME="csk709120@gmail.com",
+        MAIL_PASSWORD="rockinghell",
+        MAIL_FROM="csk709120@gmail.com",
+        MAIL_PORT=587,
+        MAIL_SERVER="smtp.gmail.com",
+        MAIL_FROM_NAME="NextCare",
+        MAIL_TLS=True,
+        MAIL_SSL=False,
+        USE_CREDENTIALS=True,
+        VALIDATE_CERTS=True,
+        TEMPLATE_FOLDER = Path(__file__).parent / 'email-templates',
+    )
+
+    message = MessageSchema(
+        subject=subject,
+        recipients=[recipients],
+        template_body = {
+            "token_url" : token_url
+        }
+    )
+
+    fm = FastMail(conf)
+    await fm.send_message(message, template_name='new-user.html')
+
+    #! CHANGE THIS TO EMAIL SENT SUCCESSFULLY PLEASE VERIFY
+    return {"details": "email sent successfully"}

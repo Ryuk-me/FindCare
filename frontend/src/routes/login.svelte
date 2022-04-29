@@ -1,3 +1,7 @@
+<script context="module">
+	export const prerender = true
+</script>
+
 <script>
 	var pass = false
 	function showpass() {
@@ -36,9 +40,7 @@
 				<div class="w-full mb-3">
 					<div class="flex justify-between">
 						<label for="password">Password</label>
-						<a href="reset" class="text-primary cursor-pointer"
-							>Forgot Password?</a
-						>
+						<a href="reset" class="text-primary cursor-pointer">Forgot Password?</a>
 					</div>
 					<div class="relative">
 						<input

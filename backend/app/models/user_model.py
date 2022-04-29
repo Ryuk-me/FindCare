@@ -22,4 +22,4 @@ class User(Base):
                         nullable=False, server_default=text('now()'))
     updated_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
-    is_superuser = Column(Boolean, server_default='FALSE', nullable=False)
+    is_active = Column(Boolean, server_default='FALSE', nullable=False)
