@@ -18,7 +18,7 @@
 <img src="shape.png" alt="" class="fixed hidden lg:block w-96 bottom-0 left-0" />
 
 <div class="w-screen h-screen flex flex-col justify-center items-center lg:grid lg:grid-cols-2 ">
-	<div class="flex justify-center items-center lg:ml-14">
+	<div class="flex justify-center items-center lg:ml-48">
 		<div class="">
 			<h2 class="text-primary font-bold font-display text-3xl text-left">nextcare</h2>
 			<form
