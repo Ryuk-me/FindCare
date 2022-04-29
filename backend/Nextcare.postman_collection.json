@@ -18,7 +18,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"222@gmail.com\",\r\n    \"name\" : \"Neeraj Kumar\",\r\n    \"phone\" : \"8125384544\",\r\n    \"password\" : \"123\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2002-04-26\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"neerajkr1210@gmail.com\",\r\n    \"name\" : \"Neeraj Kumar\",\r\n    \"phone\" : \"8125384544\",\r\n    \"password\" : \"123\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2002-04-26\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -741,7 +741,7 @@
 								},
 								{
 									"key": "password",
-									"value": "123",
+									"value": "12345",
 									"type": "text"
 								}
 							]
@@ -843,6 +843,72 @@
 								{
 									"key": "id",
 									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\" : \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/admin/change-password",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "email",
+			"item": [
+				{
+					"name": "emailverify",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/email/verify-email?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaXNfdXNlciI6dHJ1ZSwiZXhwIjoxNjUxMjE1NDAyfQ.WKzBnKzS7NYzqfcRxLtT-7-Q1vlnGWlrav3b5rcA8V0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"email",
+								"verify-email"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaXNfdXNlciI6dHJ1ZSwiZXhwIjoxNjUxMjE1NDAyfQ.WKzBnKzS7NYzqfcRxLtT-7-Q1vlnGWlrav3b5rcA8V0"
 								}
 							]
 						}
