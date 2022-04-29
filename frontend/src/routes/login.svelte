@@ -3,11 +3,13 @@
 	function showpass() {
 		if (pass) {
 			document.getElementById('password').setAttribute('type', 'password')
-			document.getElementById('eye').style.color = 'black'
+			document.getElementById('eye').classList.add('fa-eye-slash')
+			document.getElementById('eye').classList.remove('fa-eye')
 			pass = false
 		} else {
+			document.getElementById('eye').classList.remove('fa-eye-slash')
+			document.getElementById('eye').classList.add('fa-eye')
 			document.getElementById('password').setAttribute('type', 'text')
-			document.getElementById('eye').style.color = 'grey'
 			pass = true
 		}
 	}
@@ -48,7 +50,7 @@
 						/>
 						<span>
 							<i
-								class="fa fa-eye hover:cursor-pointer"
+								class="fa fa-eye-slash hover:cursor-pointer"
 								aria-hidden="true"
 								id="eye"
 								on:click={showpass}
