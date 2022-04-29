@@ -15,7 +15,7 @@
 	}
 </script>
 
-<img src="shape.png" alt="" class="fixed hidden lg:block w-72 bottom-0 left-0" />
+<img src="shape.png" alt="" class="fixed hidden lg:block w-96 bottom-0 left-0" />
 
 <div class="w-screen h-screen flex flex-col justify-center items-center lg:grid lg:grid-cols-2 ">
 	<div class="flex justify-center items-center lg:ml-14">
@@ -70,8 +70,8 @@
 			<p class="text-center">&copy;2022 NextCare. All rights reserved.</p>
 		</div>
 	</div>
-	<div class="hidden w-full h-full lg:flex items-end flex-col">
-		<img src="medical-team.png" class="hidden lg:block w-4/6 " alt="" />
+	<div class="hidden w-full h-screen lg:flex items-end flex-col">
+		<img src="medical-team.png" class="hidden lg:block max-h-full" alt="" />
 	</div>
 </div>
 
