@@ -36,7 +36,10 @@ async def doctor_login(doctor_credentials: OAuth2PasswordRequestForm = Depends()
     doctor_exist = _services.is_doctor_exist(db, doctor_credentials.username)
     if doctor_exist:
         if _services.verify_hash(doctor_credentials.password, doctor_exist.password):
-            token = create_access_token(data={"id": doctor_exist.id})
+            expire_time = timedelta(minutes=int(
+                settings.ACCESS_TOKEN_EXPIRE_MINUTES))
+            token = create_access_token(
+                data={"id": doctor_exist.id}, expires_delta=expire_time)
             return {"access_token": token, "token_type": "bearer"}
     raise errors.INVALID_CREDENTIALS_ERROR
 
@@ -48,6 +51,9 @@ async def doctor_login(admin_credentials: OAuth2PasswordRequestForm = Depends(),
     admin_exist = _services.is_admin_exist(db, admin_credentials.username)
     if admin_exist:
         if _services.verify_hash(admin_credentials.password, admin_exist.password):
-            token = create_access_token(data={"id": admin_exist.id})
+            expire_time = timedelta(minutes=int(
+                settings.ACCESS_TOKEN_EXPIRE_MINUTES))
+            token = create_access_token(
+                data={"id": admin_exist.id}, expires_delta=expire_time)
             return {"access_token": token, "token_type": "bearer"}
     raise errors.INVALID_CREDENTIALS_ERROR
