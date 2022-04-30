@@ -863,6 +863,41 @@
 					"response": []
 				},
 				{
+					"name": "activateUserAC",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/admin/activate/user?id=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"activate",
+								"user"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "deactivateUser",
 					"request": {
 						"auth": {
@@ -886,6 +921,76 @@
 								"admin",
 								"deactivate",
 								"user"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deactivateDoctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/admin/deactivate/doctor?id=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"deactivate",
+								"doctor"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activateDoctorAC",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/admin/activate/doctor?id=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"activate",
+								"doctor"
 							],
 							"query": [
 								{

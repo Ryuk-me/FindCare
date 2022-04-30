@@ -23,11 +23,11 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER_PASSWORD: str
     FIRST_SUPERUSER_NAME: str
     API_HOSTED_ROOT_URL: str
-    MAIL_USERNAME :str
-    MAIL_PASSWORD :str
-    MAIL_FROM:str
-    MAIL_PORT:int
-    MAIL_SERVER:str
+    MAIL_USERNAME: str
+    MAIL_PASSWORD: str
+    MAIL_FROM: str
+    MAIL_PORT: int
+    MAIL_SERVER: str
     MAIL_FROM_NAME: str
 
     class Config:

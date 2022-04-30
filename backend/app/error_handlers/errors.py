@@ -17,8 +17,11 @@ USER_ALREADY_EXIST = HTTPException(
 USER_ALREADY_BANNED = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="user is already banned")
 
+USER_ALREADY_UNBANNED = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="user is not banned")
+
 USER_IS_BANNED = HTTPException(
-    status_code=status.HTTP_403_FORBIDDEN, detail="Your account has been blocked. Please contact support for further details")
+    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Your account has been blocked. Please contact support for further details")
 
 # ***********************************************************************************
 #                                                                                   #
@@ -48,6 +51,14 @@ NOT_POSSIBLE_EXPERINCE_YEAR = HTTPException(
 DOCTOR_IS_NOT_VERIFIED = HTTPException(
     status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="doctor is not verified")
 
+DOCTOR_IS_BANNED = HTTPException(
+    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="doctor is banned")
+
+DOCTOR_IS_ALREADY_BANNED = HTTPException(
+    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="doctor is already banned")
+
+DOCTOR_IS_ALREADY_UNBANNED = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="doctor is not banned")
 
 # ***********************************************************************************
 #                                                                                   #

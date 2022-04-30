@@ -22,7 +22,7 @@ router = APIRouter(
 def verify_user_state(current_user: user_model.User = Depends(get_current_user)):
     if current_user.is_banned:
         raise errors.USER_IS_BANNED
-    if current_user.is_active:
+    if not current_user.is_active:
         raise errors.PLEASE_VERIFY_YOUR_EMAIL
 
 

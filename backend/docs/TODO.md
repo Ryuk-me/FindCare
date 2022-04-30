@@ -35,7 +35,7 @@
 1. - [x] host frontend with netlify
 1. - [x] IMPLEMENT UPDATE FEATURE FOR DOCTOR LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE,PROFILE_IMAGE)
 1. - [x] verify user/doctor on signup and send a verification email
-1. - [ ] implement password reset token for doctor user and admin [frontend must be created first]
+1. - [ ] implement password reset (send a temporary password on email)
 1. - [ ] change host api url to frontend webiste url and get token as slug and then call on api to verify it [after frontend ez created]
 1. - [ ] send a welcome to user after creating new accounting (can be implmeneted later)
 1. - [ ] clinic on / off flag
@@ -54,7 +54,9 @@
 - [x] user active  and doctor active(flag) for email verification
 - [X] manage user from admin panel [like ban user currently]
 - [X] USER WONT BE ABLE TO LOGIN IF ACCOUNT IS BANNED
-- [ ] manage DOCTOR from admin panel [like ban DOCTOR currently]
+- [x] manage DOCTOR from admin panel [like ban DOCTOR currently]
+- [x] activate/deactivate user/doctor account from admin panel
+- [ ] get all users for admin panel (name,email phone,number of appointments,is_banned,is_active etc details)
 - [ ] user can only cancel appointment upto 4 hours before appointment time [will be implemented after slot logic]
 - [ ] user can only book future appointments
 - [ ] at the time of appointment booking check that appointment date/time and slot is available/free in clinic (bascially it is a precation for external api calls)

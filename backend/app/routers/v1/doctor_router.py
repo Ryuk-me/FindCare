@@ -5,7 +5,7 @@ from app.Config import settings
 from app import services as _services
 from app.models import doctor_model
 from app.scheams import doctor_schema, change_password_schema
-from app.oauth2 import get_current_doctor,create_access_token
+from app.oauth2 import get_current_doctor, create_access_token
 from app.error_handlers import errors
 from datetime import timedelta
 
@@ -14,6 +14,15 @@ router = APIRouter(
     prefix=settings.BASE_API_V1 + '/doctor',
     tags=['Doctors']
 )
+
+
+# ***********************************************************************************
+#! VERIFY DOCTOR STATE
+def verify_doctor_state(current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):
+    if current_doctor.is_banned:
+        raise errors.USER_IS_BANNED
+    if not current_doctor.is_active:
+        raise errors.PLEASE_VERIFY_YOUR_EMAIL
 
 
 # ***********************************************************************************
@@ -34,7 +43,7 @@ async def create_doctor(doctor: doctor_schema.DoctorCreate, db: Session = Depend
 # ***********************************************************************************
 #! GET CURRENT DOCTOR I.E DOCTOR/ME
 @router.get('/', status_code=status.HTTP_200_OK, response_model=doctor_schema.DoctorOut)
-async def get_doctor_me(db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):
+async def get_doctor_me(db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor), access=Depends(verify_doctor_state)):
     if not current_doctor.is_active:
         raise errors.PLEASE_VERIFY_YOUR_EMAIL
     return _services.get_doctor(db, current_doctor.id)
@@ -43,10 +52,10 @@ async def get_doctor_me(db: Session = Depends(_services.get_db), current_doctor:
 # ***********************************************************************************
 #! GET CURRENT USER DETAILS WITH ALL APPOINTMENTS
 @router.put('/change-password', status_code=status.HTTP_202_ACCEPTED)
-async def change_password(doctor_p: change_password_schema.ChangePassword, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):
+async def change_password(doctor_p: change_password_schema.ChangePassword, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor), access=Depends(verify_doctor_state)):
     if not current_doctor.is_active:
         raise errors.PLEASE_VERIFY_YOUR_EMAIL
-        
+
     doctor = _services.get_doctor(db, current_doctor.id)
     return _services.change_password(db, doctor_p.password, doctor, current_doctor)
 
@@ -54,7 +63,7 @@ async def change_password(doctor_p: change_password_schema.ChangePassword, db: S
 # ***********************************************************************************
 #! UPDATE USER DETAILS
 @router.put('/', status_code=status.HTTP_202_ACCEPTED, response_model=doctor_schema.DoctorOut)
-async def update_doctor_details(doctor: doctor_schema.UpdateDoctorDetails, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor)):
+async def update_doctor_details(doctor: doctor_schema.UpdateDoctorDetails, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor), access=Depends(verify_doctor_state)):
     if not current_doctor.is_active:
         raise errors.PLEASE_VERIFY_YOUR_EMAIL
 

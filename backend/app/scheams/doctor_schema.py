@@ -1,4 +1,4 @@
-from typing import Literal, Optional
+from typing import Literal, Optional, Union
 from pydantic import BaseModel, EmailStr, constr
 from datetime import datetime, date
 
@@ -34,6 +34,8 @@ class DoctorOut(BaseModel):
     is_active: bool
     created_at: datetime
     updated_at: datetime
+    is_banned: bool
+    when_banned: Union[datetime, None]
 
     class Config:
         orm_mode = True

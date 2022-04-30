@@ -152,11 +152,13 @@ def is_clinic_exist_by_id(db: Session, clinic_id: int):
 
 
 def add_appointment(db: Session, appointment: appointment_schema.CreateAppointment, user_id: int):
-    clinic: clinic_schema.ClinicOutUser = is_clinic_exist_by_id(
+    clinic: clinic_schema.ClinicOut = is_clinic_exist_by_id(
         db, appointment.clinic_id)
     if clinic:
         if not clinic.doctor.is_verified:
             raise errors.DOCTOR_IS_NOT_VERIFIED
+        if clinic.doctor.is_banned:
+            raise errors.DOCTOR_IS_BANNED
         if clinic.is_open:
             appointment = appointment_model.Appointment(
                 user_id=user_id, doctor_id=clinic.doctor_id, cid=clinic.id, **appointment.dict())
@@ -174,8 +176,6 @@ def cancel_appointments(db: Session, appointment: appointment_schema.Appointment
         appointment_model.Appointment.id == appointment.id).first()
     if appointment.is_completed:
         raise errors.APPOINTMENT_ALREADY_COMPLETED
-    # if appointment.is_skipped:
-    #     raise errors.APPOINTMENT_SKIPPED_CANCELLATION
     if is_User:
         if appointment.is_cancelled == 'U':
             raise errors.APPOINTNEMT_ALREADY_CANCELLED
@@ -196,23 +196,6 @@ def cancel_appointments(db: Session, appointment: appointment_schema.Appointment
     return {"detail": "appointment cancelled sucessfully"}
 
 
-# def skip_appointment(db: Session, appointment: appointment_schema.AppointmentOut):
-#     appointment: appointment_schema.AppointmentOut = db.query(appointment_model.Appointment).filter(
-#         appointment_model.Appointment.id == appointment.id).first()
-#     if appointment.is_completed:
-#         raise errors.APPOINTMENT_ALREADY_COMPLETED
-#     if appointment.is_cancelled == 'U':
-#         raise errors.APPOINTNEMT_ALREADY_CANCELLED_BY_USER
-#     if appointment.is_cancelled == 'D':
-#         raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
-#     if appointment.is_skipped:
-#         raise errors.APPOINTMENT_SKIPPED_CANCELLATION
-#     appointment.is_skipped = True
-#     appointment.when_skipped = datetime.now()
-#     db.commit()
-#     return {"detail": "appointment skipped sucessfully"}
-
-
 def appointment_completed(db: Session, appointment: appointment_schema.AppointmentOut):
     appointment: appointment_schema.AppointmentOut = db.query(appointment_model.Appointment).filter(
         appointment_model.Appointment.id == appointment.id).first()
@@ -222,9 +205,6 @@ def appointment_completed(db: Session, appointment: appointment_schema.Appointme
         raise errors.APPOINTNEMT_ALREADY_CANCELLED_BY_USER
     if appointment.is_cancelled == 'D':
         raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
-    # if appointment.is_skipped:
-    #     raise errors.APPOINTMENT_SKIPPED_CANCELLATION
-
     appointment.is_completed = True
     db.commit()
     return {"detail": "appointment completed sucessfully"}
@@ -272,12 +252,12 @@ def get_appointment_by_doctor_id(db: Session, id: int, doctor_id: int):
 def search_doctor_clinics(city: str, speciality: str | None, db: Session):
     if not speciality:
         clinic = db.query(clinic_model.Clinic).join(doctor_model.Doctor).filter(
-            clinic_model.Clinic.address["city"].astext == city, doctor_model.Doctor.is_verified == True).all()
+            clinic_model.Clinic.address["city"].astext == city, doctor_model.Doctor.is_verified, doctor_model.Doctor.is_banned == False).all()
         if clinic:
             return clinic
         raise errors.NOT_FOUND_ERROR
     clinic = db.query(clinic_model.Clinic).join(doctor_model.Doctor).filter(
-        clinic_model.Clinic.address["city"].astext == city, doctor_model.Doctor.speciality == speciality, doctor_model.Doctor.is_verified == True).all()
+        clinic_model.Clinic.address["city"].astext == city, doctor_model.Doctor.speciality == speciality, doctor_model.Doctor.is_verified, doctor_model.Doctor.is_banned == False).all()
     if clinic:
         return clinic
     raise errors.NOT_FOUND_ERROR
@@ -338,21 +318,17 @@ def get_all_clinics(db: Session):
             if len(appointments) > 0:
                 total_appointments = len(appointments)
                 completed_appointments = 0
-                # skipped_appointments = 0
                 cancelled_appointments_by_doctor = 0
                 cancelled_appointments_by_user = 0
                 for appointment in appointments:
                     if appointment.is_completed:
                         completed_appointments += 1
-                    # if appointment.is_skipped:
-                    #     skipped_appointments += 1
                     if appointment.is_cancelled == "D":
                         cancelled_appointments_by_doctor += 1
                     if appointment.is_cancelled == "U":
                         cancelled_appointments_by_user += 1
                 clinic.total_appointments = total_appointments
                 clinic.completed_appointments = completed_appointments
-                # clinic.skipped_appointments = skipped_appointments
                 clinic.cancelled_appointments_by_user = cancelled_appointments_by_user
                 clinic.cancelled_appointments_by_doctor = cancelled_appointments_by_doctor
                 clinic.pending_appointments = total_appointments - \
@@ -385,6 +361,39 @@ def deactivate_account(db: Session, id: int, is_user: bool = False):
             db.commit()
             return {"details": "user banned successfully"}
         raise errors.USER_ALREADY_BANNED
+    else:
+        doctor: doctor_schema.DoctorOut = get_doctor(db, id)
+        if not doctor:
+            raise errors.DOCTOR_NOT_FOUND
+        if not doctor.is_banned:
+            doctor.is_banned = True
+            doctor.when_banned = datetime.now()
+            db.commit()
+            return {"details": "doctor banned successfully"}
+        raise errors.DOCTOR_IS_ALREADY_BANNED
+
+
+def activate_account(db: Session, id: int, is_user: bool = False):
+    if is_user:
+        user: user_schema.UserOut = get_user(db, id)
+        if not user:
+            raise errors.USER_NOT_FOUND
+        if user.is_banned:
+            user.is_banned = False
+            user.when_banned = None
+            db.commit()
+            return {"details": "user unbanned successfully"}
+        raise errors.USER_ALREADY_UNBANNED
+    else:
+        doctor: doctor_schema.DoctorOut = get_doctor(db, id)
+        if not doctor:
+            raise errors.DOCTOR_NOT_FOUND
+        if doctor.is_banned:
+            doctor.is_banned = False
+            doctor.when_banned = None
+            db.commit()
+            return {"details": "doctor unbanned successfully"}
+        raise errors.DOCTOR_IS_ALREADY_UNBANNED
 
 
 # ***********************************************************************************

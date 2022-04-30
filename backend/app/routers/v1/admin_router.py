@@ -59,7 +59,29 @@ async def verify_clinic(id: int, db: Session = Depends(_services.get_db), curren
 
 
 # ***********************************************************************************
-#! BAN USER (add doctor maybe later)
+#! BAN USER
 @router.get('/deactivate/user', status_code=status.HTTP_200_OK)
-async def deactivate_acoount(id: int, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+async def deactivate_account_user(id: int, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     return _services.deactivate_account(db, id, is_user=True)
+
+# ***********************************************************************************
+#! UNBAN USER
+
+
+@router.get('/activate/user', status_code=status.HTTP_200_OK)
+async def activate_account_user(id: int, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+    return _services.activate_account(db, id, is_user=True)
+
+
+# ***********************************************************************************
+#! BAN DOCTOR
+@router.get('/deactivate/doctor', status_code=status.HTTP_200_OK)
+async def deactivate_account_doctor(id: int, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+    return _services.deactivate_account(db, id, is_user=False)
+
+
+# ***********************************************************************************
+#! UNBAN DOCTOR
+@router.get('/activate/doctor', status_code=status.HTTP_200_OK)
+async def activate_account_user(id: int, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+    return _services.activate_account(db, id, is_user=False)

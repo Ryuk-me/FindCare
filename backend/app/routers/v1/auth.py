@@ -36,6 +36,8 @@ async def user_login(user_credentials: OAuth2PasswordRequestForm = Depends(), db
 @router.post('/doctor', response_model=token_schema.BaseToken)
 async def doctor_login(doctor_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(_services.get_db)):
     doctor_exist = _services.is_doctor_exist(db, doctor_credentials.username)
+    if doctor_exist.is_banned:
+        raise errors.USER_IS_BANNED
     if doctor_exist:
         if _services.verify_hash(doctor_credentials.password, doctor_exist.password):
             expire_time = timedelta(minutes=int(
