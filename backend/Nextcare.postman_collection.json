@@ -536,6 +536,9 @@
 				},
 				{
 					"name": "canceAppointment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -549,8 +552,17 @@
 						},
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 3,\r\n    \"cancellation_reason\" : \"dame\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{URL}}/doctor/clinic/appointment/cancel?id=11",
+							"raw": "{{URL}}/doctor/clinic/appointment/cancel",
 							"host": [
 								"{{URL}}"
 							],
@@ -559,12 +571,6 @@
 								"clinic",
 								"appointment",
 								"cancel"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "11"
-								}
 							]
 						}
 					},
@@ -851,6 +857,41 @@
 							"path": [
 								"admin",
 								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deactivateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/admin/deactivate/user?id=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"deactivate",
+								"user"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
 							]
 						}
 					},

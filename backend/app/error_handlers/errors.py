@@ -14,6 +14,11 @@ USER_NOT_FOUND = HTTPException(
 USER_ALREADY_EXIST = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="user already exist")
 
+USER_ALREADY_BANNED = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="user is already banned")
+
+USER_IS_BANNED = HTTPException(
+    status_code=status.HTTP_403_FORBIDDEN, detail="Your account has been blocked. Please contact support for further details")
 
 # ***********************************************************************************
 #                                                                                   #
@@ -39,6 +44,9 @@ DOCTOR_WITH_THIS_REGISTRATION_NUM_ALREADY_EXIST = HTTPException(
 
 NOT_POSSIBLE_EXPERINCE_YEAR = HTTPException(
     status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="experince year not acceptable please try lower value")
+
+DOCTOR_IS_NOT_VERIFIED = HTTPException(
+    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="doctor is not verified")
 
 
 # ***********************************************************************************

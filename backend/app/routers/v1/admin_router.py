@@ -56,3 +56,10 @@ async def verify_clinic(id: int, db: Session = Depends(_services.get_db), curren
     if current_admin.is_super_admin:
         return _services.verify_doctor(db, id)
     raise errors.NOT_A_SUPER_ADMIN
+
+
+# ***********************************************************************************
+#! BAN USER (add doctor maybe later)
+@router.get('/deactivate/user', status_code=status.HTTP_200_OK)
+async def deactivate_acoount(id: int, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+    return _services.deactivate_account(db, id, is_user=True)

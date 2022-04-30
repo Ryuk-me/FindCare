@@ -154,8 +154,9 @@ def is_clinic_exist_by_id(db: Session, clinic_id: int):
 def add_appointment(db: Session, appointment: appointment_schema.CreateAppointment, user_id: int):
     clinic: clinic_schema.ClinicOutUser = is_clinic_exist_by_id(
         db, appointment.clinic_id)
-
     if clinic:
+        if not clinic.doctor.is_verified:
+            raise errors.DOCTOR_IS_NOT_VERIFIED
         if clinic.is_open:
             appointment = appointment_model.Appointment(
                 user_id=user_id, doctor_id=clinic.doctor_id, cid=clinic.id, **appointment.dict())
@@ -371,6 +372,19 @@ def verify_doctor(db: Session, doctor_id: int):
         db.commit()
         return {"detail": "doctor verified successfully"}
     raise errors.NO_DOCTOR_FOUND_WITH_THIS_ID
+
+
+def deactivate_account(db: Session, id: int, is_user: bool = False):
+    if is_user:
+        user: user_schema.UserOut = get_user(db, id)
+        if not user:
+            raise errors.USER_NOT_FOUND
+        if not user.is_banned:
+            user.is_banned = True
+            user.when_banned = datetime.now()
+            db.commit()
+            return {"details": "user banned successfully"}
+        raise errors.USER_ALREADY_BANNED
 
 
 # ***********************************************************************************

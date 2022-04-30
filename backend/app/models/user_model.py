@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, Boolean
+from sqlalchemy import Column, Integer, String, Date, Boolean, DateTime
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.orm import relationship
@@ -23,3 +23,5 @@ class User(Base):
     updated_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
     is_active = Column(Boolean, server_default='FALSE', nullable=False)
+    is_banned = Column(Boolean, server_default='FALSE', nullable=False)
+    when_banned = Column(DateTime, nullable=True)

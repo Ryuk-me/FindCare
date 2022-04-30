@@ -19,6 +19,8 @@ router = APIRouter(
 @router.post('/user', response_model=token_schema.BaseToken)
 async def user_login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(_services.get_db)):
     user_exist = _services.is_user_exist(db, user_credentials.username)
+    if user_exist.is_banned:
+        raise errors.USER_IS_BANNED
     if user_exist:
         if _services.verify_hash(user_credentials.password, user_exist.password):
             expire_time = timedelta(minutes=int(

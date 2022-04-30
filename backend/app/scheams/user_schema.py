@@ -1,6 +1,6 @@
 from datetime import datetime, date
 from pydantic import BaseModel, EmailStr, constr
-from typing import List, Literal, Optional
+from typing import List, Literal, Optional, Union
 from app.scheams import appointment_schema
 
 
@@ -23,6 +23,8 @@ class UserOut(BaseModel):
     dob: date
     age: int
     is_active: bool
+    is_banned: bool
+    when_banned: Union[datetime, None]
     created_at: datetime
     updated_at: datetime
     appointments: List[appointment_schema.AppointmentOut]

@@ -50,6 +50,11 @@
 
 ## New todo
 
-- [ ] doctor reason cancellation new model [required]
-- [ ] manage user admin
+- [x] doctor reason cancellation new model [required]
 - [x] user active  and doctor active(flag) for email verification
+- [X] manage user from admin panel [like ban user currently]
+- [X] USER WONT BE ABLE TO LOGIN IF ACCOUNT IS BANNED
+- [ ] manage DOCTOR from admin panel [like ban DOCTOR currently]
+- [ ] user can only cancel appointment upto 4 hours before appointment time [will be implemented after slot logic]
+- [ ] user can only book future appointments
+- [ ] at the time of appointment booking check that appointment date/time and slot is available/free in clinic (bascially it is a precation for external api calls)
