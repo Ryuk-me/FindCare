@@ -23,10 +23,10 @@ class Appointment(Base):
     is_completed = Column(Boolean, server_default='False', nullable=False)
     # is_skipped = Column(Boolean, server_default='False', nullable=False)
     # when_skipped = Column(DateTime, nullable=True)
-    cancellation_reason = Column(String, nullable=True)
     is_cancelled = Column(String, nullable=True)
-    clinic = relationship('Clinic')
+    cancellation_reason = Column(String, nullable=True)
     when_cancelled = Column(DateTime, nullable=True)
+    clinic = relationship('Clinic')
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
 
