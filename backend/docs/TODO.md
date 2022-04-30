@@ -35,7 +35,7 @@
 1. - [x] host frontend with netlify
 1. - [x] IMPLEMENT UPDATE FEATURE FOR DOCTOR LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE,PROFILE_IMAGE)
 1. - [x] verify user/doctor on signup and send a verification email
-1. - [ ] implement password reset token for doctor user and admin
+1. - [ ] implement password reset token for doctor user and admin [frontend must be created first]
 1. - [ ] change host api url to frontend webiste url and get token as slug and then call on api to verify it [after frontend ez created]
 1. - [ ] send a welcome to user after creating new accounting (can be implmeneted later)
 1. - [ ] clinic on / off flag

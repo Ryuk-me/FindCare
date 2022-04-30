@@ -39,6 +39,21 @@ class DoctorOut(BaseModel):
         orm_mode = True
 
 
+class DoctorOutUser(BaseModel):
+    id: int
+    name: str
+    profile_image: str
+    gender: str
+    experience_year: int
+    speciality: str
+    slug: str
+    is_verified: bool
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
+
+
 class UpdateDoctorDetails(BaseModel):
     email: Optional[EmailStr]
     phone: Optional[constr(max_length=10, min_length=10)]

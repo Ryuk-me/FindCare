@@ -118,6 +118,9 @@ APPOINTMENT_SKIPPED_CANCELLATION = HTTPException(
 NO_APPOINTMENT_FOUND_ERROR = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND, detail="no appointment found")
 
+NO_CANCELLATION_REASON = HTTPException(
+    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="please enter a cancellation reason")
+
 
 # ***********************************************************************************
 #                                                                                   #

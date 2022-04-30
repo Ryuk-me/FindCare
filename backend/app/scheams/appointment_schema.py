@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
-from typing import Union
+from typing import Optional, Union
 from app.scheams import clinic_schema
 
 
@@ -22,14 +22,20 @@ class AppointmentOut(BaseModel):
     schedule: datetime
     fees_paid: bool
     is_completed: bool
-    is_skipped: bool
-    when_skipped: Union[datetime, None]
+    # is_skipped: bool
+    # when_skipped: Union[datetime, None]
+    cancellation_reason: Union[str, None]
     is_cancelled: Union[str, None]
     when_cancelled: Union[datetime, None]
     created_at: datetime
 
     class Config:
         orm_mode = True
+
+
+class CancelAppointment(BaseModel):
+    id: int
+    cancellation_reason: Optional[str] = None
 
 
 class AppointmentOutUser(BaseModel):
@@ -40,11 +46,12 @@ class AppointmentOutUser(BaseModel):
     schedule: datetime
     fees_paid: bool
     is_completed: bool
-    is_skipped: bool
-    when_skipped: Union[datetime, None]
+    # is_skipped: bool
+    # when_skipped: Union[datetime, None]
+    cancellation_reason: Union[str, None]
     is_cancelled: Union[str, None]
     when_cancelled: Union[datetime, None]
-    clinic: clinic_schema.ClinicOut
+    clinic: clinic_schema.ClinicOutUser
     created_at: datetime
 
     class Config:

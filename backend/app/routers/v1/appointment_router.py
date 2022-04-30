@@ -37,8 +37,9 @@ async def get_appointment(db: Session = Depends(_services.get_db), current_user:
 # ***********************************************************************************
 #! CANCEL USER APPOINTMENT
 @router.get('/cancel', status_code=status.HTTP_202_ACCEPTED)
-async def delete_appointment(id: int, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
+async def cancel_appointment(cancellation: appointment_schema.CancelAppointment, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user)):
     if not current_user.is_active:
         raise errors.PLEASE_VERIFY_YOUR_EMAIL
-    appointment = _services.get_appointment_by_user_id(db, id, current_user.id)
+    appointment = _services.get_appointment_by_user_id(
+        db, cancellation.id, current_user.id)
     return _services.cancel_appointments(db, appointment, is_User=True)

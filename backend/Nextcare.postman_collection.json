@@ -63,7 +63,7 @@
 								},
 								{
 									"key": "username",
-									"value": "222@gmail.com",
+									"value": "neerajkr1210@gmail.com",
 									"type": "text"
 								},
 								{
@@ -181,6 +181,9 @@
 				},
 				{
 					"name": "cancelAppointment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -194,8 +197,17 @@
 						},
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{URL}}/user/appointment/cancel?id=4",
+							"raw": "{{URL}}/user/appointment/cancel",
 							"host": [
 								"{{URL}}"
 							],
@@ -203,12 +215,6 @@
 								"user",
 								"appointment",
 								"cancel"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "4"
-								}
 							]
 						}
 					},
@@ -341,7 +347,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" :\"Dr. Neeraj Kumar\",\r\n    \"email\" : \"doctodr@gmail.com\",\r\n    \"phone\" : \"7091107348\",\r\n    \"gender\" : \"male\",\r\n    \"dob\" : \"1996-04-26\",\r\n    \"password\" : \"123\",\r\n    \"about\" : \"hello adhgajhgdah djasgd gasjd\",\r\n    \"experience_year\" : 4,\r\n    \"speciality\" : \"Cardiologist\",\r\n    \"registration_number\" : \"7326473\"\r\n     \r\n}",
+							"raw": "{\r\n    \"name\" :\"Dr. Neeraj Kumar\",\r\n    \"email\" : \"neerajkr1210@gmail.com\",\r\n    \"phone\" : \"7091107348\",\r\n    \"gender\" : \"male\",\r\n    \"dob\" : \"1996-04-26\",\r\n    \"password\" : \"123\",\r\n    \"about\" : \"hello adhgajhgdah djasgd gasjd\",\r\n    \"experience_year\" : 4,\r\n    \"speciality\" : \"Cardiologist\",\r\n    \"registration_number\" : \"7326473\"\r\n     \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -384,12 +390,12 @@
 							"formdata": [
 								{
 									"key": "username",
-									"value": "doctor@gmail.com",
+									"value": "neerajkr1210@gmail.com",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "1234",
+									"value": "123",
 									"type": "text"
 								}
 							]
@@ -565,42 +571,6 @@
 					"response": []
 				},
 				{
-					"name": "SKIPaPPOINTMENT",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{doctor_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/doctor/clinic/appointment/skip?id=11",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
-								"doctor",
-								"clinic",
-								"appointment",
-								"skip"
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "11"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "COMPLTEappointment",
 					"request": {
 						"auth": {
@@ -741,7 +711,7 @@
 								},
 								{
 									"key": "password",
-									"value": "12345",
+									"value": "123",
 									"type": "text"
 								}
 							]

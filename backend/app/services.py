@@ -12,13 +12,10 @@ from app.Config import settings
 import uuid
 from pathlib import Path
 
-conf = None
 
 def get_db():
     db = SessionLocal()
     create_first_admin(db)
-    global conf
-    conf = login_mail()
     try:
         yield db
     finally:
@@ -155,7 +152,7 @@ def is_clinic_exist_by_id(db: Session, clinic_id: int):
 
 
 def add_appointment(db: Session, appointment: appointment_schema.CreateAppointment, user_id: int):
-    clinic: clinic_schema.ClinicOut = is_clinic_exist_by_id(
+    clinic: clinic_schema.ClinicOutUser = is_clinic_exist_by_id(
         db, appointment.clinic_id)
 
     if clinic:
@@ -171,13 +168,13 @@ def add_appointment(db: Session, appointment: appointment_schema.CreateAppointme
     raise errors.CLINIC_NOT_FOUND
 
 
-def cancel_appointments(db: Session, appointment: appointment_schema.AppointmentOutUser | appointment_schema.AppointmentOut, is_User=False):
+def cancel_appointments(db: Session, appointment: appointment_schema.AppointmentOutUser | appointment_schema.AppointmentOut, reason: str = None, is_User=False):
     appointment: appointment_schema.AppointmentOutUser | appointment_schema.AppointmentOut = db.query(appointment_model.Appointment).filter(
         appointment_model.Appointment.id == appointment.id).first()
     if appointment.is_completed:
         raise errors.APPOINTMENT_ALREADY_COMPLETED
-    if appointment.is_skipped:
-        raise errors.APPOINTMENT_SKIPPED_CANCELLATION
+    # if appointment.is_skipped:
+    #     raise errors.APPOINTMENT_SKIPPED_CANCELLATION
     if is_User:
         if appointment.is_cancelled == 'U':
             raise errors.APPOINTNEMT_ALREADY_CANCELLED
@@ -185,31 +182,34 @@ def cancel_appointments(db: Session, appointment: appointment_schema.Appointment
             raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
         appointment.is_cancelled = 'U'
     else:
+        if not reason:
+            raise errors.NO_CANCELLATION_REASON
         if appointment.is_cancelled == 'U':
             raise errors.APPOINTNEMT_ALREADY_CANCELLED_BY_USER
         if appointment.is_cancelled == 'D':
             raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
         appointment.is_cancelled = 'D'
+        appointment.cancellation_reason = reason
     appointment.when_cancelled = datetime.now()
     db.commit()
     return {"detail": "appointment cancelled sucessfully"}
 
 
-def skip_appointment(db: Session, appointment: appointment_schema.AppointmentOut):
-    appointment: appointment_schema.AppointmentOut = db.query(appointment_model.Appointment).filter(
-        appointment_model.Appointment.id == appointment.id).first()
-    if appointment.is_completed:
-        raise errors.APPOINTMENT_ALREADY_COMPLETED
-    if appointment.is_cancelled == 'U':
-        raise errors.APPOINTNEMT_ALREADY_CANCELLED_BY_USER
-    if appointment.is_cancelled == 'D':
-        raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
-    if appointment.is_skipped:
-        raise errors.APPOINTMENT_SKIPPED_CANCELLATION
-    appointment.is_skipped = True
-    appointment.when_skipped = datetime.now()
-    db.commit()
-    return {"detail": "appointment skipped sucessfully"}
+# def skip_appointment(db: Session, appointment: appointment_schema.AppointmentOut):
+#     appointment: appointment_schema.AppointmentOut = db.query(appointment_model.Appointment).filter(
+#         appointment_model.Appointment.id == appointment.id).first()
+#     if appointment.is_completed:
+#         raise errors.APPOINTMENT_ALREADY_COMPLETED
+#     if appointment.is_cancelled == 'U':
+#         raise errors.APPOINTNEMT_ALREADY_CANCELLED_BY_USER
+#     if appointment.is_cancelled == 'D':
+#         raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
+#     if appointment.is_skipped:
+#         raise errors.APPOINTMENT_SKIPPED_CANCELLATION
+#     appointment.is_skipped = True
+#     appointment.when_skipped = datetime.now()
+#     db.commit()
+#     return {"detail": "appointment skipped sucessfully"}
 
 
 def appointment_completed(db: Session, appointment: appointment_schema.AppointmentOut):
@@ -221,8 +221,8 @@ def appointment_completed(db: Session, appointment: appointment_schema.Appointme
         raise errors.APPOINTNEMT_ALREADY_CANCELLED_BY_USER
     if appointment.is_cancelled == 'D':
         raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
-    if appointment.is_skipped:
-        raise errors.APPOINTMENT_SKIPPED_CANCELLATION
+    # if appointment.is_skipped:
+    #     raise errors.APPOINTMENT_SKIPPED_CANCELLATION
 
     appointment.is_completed = True
     db.commit()
@@ -337,26 +337,26 @@ def get_all_clinics(db: Session):
             if len(appointments) > 0:
                 total_appointments = len(appointments)
                 completed_appointments = 0
-                skipped_appointments = 0
+                # skipped_appointments = 0
                 cancelled_appointments_by_doctor = 0
                 cancelled_appointments_by_user = 0
                 for appointment in appointments:
                     if appointment.is_completed:
                         completed_appointments += 1
-                    if appointment.is_skipped:
-                        skipped_appointments += 1
+                    # if appointment.is_skipped:
+                    #     skipped_appointments += 1
                     if appointment.is_cancelled == "D":
                         cancelled_appointments_by_doctor += 1
                     if appointment.is_cancelled == "U":
                         cancelled_appointments_by_user += 1
                 clinic.total_appointments = total_appointments
                 clinic.completed_appointments = completed_appointments
-                clinic.skipped_appointments = skipped_appointments
+                # clinic.skipped_appointments = skipped_appointments
                 clinic.cancelled_appointments_by_user = cancelled_appointments_by_user
                 clinic.cancelled_appointments_by_doctor = cancelled_appointments_by_doctor
                 clinic.pending_appointments = total_appointments - \
-                    (cancelled_appointments_by_user + cancelled_appointments_by_doctor +
-                     skipped_appointments + completed_appointments)
+                    (cancelled_appointments_by_user +
+                     cancelled_appointments_by_doctor + completed_appointments)
         return clinics
     raise errors.CLINIC_NOT_FOUND
 
@@ -441,16 +441,17 @@ async def send_email(subject: str, recipients: str, token: str, token_url: str):
     message = MessageSchema(
         subject=subject,
         recipients=[recipients],
-        template_body = {
-            "token_url" : token_url
+        template_body={
+            "token_url": token_url
         }
     )
-
+    conf = login_mail()
     fm = FastMail(conf)
     await fm.send_message(message, template_name='new-user.html')
 
     #! CHANGE THIS TO EMAIL SENT SUCCESSFULLY PLEASE VERIFY
     return {"details": "email sent successfully"}
+
 
 def login_mail():
     config = ConnectionConfig(
@@ -464,6 +465,6 @@ def login_mail():
         MAIL_SSL=False,
         USE_CREDENTIALS=True,
         VALIDATE_CERTS=True,
-        TEMPLATE_FOLDER = Path(__file__).parent / 'email-templates',
+        TEMPLATE_FOLDER=Path(__file__).parent / 'email-templates',
     )
     return config
