@@ -18,7 +18,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"neerajkr1210@gmail.com\",\r\n    \"name\" : \"Neeraj Kumar\",\r\n    \"phone\" : \"8125384544\",\r\n    \"password\" : \"123\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2002-04-26\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"neerajishit@gmail.com\",\r\n    \"name\" : \"Neeraj Kumar\",\r\n    \"phone\" : \"8125384543\",\r\n    \"password\" : \"123\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2002-04-26\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -554,7 +554,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\" : 3,\r\n    \"cancellation_reason\" : \"dame\"\r\n}",
+							"raw": "{\r\n    \"id\" : 5,\r\n    \"cancellation_reason\" : \"dame\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -785,6 +785,34 @@
 							"path": [
 								"admin",
 								"clinics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/admin/users",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"users"
 							]
 						}
 					},

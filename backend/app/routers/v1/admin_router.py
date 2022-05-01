@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, Depends
 from app.Config import settings
-from app.scheams import admin_schema, clinic_schema, change_password_schema
+from app.scheams import admin_schema, clinic_schema, change_password_schema, user_schema
 from sqlalchemy.orm import Session
 from app import services as _services
 from app.oauth2 import get_current_admin
@@ -47,6 +47,14 @@ async def change_password(admin_p: change_password_schema.ChangePassword, db: Se
 async def get_all_clinics(db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     clinics = _services.get_all_clinics(db)
     return clinics
+
+
+# ***********************************************************************************
+#! GET ALL USERS
+@router.get('/users', status_code=status.HTTP_200_OK, response_model=List[user_schema.UserOutAdminPanel])
+async def get_all_users(db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+    users = _services.get_all_users(db)
+    return users
 
 
 # ***********************************************************************************

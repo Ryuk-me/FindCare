@@ -25,15 +25,3 @@ class Clinic(Base):
                         nullable=False, server_default=text('now()'))
     updated_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
-
-
-# class ClinicAddress(Base):
-#     __tablename__ = "clinics_address"
-#     id = Column(Integer, primary_key=True, nullable=False)
-#     clinic_id = Column(Integer, ForeignKey(
-#         "clinics.id"
-#     ), nullable=False)
-#     pincode = Column(String(6), nullable=False)
-#     address = Column(String, nullable=False)
-#     city = Column(String, nullable=False)
-#     state = Column(String, nullable=False)

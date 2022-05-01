@@ -22,8 +22,6 @@ class AppointmentOut(BaseModel):
     schedule: datetime
     fees_paid: bool
     is_completed: bool
-    # is_skipped: bool
-    # when_skipped: Union[datetime, None]
     cancellation_reason: Union[str, None]
     is_cancelled: Union[str, None]
     when_cancelled: Union[datetime, None]
@@ -46,8 +44,6 @@ class AppointmentOutUser(BaseModel):
     schedule: datetime
     fees_paid: bool
     is_completed: bool
-    # is_skipped: bool
-    # when_skipped: Union[datetime, None]
     cancellation_reason: Union[str, None]
     is_cancelled: Union[str, None]
     when_cancelled: Union[datetime, None]

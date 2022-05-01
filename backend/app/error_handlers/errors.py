@@ -23,6 +23,9 @@ USER_ALREADY_UNBANNED = HTTPException(
 USER_IS_BANNED = HTTPException(
     status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Your account has been blocked. Please contact support for further details")
 
+NO_USER_FOUND = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, detail=f'no user found')
+
 # ***********************************************************************************
 #                                                                                   #
 #                              DOCTOR ERRORS                                        #

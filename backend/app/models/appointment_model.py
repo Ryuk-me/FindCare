@@ -21,8 +21,6 @@ class Appointment(Base):
     schedule = Column(DateTime, nullable=False)
     fees_paid = Column(Boolean, server_default='False', nullable=False)
     is_completed = Column(Boolean, server_default='False', nullable=False)
-    # is_skipped = Column(Boolean, server_default='False', nullable=False)
-    # when_skipped = Column(DateTime, nullable=True)
     is_cancelled = Column(String, nullable=True)
     cancellation_reason = Column(String, nullable=True)
     when_cancelled = Column(DateTime, nullable=True)

@@ -33,6 +33,29 @@ class UserOut(BaseModel):
         orm_mode = True
 
 
+class UserOutAdminPanel(BaseModel):
+    id: int
+    name: str
+    email: EmailStr
+    gender: str
+    phone:  str
+    dob: date
+    age: int
+    is_active: bool
+    is_banned: bool
+    when_banned: Union[datetime, None]
+    total_appointments: int = 0
+    completed_appointments: int = 0
+    cancelled_appointments_by_doctor: int = 0
+    cancelled_appointments_by_user: int = 0
+    pending_appointments: int = 0
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        orm_mode = True
+
+
 class UpdateUserDetails(BaseModel):
     name: Optional[str]
     email: Optional[str]

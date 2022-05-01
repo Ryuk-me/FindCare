@@ -52,7 +52,6 @@ class ClinicOutAdminPanel(BaseModel):
     doctor: doctor_schema.DoctorOut
     total_appointments: int = 0
     completed_appointments: int = 0
-    # skipped_appointments: int = 0
     cancelled_appointments_by_doctor: int = 0
     cancelled_appointments_by_user: int = 0
     pending_appointments: int = 0

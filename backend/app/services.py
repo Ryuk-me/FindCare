@@ -396,6 +396,37 @@ def activate_account(db: Session, id: int, is_user: bool = False):
         raise errors.DOCTOR_IS_ALREADY_UNBANNED
 
 
+def get_all_users(db: Session):
+    users = db.query(user_model.User).all()
+    if len(users) > 0:
+        for user in users:
+            user: user_schema.UserOutAdminPanel
+            user_id = user.id
+            appointments = db.query(appointment_model.Appointment).filter(
+                appointment_model.Appointment.user_id == user_id).all()
+            if len(appointments) > 0:
+                total_appointments = len(appointments)
+                completed_appointments = 0
+                cancelled_appointments_by_doctor = 0
+                cancelled_appointments_by_user = 0
+                for appointment in appointments:
+                    if appointment.is_completed:
+                        completed_appointments += 1
+                    if appointment.is_cancelled == "D":
+                        cancelled_appointments_by_doctor += 1
+                    if appointment.is_cancelled == "U":
+                        cancelled_appointments_by_user += 1
+                user.total_appointments = total_appointments
+                user.completed_appointments = completed_appointments
+                user.cancelled_appointments_by_user = cancelled_appointments_by_user
+                user.cancelled_appointments_by_doctor = cancelled_appointments_by_doctor
+                user.pending_appointments = total_appointments - \
+                    (cancelled_appointments_by_user +
+                     cancelled_appointments_by_doctor + completed_appointments)
+        return users
+    raise errors.NO_USER_FOUND
+
+
 # ***********************************************************************************
 #                                                                                   #
 #                         PASSWORD SERVICES                                         #
