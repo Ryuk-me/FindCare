@@ -1,3 +1,7 @@
+<script context="module">
+	export const prerender = true
+</script>
+
 <script>
 	import lock_svg from '$lib/assets/lock.svg'
 	function passwordsent() {
