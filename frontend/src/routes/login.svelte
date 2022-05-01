@@ -67,7 +67,7 @@
 				</div>
 			</form>
 
-			<p class="text-center">&copy;2022 NextCare. All rights reserved.</p>
+			<p class="text-center">&copy;2022 <a href="./" class="text-primary">NextCare</a>. All rights reserved.</p>
 		</div>
 	</div>
 	<div class="hidden w-full h-screen lg:flex items-end flex-col">
