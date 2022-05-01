@@ -1,4 +1,6 @@
 <script>
+	import shape from '$lib/assets/shape.png'
+	import medical_team from '$lib/assets/medical-team.png'
 	var pass = false
 	function showpass() {
 		if (pass) {
@@ -15,7 +17,7 @@
 	}
 </script>
 
-<img src="shape.png" alt="" class="fixed hidden lg:block w-96 bottom-0 left-0" />
+<img src={shape} alt="" class="fixed hidden lg:block w-96 bottom-0 left-0" />
 
 <div class="w-screen h-screen flex flex-col justify-center items-center lg:grid lg:grid-cols-2 ">
 	<div class="flex justify-center items-center lg:ml-48">
@@ -67,11 +69,13 @@
 				</div>
 			</form>
 
-			<p class="text-center">&copy;2022 <a href="./" class="text-primary">NextCare</a>. All rights reserved.</p>
+			<p class="text-center">
+				&copy;2022 <a href="./" class="text-primary">NextCare</a>. All rights reserved.
+			</p>
 		</div>
 	</div>
 	<div class="hidden w-full h-screen lg:flex items-end flex-col">
-		<img src="medical-team.png" class="hidden lg:block max-h-full" alt="" />
+		<img src={medical_team} class="hidden lg:block max-h-full" alt="" />
 	</div>
 </div>
 

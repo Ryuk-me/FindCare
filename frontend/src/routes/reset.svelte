@@ -1,7 +1,8 @@
 <script>
-    function passwordsent() {
-  alert("check your email");
-}
+	import lock_svg from '$lib/assets/lock.svg'
+	function passwordsent() {
+		alert('check your email')
+	}
 </script>
 
 <div class="w-screen h-screen flex flex-col justify-center items-center ">
@@ -10,7 +11,7 @@
 	>
 		<div id="header" class="flex flex-col justify-center items-center">
 			<div>
-				<img src="lock.svg" alt="" class="w-32" />
+				<img src={lock_svg} alt="lock svg" class="w-32" />
 			</div>
 			<div>
 				<h2 class="text-2xl font-semibold">Trouble Logging In?</h2>
@@ -36,11 +37,13 @@
 					class="bg-primary hover:bg-[#524af4] text-white mb-3 font-bold py-2 mt-5 w-full rounded focus:outline-none focus:shadow-outline"
 					>Reset Password</button
 				>
-            </form>
+			</form>
 			<div>
 				<p>Return to <a href="./login" class="text-primary">Login</a></p>
 			</div>
 		</div>
 	</div>
-    <p class="text-center">&copy;2022 <a href="./" class="text-primary">NextCare</a>. All rights reserved.</p>
+	<p class="text-center">
+		&copy;2022 <a href="./" class="text-primary">NextCare</a>. All rights reserved.
+	</p>
 </div>
