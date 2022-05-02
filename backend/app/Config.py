@@ -38,4 +38,4 @@ settings = Settings()
 
 if ENV == 'prod':
     settings.DATABASE_HOSTNAME = "postgres"
-    settings.API_HOSTED_ROOT_URL = "https://nextcare-api-ryuk-me.cloud.okteto.net"
+    settings.API_HOSTED_ROOT_URL = "https://findcare-api-ryuk-me.cloud.okteto.net"
