@@ -1,5 +1,6 @@
-import type { RequestHandler } from '@sveltejs/kit'
 import { Config } from '$root/Config'
+import type { RequestHandler } from '@sveltejs/kit'
+
 
 export const post: RequestHandler = async ({ request }) => {
 	const body = await request.json()
@@ -9,7 +10,7 @@ export const post: RequestHandler = async ({ request }) => {
 		credentials: 'include',
 		body: body
 	})
-	const ACCESS_TOKEN_EXPIRE_SECONDS: number = Config.ACCESS_TOKEN_EXPIRE_MINUTES * 60
+	const ACCESS_TOKEN_EXPIRE_SECONDS = Config.ACCESS_TOKEN_EXPIRE_MINUTES * 60
 	let data = await response.json()
 	if ('access_token' in data) {
 

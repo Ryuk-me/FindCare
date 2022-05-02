@@ -1,6 +1,4 @@
-import 'dotenv/config'
-
 export const Config = {
-    ACCESS_TOKEN_EXPIRE_MINUTES: parseInt(process.env.ACCESS_TOKEN_EXPIRE_MINUTES),
-    FINDCARE_API_BASE_URL: process.env.FINDCARE_API_BASE_URL
+    ACCESS_TOKEN_EXPIRE_MINUTES: parseInt(import.meta.env.VITE_ACCESS_TOKEN_EXPIRE_MINUTES as string),
+    FINDCARE_API_BASE_URL: import.meta.env.VITE_FINDCARE_API_BASE_URL
 }

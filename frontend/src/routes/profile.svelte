@@ -15,8 +15,8 @@
 </script>
 
 <script>
-	import { onMount } from 'svelte'
 	import { Config } from '$root/Config'
+	import { onMount } from 'svelte'
 	export let session
 	let user = null
 	onMount(async () => {
