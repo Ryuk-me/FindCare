@@ -16,11 +16,11 @@
 
 <script>
 	import { onMount } from 'svelte'
-
+	import { Config } from '$root/Config'
 	export let session
 	let user = null
 	onMount(async () => {
-		const resp = await fetch('https://nextcare-api-ryuk-me.cloud.okteto.net/api/v1/user', {
+		const resp = await fetch(Config.FINDCARE_API_BASE_URL + '/api/v1/user', {
 			headers: {
 				'Content-type': 'application/json',
 				Authorization: `Bearer ${session.session}` // notice the Bearer before your token

@@ -21,8 +21,9 @@
 
 > ## Preview
 
-- BACKEND  -> [API](https://bit.ly/3xZRVmx)
-- FRONTEND ->  [WEBISTE](https://jazzy-starship-22dd57.netlify.app)
+- BACKEND  -> [API](https://bit.ly/3kQH1Ih)
+- FRONTEND ->  [WEBISTE](https://bit.ly/380nQbZ) (DOCKER)
+- FRONTEND ->  [WEBISTE](https://jazzy-starship-22dd57.netlify.app) (NETLIFY)
 
 > ## Team Members
 
