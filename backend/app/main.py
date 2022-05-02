@@ -33,8 +33,8 @@ app = FastAPI(
     # openapi_url="/openapi.json",
 )
 
-# origins = ["http://localhost:3000",
-#            'http://127.0.0.1:8009', 'http://127.0.0.1:8009/*']
+origins = ["http://localhost:3000",
+           'http://127.0.0.1:8009', 'http://127.0.0.1:8009/*','*']
 
 origins = ["*"]
 
