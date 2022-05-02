@@ -37,11 +37,11 @@ jobs:
       - name: Activate application namespace
         uses: okteto/namespace@master
         with:
-          namespace: Findcare
+          namespace: findcare
 
       - name: Build and deploy application image to Production Okteto Namespace
         if: ${{ github.event_name == 'push' }}
         uses: okteto/deploy-stack@master
         with:
-          name: Findcare
+          name: findcare
           build: true
