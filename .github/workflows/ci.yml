@@ -1,39 +1,47 @@
-name: NextCare API
+name: FindCare
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - name: Install python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10.2
 
-    - uses: actions/checkout@v2
-    - name: Install python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.10.2
+      - name: Install python dependencies
+        working-directory: backend
+        run: pip install -r requirements.txt
 
-    - name: Install python dependencies
-      working-directory: backend
-      run: pip install -r requirements.txt
+      - uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install Yarn dependencies
+        working-directory: frontend
+        run: yarn install
 
-    - name: Login to Okteto Cloud
-      uses: okteto/login@master
-      with:
-        token: ${{ secrets.OKTETO_TOKEN }}
+      - name: Login to Okteto Cloud
+        uses: okteto/login@master
+        with:
+          token: ${{ secrets.OKTETO_TOKEN }}
 
-    - name: Activate application namespace
-      uses: okteto/namespace@master
-      with:
-        namespace: nextcare
+      - name: Activate application namespace
+        uses: okteto/namespace@master
+        with:
+          namespace: Findcare
 
-    - name: Build and deploy application image to Production Okteto Namespace
-      if: ${{ github.event_name == 'push' }}
-      uses: okteto/deploy-stack@master
-      with:
-        name: okteto-nextcare-api
-        build: true
+      - name: Build and deploy application image to Production Okteto Namespace
+        if: ${{ github.event_name == 'push' }}
+        uses: okteto/deploy-stack@master
+        with:
+          name: Findcare
+          build: true
