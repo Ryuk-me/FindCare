@@ -1,11 +1,24 @@
 <script context="module">
 	export const prerender = true
+	export async function load({ session }) {
+		if (session) {
+			return {
+				status: 302,
+				redirect: '/profile'
+			}
+		}
+		return {
+			props: {}
+		}
+	}
 </script>
 
 <script>
 	import shape from '$lib/assets/shape.png'
 	import medical_team from '$lib/assets/medical-team.png'
 	var pass = false
+	let username = ''
+	let password = ''
 	function showpass() {
 		if (pass) {
 			document.getElementById('password').setAttribute('type', 'password')
@@ -19,6 +32,17 @@
 			pass = true
 		}
 	}
+	let response = {}
+	async function login() {
+		const resp = await fetch('api/v1/login', {
+			method: 'POST',
+			body: JSON.stringify(`username=${username}&password=${password}`)
+		})
+		response = await resp.json()
+		if ('access_token' in response) {
+			location.reload()
+		}
+	}
 </script>
 
 <img src={shape} alt="" class="fixed hidden lg:block w-96 bottom-0 left-0" />
@@ -28,10 +52,16 @@
 		<div class="">
 			<h2 class="text-primary font-bold font-display text-3xl text-left">nextcare</h2>
 			<form
-				action=""
+				on:submit|preventDefault={login}
 				class="flex flex-col justify-center items-start w-96 lg:w-[30rem] bg-white rounded drop-shadow-xl mb-8 px-8 py-7"
 			>
 				<h2 class="font-bold my-3 mb-9 text-xl">Sign in to your account</h2>
+
+				<!-- IF NO ACCOUNT / USER CREDENTIALS MISMATCH -->
+				{#if 'detail' in response}
+					<p class="text-red-600 mb-2">{response.detail}</p>
+				{/if}
+
 				<div class="relative w-full mb-4">
 					<label for="email" class="">Email</label>
 					<input
@@ -39,6 +69,7 @@
 						class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 						placeholder="your@domain.com"
 						autocomplete="on"
+						bind:value={username}
 					/>
 				</div>
 				<div class="w-full mb-3">
@@ -53,6 +84,7 @@
 							class="block border rounded py-2 pt-3 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 							id="password"
 							autocomplete="off"
+							bind:value={password}
 						/>
 						<span>
 							<i

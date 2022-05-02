@@ -78,7 +78,9 @@ DOCTOR_IS_ALREADY_UNBANNED = HTTPException(
 
 
 INVALID_CREDENTIALS_ERROR = HTTPException(
-    status_code=status.HTTP_403_FORBIDDEN, detail="invalid credentials")
+    status_code=status.HTTP_403_FORBIDDEN, detail="Incorrect username or password.")
+
+
 
 TOKEN_CREDENTIALS_ERROR = HTTPException(
     status_code=status.HTTP_403_FORBIDDEN, detail="could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
@@ -172,6 +174,9 @@ EMAIL_ALREADY_EXIST = HTTPException(
 
 PASSWORD_CANNOT_BE_SAME = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="password cannot be same as the old one")
+
+ACCOUNT_NOT_FOUND_WITH_THIS_EMAIL = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, detail="no account found with this email")
 
 
 # ***********************************************************************************

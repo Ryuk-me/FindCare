@@ -1,15 +1,29 @@
-version: '3.9'
+version: "3.9"
+
 services:
-  nextcare-api:
+  frontend:
+    container_name: FindCare
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - findcare-api
+
+  findcare-api:
+    container_name: FindCare-API
     restart: always
     build:
-      context: .
-      dockerfile: backend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     command: uvicorn app.main:app --host 0.0.0.0 --port 8009
     ports:
       - 8009:8009
     depends_on:
       - postgres
+
   postgres:
     image: postgres:latest
     volumes:
@@ -19,6 +33,5 @@ services:
       - POSTGRES_DB=nextcare
     expose:
       - 5432
-
 volumes:
   postgres_data:

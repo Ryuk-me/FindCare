@@ -19,6 +19,8 @@ router = APIRouter(
 @router.post('/user', response_model=token_schema.BaseToken)
 async def user_login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(_services.get_db)):
     user_exist = _services.is_user_exist(db, user_credentials.username)
+    if not user_exist:
+        raise errors.ACCOUNT_NOT_FOUND_WITH_THIS_EMAIL
     if user_exist.is_banned:
         raise errors.USER_IS_BANNED
     if user_exist:
@@ -36,6 +38,8 @@ async def user_login(user_credentials: OAuth2PasswordRequestForm = Depends(), db
 @router.post('/doctor', response_model=token_schema.BaseToken)
 async def doctor_login(doctor_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(_services.get_db)):
     doctor_exist = _services.is_doctor_exist(db, doctor_credentials.username)
+    if not doctor_exist:
+        raise errors.ACCOUNT_NOT_FOUND_WITH_THIS_EMAIL
     if doctor_exist.is_banned:
         raise errors.USER_IS_BANNED
     if doctor_exist:
@@ -53,6 +57,8 @@ async def doctor_login(doctor_credentials: OAuth2PasswordRequestForm = Depends()
 @router.post('/admin', response_model=token_schema.BaseToken)
 async def doctor_login(admin_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(_services.get_db)):
     admin_exist = _services.is_admin_exist(db, admin_credentials.username)
+    if not admin_exist:
+        raise errors.ACCOUNT_NOT_FOUND_WITH_THIS_EMAIL
     if admin_exist:
         if _services.verify_hash(admin_credentials.password, admin_exist.password):
             expire_time = timedelta(minutes=int(

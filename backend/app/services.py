@@ -304,7 +304,7 @@ def get_admin_me(db: Session, admin_id: int):
         admin_model.Admin.id == admin_id).first()
     if admin:
         return admin
-    raise errors.NOT_FOUND_ERROR
+    raise errors.ACCOUNT_NOT_FOUND_WITH_THIS_EMAIL
 
 
 def get_all_clinics(db: Session):
