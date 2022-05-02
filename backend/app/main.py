@@ -34,7 +34,10 @@ app = FastAPI(
 )
 
 origins = ["http://localhost:3000",
-           'http://127.0.0.1:8009', 'http://127.0.0.1:8009/*',"http://localhost:3000/*"]
+           'http://127.0.0.1:8009', 'http://127.0.0.1:8009/*',
+           "http://localhost:3000/*",
+           "https://findcare-api-ryuk-me.cloud.okteto.net",
+           "https://findcare-api-ryuk-me.cloud.okteto.net/*"]
 
 # origins = ["*"]
 
