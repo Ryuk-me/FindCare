@@ -8,7 +8,8 @@ export const post: RequestHandler = async ({ request }) => {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
 		credentials: 'include',
-		body: body
+		body: body,
+		mode: 'cors'
 	})
 	const ACCESS_TOKEN_EXPIRE_SECONDS = Config.ACCESS_TOKEN_EXPIRE_MINUTES * 60
 	let data = await response.json()
