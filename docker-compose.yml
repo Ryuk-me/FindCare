@@ -48,8 +48,6 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ryuk
       PGADMIN_CONFIG_SERVER_MODE: 'True'
       PGADMIN_LISTEN_PORT: 5050
-    volumes:
-      - pgadmin:/var/lib/pgadmin
     ports:
       - "5050:5050"
     networks:
@@ -66,4 +64,3 @@ networks:
           gateway: 192.168.0.1
 volumes:
   postgres_data:
-  pgadmin:
