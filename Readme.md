@@ -24,6 +24,7 @@
 - BACKEND  -> [API](https://bit.ly/3kQH1Ih)
 - FRONTEND ->  [WEBISTE](https://bit.ly/380nQbZ) (DOCKER)
 - FRONTEND ->  [WEBISTE](https://jazzy-starship-22dd57.netlify.app) (NETLIFY)
+- PG ADMIN - > [DATABASE ONLINE](https://pgadmin-ryuk-me.cloud.okteto.net) (admin@admin.com root)
 
 > ## Team Members
 
