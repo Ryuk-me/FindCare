@@ -1,5 +1,4 @@
 <script context="module">
-	export const prerender = true
 	import { check_auth_status_login } from '$root/utils'
 	export async function load({ session }) {
 		return check_auth_status_login(session, 302, '/profile')
@@ -10,7 +9,7 @@
 	import shape from '$lib/assets/shape.png'
 	import medical_team from '$lib/assets/medical-team.png'
 	import { goto } from '$app/navigation'
-	import { session } from '$app/stores'
+	import { session as st } from '$app/stores'
 	var pass = false
 	let username = ''
 	let password = ''
@@ -35,7 +34,7 @@
 		})
 		response = await resp.json()
 		if ('access_token' in response) {
-			$session = response.access_token
+			$st = response.access_token
 			await goto('/profile')
 		}
 	}
