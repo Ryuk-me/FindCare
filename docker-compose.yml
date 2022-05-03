@@ -35,14 +35,16 @@ services:
       - 5432
   pgadmin:
     container_name: pgadmin4_container
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:5.5
     restart: always
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: root
+      PGADMIN_LISTEN_PORT: 8080
     ports:
-      - 5432
-    depends_on:
-      - postgres
+      - "8080:8080"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
 volumes:
   postgres_data:
+  pgadmin-data:
