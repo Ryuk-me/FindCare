@@ -15,7 +15,6 @@
 	onMount(async () => {
 		const resp = await fetch(Config.FINDCARE_API_BASE_URL + '/api/v1/user', {
 			method: 'GET',
-			mode: 'cors',
 			headers: {
 				'Content-type': 'application/json',
 				Authorization: `Bearer ${session}`
