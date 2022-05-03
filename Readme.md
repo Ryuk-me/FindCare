@@ -24,13 +24,14 @@
 - BACKEND  -> [API](https://bit.ly/3kQH1Ih)
 - FRONTEND ->  [WEBISTE](https://bit.ly/380nQbZ) (DOCKER)
 - FRONTEND ->  [WEBISTE](https://jazzy-starship-22dd57.netlify.app) (NETLIFY)
-- PG4 ADMIN - > [DATABASE ONLINE](https://pgadmin-ryuk-me.cloud.okteto.net) (ryuk)
+- PG4 ADMIN - > [DATABASE ONLINE](https://pgadmin-ryuk-me.cloud.okteto.net)
   
 > ## How to connect database in pg4 admin
 
-- 1. Click On add serever
-- 2. In name field `find_care` (anything)
-- 3. then go to connection tab in host `192.168.0.2` and in username `postgres` and in password `ryuk` then save.
+- 1. email - > `ryuk@ryuk.com` password `ryuk`
+- 2. Click On add serever
+- 3. In name field `find_care` (anything)
+- 4. then go to connection tab in host `192.168.0.2` and in username `postgres` and in password `ryuk` then save.
 
 > ## Team Members
 
