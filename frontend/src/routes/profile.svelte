@@ -1,20 +1,13 @@
 <script context="module">
+	import { check_auth_status_profile } from '$root/utils'
 	export const load = ({ session }) => {
-		if (!session) {
-			return {
-				status: 302,
-				redirect: '/login'
-			}
-		}
-		return {
-			props: {
-				session: session
-			}
-		}
+		return check_auth_status_profile(session, 302, '/login')
 	}
 </script>
 
 <script>
+	import { goto } from '$app/navigation'
+	import { session as st } from '$app/stores'
 	import { Config } from '$root/Config'
 	import { onMount } from 'svelte'
 	export let session
@@ -23,7 +16,7 @@
 		const resp = await fetch(Config.FINDCARE_API_BASE_URL + '/api/v1/user', {
 			headers: {
 				'Content-type': 'application/json',
-				Authorization: `Bearer ${session.session}` // notice the Bearer before your token
+				Authorization: `Bearer ${session}`
 			}
 		})
 		const data = await resp.json()
@@ -33,7 +26,8 @@
 		await fetch('api/v1/logout', {
 			method: 'GET'
 		})
-		location.reload()
+		$st = null
+		await goto('/login')
 	}
 </script>
 
