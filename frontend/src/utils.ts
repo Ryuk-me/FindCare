@@ -5,20 +5,12 @@ export const check_auth_status_profile = (session, status, redirect) => {
             redirect: redirect
         }
     }
-    if (session?.session) {
-        return {
-            props: {
-                session: session.session
-            }
-        }
-    }
     return {
         props: {
-            session: session
+            session: session.session
         }
     }
 }
-
 
 export const check_auth_status_login = (session, status, redirect) => {
     if (session) {

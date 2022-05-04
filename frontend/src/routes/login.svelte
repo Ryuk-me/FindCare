@@ -34,8 +34,19 @@
 		})
 		response = await resp.json()
 		if ('access_token' in response) {
-			$st = response.access_token
-			await goto('/profile')
+			$st = {
+				session: response.access_token,
+				isAdmin: false,
+				isDoctor: false,
+				isUser: true
+			}
+			if ($st.isUser) {
+				await goto('/profile')
+			} else if ($st.isDoctor) {
+				await goto('/doctor')
+			} else {
+				await goto('/admin')
+			}
 		}
 	}
 </script>
