@@ -10,7 +10,7 @@ class CreateAdmin(BaseModel):
 
 
 class AdminOut(BaseModel):
-    id: int
+    id: str
     name: str
     email: EmailStr
     is_super_admin: bool

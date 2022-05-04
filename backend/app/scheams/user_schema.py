@@ -14,7 +14,7 @@ class UserCreate(BaseModel):
 
 
 class UserOut(BaseModel):
-    id: int
+    id: str
     name: str
     email: EmailStr
     profile_image: str
@@ -34,7 +34,7 @@ class UserOut(BaseModel):
 
 
 class UserOutAdminPanel(BaseModel):
-    id: int
+    id: str
     name: str
     email: EmailStr
     gender: str

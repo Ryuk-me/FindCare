@@ -4,12 +4,14 @@ from sqlalchemy.sql.sqltypes import TIMESTAMP, JSON
 from app.database import Base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.dialects.postgresql import UUID
+import uuid
 
 
 class Clinic(Base):
     __tablename__ = "clinics"
-    id = Column(Integer, primary_key=True, nullable=False)
-    doctor_id = Column(Integer, ForeignKey(
+    id = Column(String, primary_key=True, default=uuid.uuid4().hex)
+    doctor_id = Column(String, ForeignKey(
         "doctors.id"
     ), nullable=False, unique=True)
     name = Column(String, nullable=False)

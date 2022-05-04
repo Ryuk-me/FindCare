@@ -33,7 +33,7 @@ async def create_doctor(doctor: doctor_schema.DoctorCreate, db: Session = Depend
     expire_time = timedelta(minutes=int(
         settings.EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES))
     token = create_access_token(
-        data={"id": doctor.id, "is_doctor": True}, expires_delta=expire_time)
+        data={"id": doctor.id, "is_doctor": True, "email": doctor.email}, expires_delta=expire_time)
     token_url = f"{settings.API_HOSTED_ROOT_URL+settings.BASE_API_V1+'/email/verify-email?token='+token}"
 
     return await _services.send_email(subject="Email Verification",

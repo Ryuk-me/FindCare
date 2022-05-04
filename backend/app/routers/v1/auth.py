@@ -28,7 +28,7 @@ async def user_login(user_credentials: OAuth2PasswordRequestForm = Depends(), db
             expire_time = timedelta(minutes=int(
                 settings.ACCESS_TOKEN_EXPIRE_MINUTES))
             token = create_access_token(
-                data={"id": user_exist.id}, expires_delta=expire_time)
+                data={"id": user_exist.id, "email": user_exist.email}, expires_delta=expire_time)
             return {"access_token": token, "token_type": "bearer"}
     raise errors.INVALID_CREDENTIALS_ERROR
 
@@ -47,7 +47,7 @@ async def doctor_login(doctor_credentials: OAuth2PasswordRequestForm = Depends()
             expire_time = timedelta(minutes=int(
                 settings.ACCESS_TOKEN_EXPIRE_MINUTES))
             token = create_access_token(
-                data={"id": doctor_exist.id}, expires_delta=expire_time)
+                data={"id": doctor_exist.id, "email": doctor_exist.email}, expires_delta=expire_time)
             return {"access_token": token, "token_type": "bearer"}
     raise errors.INVALID_CREDENTIALS_ERROR
 
@@ -55,7 +55,7 @@ async def doctor_login(doctor_credentials: OAuth2PasswordRequestForm = Depends()
 # ***********************************************************************************
 #! ADMIN LOGIN
 @router.post('/admin', response_model=token_schema.BaseToken)
-async def doctor_login(admin_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(_services.get_db)):
+async def admin_login(admin_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(_services.get_db)):
     admin_exist = _services.is_admin_exist(db, admin_credentials.username)
     if not admin_exist:
         raise errors.ACCOUNT_NOT_FOUND_WITH_THIS_EMAIL
@@ -64,6 +64,6 @@ async def doctor_login(admin_credentials: OAuth2PasswordRequestForm = Depends(),
             expire_time = timedelta(minutes=int(
                 settings.ACCESS_TOKEN_EXPIRE_MINUTES))
             token = create_access_token(
-                data={"id": admin_exist.id}, expires_delta=expire_time)
+                data={"id": admin_exist.id, "email": admin_exist.email}, expires_delta=expire_time)
             return {"access_token": token, "token_type": "bearer"}
     raise errors.INVALID_CREDENTIALS_ERROR

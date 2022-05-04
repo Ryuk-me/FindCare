@@ -17,7 +17,7 @@ class DoctorCreate(BaseModel):
 
 
 class DoctorOut(BaseModel):
-    id: int
+    id: str
     name: str
     email: EmailStr
     phone: constr(max_length=10, min_length=10)
@@ -42,7 +42,7 @@ class DoctorOut(BaseModel):
 
 
 class DoctorOutUser(BaseModel):
-    id: int
+    id: str
     name: str
     profile_image: str
     gender: str

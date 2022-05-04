@@ -22,7 +22,7 @@ class ClinicCreate(BaseModel):
 
 
 class ClinicOut(BaseModel):
-    id: int
+    id: str
     doctor_id: int
     name: str
     fees: str
@@ -39,7 +39,7 @@ class ClinicOut(BaseModel):
 
 
 class ClinicOutAdminPanel(BaseModel):
-    id: int
+    id: str
     doctor_id: int
     name: str
     fees: str
@@ -61,7 +61,7 @@ class ClinicOutAdminPanel(BaseModel):
 
 
 class ClinicOutUser(BaseModel):
-    id: int
+    id: str
     doctor_id: int
     name: str
     fees: str

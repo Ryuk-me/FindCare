@@ -15,7 +15,7 @@ class CreateAppointment(BaseAppointment):
 
 
 class AppointmentOut(BaseModel):
-    id: int
+    id: str
     user_id: int
     doctor_id: int
     clinic_id: int
@@ -37,7 +37,7 @@ class CancelAppointment(BaseModel):
 
 
 class AppointmentOutUser(BaseModel):
-    id: int
+    id: str
     user_id: int
     doctor_id: int
     clinic_id: int

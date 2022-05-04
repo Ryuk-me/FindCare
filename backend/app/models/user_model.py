@@ -3,11 +3,12 @@ from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.orm import relationship
 from app.database import Base
-
+from sqlalchemy.dialects.postgresql import UUID
+import uuid
 
 class User(Base):
     __tablename__ = "users"
-    id = Column(Integer, primary_key=True, nullable=False)
+    id = Column(String, primary_key=True, default=uuid.uuid4().hex)
     name = Column(String, nullable=False)
     email = Column(String, nullable=False, unique=True)
     phone = Column(String(10), nullable=False, unique=True)
