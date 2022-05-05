@@ -33,12 +33,15 @@ app = FastAPI(
     # openapi_url="/openapi.json",
 )
 
-origins = ["http://localhost:3000",
-           'http://127.0.0.1:8009', 'http://127.0.0.1:8009/*',
-           "http://localhost:3000/*",
-           "https://findcare-api-ryuk-me.cloud.okteto.net",
-           "https://findcare-api-ryuk-me.cloud.okteto.net/*",
-           "https://findcare-ryuk-me.cloud.okteto.net", "https://findcare-ryuk-me.cloud.okteto.net/*"]
+origins = [
+    "https://findcare-api-ryuk-me.cloud.okteto.net",
+    "http://findcare-api-ryuk-me.cloud.okteto.net",
+    "https://findcare-ryuk-me.cloud.okteto.net",
+    "http://findcare-ryuk-me.cloud.okteto.net",
+    '127.0.0.1',
+    '0.0.0.0',
+    'localhost'
+]
 
 # origins = ["*"]
 

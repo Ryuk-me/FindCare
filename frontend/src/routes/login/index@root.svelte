@@ -1,10 +1,41 @@
+<script context="module">
+	export async function load({ session }) {
+		if (session) {
+			return {
+				status: 302,
+				redirect: '/profile'
+			}
+		}
+		return {}
+	}
+</script>
+
 <script>
-	let username = '';
-	let password = '';
-	let show = false;
+	import { session } from '$app/stores'
+	import { goto } from '$app/navigation'
+	import { post } from '$lib/utils.js'
+	import jwt_decode from 'jwt-decode'
+	let username = ''
+	let password = ''
+	export let msg
+	let show = false
 	const handleInput = (event) => {
-		password = event.target.value;
-	};
+		password = event.target.value
+	}
+	async function handleLogin() {
+		const response = await post(`api/v1/auth/login`, { username, password })
+		if (response.access_token) {
+			const t = jwt_decode(response.access_token)
+			$session = {
+				session: response.access_token,
+				//@ts-ignore
+				status: t.status
+			}
+			//@ts-ignore
+			if ($session.status == 'admin') goto('/admin')
+			else goto('/profile')
+		}
+	}
 </script>
 
 <img src="shape.png" alt="" class="fixed hidden lg:block w-96 bottom-0 left-0" />
@@ -14,11 +45,13 @@
 		<div class="">
 			<h2 class="text-primary font-bold font-display text-3xl text-left">findcare</h2>
 			<form
-				action="/"
+				on:submit|preventDefault={handleLogin}
 				class="flex flex-col justify-center items-start w-96 lg:w-[30rem] bg-white rounded drop-shadow-xl mb-8 px-8 py-7"
 			>
 				<h2 class="font-bold my-3 mb-9 text-xl">Sign in to your account</h2>
-
+				{#if msg}
+					<h1>{msg}</h1>
+				{/if}
 				<div class="relative w-full mb-4">
 					<label for="email" class="">Email</label>
 					<input

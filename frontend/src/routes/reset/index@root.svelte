@@ -1,6 +1,7 @@
 <script>
+	let email = ''
 	function passwordsent() {
-		alert('check your email');
+		alert('check your email')
 	}
 </script>
 
@@ -25,8 +26,9 @@
 				</p>
 			</div>
 			<form class="w-full mt-3 mb-2" on:submit={passwordsent}>
-				<label for="email" class="font-medium">EMAIL</label>
+				<label for="email" class="font-medium">Email</label>
 				<input
+					bind:value={email}
 					type="email"
 					id="email"
 					placeholder="your@domain.com"
