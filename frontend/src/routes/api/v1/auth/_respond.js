@@ -1,4 +1,4 @@
-import jwt_decode from 'jwt-decode'
+import { ENV } from '$lib/utils'
 
 export function respond(body) {
 	if (!body.access_token) {
@@ -6,13 +6,13 @@ export function respond(body) {
 	}
 
 	const access_token = body.access_token
-	const ACCESS_TOKEN_EXPIRE_MINUTES =
-		parseInt(import.meta.env.VITE_ACCESS_TOKEN_EXPIRE_MINUTES) * 60
 	return {
 		headers: {
 			'set-cookie': [
 				// @ts-ignore
-				`session=${access_token}; Path=/; max-age=${ACCESS_TOKEN_EXPIRE_MINUTES}; HttpOnly;`
+				`session=${access_token}; Path=/; max-age=${
+					ENV.VITE_ACCESS_TOKEN_EXPIRE_MINUTES * 60
+				}; HttpOnly;`
 			]
 		},
 		body

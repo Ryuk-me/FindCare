@@ -1,3 +1,6 @@
+<svelte:head>
+  <title>Findcare Password Recovery</title>
+</svelte:head>
 <script>
 	let email = ''
 	function passwordsent() {

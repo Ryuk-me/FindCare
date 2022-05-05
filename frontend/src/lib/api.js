@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_FINDCARE_API_BASE_URL
+import { ENV } from './utils'
 
 async function send({ method, path, token = null, data = null }) {
 	const opts = {
@@ -12,9 +12,10 @@ async function send({ method, path, token = null, data = null }) {
 	}
 
 	if (token) {
+		opts.headers['Content-type'] = 'application/json'
 		opts.headers['Authorization'] = `Bearer ${token}`
 	}
-	return fetch(`${API_URL}/${path}`, opts)
+	return fetch(`${ENV.VITE_FINDCARE_API_BASE_URL}/${path}`, opts)
 		.then((r) => r.json())
 		.then((json) => {
 			try {

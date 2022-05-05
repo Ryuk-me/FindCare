@@ -1,23 +1,16 @@
 <script context="module">
-	export async function load({ params, fetch, session, stuff }) {
+	import * as api from '$lib/api.js'
+	export async function load({ session }) {
 		if (!session) {
 			return {
 				status: 302,
 				redirect: '/login'
 			}
 		}
-		const resp = await fetch('https://findcare-api-ryuk-me.cloud.okteto.net' + '/api/v1/user/', {
-			method: 'GET',
-			headers: {
-				'Content-type': 'application/json',
-				Authorization: `Bearer ${session.session}`
-			}
-		})
-
+		const resp = await api.get('api/v1/user/', session.session)
 		return {
-			status: resp.status,
 			props: {
-				user: resp.ok && (await resp.json())
+				user: resp
 			}
 		}
 	}
@@ -27,13 +20,14 @@
 	export let user
 </script>
 
+<svelte:head>
+	<title>Profile</title>
+</svelte:head>
+
 <p>User profile route</p>
 {#if user}
 	{#each Object.entries(user) as [key, value]}
 		<p>{key} : {value}</p>
 	{/each}
 {/if}
-<!-- {#if user}
-	{user.count}
-{/if} -->
 <button class="bg-orange-500 text-black"> Logout </button>

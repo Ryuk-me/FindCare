@@ -7,6 +7,5 @@ export async function post({ request }) {
 		body: json
 	})
 
-	console.log('body', body)
 	return respond(body)
 }

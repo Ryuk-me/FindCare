@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Findcare Login | Sign</title>
+</svelte:head>
+
 <script context="module">
 	export async function load({ session }) {
 		if (session) {

@@ -10,3 +10,8 @@ export function post(endpoint, data) {
 		}
 	}).then((r) => r.json())
 }
+
+export const ENV = {
+	VITE_ACCESS_TOKEN_EXPIRE_MINUTES: parseInt(import.meta.env.VITE_ACCESS_TOKEN_EXPIRE_MINUTES),
+	VITE_FINDCARE_API_BASE_URL: import.meta.env.VITE_FINDCARE_API_BASE_URL
+}
