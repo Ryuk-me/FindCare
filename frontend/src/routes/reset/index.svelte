@@ -1,11 +1,6 @@
-<script context="module">
-	export const prerender = true
-</script>
-
 <script>
-	import lock_svg from '$lib/assets/lock.svg'
 	function passwordsent() {
-		alert('check your email')
+		alert('check your email');
 	}
 </script>
 
@@ -15,7 +10,7 @@
 	>
 		<div id="header" class="flex flex-col justify-center items-center">
 			<div>
-				<img src={lock_svg} alt="lock svg" class="w-32" />
+				<img src="lock.svg" alt="lock svg" class="w-32" />
 			</div>
 			<div>
 				<h2 class="text-2xl font-semibold">Trouble Logging In?</h2>
@@ -48,6 +43,6 @@
 		</div>
 	</div>
 	<p class="text-center">
-		&copy;2022 <a href="./" class="text-primary">NextCare</a>. All rights reserved.
+		&copy;2022 <a href="./" class="text-primary">FindCare</a>. All rights reserved.
 	</p>
 </div>

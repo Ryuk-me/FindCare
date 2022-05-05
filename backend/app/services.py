@@ -31,16 +31,19 @@ def get_db():
 
 def create_user(db: Session, user: user_schema.UserCreate):
     if not is_user_exist(db, user.email):
-        if not get_user_by_phone_no(db, user.phone):
-            hash = hash_password(user.password)
-            user.password = hash
-            user = user_model.User(age=calculate_age(user.dob), **user.dict())
-            db.add(user)
-            db.commit()
-            db.refresh(user)
-            return user
-        raise errors.PHONE_NUMBER_ALREADY_EXIST
-    raise errors.USER_ALREADY_EXIST
+        if not is_doctor_exist(db, user.email):
+            if not get_doctor_by_phone_no(db, user.phone):
+                if not get_user_by_phone_no(db, user.phone):
+                    hash = hash_password(user.password)
+                    user.password = hash
+                    user = user_model.User(
+                        age=calculate_age(user.dob), **user.dict())
+                    db.add(user)
+                    db.commit()
+                    db.refresh(user)
+                    return user
+            raise errors.PHONE_NUMBER_ALREADY_EXIST
+    raise errors.EMAIL_ALREADY_EXIST
 
 
 def get_user(db: Session, id: int):
@@ -69,18 +72,20 @@ def get_user_by_phone_no(db: Session, phone: str):
 
 def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate):
     if not is_doctor_exist(db, doctor.email):
-        if not get_doctor_by_phone_no(db, doctor.phone):
-            if not get_doctor_by_rgnum(db, doctor.registration_number):
-                hash = hash_password(doctor.password)
-                doctor.password = hash
-                doctor = doctor_model.Doctor(
-                    age=calculate_age(doctor.dob), slug=generate_slug(doctor.name), **doctor.dict())
-                db.add(doctor)
-                db.commit()
-                db.refresh(doctor)
-                return doctor
-            raise errors.DOCTOR_WITH_THIS_REGISTRATION_NUM_ALREADY_EXIST
-        raise errors.PHONE_NUMBER_ALREADY_EXIST
+        if not is_user_exist(db, doctor.email):
+            if not get_user_by_phone_no(db, doctor.phone):
+                if not get_doctor_by_phone_no(db, doctor.phone):
+                    if not get_doctor_by_rgnum(db, doctor.registration_number):
+                        hash = hash_password(doctor.password)
+                        doctor.password = hash
+                        doctor = doctor_model.Doctor(
+                            age=calculate_age(doctor.dob), slug=generate_slug(doctor.name), **doctor.dict())
+                        db.add(doctor)
+                        db.commit()
+                        db.refresh(doctor)
+                        return doctor
+                    raise errors.DOCTOR_WITH_THIS_REGISTRATION_NUM_ALREADY_EXIST
+            raise errors.PHONE_NUMBER_ALREADY_EXIST
     raise errors.EMAIL_ALREADY_EXIST
 
 

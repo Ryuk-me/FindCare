@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, Literal
 
 
 class BaseToken(BaseModel):
@@ -9,6 +9,5 @@ class BaseToken(BaseModel):
 
 class TokenData(BaseModel):
     id: Optional[str] = None
-    is_user: Optional[bool] = False
-    is_doctor: Optional[bool] = False
+    status: Optional[Literal['admin', 'user', 'doctor']]
     email: Optional[str] = None

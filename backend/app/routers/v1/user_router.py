@@ -34,7 +34,7 @@ async def create_user(user: user_schema.UserCreate, db: Session = Depends(_servi
     expire_time = timedelta(minutes=int(
         settings.EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES))
     token = create_access_token(
-        data={"id": user.id, "is_user": True, "email": user.email}, expires_delta=expire_time)
+        data={"id": user.id, "status": 'user', "email": user.email}, expires_delta=expire_time)
     token_url = f"{settings.API_HOSTED_ROOT_URL+settings.BASE_API_V1+'/email/verify-email?token='+token}"
 
     return await _services.send_email(subject="Email Verification",

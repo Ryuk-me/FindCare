@@ -17,7 +17,7 @@ async def verify_email(token: str, db: Session = Depends(_services.get_db)):
     token = verify_token(token, is_email_verification_token=True)
     if not token:
         raise errors.VERIFICATION_LINK_EXPIRED
-    if token.is_user:
+    if token.status == 'user':
         user = db.query(user_model.User).filter(
             user_model.User.id == token.id).first()
         if not user.is_active:
@@ -25,7 +25,7 @@ async def verify_email(token: str, db: Session = Depends(_services.get_db)):
             db.commit()
             return {"details": "email verified successfully"}
         raise errors.EMAIL_ALREADY_VERIFIED
-    if token.is_doctor:
+    if token.status == 'doctor':
         doctor = db.query(doctor_model.Doctor).filter(
             doctor_model.Doctor.id == token.id
         ).first()
