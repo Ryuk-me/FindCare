@@ -12,7 +12,8 @@ from datetime import timedelta
 
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/doctor',
-    tags=['Doctors']
+    tags=['Doctors'],
+    redirect_slashes=False
 )
 
 

@@ -8,7 +8,8 @@ from app.models import doctor_model, user_model
 
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/email',
-    tags=["Email Verification"]
+    tags=["Email Verification"],
+    redirect_slashes=False
 )
 
 

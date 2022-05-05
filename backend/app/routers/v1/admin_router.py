@@ -11,7 +11,8 @@ from typing import List
 
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/admin',
-    tags=["Admins"]
+    tags=["Admins"],
+    redirect_slashes=False
 )
 
 

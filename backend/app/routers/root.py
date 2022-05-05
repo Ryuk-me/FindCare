@@ -2,7 +2,8 @@ from fastapi import APIRouter
 
 
 router = APIRouter(
-    tags=['Root']
+    tags=['Root'],
+    redirect_slashes=False
 )
 
 

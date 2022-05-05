@@ -6,7 +6,7 @@
 				redirect: '/login'
 			}
 		}
-		const resp = await fetch('https://findcare-api-ryuk-me.cloud.okteto.net' + '/api/v1/user', {
+		const resp = await fetch('https://findcare-api-ryuk-me.cloud.okteto.net' + '/api/v1/user/', {
 			method: 'GET',
 			headers: {
 				'Content-type': 'application/json',

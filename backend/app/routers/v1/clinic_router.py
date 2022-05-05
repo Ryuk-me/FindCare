@@ -11,7 +11,8 @@ from app.routers.v1.doctor_router import verify_doctor_state
 
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/doctor/clinic',
-    tags=['Clinics']
+    tags=['Clinics'],
+    redirect_slashes=False
 )
 
 

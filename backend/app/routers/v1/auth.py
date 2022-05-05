@@ -10,7 +10,8 @@ from datetime import timedelta
 
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/auth',
-    tags=['Authentication']
+    tags=['Authentication'],
+    redirect_slashes=False
 )
 
 

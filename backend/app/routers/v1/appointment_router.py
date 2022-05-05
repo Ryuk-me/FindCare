@@ -11,7 +11,8 @@ from app.routers.v1.user_router import verify_user_state
 
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/user/appointment',
-    tags=['Appointments']
+    tags=['Appointments'],
+    redirect_slashes=False
 )
 
 

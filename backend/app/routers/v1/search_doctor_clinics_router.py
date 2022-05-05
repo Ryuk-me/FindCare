@@ -7,7 +7,8 @@ from app import services as _services
 
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/search',
-    tags=["Search"]
+    tags=["Search"],
+    redirect_slashes=False
 )
 
 
