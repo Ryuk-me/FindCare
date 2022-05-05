@@ -1,12 +1,17 @@
-<svelte:head>
-  <title>Findcare Password Recovery</title>
-</svelte:head>
+<script context="module">
+	export const prerender = true
+</script>
+
 <script>
 	let email = ''
 	function passwordsent() {
 		alert('check your email')
 	}
 </script>
+
+<svelte:head>
+	<title>Findcare Password Recovery</title>
+</svelte:head>
 
 <div class="w-screen h-screen flex flex-col justify-center items-center ">
 	<div

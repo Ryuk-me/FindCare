@@ -1,9 +1,5 @@
-<script context="module">
-	export const prerender = true
-</script>
-
 <svelte:head>
-	<title>Reset Password</title>
+	<title>Findcare</title>
 </svelte:head>
 
 <div class="container-home">
