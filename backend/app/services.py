@@ -1,3 +1,4 @@
+import os
 from typing import List
 from app.database import SessionLocal
 from app.models import user_model
@@ -525,6 +526,6 @@ def login_mail():
         MAIL_SSL=False,
         USE_CREDENTIALS=True,
         VALIDATE_CERTS=True,
-        TEMPLATE_FOLDER=Path(__file__).parent / 'email-templates',
+        TEMPLATE_FOLDER=os.path.join(os.getcwd(), 'app', 'email-templates',),
     )
     return config
