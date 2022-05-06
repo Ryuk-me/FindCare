@@ -6,9 +6,13 @@ from app.database import Base
 import uuid
 
 
+def generate_uuid():
+    return str(uuid.uuid4())
+
+
 class Admin(Base):
     __tablename__ = "admins"
-    id = Column(String, primary_key=True, default=uuid.uuid4().hex)
+    id = Column(String, primary_key=True, default=generate_uuid)
     name = Column(String, nullable=False)
     email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)

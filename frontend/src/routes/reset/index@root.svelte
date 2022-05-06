@@ -7,6 +7,7 @@
 	function passwordsent() {
 		alert('check your email')
 	}
+	async function sendResetPassword() {}
 </script>
 
 <svelte:head>
@@ -44,7 +45,7 @@
 				/>
 				<button
 					class="bg-primary hover:bg-[#524af4] text-white mb-3 font-bold py-2 mt-5 w-full rounded focus:outline-none focus:shadow-outline"
-					>Reset Password</button
+					on:click={sendResetPassword}>Reset Password</button
 				>
 			</form>
 			<div>
