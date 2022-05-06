@@ -375,7 +375,7 @@ def deactivate_account(db: Session, id: str, is_user: bool = False):
             user.is_banned = True
             user.when_banned = datetime.now()
             db.commit()
-            return {"details": "user banned successfully"}
+            return {"detail": "user banned successfully"}
         raise errors.USER_ALREADY_BANNED
     else:
         doctor: doctor_schema.DoctorOut = get_doctor(db, id)
@@ -385,7 +385,7 @@ def deactivate_account(db: Session, id: str, is_user: bool = False):
             doctor.is_banned = True
             doctor.when_banned = datetime.now()
             db.commit()
-            return {"details": "doctor banned successfully"}
+            return {"detail": "doctor banned successfully"}
         raise errors.DOCTOR_IS_ALREADY_BANNED
 
 
@@ -398,7 +398,7 @@ def activate_account(db: Session, id: str, is_user: bool = False):
             user.is_banned = False
             user.when_banned = None
             db.commit()
-            return {"details": "user unbanned successfully"}
+            return {"detail": "user unbanned successfully"}
         raise errors.USER_ALREADY_UNBANNED
     else:
         doctor: doctor_schema.DoctorOut = get_doctor(db, id)
@@ -408,7 +408,7 @@ def activate_account(db: Session, id: str, is_user: bool = False):
             doctor.is_banned = False
             doctor.when_banned = None
             db.commit()
-            return {"details": "doctor unbanned successfully"}
+            return {"detail": "doctor unbanned successfully"}
         raise errors.DOCTOR_IS_ALREADY_UNBANNED
 
 
@@ -458,7 +458,7 @@ def change_password(db: Session, password: str, obj: change_password_schema.Chan
     if(current_db_obj):
         current_db_obj.updated_at = datetime.now()
     db.commit()
-    return {"details": "password changed successfully"}
+    return {"detail": "password changed successfully"}
 
 
 def reset_password(db: Session, email: str):
@@ -482,7 +482,7 @@ def reset_password(db: Session, email: str):
     change_password(db, temp_gen_pass, final_obj, final_obj)
 
     # ! send password on email and return a message temporary password has been successfully sent to your email
-    return {"details": temp_gen_pass}
+    return {"detail": temp_gen_pass}
 
 
 def generate_random_password():
@@ -550,7 +550,7 @@ async def send_email(subject: str, recipients: str, token: str, token_url: str):
     await fm.send_message(message, template_name='new-user.html')
 
     #! CHANGE THIS TO EMAIL SENT SUCCESSFULLY PLEASE VERIFY
-    return {"details": "email sent successfully"}
+    return {"detail": "email sent successfully"}
 
 
 def login_mail():

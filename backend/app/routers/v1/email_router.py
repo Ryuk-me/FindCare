@@ -29,7 +29,7 @@ async def verify_email(token: str, db: Session = Depends(_services.get_db)):
         if not user.is_active:
             user.is_active = True
             db.commit()
-            return {"details": "email verified successfully"}
+            return {"detail": "email verified successfully"}
         raise errors.EMAIL_ALREADY_VERIFIED
     if token.status == 'doctor':
         doctor = db.query(doctor_model.Doctor).filter(
@@ -38,7 +38,7 @@ async def verify_email(token: str, db: Session = Depends(_services.get_db)):
         if not doctor.is_active:
             doctor.is_active = True
             db.commit()
-            return {"details": "email verified successfully"}
+            return {"detail": "email verified successfully"}
         raise errors.EMAIL_ALREADY_VERIFIED
 
 

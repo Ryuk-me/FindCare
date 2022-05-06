@@ -1,11 +1,14 @@
 <script context="module">
-	import * as api from '$lib/api.js'
-	export async function load({ params }) {
+	import { ENV } from '$lib/utils'
+	export async function load({ params, fetch }) {
 		const token = params.token
-		const resp = await api.get('api/v1/email/verify-email?token=' + token)
+		const resp = await fetch(
+			ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/email/verify-email?token=' + token
+		)
+		const data = await resp.json()
 		return {
 			props: {
-				msg: resp.detail
+				msg: data.detail
 			}
 		}
 	}
@@ -18,7 +21,6 @@
 <svelte:head>
 	<title>Email Verification</title>
 </svelte:head>
-
 <div class="flex justify-center">
 	{#if !msg.includes('expired')}
 		<div class="animation-ctn grid place-items-center h-80 w-3/6">
