@@ -81,7 +81,6 @@ INVALID_CREDENTIALS_ERROR = HTTPException(
     status_code=status.HTTP_403_FORBIDDEN, detail="Incorrect username or password.")
 
 
-
 TOKEN_CREDENTIALS_ERROR = HTTPException(
     status_code=status.HTTP_403_FORBIDDEN, detail="could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
 
@@ -189,8 +188,8 @@ ACCOUNT_NOT_FOUND_WITH_THIS_EMAIL = HTTPException(
 VERIFICATION_LINK_EXPIRED = HTTPException(
     status_code=status.HTTP_410_GONE, detail="verification link has been expired")
 
-EMAIL_ALREADY_VERIFIED = PASSWORD_CANNOT_BE_SAME = HTTPException(
+EMAIL_ALREADY_VERIFIED = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="email already verified")
 
-PLEASE_VERIFY_YOUR_EMAIL = PASSWORD_CANNOT_BE_SAME = HTTPException(
+PLEASE_VERIFY_YOUR_EMAIL = HTTPException(
     status_code=status.HTTP_403_FORBIDDEN, detail="please verify your email first")

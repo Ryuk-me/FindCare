@@ -44,9 +44,8 @@ async def verify_email(token: str, db: Session = Depends(_services.get_db)):
 
 @router.post('/reset-email', status_code=status.HTTP_202_ACCEPTED)
 async def reset_email(email: BaseEmail, db: Session = Depends(_services.get_db)):
-    # print(email.dict())
     email = email.email
-    ...
+    return _services.reset_password(db, email)
 
 
 @router.get('/test-email', status_code=status.HTTP_202_ACCEPTED)

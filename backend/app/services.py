@@ -1,3 +1,4 @@
+import json
 from typing import List
 from app.database import SessionLocal
 from app.models import user_model
@@ -31,22 +32,23 @@ def get_db():
 
 def create_user(db: Session, user: user_schema.UserCreate):
     if not is_user_exist(db, user.email):
-        if not is_doctor_exist(db, user.email):
-            if not get_doctor_by_phone_no(db, user.phone):
-                if not get_user_by_phone_no(db, user.phone):
-                    hash = hash_password(user.password)
-                    user.password = hash
-                    user = user_model.User(
-                        age=calculate_age(user.dob), **user.dict())
-                    db.add(user)
-                    db.commit()
-                    db.refresh(user)
-                    return user
-            raise errors.PHONE_NUMBER_ALREADY_EXIST
+        if not get_admin_by_email(db, user.email):
+            if not is_doctor_exist(db, user.email):
+                if not get_doctor_by_phone_no(db, user.phone):
+                    if not get_user_by_phone_no(db, user.phone):
+                        hash = hash_password(user.password)
+                        user.password = hash
+                        user = user_model.User(
+                            age=calculate_age(user.dob), **user.dict())
+                        db.add(user)
+                        db.commit()
+                        db.refresh(user)
+                        return user
+                raise errors.PHONE_NUMBER_ALREADY_EXIST
     raise errors.EMAIL_ALREADY_EXIST
 
 
-def get_user(db: Session, id: int):
+def get_user(db: Session, id: str):
     return db.query(user_model.User).filter(
         user_model.User.id == id).first()
 
@@ -72,24 +74,25 @@ def get_user_by_phone_no(db: Session, phone: str):
 
 def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate):
     if not is_doctor_exist(db, doctor.email):
-        if not is_user_exist(db, doctor.email):
-            if not get_user_by_phone_no(db, doctor.phone):
-                if not get_doctor_by_phone_no(db, doctor.phone):
-                    if not get_doctor_by_rgnum(db, doctor.registration_number):
-                        hash = hash_password(doctor.password)
-                        doctor.password = hash
-                        doctor = doctor_model.Doctor(
-                            age=calculate_age(doctor.dob), slug=generate_slug(doctor.name), **doctor.dict())
-                        db.add(doctor)
-                        db.commit()
-                        db.refresh(doctor)
-                        return doctor
-                    raise errors.DOCTOR_WITH_THIS_REGISTRATION_NUM_ALREADY_EXIST
-            raise errors.PHONE_NUMBER_ALREADY_EXIST
+        if not get_admin_by_email(db, doctor.email):
+            if not is_user_exist(db, doctor.email):
+                if not get_user_by_phone_no(db, doctor.phone):
+                    if not get_doctor_by_phone_no(db, doctor.phone):
+                        if not get_doctor_by_rgnum(db, doctor.registration_number):
+                            hash = hash_password(doctor.password)
+                            doctor.password = hash
+                            doctor = doctor_model.Doctor(
+                                age=calculate_age(doctor.dob), slug=generate_slug(doctor.name), **doctor.dict())
+                            db.add(doctor)
+                            db.commit()
+                            db.refresh(doctor)
+                            return doctor
+                        raise errors.DOCTOR_WITH_THIS_REGISTRATION_NUM_ALREADY_EXIST
+                raise errors.PHONE_NUMBER_ALREADY_EXIST
     raise errors.EMAIL_ALREADY_EXIST
 
 
-def get_doctor(db: Session, id: int):
+def get_doctor(db: Session, id: str):
     return db.query(doctor_model.Doctor).filter(
         doctor_model.Doctor.id == id).first()
 
@@ -118,7 +121,7 @@ def get_doctor_by_rgnum(db: Session, registration_number: str):
 # ***********************************************************************************
 
 
-def add_clinic(db: Session, clinic: clinic_schema.ClinicCreate, doctor_id: int):
+def add_clinic(db: Session, clinic: clinic_schema.ClinicCreate, doctor_id: str):
     if not is_clinic_exist(db, clinic, doctor_id):
         clinic = clinic_model.Clinic(doctor_id=doctor_id, slots=calculate_slots(
             clinic.opens_at, clinic.closes_at, clinic.session_time), **clinic.dict())
@@ -129,7 +132,7 @@ def add_clinic(db: Session, clinic: clinic_schema.ClinicCreate, doctor_id: int):
     raise errors.ALREADY_EXIST_CLINIC
 
 
-def get_clinic(db: Session, doctor_id: int):
+def get_clinic(db: Session, doctor_id: str):
     clinic = db.query(clinic_model.Clinic).filter(
         clinic_model.Clinic.doctor_id == doctor_id).first()
     if clinic:
@@ -137,13 +140,13 @@ def get_clinic(db: Session, doctor_id: int):
     raise errors.NOT_FOUND_ERROR
 
 
-def is_clinic_exist(db: Session, clinic: clinic_schema.ClinicCreate, doctor_id: int):
+def is_clinic_exist(db: Session, clinic: clinic_schema.ClinicCreate, doctor_id: str):
     clinic = db.query(clinic_model.Clinic).filter(
         clinic_model.Clinic.doctor_id == doctor_id).first()
     return clinic
 
 
-def is_clinic_exist_by_id(db: Session, clinic_id: int):
+def is_clinic_exist_by_id(db: Session, clinic_id: str):
     clinic = db.query(clinic_model.Clinic).filter(
         clinic_model.Clinic.id == clinic_id).first()
     return clinic
@@ -156,7 +159,7 @@ def is_clinic_exist_by_id(db: Session, clinic_id: int):
 # ***********************************************************************************
 
 
-def add_appointment(db: Session, appointment: appointment_schema.CreateAppointment, user_id: int):
+def add_appointment(db: Session, appointment: appointment_schema.CreateAppointment, user_id: str):
     clinic: clinic_schema.ClinicOut = is_clinic_exist_by_id(
         db, appointment.clinic_id)
     if clinic:
@@ -215,7 +218,7 @@ def appointment_completed(db: Session, appointment: appointment_schema.Appointme
     return {"detail": "appointment completed sucessfully"}
 
 
-def get_clinic_appointments(db: Session, doctor_id: int):
+def get_clinic_appointments(db: Session, doctor_id: str):
     appointments = db.query(appointment_model.Appointment).filter(
         appointment_model.Appointment.doctor_id == doctor_id).all()
     if appointments:
@@ -223,7 +226,7 @@ def get_clinic_appointments(db: Session, doctor_id: int):
     raise errors.NO_APPOINTMENT_FOUND_ERROR
 
 
-def get_all_appointment_by_user_id(db: Session, user_id: int):
+def get_all_appointment_by_user_id(db: Session, user_id: str):
     appointment = db.query(appointment_model.Appointment).filter(
         appointment_model.Appointment.user_id == user_id).all()
     if len(appointment) > 0:
@@ -231,7 +234,7 @@ def get_all_appointment_by_user_id(db: Session, user_id: int):
     raise errors.NO_APPOINTMENT_FOUND_ERROR
 
 
-def get_appointment_by_user_id(db: Session, id: int, user_id: int):
+def get_appointment_by_user_id(db: Session, id: str, user_id: str):
     appointment = db.query(appointment_model.Appointment).filter(
         appointment_model.Appointment.id == id, appointment_model.Appointment.user_id == user_id).first()
     if appointment:
@@ -239,7 +242,7 @@ def get_appointment_by_user_id(db: Session, id: int, user_id: int):
     raise errors.NO_APPOINTMENT_FOUND_ERROR
 
 
-def get_appointment_by_doctor_id(db: Session, id: int, doctor_id: int):
+def get_appointment_by_doctor_id(db: Session, id: str, doctor_id: str):
     appointment = db.query(appointment_model.Appointment).filter(
         appointment_model.Appointment.id == id, appointment_model.Appointment.doctor_id == doctor_id).first()
     if appointment:
@@ -276,13 +279,15 @@ def search_doctor_clinics(city: str, speciality: str | None, db: Session):
 
 def create_admin(db: Session, admin: admin_schema.CreateAdmin):
     if not is_admin_exist(db, admin.email):
-        hash = hash_password(admin.password)
-        admin.password = hash
-        admin = admin_model.Admin(**admin.dict())
-        db.add(admin)
-        db.commit()
-        db.refresh(admin)
-        return admin
+        if not is_user_exist(db, admin.email):
+            if not is_doctor_exist(db, admin.email):
+                hash = hash_password(admin.password)
+                admin.password = hash
+                admin = admin_model.Admin(**admin.dict())
+                db.add(admin)
+                db.commit()
+                db.refresh(admin)
+                return admin
     raise errors.EMAIL_ALREADY_EXIST
 
 
@@ -304,12 +309,18 @@ def create_first_admin(db: Session):
         create_admin(db, admin_in)
 
 
-def get_admin_me(db: Session, admin_id: int):
+def get_admin_me(db: Session, admin_id: str):
     admin = db.query(admin_model.Admin).filter(
         admin_model.Admin.id == admin_id).first()
     if admin:
         return admin
     raise errors.ACCOUNT_NOT_FOUND_WITH_THIS_EMAIL
+
+
+def get_admin_by_email(db: Session, email: str):
+    admin = db.query(admin_model.Admin).filter(
+        admin_model.Admin.email == email).first()
+    return admin
 
 
 def get_all_clinics(db: Session):
@@ -343,7 +354,7 @@ def get_all_clinics(db: Session):
     raise errors.CLINIC_NOT_FOUND
 
 
-def verify_doctor(db: Session, doctor_id: int):
+def verify_doctor(db: Session, doctor_id: str):
     doctor: doctor_schema.DoctorOut = db.query(doctor_model.Doctor).filter(
         doctor_model.Doctor.id == doctor_id).first()
     if doctor:
@@ -355,7 +366,7 @@ def verify_doctor(db: Session, doctor_id: int):
     raise errors.NO_DOCTOR_FOUND_WITH_THIS_ID
 
 
-def deactivate_account(db: Session, id: int, is_user: bool = False):
+def deactivate_account(db: Session, id: str, is_user: bool = False):
     if is_user:
         user: user_schema.UserOut = get_user(db, id)
         if not user:
@@ -378,7 +389,7 @@ def deactivate_account(db: Session, id: int, is_user: bool = False):
         raise errors.DOCTOR_IS_ALREADY_BANNED
 
 
-def activate_account(db: Session, id: int, is_user: bool = False):
+def activate_account(db: Session, id: str, is_user: bool = False):
     if is_user:
         user: user_schema.UserOut = get_user(db, id)
         if not user:
@@ -444,10 +455,39 @@ def change_password(db: Session, password: str, obj: change_password_schema.Chan
         raise errors.PASSWORD_CANNOT_BE_SAME
     hash = hash_password(password)
     obj.password = hash
-    current_db_obj.updated_at = datetime.now()
+    if(current_db_obj):
+        current_db_obj.updated_at = datetime.now()
     db.commit()
     return {"details": "password changed successfully"}
 
+
+def reset_password(db: Session, email: str):
+    user = db.query(user_model.User).filter(
+        user_model.User.email == email).first()
+    doctor = db.query(doctor_model.Doctor).filter(
+        doctor_model.Doctor.email == email).first()
+    admin = db.query(admin_model.Admin).filter(
+        admin_model.Admin.email == email).first()
+    if not user or doctor or admin:
+        raise errors.ACCOUNT_NOT_FOUND_WITH_THIS_EMAIL
+
+    temp_gen_pass = generate_random_password()
+    final_obj = None
+    if user:
+        final_obj = user
+    if doctor:
+        final_obj = doctor
+    if admin:
+        final_obj = admin
+    change_password(db, temp_gen_pass, final_obj, final_obj)
+
+    # ! send password on email and return a message temporary password has been successfully sent to your email
+    return {"details": temp_gen_pass}
+
+
+def generate_random_password():
+    password = uuid.uuid4().hex.upper()[0:6]
+    return password
 
 # ***********************************************************************************
 #                                                                                   #
