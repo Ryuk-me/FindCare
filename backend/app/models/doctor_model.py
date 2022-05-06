@@ -2,13 +2,16 @@ from sqlalchemy import Column, Integer, String, Boolean, Date, DateTime
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from app.database import Base
-from sqlalchemy.dialects.postgresql import UUID
 import uuid
+
+
+def generate_uuid():
+    return str(uuid.uuid4())
 
 
 class Doctor(Base):
     __tablename__ = "doctors"
-    id = Column(String, primary_key=True, default=uuid.uuid4().hex)
+    id = Column(String, primary_key=True, default=generate_uuid)
     name = Column(String, nullable=False)
     email = Column(String, nullable=False, unique=True)
     phone = Column(String(10), nullable=False, unique=True)

@@ -35,3 +35,4 @@ async def verify_email(token: str, db: Session = Depends(_services.get_db)):
             db.commit()
             return {"details": "email verified successfully"}
         raise errors.EMAIL_ALREADY_VERIFIED
+

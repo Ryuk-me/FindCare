@@ -8,9 +8,13 @@ from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
 
+def generate_uuid():
+    return str(uuid.uuid4())
+
+
 class Clinic(Base):
     __tablename__ = "clinics"
-    id = Column(String, primary_key=True, default=uuid.uuid4().hex)
+    id = Column(String, primary_key=True, default=generate_uuid)
     doctor_id = Column(String, ForeignKey(
         "doctors.id"
     ), nullable=False, unique=True)

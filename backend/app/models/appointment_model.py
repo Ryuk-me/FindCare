@@ -7,9 +7,13 @@ from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
 
+def generate_uuid():
+    return str(uuid.uuid4())
+
+
 class Appointment(Base):
     __tablename__ = "appointments"
-    id = Column(String, primary_key=True, default=uuid.uuid4().hex)
+    id = Column(String, primary_key=True, default=generate_uuid)
     user_id = Column(String, ForeignKey(
         "users.id"
     ), nullable=False)
