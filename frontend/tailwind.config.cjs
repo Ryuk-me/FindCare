@@ -8,7 +8,8 @@ module.exports = {
       }
     },
     fontFamily: {
-      display: ["Poppins"]
+      poppins: ["Poppins"],
+      maven: ['Maven Pro']
     }
   },
   plugins: []

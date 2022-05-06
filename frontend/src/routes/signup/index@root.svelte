@@ -1,6 +1,6 @@
-<div class="w-screen h-screen flex flex-row font-signUp">
+<div class="w-screen h-screen flex flex-row font-maven">
 	<div class="bg-primary h-screen lg:w-1/3 flex flex-col w-0">
-		<h1 class="text-[3.5vw] mt-4 ml-[7vw] text-white font-display font-[800]">findcare</h1>
+		<h1 class="text-[3.5vw] mt-4 ml-[7vw] text-white font-poppins font-bold">findcare</h1>
 		<img src="signUp/doctor.png" alt="doctor.png" class="h-[64vh] w-10/12 relative left-[10vw] top-[6vh]">
 	</div>
 	<div class="lg:mt-10 lg:ml-32 lg:p-0 flex flex-col text-lg p-10">
