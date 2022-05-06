@@ -5,7 +5,7 @@ from app.error_handlers import errors
 from sqlalchemy.orm import Session
 from app import services as _services
 from app.models import doctor_model, user_model
-from pydantic import BaseModel,EmailStr
+from pydantic import BaseModel, EmailStr
 
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/email',
@@ -48,8 +48,8 @@ async def reset_email(email: BaseEmail, db: Session = Depends(_services.get_db))
     email = email.email
     ...
 
-@router.get('/test-email',status_code=status.HTTP_202_ACCEPTED)
-async def reset_email(email, db: Session = Depends(_services.get_db)):
-    return await _services.send_email(subject="Test Email",recipients=email,token=None,token_url=None)
+
+@router.get('/test-email', status_code=status.HTTP_202_ACCEPTED)
+async def send_test_email(email, db: Session = Depends(_services.get_db)):
+    return await _services.send_email(subject="Test Email", recipients=email, token="None", token_url="None")
     # print(email.dict())
-    
