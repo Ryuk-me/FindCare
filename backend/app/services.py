@@ -528,5 +528,4 @@ def login_mail():
         VALIDATE_CERTS=True,
         TEMPLATE_FOLDER=Path(__file__).parent / 'email-templates',
     )
-
     return config

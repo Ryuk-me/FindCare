@@ -38,7 +38,7 @@ async def create_user(user: user_schema.UserCreate, db: Session = Depends(_servi
         data={"id": user.id, "status": 'user', "email": user.email}, expires_delta=expire_time)
     token_url = f"{settings.API_HOSTED_ROOT_URL+settings.BASE_API_V1+'/email/verify-email?token='+token}"
 
-    return await _services.send_email(subject="Email Verification",
+    return await _services.send_email(subject=f"Welcome to FindCare {user.name} !",
                                       recipients=user.email, token=token, token_url=token_url)
 
 

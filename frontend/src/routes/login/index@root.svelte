@@ -1,7 +1,3 @@
-<svelte:head>
-  <title>Findcare Login | Sign</title>
-</svelte:head>
-
 <script context="module">
 	export async function load({ session }) {
 		if (session) {
@@ -42,12 +38,16 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Findcare Login | Sign</title>
+</svelte:head>
+
 <img src="shape.png" alt="" class="fixed hidden lg:block w-96 bottom-0 left-0" />
 
-<div class="w-screen h-screen flex flex-col justify-center items-center lg:grid lg:grid-cols-2 ">
+<div class="w-screen h-screen flex flex-col justify-center items-center lg:grid lg:grid-cols-2 bg-[#ecf7ff]">
 	<div class="flex justify-center items-center lg:ml-48">
 		<div class="">
-			<h2 class="text-primary font-bold font-display text-3xl text-left">findcare</h2>
+			<h2 class="text-primary font-bold font-poppins text-3xl text-left">findcare</h2>
 			<form
 				on:submit|preventDefault={handleLogin}
 				class="flex flex-col justify-center items-start w-96 lg:w-[30rem] bg-white rounded drop-shadow-xl mb-8 px-8 py-7"
@@ -110,6 +110,7 @@
 </div>
 
 <style>
+
 	span {
 		position: absolute;
 		right: 14px;
