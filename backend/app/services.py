@@ -498,7 +498,6 @@ def calculate_slots(opens_at, closes_at, session_time):
 
 async def send_email(subject: str, recipients: str, token: str, token_url: str):
     message = MessageSchema(
-        subtype='html',
         subject=subject,
         recipients=[recipients],
         template_body={
@@ -508,7 +507,7 @@ async def send_email(subject: str, recipients: str, token: str, token_url: str):
 
     conf = login_mail()
     fm = FastMail(conf)
-    await fm.send_message(message, template_name='verify.html')
+    await fm.send_message(message, template_name='new-user.html')
 
     #! CHANGE THIS TO EMAIL SENT SUCCESSFULLY PLEASE VERIFY
     return {"details": "email sent successfully"}
