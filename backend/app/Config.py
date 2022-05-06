@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER_EMAIL: str
     FIRST_SUPERUSER_PASSWORD: str
     FIRST_SUPERUSER_NAME: str
-    API_HOSTED_ROOT_URL: str
+    WEBSITE_HOSTED_ROOT_URL: str
     MAIL_USERNAME: str
     MAIL_PASSWORD: str
     MAIL_FROM: str
@@ -38,4 +38,4 @@ settings = Settings()
 
 if ENV == 'prod':
     settings.DATABASE_HOSTNAME = "postgres"
-    settings.API_HOSTED_ROOT_URL = "https://findcare-api-ryuk-me.cloud.okteto.net"
+    settings.WEBSITE_HOSTED_ROOT_URL = "https://findcare-ryuk-me.cloud.okteto.net"

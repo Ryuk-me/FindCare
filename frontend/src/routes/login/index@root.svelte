@@ -47,7 +47,7 @@
 <div class="w-screen h-screen flex flex-col justify-center items-center lg:grid lg:grid-cols-2 bg-[#ecf7ff]">
 	<div class="flex justify-center items-center lg:ml-48">
 		<div class="">
-			<h2 class="text-primary font-bold font-poppins text-3xl text-left">findcare</h2>
+			<h2 class="text-primary font-bold font-poppins text-3xl text-left">Findcare</h2>
 			<form
 				on:submit|preventDefault={handleLogin}
 				class="flex flex-col justify-center items-start w-96 lg:w-[30rem] bg-white rounded drop-shadow-xl mb-8 px-8 py-7"

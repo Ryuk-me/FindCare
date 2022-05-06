@@ -4,7 +4,7 @@
 
 - SVELTEKIT (FRONTEND)
 - TAILWIND CSS (FOR STYLING)
-- Typescript / Javascript (Programming language)
+- Javascript (Programming language)
 
 <hr>
 

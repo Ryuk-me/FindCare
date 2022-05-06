@@ -10,7 +10,7 @@
 > Preview
 
 - [WEBISTE](https://bit.ly/380nQbZ) (DOCKER)
-- [WEBISTE](https://jazzy-starship-22dd57.netlify.app) (NETLIFY)
+- ~~[WEBISTE](https://jazzy-starship-22dd57.netlify.app) (NETLIFY)~~
 
 <hr>
 

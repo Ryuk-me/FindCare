@@ -33,9 +33,18 @@ async def create_doctor(doctor: doctor_schema.DoctorCreate, db: Session = Depend
     doctor = _services.create_doctor(db, doctor)
     expire_time = timedelta(minutes=int(
         settings.EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES))
+    import os
+
+    try:
+        ENV = os.environ['ENV']
+    except:
+        ENV = None
     token = create_access_token(
         data={"id": doctor.id, "status": 'doctor', "email": doctor.email}, expires_delta=expire_time)
-    token_url = f"{settings.API_HOSTED_ROOT_URL+settings.BASE_API_V1+'/email/verify-email?token='+token}"
+    if not ENV:
+        token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/email/verify-email?token='+token}"
+    else:
+        token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/verify/token/'+token}"
 
     return await _services.send_email(subject=f"Welcome to FindCare {doctor.name} !",
                                       recipients=doctor.email, token=token, token_url=token_url)

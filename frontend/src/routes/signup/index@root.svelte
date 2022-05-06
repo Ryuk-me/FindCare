@@ -84,6 +84,6 @@
 			</div>
 		</form>
 		<button class="mt-6 bg-primary lg:w-64 h-12 text-white rounded w-full lg:p-0 p-2 ">create account</button>
-		<p class="mt-4 text-center lg:text-left">Already have an account? <a href="" class="text-primary">Log in</a></p>
+		<p class="mt-4 text-center lg:text-left">Already have an account? <a href="/login" class="text-primary">Log in</a></p>
 	</div>
 </div>

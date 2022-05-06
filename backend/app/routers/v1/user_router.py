@@ -9,7 +9,7 @@ from app.models import user_model
 from app.scheams import change_password_schema
 from app.error_handlers import errors
 from datetime import timedelta
-
+import os
 
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/user',
@@ -36,7 +36,16 @@ async def create_user(user: user_schema.UserCreate, db: Session = Depends(_servi
         settings.EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES))
     token = create_access_token(
         data={"id": user.id, "status": 'user', "email": user.email}, expires_delta=expire_time)
-    token_url = f"{settings.API_HOSTED_ROOT_URL+settings.BASE_API_V1+'/email/verify-email?token='+token}"
+    try:
+        ENV = os.environ['ENV']
+    except:
+        ENV = None
+    if not ENV:
+        # ! for local verification
+        token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/email/verify-email?token='+token}"
+    else:
+        # ! verification through production webiste
+        token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/verify/token/'+token}"
 
     return await _services.send_email(subject=f"Welcome to FindCare {user.name} !",
                                       recipients=user.email, token=token, token_url=token_url)

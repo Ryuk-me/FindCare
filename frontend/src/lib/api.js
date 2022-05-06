@@ -26,7 +26,7 @@ async function send({ method, path, token = null, data = null }) {
 		})
 }
 
-export function get(path, token) {
+export function get(path, token = null) {
 	return send({ method: 'GET', path, token })
 }
 

@@ -23,8 +23,8 @@
 
 - BACKEND  -> [API](https://bit.ly/3kQH1Ih)
 - FRONTEND ->  [WEBISTE](https://bit.ly/380nQbZ) (DOCKER)
-- FRONTEND ->  [WEBISTE](https://jazzy-starship-22dd57.netlify.app) (NETLIFY)
-- PG4 ADMIN - > [DATABASE ONLINE](https://pgadmin-ryuk-me.cloud.okteto.net)
+- ~~FRONTEND ->  [WEBISTE](https://jazzy-starship-22dd57.netlify.app) (NETLIFY)~~
+- ~~PG4 ADMIN - > [DATABASE ONLINE](https://pgadmin-ryuk-me.cloud.okteto.net)~~
   
 > ## How to connect database in pg4 admin
 
