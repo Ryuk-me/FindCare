@@ -6,7 +6,7 @@ from app.scheams import user_schema, doctor_schema, clinic_schema, appointment_s
 from passlib.hash import bcrypt
 from app.models import user_model, doctor_model, clinic_model, appointment_model, admin_model
 from app.error_handlers import errors
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from app.Config import settings
 import uuid
@@ -525,6 +525,6 @@ def login_mail():
         MAIL_SSL=False,
         USE_CREDENTIALS=True,
         VALIDATE_CERTS=True,
-        TEMPLATE_FOLDER=Path(__file__).parent / 'templates',
+        TEMPLATE_FOLDER=Path(__file__).parent / 'email-templates',
     )
     return config
