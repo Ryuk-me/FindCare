@@ -525,6 +525,6 @@ def login_mail():
         MAIL_SSL=False,
         USE_CREDENTIALS=True,
         VALIDATE_CERTS=True,
-        TEMPLATE_FOLDER=Path(__file__).parent / 'email-templates',
+        TEMPLATE_FOLDER=Path(__file__).parent / 'templates',
     )
     return config
