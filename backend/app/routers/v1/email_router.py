@@ -5,12 +5,17 @@ from app.error_handlers import errors
 from sqlalchemy.orm import Session
 from app import services as _services
 from app.models import doctor_model, user_model
+from pydantic import BaseModel,EmailStr
 
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/email',
     tags=["Email Verification"],
     redirect_slashes=False
 )
+
+
+class BaseEmail(BaseModel):
+    email: EmailStr
 
 
 @router.get('/verify-email', status_code=status.HTTP_202_ACCEPTED)
@@ -36,3 +41,15 @@ async def verify_email(token: str, db: Session = Depends(_services.get_db)):
             return {"details": "email verified successfully"}
         raise errors.EMAIL_ALREADY_VERIFIED
 
+
+@router.post('/reset-email', status_code=status.HTTP_202_ACCEPTED)
+async def reset_email(email: BaseEmail, db: Session = Depends(_services.get_db)):
+    # print(email.dict())
+    email = email.email
+    ...
+
+@router.get('/test-email',status_code=status.HTTP_202_ACCEPTED)
+async def reset_email(email, db: Session = Depends(_services.get_db)):
+    return await _services.send_email(subject="Test Email",recipients=email,token=None,token_url=None)
+    # print(email.dict())
+    

@@ -5,7 +5,7 @@ from app.routers import root
 from app.models import user_model, clinic_model, doctor_model, appointment_model
 from app.database import engine
 from app.routers.v1 import auth, user_router, doctor_router, clinic_router, \
-    appointment_router, search_doctor_clinics_router, admin_router, email_verify
+    appointment_router, search_doctor_clinics_router, admin_router, email_router
 
 
 user_model.Base.metadata.create_all(bind=engine)
@@ -67,4 +67,4 @@ app.include_router(clinic_router.router)
 app.include_router(appointment_router.router)
 app.include_router(search_doctor_clinics_router.router)
 app.include_router(admin_router.router)
-app.include_router(email_verify.router)
+app.include_router(email_router.router)
