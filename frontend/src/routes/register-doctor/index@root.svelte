@@ -9,7 +9,7 @@
 	<img src="doctor/doctor.png" alt="" class="fixed hidden lg:block bottom-0 ml-7 left-0 w-40" />
 	<img src="doctor/upper.png" alt="" class="fixed hidden lg:block right-0 top-0" />
 	<img src="doctor/lower.png" alt="" class="fixed hidden lg:block right-0 bottom-0" />
-	<div class="flex justify-center items-center">
+	<div class="flex justify-center items-center h-full">
 		<div class="my-2">
 			<div class="text-primary font-bold font-poppins text-4xl">Findcare</div>
 			<div class="flex justify-center items-center">
