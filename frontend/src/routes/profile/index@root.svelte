@@ -17,6 +17,8 @@
 </script>
 
 <script>
+	import { goto } from '$app/navigation'
+import { session } from '$app/stores';
 	export let user
 </script>
 
@@ -30,4 +32,12 @@
 		<p>{key} : {value}</p>
 	{/each}
 {/if}
-<button class="bg-orange-500 text-black"> Logout </button>
+<button
+	class="bg-orange-500 text-black"
+	on:click={() => {
+		$session = null
+		goto('/logout')
+	}}
+>
+	Logout
+</button>

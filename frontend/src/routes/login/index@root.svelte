@@ -17,7 +17,6 @@
 	import jwt_decode from 'jwt-decode'
 	let username = ''
 	let password = ''
-	export let msg
 	let show = false
 	const handleInput = (event) => {
 		password = event.target.value
@@ -44,7 +43,9 @@
 
 <img src="shape.png" alt="" class="fixed hidden lg:block w-96 bottom-0 left-0" />
 
-<div class="w-screen h-screen flex flex-col justify-center items-center lg:grid lg:grid-cols-2 bg-[#ecf7ff]">
+<div
+	class="w-screen h-screen flex flex-col justify-center items-center lg:grid lg:grid-cols-2 bg-[#ecf7ff]"
+>
 	<div class="flex justify-center items-center lg:ml-48">
 		<div class="">
 			<h2 class="text-primary font-bold font-poppins text-3xl text-left">Findcare</h2>
@@ -53,9 +54,6 @@
 				class="flex flex-col justify-center items-start w-96 lg:w-[30rem] bg-white rounded drop-shadow-xl mb-8 px-8 py-7"
 			>
 				<h2 class="font-bold my-3 mb-9 text-xl">Sign in to your account</h2>
-				{#if msg}
-					<h1>{msg}</h1>
-				{/if}
 				<div class="relative w-full mb-4">
 					<label for="email" class="">Email</label>
 					<input
@@ -110,7 +108,6 @@
 </div>
 
 <style>
-
 	span {
 		position: absolute;
 		right: 14px;
