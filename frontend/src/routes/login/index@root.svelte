@@ -36,9 +36,14 @@
 			else goto('/profile')
 		} else {
 			if (response?.detail[0]?.msg) {
-				notificationToast(capitalize(response?.detail[0]?.msg), false, 2000, 'error')
+				notificationToast(
+					capitalize(response.detail[0].loc?.slice(1).join(', ')) + ' ' + response?.detail[0]?.msg,
+					false,
+					2000,
+					'error'
+				)
 			} else {
-				notificationToast(capitalize(response?.detail), true, 2000, 'error')
+				notificationToast(capitalize(response?.detail), false, 2000, 'error')
 			}
 		}
 	}
@@ -74,7 +79,9 @@
 				<div class="w-full mb-3">
 					<div class="flex justify-between">
 						<label for="password">Password</label>
-						<a href="reset" class="text-primary cursor-pointer hover:font-semibold font-medium">Forgot Password?</a>
+						<a href="reset" class="text-primary cursor-pointer hover:font-semibold font-medium"
+							>Forgot Password?</a
+						>
 					</div>
 					<div class="relative">
 						<input
@@ -100,12 +107,18 @@
 						class="bg-primary hover:bg-[#524af4] text-white mb-3 font-medium py-2 px-28 rounded focus:outline-none focus:shadow-outline"
 						>Login</button
 					>
-					<p>Don't Have An Account? <a href="./signup" class="text-primary hover:font-semibold font-medium">Sign Up</a></p>
+					<p>
+						Don't Have An Account? <a
+							href="./signup"
+							class="text-primary hover:font-semibold font-medium">Sign Up</a
+						>
+					</p>
 				</div>
 			</form>
 
 			<p class="text-center">
-				&copy;2022 <a href="./" class="text-primary font-semibold">FindCare</a>. All rights reserved.
+				&copy;2022 <a href="./" class="text-primary font-semibold">FindCare</a>. All rights
+				reserved.
 			</p>
 		</div>
 	</div>
