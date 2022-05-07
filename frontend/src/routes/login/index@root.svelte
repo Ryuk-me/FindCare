@@ -37,7 +37,12 @@
 		} else {
 			if (response?.detail[0]?.msg) {
 				notificationToast(
-					capitalize(response.detail[0].loc?.slice(1).join(', ')) + ' ' + response?.detail[0]?.msg,
+					capitalize(response.detail[0].loc?.slice(1).join(', ')).replace(
+						/username|Username/gm,
+						'Email'
+					) +
+						' ' +
+						response?.detail[0]?.msg,
 					false,
 					2000,
 					'error'
