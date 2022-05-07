@@ -34,6 +34,7 @@
   "dependencies": {
     "cookie": "^0.5.0",
     "jwt-decode": "^3.1.2",
-    "svelte-use-form": "^2.4.3"
+    "svelte-use-form": "^2.4.3",
+    "toastify-js": "^1.11.2"
   }
 }

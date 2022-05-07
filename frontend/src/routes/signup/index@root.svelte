@@ -1,7 +1,15 @@
+<svelte:head>
+	<title>Signup</title>
+</svelte:head>
+
 <div class="w-screen h-screen flex flex-row font-maven">
 	<div class="bg-primary h-screen lg:w-1/3 flex flex-col w-0">
-		<h1 class="text-[3.5vw] mt-4 ml-[7vw] text-white font-poppins font-bold">findcare</h1>
-		<img src="/signup/doctor.png" alt="doctor.png" class="h-[64vh] w-10/12 relative left-[10vw] top-[6vh]">
+		<h1 class="text-[3.5vw] mt-4 ml-[7vw] text-white font-poppins font-bold">Findcare</h1>
+		<img
+			src="/signup/doctor.png"
+			alt="doctor.png"
+			class="h-[64vh] w-10/12 relative left-[10vw] top-[6vh]"
+		/>
 	</div>
 	<div class="lg:mt-10 lg:ml-32 lg:p-0 flex flex-col text-lg p-10">
 		<h1 class="text-4xl font-bold">Register</h1>
@@ -10,9 +18,9 @@
 			profile.
 		</p>
 		<div class="py-6">
-			<div class="w-full border-t-[2px] border-[#BABABA]"></div>
+			<div class="w-full border-t-[2px] border-[#BABABA]" />
 		</div>
-	
+
 		<form action="">
 			<div class="flex lg:flex-row flex-col">
 				<div class="flex flex-col lg:w-1/2 pr-2 w-full">
@@ -39,6 +47,7 @@
 						type="password"
 						placeholder="********"
 						name="firstName"
+						autocomplete="off"
 						class="block border rounded px-3 py-1 w-full my-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 					/>
 				</div>
@@ -78,12 +87,20 @@
 						type="password"
 						placeholder="********"
 						name="confirmPassword"
+						autocomplete="off"
 						class="block border rounded px-3 py-1 w-full my-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 					/>
 				</div>
 			</div>
 		</form>
-		<button class="mt-6 bg-primary lg:w-64 h-12 text-white rounded w-full lg:p-0 p-2 ">create account</button>
-		<p class="mt-4 text-center lg:text-left">Already have an account? <a href="/login" class="text-primary">Log in</a></p>
+		<button
+			class="mt-6 bg-primary hover:bg-[#524af4] lg:w-64 h-12 text-white rounded w-full lg:p-0 p-2 font-medium"
+			>CREATE ACCOUNT</button
+		>
+		<p class="mt-4 text-center lg:text-left">
+			Already have an account? <a href="/login" class="text-primary hover:font-semibold font-medium"
+				>Log in</a
+			>
+		</p>
 	</div>
 </div>

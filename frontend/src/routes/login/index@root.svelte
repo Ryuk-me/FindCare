@@ -13,7 +13,8 @@
 <script>
 	import { session } from '$app/stores'
 	import { goto } from '$app/navigation'
-	import { post } from '$lib/utils.js'
+	import { post, capitalize } from '$lib/utils.js'
+	import { notificationToast } from '$lib/NotificationToast'
 	import jwt_decode from 'jwt-decode'
 	let username = ''
 	let password = ''
@@ -23,7 +24,7 @@
 	}
 	async function handleLogin() {
 		const response = await post(`api/v1/auth/login`, { username, password })
-		if (response.access_token) {
+		if (response?.access_token) {
 			const t = jwt_decode(response.access_token)
 			$session = {
 				session: response.access_token,
@@ -33,6 +34,12 @@
 			//@ts-ignore
 			if ($session.status == 'admin') goto('/admin')
 			else goto('/profile')
+		} else {
+			if (response?.detail[0]?.msg) {
+				notificationToast(capitalize(response?.detail[0]?.msg), false, 2000, 'error')
+			} else {
+				notificationToast(capitalize(response?.detail), true, 2000, 'error')
+			}
 		}
 	}
 </script>
@@ -46,7 +53,7 @@
 <div
 	class="w-screen h-screen flex flex-col justify-center items-center lg:grid lg:grid-cols-2 bg-[#ecf7ff]"
 >
-	<div class="flex justify-center items-center lg:ml-48">
+	<div class="flex justify-center items-center lg:ml-48 font-maven">
 		<div class="">
 			<h2 class="text-primary font-bold font-poppins text-3xl text-left">Findcare</h2>
 			<form
@@ -67,7 +74,7 @@
 				<div class="w-full mb-3">
 					<div class="flex justify-between">
 						<label for="password">Password</label>
-						<a href="reset" class="text-primary cursor-pointer">Forgot Password?</a>
+						<a href="reset" class="text-primary cursor-pointer hover:font-semibold font-medium">Forgot Password?</a>
 					</div>
 					<div class="relative">
 						<input
@@ -90,15 +97,15 @@
 				</div>
 				<div class="flex flex-col justify-center items-center w-full my-3">
 					<button
-						class="bg-primary hover:bg-[#524af4] text-white mb-3 font-bold py-2 px-28 rounded focus:outline-none focus:shadow-outline"
+						class="bg-primary hover:bg-[#524af4] text-white mb-3 font-medium py-2 px-28 rounded focus:outline-none focus:shadow-outline"
 						>Login</button
 					>
-					<p>Don't Have An Account? <a href="./signup" class="text-primary">Sign Up</a></p>
+					<p>Don't Have An Account? <a href="./signup" class="text-primary hover:font-semibold font-medium">Sign Up</a></p>
 				</div>
 			</form>
 
 			<p class="text-center">
-				&copy;2022 <a href="./" class="text-primary">FindCare</a>. All rights reserved.
+				&copy;2022 <a href="./" class="text-primary font-semibold">FindCare</a>. All rights reserved.
 			</p>
 		</div>
 	</div>
