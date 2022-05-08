@@ -201,7 +201,7 @@ def cancel_appointments(db: Session, appointment: appointment_schema.Appointment
         appointment.cancellation_reason = reason
     appointment.when_cancelled = datetime.now()
     db.commit()
-    return {"detail": "appointment cancelled sucessfully"}
+    return {"detail": "Appointment cancelled sucessfully"}
 
 
 def appointment_completed(db: Session, appointment: appointment_schema.AppointmentOut):
@@ -215,7 +215,7 @@ def appointment_completed(db: Session, appointment: appointment_schema.Appointme
         raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
     appointment.is_completed = True
     db.commit()
-    return {"detail": "appointment completed sucessfully"}
+    return {"detail": "Appointment completed sucessfully"}
 
 
 def get_clinic_appointments(db: Session, doctor_id: str):
@@ -362,7 +362,7 @@ def verify_doctor(db: Session, doctor_id: str):
             raise errors.DOCTOR_IS_ALREADY_VERIFIED
         doctor.is_verified = True
         db.commit()
-        return {"detail": "doctor verified successfully"}
+        return {"detail": "Doctor verified successfully"}
     raise errors.NO_DOCTOR_FOUND_WITH_THIS_ID
 
 
@@ -375,7 +375,7 @@ def deactivate_account(db: Session, id: str, is_user: bool = False):
             user.is_banned = True
             user.when_banned = datetime.now()
             db.commit()
-            return {"detail": "user banned successfully"}
+            return {"detail": "User banned successfully"}
         raise errors.USER_ALREADY_BANNED
     else:
         doctor: doctor_schema.DoctorOut = get_doctor(db, id)
@@ -385,7 +385,7 @@ def deactivate_account(db: Session, id: str, is_user: bool = False):
             doctor.is_banned = True
             doctor.when_banned = datetime.now()
             db.commit()
-            return {"detail": "doctor banned successfully"}
+            return {"detail": "Doctor banned successfully"}
         raise errors.DOCTOR_IS_ALREADY_BANNED
 
 
@@ -398,7 +398,7 @@ def activate_account(db: Session, id: str, is_user: bool = False):
             user.is_banned = False
             user.when_banned = None
             db.commit()
-            return {"detail": "user unbanned successfully"}
+            return {"detail": "User unbanned successfully"}
         raise errors.USER_ALREADY_UNBANNED
     else:
         doctor: doctor_schema.DoctorOut = get_doctor(db, id)
@@ -408,7 +408,7 @@ def activate_account(db: Session, id: str, is_user: bool = False):
             doctor.is_banned = False
             doctor.when_banned = None
             db.commit()
-            return {"detail": "doctor unbanned successfully"}
+            return {"detail": "Doctor unbanned successfully"}
         raise errors.DOCTOR_IS_ALREADY_UNBANNED
 
 
@@ -458,7 +458,7 @@ def change_password(db: Session, password: str, obj: change_password_schema.Chan
     if(current_db_obj):
         current_db_obj.updated_at = datetime.now()
     db.commit()
-    return {"detail": "password changed successfully"}
+    return {"detail": "Password changed successfully"}
 
 
 def reset_password(db: Session, email: str):
@@ -550,7 +550,7 @@ async def send_email(subject: str, recipients: str, token: str, token_url: str):
     await fm.send_message(message, template_name='new-user.html')
 
     #! CHANGE THIS TO EMAIL SENT SUCCESSFULLY PLEASE VERIFY
-    return {"detail": "email sent successfully"}
+    return {"detail": "Email sent successfully"}
 
 
 def login_mail():
