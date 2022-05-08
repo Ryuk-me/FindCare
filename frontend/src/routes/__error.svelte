@@ -1,4 +1,6 @@
-<h1 class="bg-red-400">Fall baCK PAGE</h1>
+<h1 class="bg-red-400">kaha bhai galat jagah aaye ho
+	
+</h1>
 
 <style>
 	@tailwind base;

@@ -4,7 +4,7 @@
 
 <script>
 	import { notificationToast } from '$lib/NotificationToast'
-	import lock_svg from '$lib/assets/lock.svg'
+	import lock_svg from '$lib/assets/reset/lock.svg'
 	let email = ''
 
 	/****************************

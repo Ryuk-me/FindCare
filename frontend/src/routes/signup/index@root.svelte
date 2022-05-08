@@ -7,7 +7,7 @@
 </svelte:head>
 <div class="w-screen h-screen flex flex-row font-maven">
 	<div class="bg-primary h-screen lg:w-1/3 flex flex-col w-0">
-		<h1 class="text-[3.5vw] mt-4 ml-[7vw] text-white font-poppins font-bold">Findcare</h1>
+		<h1 class="text-[3.5vw] mt-4 ml-[7vw] text-white font-poppins font-bold">FindCare</h1>
 		<img
 			src={doctor_img}
 			alt="doctor.png"
@@ -103,6 +103,11 @@
 		<p class="mt-4 text-center lg:text-left">
 			Already have an account? <a href="/login" class="text-primary hover:font-semibold font-medium"
 				>Log in</a
+			>
+		</p>
+		<p class="mb-3 text-center lg:text-left">
+			Are You A Doctor? <a href="/register-doctor" class="text-primary hover:font-semibold font-medium"
+				>Sign Up Here</a
 			>
 		</p>
 	</div>
