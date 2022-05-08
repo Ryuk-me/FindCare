@@ -15,8 +15,8 @@
 	import { goto } from '$app/navigation'
 	import { post, capitalize } from '$lib/utils.js'
 	import { notificationToast } from '$lib/NotificationToast'
-	import shape_png from '$lib/assets/shape.png'
-	import medical_team_png from '$lib/assets/medical-team.png'
+	import shape_png from '$lib/assets/login/shape.png'
+	import medical_team_png from '$lib/assets/login/medical-team.png'
 	import jwt_decode from 'jwt-decode'
 	let username = ''
 	let password = ''
@@ -67,10 +67,10 @@
 >
 	<div class="flex justify-center items-center lg:ml-48 font-maven">
 		<div class="">
-			<h2 class="text-primary font-bold font-poppins text-3xl text-left">Findcare</h2>
+			<h2 class="text-primary font-bold font-poppins text-3xl my-4 text-left">FindCare</h2>
 			<form
 				on:submit|preventDefault={handleLogin}
-				class="flex flex-col justify-center items-start w-96 lg:w-[30rem] bg-white rounded drop-shadow-xl mb-8 px-8 py-7"
+				class="flex flex-col justify-center items-start w-96 lg:w-[30rem] bg-white rounded drop-shadow-xl mb-6 px-8 py-7"
 			>
 				<h2 class="font-bold my-3 mb-9 text-xl">Sign in to your account</h2>
 				<div class="relative w-full mb-4">

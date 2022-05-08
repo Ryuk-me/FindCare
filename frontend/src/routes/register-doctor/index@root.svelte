@@ -41,6 +41,7 @@
 								type="text"
 								name="firstName"
 								id="firstName"
+								title="Enter Your First Name"
 								placeholder="Dr. Neeraj"
 								class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary" required
 							/>
@@ -52,6 +53,7 @@
 								name="lastName"
 								placeholder="Kumar"
 								id="lastName"
+								title="Enter Your Last Name"
 								class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary" required
 							/>
 						</div>
@@ -61,6 +63,7 @@
 								type="text"
 								placeholder="AQ-15-XXXXX"
 								name="registrationNumber"
+								title="Enter Your Registration Number"
 								id="registrationNumber"
 								class="block appearance-none border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary" required
 							/>
@@ -74,6 +77,7 @@
 								placeholder="98765XXXXX"
 								name="phoneNumber"
 								id="phoneNumber"
+								title="Enter Your Phone Number"
 								class="block appearance-none border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary" required
 							/>
 						</div>
@@ -84,6 +88,7 @@
 								placeholder="your@domain.com"
 								name="email"
 								id="email"
+								title="Enter Your Email"
 								class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary" required
 							/>
 						</div>
@@ -93,6 +98,7 @@
 								type="text"
 								name="speciality"
 								id="speciality"
+								title="Enter Your Speciality"
 								class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary" required
 							/>
 						</div>
@@ -104,6 +110,7 @@
 								type="date"
 								name="dob"
 								id="dob"
+								title="Enter Your Date Of Birth"
 								class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary" required
 							/>
 						</div>
@@ -140,6 +147,7 @@
 								type="number"
 								name="expYear"
 								id="expYear"
+								title="Enter Your Experience Year"
 								min="1"
 								max="70"
 								placeholder="20"
@@ -155,6 +163,7 @@
 									type={show ? 'text' : 'password'}
 									name="password"
 									placeholder="***********"
+									title="Enter Your Password"
 									id="password"
 									class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary" required
 								/>
@@ -176,6 +185,7 @@
 								type="password"
 								name="confirmPassword"
 								placeholder="***********"
+								title="Enter Your Password Again"
 								id="confirmPassword"
 								class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary" required
 							/>
@@ -186,6 +196,7 @@
 								type="text"
 								name="about"
 								placeholder="Tell us about yourself"
+								title="Enter About Yourself"
 								id="about"
 								class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary" required
 							/>
@@ -194,8 +205,8 @@
 					<div class="w-full">
 						<div class="w-full">
 							<button
-								class="bg-primary hover:bg-[#524af4] lg:w-[16vw] text-white my-3 font-bold py-2 w-full rounded focus:outline-none focus:shadow-outline"
-								>create account</button
+								class="bg-primary hover:bg-[#524af4] lg:w-[16vw] text-white my-3 py-2 w-full rounded focus:outline-none focus:shadow-outline font-medium"
+								>CREATE ACCOUNT</button
 							>
 						</div>
 						<div>

@@ -3,10 +3,15 @@
 </svelte:head>
 
 <div class="container-home">
-	<h1>Welcome to SvelteKit</h1>
-	<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+	<h1 class="text-2xl
+	">Welcome to FindCare</h1>
 
 	<button><a href="/login">login</a></button>
+	<button><a href="/signup">signup</a></button>
+	<button><a href="/reset">reset</a></button>
+	<button><a href="/register-doctor">register-doctor</a></button>
+	<button><a href="/profile">profile</a></button>
+	<button><a href="/dashboard">dashboard</a></button>
 </div>
 
 <style>
