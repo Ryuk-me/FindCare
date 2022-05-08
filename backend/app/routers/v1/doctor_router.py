@@ -37,8 +37,10 @@ async def create_doctor(doctor: doctor_schema.DoctorCreate, db: Session = Depend
         data={"id": doctor.id, "status": 'doctor', "email": doctor.email}, expires_delta=expire_time)
     token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/verify/token/'+token}"
 
-    return await _services.send_email(subject=f"Welcome to FindCare {doctor.name} !",
-                                      recipients=doctor.email, token=token, token_url=token_url)
+    return await _services.send_welcome_email(subject=f"Welcome to FindCare {doctor.name} !",
+                                              recipients=doctor.email,
+                                              token_url=token_url
+                                              )
 
 
 # ***********************************************************************************

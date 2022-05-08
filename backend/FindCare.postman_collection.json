@@ -1,0 +1,1451 @@
+{
+	"info": {
+		"_postman_id": "0b15e668-24ab-4959-a1d0-9135af5957e4",
+		"name": "FindCare",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "createUser",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"neerajkr1210@gmail.com\",\r\n    \"name\" : \"Neeraj Kumar\",\r\n    \"phone\" : \"8125384522\",\r\n    \"password\" : \"123\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2002-04-26\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserMe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loginUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"user_token\", pm.response.json().access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "neerajkr1210@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "222@gmail.com",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/auth/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createAppointmentUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clinic_id\" : 1,\r\n    \"schedule\" : \"2020-11-01 13:00:03.478039\",\r\n    \"fees_paid\" : true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user/appointment",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								"appointment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAppointmentUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/user/appointment",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								"appointment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancelAppointment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user/appointment/cancel",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								"appointment",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "password",
+								"value": "123",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\" : \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user/change-password",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUserDetails",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"222@gmail.com\",\r\n    \"name\" : \"Neerajs Kumar\",\r\n    \"phone\" : \"8125384544\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2002-04-26\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "public",
+			"item": [
+				{
+					"name": "searchClinic",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/search/doctors?city=patna&speciality=Cardiologist",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"search",
+								"doctors"
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "patna"
+								},
+								{
+									"key": "speciality",
+									"value": "Cardiologist"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "doctor and clinic",
+			"item": [
+				{
+					"name": "createDoctor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" :\"Dr. Neeraj Kumar\",\r\n    \"email\" : \"neerajkr1210@gmail.com\",\r\n    \"phone\" : \"8125384543\",\r\n    \"gender\" : \"male\",\r\n    \"dob\" : \"1996-04-26\",\r\n    \"password\" : \"123\",\r\n    \"about\" : \"hello adhgajhgdah djasgd gasjd\",\r\n    \"experience_year\" : 4,\r\n    \"speciality\" : \"Cardiologist\",\r\n    \"registration_number\" : \"7326473\"\r\n     \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/doctor",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "doctorLogin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"doctor_token\", pm.response.json().access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "neerajkr1210@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/auth/doctor",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"doctor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDoctorMe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/doctor",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createClinic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"test Clinic\",\r\n    \"fees\" : \"250\",\r\n    \"session_time\" : \"20\",\r\n    \"opens_at\" : \"09:00:00\",\r\n    \"closes_at\" : \"17:00:00\",\r\n    \"is_open\" : true,\r\n    \"address\":{\r\n        \"pincode\" : \"800006\",\r\n        \"address\" : \"shahganj professor colony nahar road\",\r\n        \"city\" : \"Patna\",\r\n        \"state\" : \"Bihar\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/doctor/clinic",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor",
+								"clinic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getClinic of the current doctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/doctor/clinic",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor",
+								"clinic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clinic appointments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/doctor/clinic/appointments",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor",
+								"clinic",
+								"appointments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "canceAppointment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 5,\r\n    \"cancellation_reason\" : \"dame\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/doctor/clinic/appointment/cancel",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor",
+								"clinic",
+								"appointment",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "COMPLTEappointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/doctor/clinic/appointment/completed?id=11",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor",
+								"clinic",
+								"appointment",
+								"completed"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "11"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\" : \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/doctor/change-password",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "email",
+			"item": [
+				{
+					"name": "emailverify",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/email/verify-email?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaXNfdXNlciI6dHJ1ZSwiZXhwIjoxNjUxMjE1NDAyfQ.WKzBnKzS7NYzqfcRxLtT-7-Q1vlnGWlrav3b5rcA8V0",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"email",
+								"verify-email"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaXNfdXNlciI6dHJ1ZSwiZXhwIjoxNjUxMjE1NDAyfQ.WKzBnKzS7NYzqfcRxLtT-7-Q1vlnGWlrav3b5rcA8V0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-Email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"neerajkr1210@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/email/reset-email",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"email",
+								"reset-email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "test-email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/email/test-email?email=neerajkr1210@gmail.com",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"email",
+								"test-email"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "neerajkr1210@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "createAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"asdNeeraj Kumar\",\r\n    \"email\" : \"aasdasdasddmin@gmail.com\",\r\n    \"password\" : \"123\",\r\n    \"is_super_admin\" : false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/admin/create/admin",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"create",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loginAdmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"admin_token\", pm.response.json().access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "admin@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{URL}}/auth/admin",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCurrentAdmin",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/admin",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllClinics",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/admin/clinics",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"clinics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/admin/users",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifyDoctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/admin/doctor/verify?id=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"doctor",
+								"verify"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\" : \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/admin/change-password",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activateUserAC",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/admin/activate/user?id=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"activate",
+								"user"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deactivateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/admin/deactivate/user?id=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"deactivate",
+								"user"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deactivateDoctor",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/admin/deactivate/doctor?id=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"deactivate",
+								"doctor"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activateDoctorAC",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/admin/activate/doctor?id=1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"activate",
+								"doctor"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUserByADMIN",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"neerajkr1210@gmail.com\",\r\n    \"name\" : \"Neeraj Kumar\",\r\n    \"phone\" : \"8125384522\",\r\n    \"password\" : \"123\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2002-04-26\"\r\n}\r\n\r\n//remove password field",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/admin/create/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"create",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createDoctorByADMIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" :\"Dr. Neeraj Kumar\",\r\n    \"email\" : \"neerajkr1210@gmail.com\",\r\n    \"phone\" : \"8125384543\",\r\n    \"gender\" : \"male\",\r\n    \"dob\" : \"1996-04-26\",\r\n    \"password\" : \"123\",\r\n    \"about\" : \"hello adhgajhgdah djasgd gasjd\",\r\n    \"experience_year\" : 4,\r\n    \"speciality\" : \"Cardiologist\",\r\n    \"registration_number\" : \"7326473\"\r\n     \r\n}\r\n\r\n//remove password field",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/admin/create/doctor",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"admin",
+								"create",
+								"doctor"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "temporaryRoutes",
+			"item": [
+				{
+					"name": "deleteUser",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : \"c3336292-ea0e-416d-8280-fb70e1f0545b\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/temp/delete/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"temp",
+								"delete",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteDoctor",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"neerajkr1210@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/temp/delete/doctor",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"temp",
+								"delete",
+								"doctor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/temp/users",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"temp",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifyMail-USER",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"neerajkr1210@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/temp/verify-mail/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"temp",
+								"verify-mail",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify-Mail-DOCTOR",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"neerajkr1210@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/temp/verify-mail/doctor",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"temp",
+								"verify-mail",
+								"doctor"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{admin_token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "root",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8009",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8009"
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

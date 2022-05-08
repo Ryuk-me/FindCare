@@ -70,6 +70,13 @@ DOCTOR_IS_ALREADY_UNBANNED = HTTPException(
 # ***********************************************************************************
 
 
+YOU_CANNOT_SET_PASSWORD_FOR_USER = HTTPException(
+    status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="You cannot set password for user")
+
+YOU_CANNOT_SET_PASSWORD_FOR_DOCTOR = HTTPException(
+    status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="You cannot set password for doctor")
+
+
 # ***********************************************************************************
 #                                                                                   #
 #                      FORBIDDEN ACTIONS ERRORS                                     #

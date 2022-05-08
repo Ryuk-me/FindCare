@@ -16,6 +16,19 @@ class DoctorCreate(BaseModel):
     registration_number: str
 
 
+class AdminDoctorCreate(BaseModel):
+    name: str
+    email: EmailStr
+    phone: constr(max_length=10, min_length=10)
+    gender: Literal['male', 'female', 'other']
+    dob: date
+    password: Optional[str] = None
+    about: str
+    experience_year: int
+    speciality: str
+    registration_number: str
+
+
 class DoctorOut(BaseModel):
     id: str
     name: str
