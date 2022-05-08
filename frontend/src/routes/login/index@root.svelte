@@ -15,6 +15,8 @@
 	import { goto } from '$app/navigation'
 	import { post, capitalize } from '$lib/utils.js'
 	import { notificationToast } from '$lib/NotificationToast'
+	import shape_png from '$lib/assets/shape.png'
+	import medical_team_png from '$lib/assets/medical-team.png'
 	import jwt_decode from 'jwt-decode'
 	let username = ''
 	let password = ''
@@ -58,7 +60,7 @@
 	<title>Findcare Login | Sign</title>
 </svelte:head>
 
-<img src="shape.png" alt="" class="fixed hidden lg:block w-96 bottom-0 left-0" />
+<img src={shape_png} alt="shape.png" class="fixed hidden lg:block w-96 bottom-0 left-0" />
 
 <div
 	class="w-screen h-screen flex flex-col justify-center items-center lg:grid lg:grid-cols-2 bg-[#ecf7ff]"
@@ -128,7 +130,7 @@
 		</div>
 	</div>
 	<div class="hidden w-full h-screen lg:flex items-end flex-col">
-		<img src="medical-team.png" class="hidden lg:block max-h-full" alt="" />
+		<img src={medical_team_png} class="hidden lg:block max-h-full" alt="medical-team.png" />
 	</div>
 </div>
 

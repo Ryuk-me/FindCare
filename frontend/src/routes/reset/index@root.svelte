@@ -4,6 +4,7 @@
 
 <script>
 	import { notificationToast } from '$lib/NotificationToast'
+	import lock_svg from '$lib/assets/lock.svg'
 	let email = ''
 
 	/****************************
@@ -27,7 +28,7 @@
 	>
 		<div id="header" class="flex flex-col justify-center items-center">
 			<div>
-				<img src="lock.svg" alt="lock svg" class="w-32" />
+				<img src={lock_svg} alt="lock svg" class="w-32" />
 			</div>
 			<div>
 				<h2 class="text-2xl font-semibold mt-6">Trouble Logging In?</h2>

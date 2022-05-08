@@ -1,12 +1,15 @@
+<script>
+	import doctor_img from '$lib/assets/signup/doctor.png'
+</script>
+
 <svelte:head>
 	<title>Signup</title>
 </svelte:head>
-
 <div class="w-screen h-screen flex flex-row font-maven">
 	<div class="bg-primary h-screen lg:w-1/3 flex flex-col w-0">
 		<h1 class="text-[3.5vw] mt-4 ml-[7vw] text-white font-poppins font-bold">Findcare</h1>
 		<img
-			src="/signup/doctor.png"
+			src={doctor_img}
 			alt="doctor.png"
 			class="h-[64vh] w-10/12 relative left-[10vw] top-[6vh]"
 		/>
