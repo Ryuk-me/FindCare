@@ -30,19 +30,26 @@ def get_db():
 # ***********************************************************************************
 
 
-def create_user(db: Session, user: user_schema.UserCreate):
+def create_user(db: Session, user: user_schema.UserCreate, created_by_admin=False):
     if not is_user_exist(db, user.email):
         if not get_admin_by_email(db, user.email):
             if not is_doctor_exist(db, user.email):
                 if not get_doctor_by_phone_no(db, user.phone):
                     if not get_user_by_phone_no(db, user.phone):
                         hash = hash_password(user.password)
+                        temp_pass = user.password
                         user.password = hash
                         user = user_model.User(
                             age=calculate_age(user.dob), **user.dict())
                         db.add(user)
                         db.commit()
                         db.refresh(user)
+                        if(created_by_admin):
+                            send_welcome_email_admin(
+                                subject=f"Welcome to FindCare {user.name} !",
+                                recipients=user.email,
+                                password=temp_pass,
+                            )
                         return user
                 raise errors.PHONE_NUMBER_ALREADY_EXIST
     raise errors.EMAIL_ALREADY_EXIST
@@ -72,20 +79,30 @@ def get_user_by_phone_no(db: Session, phone: str):
 # ***********************************************************************************
 
 
-def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate):
+def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate, created_by_admin=False):
     if not is_doctor_exist(db, doctor.email):
         if not get_admin_by_email(db, doctor.email):
             if not is_user_exist(db, doctor.email):
                 if not get_user_by_phone_no(db, doctor.phone):
                     if not get_doctor_by_phone_no(db, doctor.phone):
                         if not get_doctor_by_rgnum(db, doctor.registration_number):
+                            age = calculate_age(doctor.dob)
+                            if not doctor.experience_year < age - 18:
+                                raise errors.NOT_POSSIBLE_EXPERINCE_YEAR
                             hash = hash_password(doctor.password)
+                            temp_pass = doctor.password
                             doctor.password = hash
                             doctor = doctor_model.Doctor(
-                                age=calculate_age(doctor.dob), slug=generate_slug(doctor.name), **doctor.dict())
+                                age=age, slug=generate_slug(doctor.name), **doctor.dict())
                             db.add(doctor)
                             db.commit()
                             db.refresh(doctor)
+                            if(created_by_admin):
+                                send_welcome_email_admin(
+                                    subject=f"Welcome to FindCare {doctor.name} !",
+                                    recipients=doctor.email,
+                                    password=temp_pass,
+                                )
                             return doctor
                         raise errors.DOCTOR_WITH_THIS_REGISTRATION_NUM_ALREADY_EXIST
                 raise errors.PHONE_NUMBER_ALREADY_EXIST
@@ -536,7 +553,14 @@ def calculate_slots(opens_at, closes_at, session_time):
     return slots
 
 
-async def send_email(subject: str, recipients: str, token: str, token_url: str):
+# ***********************************************************************************
+#                                                                                   #
+#                       EMAIL FUNCTIONS                                             #
+#                                                                                   #
+# ***********************************************************************************
+
+
+async def send_welcome_email(subject: str, recipients: str, token_url: str):
     message = MessageSchema(
         subject=subject,
         recipients=[recipients],
@@ -549,8 +573,35 @@ async def send_email(subject: str, recipients: str, token: str, token_url: str):
     fm = FastMail(conf)
     await fm.send_message(message, template_name='new-user.html')
 
-    #! CHANGE THIS TO EMAIL SENT SUCCESSFULLY PLEASE VERIFY
-    return {"detail": "Email sent successfully"}
+    return {"detail": "We have sent a verification mail please verify to continue"}
+
+
+async def send_welcome_email_admin(subject: str, recipients: str, password: str):
+    message = MessageSchema(
+        subject=subject,
+        recipients=[recipients],
+        template_body={
+            "password": password
+        }
+    )
+    conf = login_mail()
+    fm = FastMail(conf)
+    await fm.send_message(message, template_name='new-user-admin.html')
+    return {"detail": "We have sent a verification mail please verify to continue"}
+
+
+async def send_email_change(subject: str, recipients: str, token_url: str):
+    message = MessageSchema(
+        subject=subject,
+        recipients=[recipients],
+        template_body={
+            "token_url": token_url
+        }
+    )
+    conf = login_mail()
+    fm = FastMail(conf)
+    await fm.send_message(message, template_name='mail-change.html')
+    return {"detail": "We have sent a verification mail please verify to continue"}
 
 
 def login_mail():

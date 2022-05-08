@@ -36,7 +36,7 @@
 1. - [x] IMPLEMENT UPDATE FEATURE FOR DOCTOR LIKE (PASSWORD,MAIL,PHONE NUMBER,DOB,AGE,PROFILE_IMAGE)
 1. - [x] verify user/doctor on signup and send a verification email
 1. - [x] implement password reset (send a temporary password on email)
-1. - [ ] change host api url to frontend webiste url and get token as slug and then call on api to verify it [after frontend ez created]
+1. - [x] change host api url to frontend webiste url and get token as slug and then call on api to verify it [after frontend ez created]
 1. - [ ] send a welcome to user after creating new accounting (can be implmeneted later)
 1. - [ ] clinic on / off flag
 1. - [ ] implemnet available_days update and remove ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
@@ -57,8 +57,8 @@
 - [x] manage DOCTOR from admin panel [like ban DOCTOR currently]
 - [x] activate/deactivate user/doctor account from admin panel
 - [X] get all users for admin panel (name,email phone,number of appointments,is_banned,is_active etc details)
-- [ ] admin can create user account /doctor and password will be directly sent to the user admin cant see password or set
-- [ ] admin can change user/doctor email and user have to verify it
+- [x] admin can create user account /doctor and password will be directly sent to the user admin cant see password or set
+- [x] admin can change user/doctor email and user have to verify it
 - [ ] user can only cancel appointment upto 4 hours before appointment time [will be implemented after slot logic]
 - [ ] user can only book future appointments
 - [ ] at the time of appointment booking check that appointment date/time and slot is available/free in clinic (bascially it is a precation for external api calls)

@@ -1,13 +1,14 @@
 from fastapi import APIRouter, status, Depends
 from app.Config import settings
-from app.scheams import admin_schema, clinic_schema, change_password_schema, user_schema
+from app.scheams import admin_schema, clinic_schema, change_password_schema, user_schema, doctor_schema
 from sqlalchemy.orm import Session
 from app import services as _services
-from app.oauth2 import get_current_admin
+from app.oauth2 import get_current_admin, create_access_token
 from app.models import admin_model
 from app.error_handlers import errors
-from typing import List
-
+from typing import List, Optional
+from pydantic import BaseModel
+from datetime import timedelta
 
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/admin',
@@ -16,14 +17,42 @@ router = APIRouter(
 )
 
 
+class User_Doctor(BaseModel):
+    id: Optional[str] = None
+    email: Optional[str] = None
+    new_email: str
+
+
 # ***********************************************************************************
 #! CREATE ADMIN (CURRENT_ADMIN MUST BE SUPER ADMIN TO CREATE OTHER ADMINS)
-@router.post('/createadmin', status_code=status.HTTP_201_CREATED, response_model=admin_schema.AdminOut)
+@router.post('/create/admin', status_code=status.HTTP_201_CREATED, response_model=admin_schema.AdminOut)
 async def create_admin(admin: admin_schema.CreateAdmin, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     if not current_admin.is_super_admin:
         raise errors.NOT_A_SUPER_ADMIN
     admin = _services.create_admin(db, admin)
     return admin
+
+
+# ***********************************************************************************
+#! CREATE USER BY ADMIN
+@router.post('/create/user', status_code=status.HTTP_200_OK)
+async def create_account_user(user: user_schema.AdminUserCreate, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+    if user.password:
+        raise errors.YOU_CANNOT_SET_PASSWORD_FOR_USER
+    user.password = _services.generate_random_password()
+    _services.create_user(db, user, created_by_admin=True)
+    return {"detail": "User account created successfully"}
+
+
+# ***********************************************************************************
+#! CREATE DOCTOR BY ADMIN
+@router.post('/create/doctor', status_code=status.HTTP_200_OK)
+async def create_account_doctor(doctor: doctor_schema.AdminDoctorCreate, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+    if doctor.password:
+        raise errors.YOU_CANNOT_SET_PASSWORD_FOR_DOCTOR
+    doctor.password = _services.generate_random_password()
+    _services.create_doctor(db, doctor, created_by_admin=True)
+    return {"detail": "Doctor account created successfully"}
 
 
 # ***********************************************************************************
@@ -73,10 +102,9 @@ async def verify_clinic(id: int, db: Session = Depends(_services.get_db), curren
 async def deactivate_account_user(id: int, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     return _services.deactivate_account(db, id, is_user=True)
 
+
 # ***********************************************************************************
 #! UNBAN USER
-
-
 @router.get('/activate/user', status_code=status.HTTP_200_OK)
 async def activate_account_user(id: int, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     return _services.activate_account(db, id, is_user=True)
@@ -94,3 +122,58 @@ async def deactivate_account_doctor(id: int, db: Session = Depends(_services.get
 @router.get('/activate/doctor', status_code=status.HTTP_200_OK)
 async def activate_account_user(id: int, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     return _services.activate_account(db, id, is_user=False)
+
+
+# ***********************************************************************************
+#! CHNAGE-USER-MAIL
+@router.get('/change-mail/user', status_code=status.HTTP_200_OK)
+async def change_user_mail(change_mail: User_Doctor, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+    if change_mail.id:
+        user = _services.get_user(db, change_mail.id)
+    elif change_mail.email:
+        user = _services.is_user_exist(db, change_mail.email)
+    if not user:
+        raise errors.USER_NOT_FOUND
+    user.email = change_mail.new_email
+    db.commit()
+    expire_time = timedelta(minutes=int(
+        settings.EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES))
+    token = create_access_token(
+        data={"id": user.id, "status": 'user', "email": user.email}, expires_delta=expire_time)
+
+    #! send email to user using template mail-change-admin.html
+    #! (Your email has been successfully changed on your request if it is not u then please contact support)
+
+    token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/verify/token/'+token}"
+    await _services.send_email_change(subject=f"Welcome to FindCare {user.name} !",
+                                      recipients=user.email,
+                                      token_url=token_url
+                                      )
+    return {"detail": "User email changed successfully"}
+
+
+# ***********************************************************************************
+#! CHNAGE-DOCTOR-MAIL
+@router.get('/change-mail/doctor', status_code=status.HTTP_200_OK)
+async def change_doctor_mail(change_mail: User_Doctor, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+    if change_mail.id:
+        doctor = _services.get_doctor(db, change_mail.id)
+    elif change_mail.email:
+        doctor = _services.is_doctor_exist(db, change_mail.email)
+    if not doctor:
+        raise errors.DOCTOR_NOT_FOUND
+    doctor.email = change_mail.new_email
+    db.commit()
+    expire_time = timedelta(minutes=int(
+        settings.EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES))
+    token = create_access_token(
+        data={"id": doctor.id, "status": 'doctor', "email": doctor.email}, expires_delta=expire_time)
+
+    #! send email to user using template mail-change-admin.html
+    #! (Your email has been successfully changed on your request if it is not u then please contact support)
+    token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/verify/token/'+token}"
+    await _services.send_email_change(subject=f"Welcome to FindCare {doctor.name} !",
+                                      recipients=doctor.email,
+                                      token_url=token_url
+                                      )
+    return {"detail": "Doctor email changed successfully"}

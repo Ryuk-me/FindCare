@@ -13,6 +13,15 @@ class UserCreate(BaseModel):
     password: str
 
 
+class AdminUserCreate(BaseModel):
+    name: str
+    email: EmailStr
+    phone: constr(max_length=10, min_length=10)
+    gender: Literal['male', 'female', 'other']
+    dob: date
+    password: Optional[str] = None
+
+
 class UserOut(BaseModel):
     id: str
     name: str
