@@ -28,7 +28,7 @@ class User(BaseModel):
         orm_mode = True
 
 
-@router.get('/delete/user')
+@router.post('/delete/user')
 async def delete_user(delete: User_Doctor, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     if not current_admin.is_super_admin:
         raise errors.NOT_A_SUPER_ADMIN
@@ -43,7 +43,7 @@ async def delete_user(delete: User_Doctor, db: Session = Depends(_services.get_d
     return {"detail": "User deleted from db successfully"}
 
 
-@router.get('/delete/doctor')
+@router.post('/delete/doctor')
 async def delete_doctor(delete: User_Doctor, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     if not current_admin.is_super_admin:
         raise errors.NOT_A_SUPER_ADMIN
@@ -78,7 +78,7 @@ async def get_all_doctors(db: Session = Depends(_services.get_db), current_admin
     return doctors
 
 
-@router.get('/verify-mail/user')
+@router.post('/verify-mail/user')
 async def verify_user(verify: User_Doctor, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     if not current_admin.is_super_admin:
         raise errors.NOT_A_SUPER_ADMIN
@@ -96,7 +96,7 @@ async def verify_user(verify: User_Doctor, db: Session = Depends(_services.get_d
     return {"detail": "User email verified successfully"}
 
 
-@router.get('/verify-mail/doctor')
+@router.post('/verify-mail/doctor')
 async def verify_doctor(verify: User_Doctor, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     if not current_admin.is_super_admin:
         raise errors.NOT_A_SUPER_ADMIN
