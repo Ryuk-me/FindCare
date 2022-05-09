@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap" rel="stylesheet">
-    <title>HTML Email</title>
+    <title>Welcome to FindCare</title>
     <style type="text/css">
         body {
             Margin: 0;
@@ -64,7 +64,7 @@
             font-size: 13px;
         }
 
-        .footer>td>p{
+        .footer>td>p {
             font-size: 13px;
         }
 
@@ -83,13 +83,13 @@
                 width: 280px !important;
             }
 
-            .footer>td>a{
+            .footer>td>a {
                 font-size: 10px !important;
             }
 
-            .footer>td>p{
+            .footer>td>p {
                 font-size: 10px !important;
-        }
+            }
         }
     </style>
 </head>
@@ -122,13 +122,15 @@
 
                 <tr>
                     <td style="text-align: center;">
-                        <img src="https://findcare-ryuk-me.cloud.okteto.net/doctor.png" alt="doctor" style="width: 350px;">
+                        <img src="https://findcare-ryuk-me.cloud.okteto.net/doctor.png" alt="doctor"
+                            style="width: 350px;">
                     </td>
                 </tr>
 
                 <tr>
                     <td style="text-align: center;color: black;">
-                        <p>Thanks you for being a part of <span style="font-weight: bold;">FindCare</span> family!</p>
+                        <p>Thanks you for becoming a part of <span style="font-weight: bold;">FindCare</span> family!
+                        </p>
                         <p>We are delighted to have you with us.</p>
                         <p>To complete the final step of your registration, please click on the button below.</p>
                     </td>
@@ -136,10 +138,12 @@
 
                 <tr>
                     <td style="text-align: center;">
-                        <button
-                            style="background-color: #004eff;padding: 10px 35px;border-radius: 4px;border-width: 0;color: white;font-size: 18px;margin-top: 20px;margin-bottom: 10px;">
-                            Verify
-                        </button>
+                        <a href="{{ token_url }}" target="_blank">
+                            <button
+                                style="background-color: #004eff;padding: 10px 35px;border-radius: 4px;border-width: 0;color: white;font-size: 18px;margin-top: 20px;margin-bottom: 10px;">
+                                Verify
+                            </button>
+                        </a>
                     </td>
                 </tr>
 

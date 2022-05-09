@@ -141,11 +141,8 @@ async def change_user_mail(change_mail: User_Doctor, db: Session = Depends(_serv
     token = create_access_token(
         data={"id": user.id, "status": 'user', "email": user.email}, expires_delta=expire_time)
 
-    #! send email to user using template mail-change-admin.html
-    #! (Your email has been successfully changed on your request if it is not u then please contact support)
-
     token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/verify/token/'+token}"
-    await _services.send_email_change(subject=f"Welcome to FindCare {user.name} !",
+    await _services.send_email_change(subject=f"Email Changed",
                                       recipients=user.email,
                                       token_url=token_url
                                       )
@@ -169,10 +166,8 @@ async def change_doctor_mail(change_mail: User_Doctor, db: Session = Depends(_se
     token = create_access_token(
         data={"id": doctor.id, "status": 'doctor', "email": doctor.email}, expires_delta=expire_time)
 
-    #! send email to user using template mail-change-admin.html
-    #! (Your email has been successfully changed on your request if it is not u then please contact support)
     token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/verify/token/'+token}"
-    await _services.send_email_change(subject=f"Welcome to FindCare {doctor.name} !",
+    await _services.send_email_change(subject=f"Email Changed",
                                       recipients=doctor.email,
                                       token_url=token_url
                                       )

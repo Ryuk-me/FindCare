@@ -392,6 +392,8 @@ def deactivate_account(db: Session, id: str, is_user: bool = False):
             user.is_banned = True
             user.when_banned = datetime.now()
             db.commit()
+            send_email_account_deactivation(
+                subject="Account Deactivation", recipients=user.email)
             return {"detail": "User banned successfully"}
         raise errors.USER_ALREADY_BANNED
     else:
@@ -402,6 +404,8 @@ def deactivate_account(db: Session, id: str, is_user: bool = False):
             doctor.is_banned = True
             doctor.when_banned = datetime.now()
             db.commit()
+            send_email_account_deactivation(
+                subject="Account Deactivation", recipients=user.email)
             return {"detail": "Doctor banned successfully"}
         raise errors.DOCTOR_IS_ALREADY_BANNED
 
@@ -415,6 +419,8 @@ def activate_account(db: Session, id: str, is_user: bool = False):
             user.is_banned = False
             user.when_banned = None
             db.commit()
+            send_email_account_activation(
+                subject="Account Activation", recipients=user.email)
             return {"detail": "User unbanned successfully"}
         raise errors.USER_ALREADY_UNBANNED
     else:
@@ -425,6 +431,8 @@ def activate_account(db: Session, id: str, is_user: bool = False):
             doctor.is_banned = False
             doctor.when_banned = None
             db.commit()
+            send_email_account_activation(
+                subject="Account Activation", recipients=user.email)
             return {"detail": "Doctor unbanned successfully"}
         raise errors.DOCTOR_IS_ALREADY_UNBANNED
 
@@ -498,8 +506,8 @@ def reset_password(db: Session, email: str):
         final_obj = admin
     change_password(db, temp_gen_pass, final_obj, final_obj)
 
-    # ! send password on email and return a message temporary password has been successfully sent to your email
-    return {"detail": temp_gen_pass}
+    return send_reset_password_mail(
+        subject="Reset Password", recipients=final_obj.email, password=temp_gen_pass)
 
 
 def generate_random_password():
@@ -587,7 +595,40 @@ async def send_welcome_email_admin(subject: str, recipients: str, password: str)
     conf = login_mail()
     fm = FastMail(conf)
     await fm.send_message(message, template_name='new-user-admin.html')
-    return {"detail": "We have sent a verification mail please verify to continue"}
+
+
+async def send_reset_password_mail(subject: str, recipients: str, password: str):
+    message = MessageSchema(
+        subject=subject,
+        recipients=[recipients],
+        template_body={
+            "password": password
+        }
+    )
+    conf = login_mail()
+    fm = FastMail(conf)
+    await fm.send_message(message, template_name='reset.html')
+    return {"detail": "We have sent a temporary password on your mail."}
+
+
+async def send_email_account_activation(subject: str, recipients: str):
+    message = MessageSchema(
+        subject=subject,
+        recipients=[recipients],
+    )
+    conf = login_mail()
+    fm = FastMail(conf)
+    await fm.send_message(message, template_name='account-reactivated.html')
+
+
+async def send_email_account_deactivation(subject: str, recipients: str):
+    message = MessageSchema(
+        subject=subject,
+        recipients=[recipients],
+    )
+    conf = login_mail()
+    fm = FastMail(conf)
+    await fm.send_message(message, template_name='account-blocked.html')
 
 
 async def send_email_change(subject: str, recipients: str, token_url: str):
@@ -601,7 +642,7 @@ async def send_email_change(subject: str, recipients: str, token_url: str):
     conf = login_mail()
     fm = FastMail(conf)
     await fm.send_message(message, template_name='mail-change.html')
-    return {"detail": "We have sent a verification mail please verify to continue"}
+    return {"detail": "Email changed successfully please verify to continue"}
 
 
 def login_mail():

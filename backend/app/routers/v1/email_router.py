@@ -42,8 +42,8 @@ async def verify_email(token: str, db: Session = Depends(_services.get_db)):
         raise errors.EMAIL_ALREADY_VERIFIED
 
 
-@router.post('/reset-email', status_code=status.HTTP_202_ACCEPTED)
-async def reset_email(email: BaseEmail, db: Session = Depends(_services.get_db)):
+@router.post('/reset-password', status_code=status.HTTP_202_ACCEPTED)
+async def reset_password(email: BaseEmail, db: Session = Depends(_services.get_db)):
     email = email.email
     return _services.reset_password(db, email)
 

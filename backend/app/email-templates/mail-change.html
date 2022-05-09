@@ -68,7 +68,7 @@
             font-size: 13px;
         }
 
-        .text >td>p {
+        .text>td>p {
             padding: 0 60px;
         }
 
@@ -95,7 +95,7 @@
                 font-size: 10px !important;
             }
 
-            .text >td>p {
+            .text>td>p {
                 padding: 0 25px;
             }
 
@@ -144,17 +144,19 @@
 
                 <tr class="text">
                     <td style="text-align: center;color: black;">
-                        <p>Your email has been successfully changed on your request if it is not u then please contact
+                        <p>Your email has been successfully changed on your request if it is not you then please contact
                             support.</p>
                     </td>
                 </tr>
 
                 <tr>
                     <td style="text-align: center;">
-                        <button
-                            style="background-color: #004eff;padding: 10px 35px;border-radius: 4px;border-width: 0;color: white;font-size: 18px;margin-top: 20px;margin-bottom: 10px;">
-                            Verify
-                        </button>
+                        <a href="{{ token_url }}" target="_blank">
+                            <button
+                                style="background-color: #004eff;padding: 10px 35px;border-radius: 4px;border-width: 0;color: white;font-size: 18px;margin-top: 20px;margin-bottom: 10px;">
+                                Verify
+                            </button>
+                        </a>
                     </td>
                 </tr>
 
