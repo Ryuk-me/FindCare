@@ -39,8 +39,12 @@ async def create_user(db: Session, user: user_schema.UserCreate, created_by_admi
                         hash = hash_password(user.password)
                         temp_pass = user.password
                         user.password = hash
-                        user = user_model.User(
-                            age=calculate_age(user.dob), **user.dict())
+                        if created_by_admin:
+                            user = user_model.User(
+                                age=calculate_age(user.dob), is_active=True, **user.dict())
+                        else:
+                            user = user_model.User(
+                                age=calculate_age(user.dob), **user.dict())
                         db.add(user)
                         db.commit()
                         db.refresh(user)
@@ -92,8 +96,12 @@ async def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate, created
                             hash = hash_password(doctor.password)
                             temp_pass = doctor.password
                             doctor.password = hash
-                            doctor = doctor_model.Doctor(
-                                age=age, slug=generate_slug(doctor.name), **doctor.dict())
+                            if created_by_admin:
+                                doctor = doctor_model.Doctor(
+                                    age=age, is_active=True, slug=generate_slug(doctor.name), **doctor.dict())
+                            else:
+                                doctor = doctor_model.Doctor(
+                                    age=age, slug=generate_slug(doctor.name), **doctor.dict())
                             db.add(doctor)
                             db.commit()
                             db.refresh(doctor)

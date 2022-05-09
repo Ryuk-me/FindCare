@@ -37,9 +37,8 @@ async def create_admin(admin: admin_schema.CreateAdmin, db: Session = Depends(_s
 #! CREATE USER BY ADMIN
 @router.post('/create/user', status_code=status.HTTP_200_OK)
 async def create_account_user(user: user_schema.AdminUserCreate, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
-    if user.password:
-        raise errors.YOU_CANNOT_SET_PASSWORD_FOR_USER
-    user.password = _services.generate_random_password()
+    password = _services.generate_random_password()
+    user = user_schema.UserCreate(**user.dict(), password=password)
     await _services.create_user(db, user, created_by_admin=True)
     return {"detail": "User account created successfully"}
 
@@ -48,9 +47,8 @@ async def create_account_user(user: user_schema.AdminUserCreate, db: Session = D
 #! CREATE DOCTOR BY ADMIN
 @router.post('/create/doctor', status_code=status.HTTP_200_OK)
 async def create_account_doctor(doctor: doctor_schema.AdminDoctorCreate, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
-    if doctor.password:
-        raise errors.YOU_CANNOT_SET_PASSWORD_FOR_DOCTOR
-    doctor.password = _services.generate_random_password()
+    password = _services.generate_random_password()
+    doctor = doctor_schema.DoctorCreate(**doctor.dict(), password=password)
     await _services.create_doctor(db, doctor, created_by_admin=True)
     return {"detail": "Doctor account created successfully"}
 

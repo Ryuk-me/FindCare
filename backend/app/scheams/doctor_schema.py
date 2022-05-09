@@ -22,7 +22,6 @@ class AdminDoctorCreate(BaseModel):
     phone: constr(max_length=10, min_length=10)
     gender: Literal['male', 'female', 'other']
     dob: date
-    password: Optional[str] = None
     about: str
     experience_year: int
     speciality: str
