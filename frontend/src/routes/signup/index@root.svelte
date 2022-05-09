@@ -89,30 +89,30 @@
 					</div>
 					<div class="relative w-full mb-4 lg:mx-4">
 						<label for="gender">Gender</label>
-						<div class="flex items-center pt-2 lg:pt-5">
-							<div class="flex items-center ">
-								<input id="male" type="radio" name="gender" class="my-5 h-4 w-4" checked />
-								<label class="form-check-label inline-block text-gray-800 mx-3" for="male" value="male"
-									>Male</label
-								>
+							<div class="flex items-center pt-2 lg:pt-5">
+								<div class="flex items-center ">
+									<input id="male" type="radio" name="gender" class="h-4 w-4 mr-2" checked />
+									<label class="form-check-label inline-block text-gray-800" for="male" value="male"
+										>Male</label
+									>
+								</div>
+								<div class="flex items-center mx-5">
+									<input id="female" type="radio" name="gender" class="h-4 w-4 mr-2" />
+									<label
+										class="form-check-label inline-block text-gray-800"
+										for="female"
+										value="female">Female</label
+									>
+								</div>
+								<div class="flex items-center">
+									<input id="other" type="radio" name="gender" class="h-4 w-4 mr-2" />
+									<label
+										class="form-check-label inline-block text-gray-800"
+										for="other"
+										value="other">Other</label
+									>
+								</div>
 							</div>
-							<div class="flex items-center">
-								<input id="female" type="radio" name="gender" class="my-5 h-4 w-4" />
-								<label
-									class="form-check-label inline-block text-gray-800 mx-3"
-									for="female"
-									value="female">Female</label
-								>
-							</div>
-							<div class="flex items-center">
-								<input id="other" type="radio" name="gender" class="my-5 h-4 w-4" />
-								<label
-									class="form-check-label inline-block text-gray-800 mx-3"
-									for="other"
-									value="other">Other</label
-								>
-							</div>
-						</div>
 					</div>
 					</div>
 					<div class="w-full lg:flex lg:justify-center">
