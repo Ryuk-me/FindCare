@@ -69,6 +69,18 @@ async def update_user_details(user: user_schema.UpdateUserDetails, db: Session =
 
     if user.email and user.email != current_user.email:
         if not _services.is_user_exist(db, user.email):
+            expire_time = timedelta(minutes=int(
+                settings.EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES))
+            token = create_access_token(
+                data={"id": user.id, "status": 'user', "email": user.email}, expires_delta=expire_time)
+
+            token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/verify/token/'+token}"
+
+            await _services.send_email_change(subject=f"Email Changed",
+                                              recipients=user.email,
+                                              token_url=token_url
+                                              )
+            current_user.is_active = False
             current_user.email = user.email
             is_something_changed = True
         else:

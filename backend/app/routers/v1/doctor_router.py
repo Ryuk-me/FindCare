@@ -47,8 +47,6 @@ async def create_doctor(doctor: doctor_schema.DoctorCreate, db: Session = Depend
 #! GET CURRENT DOCTOR I.E DOCTOR/ME
 @router.get('/', status_code=status.HTTP_200_OK, response_model=doctor_schema.DoctorOut)
 async def get_doctor_me(db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor), access=Depends(verify_doctor_state)):
-    if not current_doctor.is_active:
-        raise errors.PLEASE_VERIFY_YOUR_EMAIL
     return _services.get_doctor(db, current_doctor.id)
 
 
@@ -56,9 +54,6 @@ async def get_doctor_me(db: Session = Depends(_services.get_db), current_doctor:
 #! GET CURRENT USER DETAILS WITH ALL APPOINTMENTS
 @router.put('/change-password', status_code=status.HTTP_202_ACCEPTED)
 async def change_password(doctor_p: change_password_schema.ChangePassword, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor), access=Depends(verify_doctor_state)):
-    if not current_doctor.is_active:
-        raise errors.PLEASE_VERIFY_YOUR_EMAIL
-
     doctor = _services.get_doctor(db, current_doctor.id)
     return _services.change_password(db, doctor_p.password, doctor, current_doctor)
 
@@ -67,13 +62,21 @@ async def change_password(doctor_p: change_password_schema.ChangePassword, db: S
 #! UPDATE USER DETAILS
 @router.put('/', status_code=status.HTTP_202_ACCEPTED, response_model=doctor_schema.DoctorOut)
 async def update_doctor_details(doctor: doctor_schema.UpdateDoctorDetails, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor), access=Depends(verify_doctor_state)):
-    if not current_doctor.is_active:
-        raise errors.PLEASE_VERIFY_YOUR_EMAIL
-
     is_something_changed: bool = False
-
     if doctor.email and current_doctor.email != doctor.email:
         if not _services.is_doctor_exist(db, doctor.email):
+            expire_time = timedelta(minutes=int(
+                settings.EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES))
+            token = create_access_token(
+                data={"id": doctor.id, "status": 'doctor', "email": doctor.email}, expires_delta=expire_time)
+
+            token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/verify/token/'+token}"
+
+            await _services.send_email_change(subject=f"Email Changed",
+                                              recipients=doctor.email,
+                                              token_url=token_url
+                                              )
+            current_doctor.is_active = False
             current_doctor.email = doctor.email
             is_something_changed = True
         raise errors.EMAIL_ALREADY_EXIST

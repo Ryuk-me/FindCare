@@ -132,6 +132,7 @@ async def change_user_mail(change_mail: User_Doctor, db: Session = Depends(_serv
         user = _services.is_user_exist(db, change_mail.email)
     if not user:
         raise errors.USER_NOT_FOUND
+    user.is_active = False
     user.email = change_mail.new_email
     db.commit()
     expire_time = timedelta(minutes=int(
@@ -157,6 +158,7 @@ async def change_doctor_mail(change_mail: User_Doctor, db: Session = Depends(_se
         doctor = _services.is_doctor_exist(db, change_mail.email)
     if not doctor:
         raise errors.DOCTOR_NOT_FOUND
+    doctor.is_active = False
     doctor.email = change_mail.new_email
     db.commit()
     expire_time = timedelta(minutes=int(
@@ -165,6 +167,7 @@ async def change_doctor_mail(change_mail: User_Doctor, db: Session = Depends(_se
         data={"id": doctor.id, "status": 'doctor', "email": doctor.email}, expires_delta=expire_time)
 
     token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/verify/token/'+token}"
+
     await _services.send_email_change(subject=f"Email Changed",
                                       recipients=doctor.email,
                                       token_url=token_url

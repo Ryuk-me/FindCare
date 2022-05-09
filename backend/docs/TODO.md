@@ -37,7 +37,12 @@
 1. - [x] verify user/doctor on signup and send a verification email
 1. - [x] implement password reset (send a temporary password on email)
 1. - [x] change host api url to frontend webiste url and get token as slug and then call on api to verify it [after frontend ez created]
-1. - [ ] send a welcome to user after creating new accounting (can be implmeneted later)
+1. - [x] send a welcome email with email verification to user/doctor after creating new accounting (by themselves)
+1. - [x] send a reset password mail user/doctor
+1. - [x] send a account banned/unbanned
+1. - [x] send a welcome email to user/doctor after creation of new account by admin(it will contain temp pass user/dr wont need to verify their email)
+1. - [x] send email changed verification mail to user/doctor by admin user/dr will need to verify that mail to continue
+1. - [x] when user/doctor change their email they have to verify that email again until their state of will be is_active=False
 1. - [ ] clinic on / off flag
 1. - [ ] implemnet available_days update and remove ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
 1. - [ ] IMPLEMENT UPDATE FEATURE ON DOCTOR CLINIC (WHICH WILL CHANGE OPENS AT,CLOSES AT,SESSION_TIME,AND IS_OPEN AND SLOTS WILL BE CALCULATED ACCORDINGLY)
