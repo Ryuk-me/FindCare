@@ -1,4 +1,6 @@
-<h1 align='center'>NextCare 🩺</h2>
+#
+
+<pre><h1 align='center'>FindCare 🩺</h1></pre>
 
 > ## Techstack
 
@@ -28,10 +30,10 @@
   
 > ## How to connect database in pg4 admin
 
-- 1. email - > `ryuk@ryuk.com` password `ryuk`
-- 2. Click On add serever
-- 3. In name field `find_care` (anything)
-- 4. then go to connection tab in host `192.168.0.2` and in username `postgres` and in password `ryuk` then save.
+- ~~email - > `ryuk@ryuk.com` password `ryuk`~~
+- ~~Click On add serever~~
+- ~~In name field `find_care` (anything)~~
+- ~~then go to connection tab in host `192.168.0.2` and in username `postgres` and in password `ryuk` then save.~~
 
 > ## Team Members
 
@@ -41,4 +43,4 @@
 - [Amardeep Anand](#null)
 
 <hr>
-<h2 align='center'>👷 WORK IN PROGRESS (WIP)</h2>
+<pre><h2 align='center'>👷 WORK IN PROGRESS (WIP)</h2></pre>

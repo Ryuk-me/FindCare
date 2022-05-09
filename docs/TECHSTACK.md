@@ -1,4 +1,6 @@
-<h1 align='center'>TECHSTACK 🧑🏼‍💻</h2>
+#
+
+<pre><h1 align='center'>TECHSTACK 🧑🏼‍💻</h1></pre>
 
 ## FRONTEND
 
