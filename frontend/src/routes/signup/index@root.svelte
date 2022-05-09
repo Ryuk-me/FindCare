@@ -6,7 +6,7 @@
 <svelte:head>
 	<title>Signup</title>
 </svelte:head>
-<div class="w-full h-full flex flex-row font-maven">
+<div class="w-full lg:h-screen h-full flex flex-row font-maven">
 	<div class="bg-primary h-screen lg:w-1/3 flex flex-col w-0">
 		<h1 class="text-[3.5vw] mt-4 text-center text-white font-poppins font-bold">FindCare</h1>
 		<img
