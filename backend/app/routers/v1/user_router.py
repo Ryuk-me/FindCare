@@ -30,7 +30,7 @@ def verify_user_state(current_user: user_model.User = Depends(get_current_user))
 #! USER SIGNUP
 @router.post('/', status_code=status.HTTP_201_CREATED)
 async def create_user(user: user_schema.UserCreate, db: Session = Depends(_services.get_db)):
-    user = _services.create_user(db, user)
+    user = await _services.create_user(db, user)
     expire_time = timedelta(minutes=int(
         settings.EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES))
     token = create_access_token(

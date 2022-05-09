@@ -30,7 +30,7 @@ def get_db():
 # ***********************************************************************************
 
 
-def create_user(db: Session, user: user_schema.UserCreate, created_by_admin=False):
+async def create_user(db: Session, user: user_schema.UserCreate, created_by_admin=False):
     if not is_user_exist(db, user.email):
         if not get_admin_by_email(db, user.email):
             if not is_doctor_exist(db, user.email):
@@ -45,7 +45,7 @@ def create_user(db: Session, user: user_schema.UserCreate, created_by_admin=Fals
                         db.commit()
                         db.refresh(user)
                         if(created_by_admin):
-                            send_welcome_email_admin(
+                            await send_welcome_email_admin(
                                 subject=f"Welcome to FindCare {user.name} !",
                                 recipients=user.email,
                                 password=temp_pass,
@@ -79,7 +79,7 @@ def get_user_by_phone_no(db: Session, phone: str):
 # ***********************************************************************************
 
 
-def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate, created_by_admin=False):
+async def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate, created_by_admin=False):
     if not is_doctor_exist(db, doctor.email):
         if not get_admin_by_email(db, doctor.email):
             if not is_user_exist(db, doctor.email):
@@ -98,7 +98,7 @@ def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate, created_by_ad
                             db.commit()
                             db.refresh(doctor)
                             if(created_by_admin):
-                                send_welcome_email_admin(
+                                await send_welcome_email_admin(
                                     subject=f"Welcome to FindCare {doctor.name} !",
                                     recipients=doctor.email,
                                     password=temp_pass,
@@ -383,7 +383,7 @@ def verify_doctor(db: Session, doctor_id: str):
     raise errors.NO_DOCTOR_FOUND_WITH_THIS_ID
 
 
-def deactivate_account(db: Session, id: str, is_user: bool = False):
+async def deactivate_account(db: Session, id: str, is_user: bool = False):
     if is_user:
         user: user_schema.UserOut = get_user(db, id)
         if not user:
@@ -392,7 +392,7 @@ def deactivate_account(db: Session, id: str, is_user: bool = False):
             user.is_banned = True
             user.when_banned = datetime.now()
             db.commit()
-            send_email_account_deactivation(
+            await send_email_account_deactivation(
                 subject="Account Deactivation", recipients=user.email)
             return {"detail": "User banned successfully"}
         raise errors.USER_ALREADY_BANNED
@@ -404,13 +404,13 @@ def deactivate_account(db: Session, id: str, is_user: bool = False):
             doctor.is_banned = True
             doctor.when_banned = datetime.now()
             db.commit()
-            send_email_account_deactivation(
+            await send_email_account_deactivation(
                 subject="Account Deactivation", recipients=user.email)
             return {"detail": "Doctor banned successfully"}
         raise errors.DOCTOR_IS_ALREADY_BANNED
 
 
-def activate_account(db: Session, id: str, is_user: bool = False):
+async def activate_account(db: Session, id: str, is_user: bool = False):
     if is_user:
         user: user_schema.UserOut = get_user(db, id)
         if not user:
@@ -419,7 +419,7 @@ def activate_account(db: Session, id: str, is_user: bool = False):
             user.is_banned = False
             user.when_banned = None
             db.commit()
-            send_email_account_activation(
+            await send_email_account_activation(
                 subject="Account Activation", recipients=user.email)
             return {"detail": "User unbanned successfully"}
         raise errors.USER_ALREADY_UNBANNED
@@ -431,7 +431,7 @@ def activate_account(db: Session, id: str, is_user: bool = False):
             doctor.is_banned = False
             doctor.when_banned = None
             db.commit()
-            send_email_account_activation(
+            await send_email_account_activation(
                 subject="Account Activation", recipients=user.email)
             return {"detail": "Doctor unbanned successfully"}
         raise errors.DOCTOR_IS_ALREADY_UNBANNED
@@ -486,7 +486,7 @@ def change_password(db: Session, password: str, obj: change_password_schema.Chan
     return {"detail": "Password changed successfully"}
 
 
-def reset_password(db: Session, email: str):
+async def reset_password(db: Session, email: str):
     user = db.query(user_model.User).filter(
         user_model.User.email == email).first()
     doctor = db.query(doctor_model.Doctor).filter(
@@ -505,8 +505,7 @@ def reset_password(db: Session, email: str):
     if admin:
         final_obj = admin
     change_password(db, temp_gen_pass, final_obj, final_obj)
-
-    return send_reset_password_mail(
+    return await send_reset_password_mail(
         subject="Reset Password", recipients=final_obj.email, password=temp_gen_pass)
 
 
@@ -619,6 +618,7 @@ async def send_email_account_activation(subject: str, recipients: str):
     conf = login_mail()
     fm = FastMail(conf)
     await fm.send_message(message, template_name='account-reactivated.html')
+    return {"detail": "Account Unblocked Successfully"}
 
 
 async def send_email_account_deactivation(subject: str, recipients: str):
@@ -629,6 +629,7 @@ async def send_email_account_deactivation(subject: str, recipients: str):
     conf = login_mail()
     fm = FastMail(conf)
     await fm.send_message(message, template_name='account-blocked.html')
+    return {"detail": "Account Blocked Successfully"}
 
 
 async def send_email_change(subject: str, recipients: str, token_url: str):

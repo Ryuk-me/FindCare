@@ -1,5 +1,5 @@
 <script context="module">
-	import { ENV } from '$lib/utils'
+	import { ENV, status_code } from '$lib/utils'
 	export async function load({ params, fetch }) {
 		const token = params.token
 		const resp = await fetch(
@@ -8,6 +8,7 @@
 		const data = await resp.json()
 		return {
 			props: {
+				status: resp.status,
 				msg: data.detail
 			}
 		}
@@ -16,13 +17,14 @@
 
 <script>
 	export let msg
+	export let status
 </script>
 
 <svelte:head>
 	<title>Email Verification</title>
 </svelte:head>
 <div class="flex justify-center">
-	{#if !msg.includes('expired')}
+	{#if status === status_code.HTTP_202_ACCEPTED}
 		<div class="animation-ctn grid place-items-center h-80 w-3/6">
 			<div class="icon icon--order-success svg ">
 				<svg xmlns="http://www.w3.org/2000/svg" width="154px" height="154px">

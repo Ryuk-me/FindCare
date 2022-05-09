@@ -40,7 +40,7 @@ async def create_account_user(user: user_schema.AdminUserCreate, db: Session = D
     if user.password:
         raise errors.YOU_CANNOT_SET_PASSWORD_FOR_USER
     user.password = _services.generate_random_password()
-    _services.create_user(db, user, created_by_admin=True)
+    await _services.create_user(db, user, created_by_admin=True)
     return {"detail": "User account created successfully"}
 
 
@@ -51,7 +51,7 @@ async def create_account_doctor(doctor: doctor_schema.AdminDoctorCreate, db: Ses
     if doctor.password:
         raise errors.YOU_CANNOT_SET_PASSWORD_FOR_DOCTOR
     doctor.password = _services.generate_random_password()
-    _services.create_doctor(db, doctor, created_by_admin=True)
+    await _services.create_doctor(db, doctor, created_by_admin=True)
     return {"detail": "Doctor account created successfully"}
 
 
@@ -89,7 +89,7 @@ async def get_all_users(db: Session = Depends(_services.get_db), current_admin: 
 
 # ***********************************************************************************
 #! VERIFY CLINICS
-@router.get('/doctor/verify', status_code=status.HTTP_200_OK)
+@router.post('/doctor/verify', status_code=status.HTTP_200_OK)
 async def verify_clinic(id: int, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     if current_admin.is_super_admin:
         return _services.verify_doctor(db, id)
@@ -98,35 +98,35 @@ async def verify_clinic(id: int, db: Session = Depends(_services.get_db), curren
 
 # ***********************************************************************************
 #! BAN USER
-@router.get('/deactivate/user', status_code=status.HTTP_200_OK)
-async def deactivate_account_user(id: int, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
-    return _services.deactivate_account(db, id, is_user=True)
+@router.post('/deactivate/user', status_code=status.HTTP_200_OK)
+async def deactivate_account_user(id: str, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+    return await _services.deactivate_account(db, id, is_user=True)
 
 
 # ***********************************************************************************
 #! UNBAN USER
-@router.get('/activate/user', status_code=status.HTTP_200_OK)
-async def activate_account_user(id: int, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
-    return _services.activate_account(db, id, is_user=True)
+@router.post('/activate/user', status_code=status.HTTP_200_OK)
+async def activate_account_user(id: str, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+    return await _services.activate_account(db, id, is_user=True)
 
 
 # ***********************************************************************************
 #! BAN DOCTOR
-@router.get('/deactivate/doctor', status_code=status.HTTP_200_OK)
-async def deactivate_account_doctor(id: int, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
-    return _services.deactivate_account(db, id, is_user=False)
+@router.post('/deactivate/doctor', status_code=status.HTTP_200_OK)
+async def deactivate_account_doctor(id: str, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+    return await _services.deactivate_account(db, id, is_user=False)
 
 
 # ***********************************************************************************
 #! UNBAN DOCTOR
-@router.get('/activate/doctor', status_code=status.HTTP_200_OK)
-async def activate_account_user(id: int, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
-    return _services.activate_account(db, id, is_user=False)
+@router.post('/activate/doctor', status_code=status.HTTP_200_OK)
+async def activate_account_user(id: str, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
+    return await _services.activate_account(db, id, is_user=False)
 
 
 # ***********************************************************************************
 #! CHNAGE-USER-MAIL
-@router.get('/change-mail/user', status_code=status.HTTP_200_OK)
+@router.post('/change-mail/user', status_code=status.HTTP_200_OK)
 async def change_user_mail(change_mail: User_Doctor, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     if change_mail.id:
         user = _services.get_user(db, change_mail.id)
@@ -151,7 +151,7 @@ async def change_user_mail(change_mail: User_Doctor, db: Session = Depends(_serv
 
 # ***********************************************************************************
 #! CHNAGE-DOCTOR-MAIL
-@router.get('/change-mail/doctor', status_code=status.HTTP_200_OK)
+@router.post('/change-mail/doctor', status_code=status.HTTP_200_OK)
 async def change_doctor_mail(change_mail: User_Doctor, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     if change_mail.id:
         doctor = _services.get_doctor(db, change_mail.id)
