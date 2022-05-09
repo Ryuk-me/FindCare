@@ -614,6 +614,9 @@ async def send_email_account_activation(subject: str, recipients: str):
     message = MessageSchema(
         subject=subject,
         recipients=[recipients],
+        template_body={
+            "just_a_place_holder": "just_a_place_holder"
+        }
     )
     conf = login_mail()
     fm = FastMail(conf)
@@ -625,6 +628,9 @@ async def send_email_account_deactivation(subject: str, recipients: str):
     message = MessageSchema(
         subject=subject,
         recipients=[recipients],
+        template_body={
+            "just_a_place_holder": "just_a_place_holder"
+        }
     )
     conf = login_mail()
     fm = FastMail(conf)
