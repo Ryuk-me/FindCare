@@ -9,10 +9,10 @@
 </script>
 
 <div class="h-screen w-screen flex items-center justify-center">
-    <div class="">
+    <div class="font-maven">
         <h1 class="text-primary text-4xl font-bold font-poppins mb-2">FindCare</h1>
-        <div class="border border-primary p-8 rounded font-maven">
-            <h2 class="font-2xl font-bold">Change password</h2>
+        <div class="border border-primary p-8 rounded">
+            <h2 class="text-2xl font-bold mb-2">Change password</h2>
             <form class="">
                 <div class="">
                     <label for="password">Password</label>
