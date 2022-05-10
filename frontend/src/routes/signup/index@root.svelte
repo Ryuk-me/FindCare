@@ -5,14 +5,15 @@
 	import { goto } from '$app/navigation'
 
 	let show = false
-	let firstName = ''.trim()
-	let lastName = ''.trim()
+	let firstName = ''
+	let lastName = ''
 	let email = ''.trim()
 	let password = ''
 	let confirmPassword = ''
 	let phoneNumber = ''
 	let gender = ''
 	let dob = ''.split('-')
+	// $: firstName =
 	const handleInput = (event) => {
 		password = event.target.value
 	}
@@ -22,6 +23,14 @@
 			event.preventDefault()
 		}
 	}
+
+	const removeSpecialCharacters = (event) => {
+		const allowedRegex = /[A-Za-z ]/g
+		if (!event.key.match(allowedRegex)) {
+			event.preventDefault()
+		}
+	}
+
 	const signUpUser = async () => {
 		if (password !== confirmPassword) {
 			notificationToast('Password do not match !', false, 2000, 'error')
@@ -31,8 +40,11 @@
 			method: 'post',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
-				name: firstName + ' ' + lastName,
-				email,
+				name:
+					firstName.replace(/[^A-Za-z ]/g, '').trim() +
+					' ' +
+					lastName.replace(/[^A-Za-z ]/g, '').trim(),
+				email: email.trim(),
 				phone: phoneNumber,
 				gender,
 				dob,
@@ -98,6 +110,7 @@
 						placeholder="Neeraj"
 						class="block border capitalize rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 						required
+						on:keypress={removeSpecialCharacters}
 						bind:value={firstName}
 						autocomplete="off"
 					/>
@@ -112,6 +125,7 @@
 						title="Enter Your Last Name"
 						class="block border rounded capitalize py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 						required
+						on:keypress={removeSpecialCharacters}
 						bind:value={lastName}
 						autocomplete="off"
 					/>
