@@ -27,7 +27,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 
-def verify_token(token: str, is_email_verification_token: bool = False):
+def verify_token(token: str, is_email_verification_token: bool = False, is_reset_password_token: bool = False):
     try:
         payload = jwt.decode(token, settings.SECRET_KEY,
                              algorithms=[settings.ALGORITHM])
@@ -35,6 +35,8 @@ def verify_token(token: str, is_email_verification_token: bool = False):
         if id is None:
             if is_email_verification_token:
                 raise errors.VERIFICATION_LINK_EXPIRED
+            if is_reset_password_token:
+                raise errors.PASSWORD_RESET_LINK_EXPIRED
             raise errors.TOKEN_CREDENTIALS_ERROR
         token_data = token_schema.TokenData(**payload)
     except JWTError:

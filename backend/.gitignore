@@ -2,6 +2,9 @@
 __pycache__
 .pytest_cache
 .vscode
+nextcare-venv
 next-care-venv
+find-care-venv
+findcare-venv
 alembic/versions/*.py
 .env.local
