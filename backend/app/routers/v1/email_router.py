@@ -24,9 +24,8 @@ class BaseEmail(BaseModel):
 class TokenResetPass(change_password_schema.ChangePassword):
     token: str
 
+
 #!! IT WILL VERIFY USER MAIL ON SIGNUP
-
-
 @router.get('/verify-email', status_code=status.HTTP_202_ACCEPTED)
 async def verify_email(token: str, db: Session = Depends(_services.get_db)):
     token = verify_token(token, is_email_verification_token=True)
@@ -87,10 +86,10 @@ async def reset_password_mail(email: BaseEmail, db: Session = Depends(_services.
     token = create_access_token(
         data={"id": final_obj.id, "status": status, "email": final_obj.email}, expires_delta=expire_time)
 
-    token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/verify/token/'+token}"
+    token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/verify/password-reset/'+token}"
 
     return await _services.send_reset_password_mail(
-        subject="Reset Password", recipients=final_obj.email, password=token_url)
+        subject="Reset Password", recipients=final_obj.email, token_url=token_url)
 
 
 #! IT WILL VERIFY USER PASSWORD RESET TOKEN

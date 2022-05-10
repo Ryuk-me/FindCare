@@ -609,12 +609,12 @@ async def send_welcome_email_admin(subject: str, recipients: str, password: str)
     await fm.send_message(message, template_name='new-user-admin.html')
 
 
-async def send_reset_password_mail(subject: str, recipients: str, password: str):
+async def send_reset_password_mail(subject: str, recipients: str, token_url: str):
     message = MessageSchema(
         subject=subject,
         recipients=[recipients],
         template_body={
-            "password": password
+            "token_url": token_url
         }
     )
     conf = login_mail()
