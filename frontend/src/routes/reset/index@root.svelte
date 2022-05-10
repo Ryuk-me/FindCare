@@ -5,16 +5,24 @@
 <script>
 	import { notificationToast } from '$lib/NotificationToast'
 	import lock_svg from '$lib/assets/reset/lock.svg'
+	import { ENV, status_code } from '$lib/utils'
+
 	let email = ''
 
-	/****************************
-	
-	It will be implemneted only after email-template for reset_password is created 
-	
-	****************************************/
-
 	async function sendResetPassword() {
-		notificationToast('Password Reset Successfully Check Email', false, 2000, 'success')
+		const resp = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/email/reset-password', {
+			method: 'post',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				email
+			})
+		})
+		const data = await resp.json()
+		if (resp.status === status_code.HTTP_202_ACCEPTED) {
+			notificationToast(data?.detail, false, 3000, 'success')
+			return
+		}
+		notificationToast(data?.detail, false, 3000, 'error')
 	}
 </script>
 

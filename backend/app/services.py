@@ -499,17 +499,24 @@ async def reset_password(db: Session, email: str):
         doctor_model.Doctor.email == email).first()
     admin = db.query(admin_model.Admin).filter(
         admin_model.Admin.email == email).first()
-    if not user or doctor or admin:
+    if not user or doctor:
         raise errors.ACCOUNT_NOT_FOUND_WITH_THIS_EMAIL
-
+    if admin:
+        raise errors.PLEASE_CONTACT_ADMIN
+        
     temp_gen_pass = generate_random_password()
     final_obj = None
+
     if user:
         final_obj = user
-    if doctor:
+    elif doctor:
         final_obj = doctor
-    if admin:
-        final_obj = admin
+
+    if not final_obj.is_active:
+        raise errors.PLEASE_VERIFY_YOUR_EMAIL
+    elif final_obj.is_banned:
+        raise errors.USER_IS_BANNED
+
     change_password(db, temp_gen_pass, final_obj, final_obj)
     return await send_reset_password_mail(
         subject="Reset Password", recipients=final_obj.email, password=temp_gen_pass)

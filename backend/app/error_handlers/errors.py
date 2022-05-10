@@ -76,6 +76,9 @@ YOU_CANNOT_SET_PASSWORD_FOR_USER = HTTPException(
 YOU_CANNOT_SET_PASSWORD_FOR_DOCTOR = HTTPException(
     status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="You cannot set password for doctor")
 
+PLEASE_CONTACT_ADMIN = HTTPException(
+    status_code=status.HTTP_406_NOT_ACCEPTABLE, detail="Please contact Admin for support")
+
 
 # ***********************************************************************************
 #                                                                                   #
