@@ -50,7 +50,7 @@
 					'error'
 				)
 			} else {
-				notificationToast(capitalize(response?.detail), false, 2000, 'error')
+				notificationToast(response?.detail, false, 2000, 'error')
 			}
 		}
 	}
