@@ -80,12 +80,13 @@
 		<img
 			src={doctor_img}
 			alt="doctor.png"
-			class="h-[60vh] w-[26vw] relative left-[10vw] top-[6vh]"
-		/>
+			class="w-[28vw] relative left-32 top-[6vh]"
+			/>
+			<!-- class="h-[60vh] w-[26vw] relative left-[12vw] top-[6vh]" -->
 	</div>
 	<form
 		on:submit|preventDefault={signUpUser}
-		class="lg:mt-5 lg:ml-32 lg:p-0 flex flex-col p-5 lg:w-auto w-full"
+		class="lg:mt-5 lg:ml-32 lg:p-0 flex flex-col p-5 lg:w-auto w-full drop-shadow-xl"
 	>
 		<h1 class="text-4xl text-primary font-poppins font-bold mb-4 lg:hidden">FindCare</h1>
 		<div class="border border-primary p-4 rounded lg:border-0 mb-8">
