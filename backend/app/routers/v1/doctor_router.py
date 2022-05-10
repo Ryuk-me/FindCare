@@ -30,7 +30,7 @@ def verify_doctor_state(current_doctor: doctor_model.Doctor = Depends(get_curren
 #! DOCTOR SIGNUP
 @router.post('/', status_code=status.HTTP_201_CREATED)
 async def create_doctor(doctor: doctor_schema.DoctorCreate, db: Session = Depends(_services.get_db)):
-    doctor = _services.create_doctor(db, doctor)
+    doctor = await _services.create_doctor(db, doctor)
     expire_time = timedelta(minutes=int(
         settings.EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES))
     token = create_access_token(

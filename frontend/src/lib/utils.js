@@ -15,6 +15,28 @@ export function capitalize(text) {
 	return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()
 }
 
+export function titleCase(str) {
+	var splitStr = str.toLowerCase().split(' ')
+	for (var i = 0; i < splitStr.length; i++) {
+		splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1)
+	}
+	return splitStr.join(' ')
+}
+
+export const removeAlpha = (event) => {
+	const allowedRegex = /[0-9]/g
+	if (!event.key.match(allowedRegex)) {
+		event.preventDefault()
+	}
+}
+
+export const removeSpecialCharacters = (event) => {
+	const allowedRegex = /[A-Za-z .]/g
+	if (!event.key.match(allowedRegex)) {
+		event.preventDefault()
+	}
+}
+
 export const ENV = {
 	VITE_ACCESS_TOKEN_EXPIRE_MINUTES: parseInt(import.meta.env.VITE_ACCESS_TOKEN_EXPIRE_MINUTES),
 	VITE_FINDCARE_API_BASE_URL: import.meta.env.VITE_FINDCARE_API_BASE_URL
