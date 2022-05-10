@@ -89,7 +89,7 @@ async def reset_password_mail(email: BaseEmail, db: Session = Depends(_services.
     token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/verify/token/'+token}"
 
     return await _services.send_reset_password_mail(
-        subject="Reset Password", recipients=final_obj.email, password=token_url)
+        subject="Reset Password", recipients=final_obj.email, token_url=token_url)
 
 
 #! IT WILL VERIFY USER PASSWORD RESET TOKEN
