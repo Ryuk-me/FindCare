@@ -2,11 +2,11 @@
 
 > ## Setup your virtual environment for python fast-api
 
-- `py -3 -m venv next-care-venv` (run this in backend directory)
+- `py -3 -m venv findcare-venv` (run this in backend directory)
 
 > ## Install Requirements
 
-- `pip install -r requirements.txt` (please use this command after u sees next-care-venv in your terminal or after enabling your virtual environment)
+- `pip install -r requirements.txt` (please use this command after u sees findcare-venv in your terminal or after enabling your virtual environment)
 
 > ## Setup Env
 

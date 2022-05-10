@@ -198,6 +198,9 @@ ACCOUNT_NOT_FOUND_WITH_THIS_EMAIL = HTTPException(
 VERIFICATION_LINK_EXPIRED = HTTPException(
     status_code=status.HTTP_410_GONE, detail="Verification link has been expired")
 
+PASSWORD_RESET_LINK_EXPIRED = HTTPException(
+    status_code=status.HTTP_410_GONE, detail="Password reset link has been expired")
+
 EMAIL_ALREADY_VERIFIED = HTTPException(
     status_code=status.HTTP_409_CONFLICT, detail="Email already verified")
 
