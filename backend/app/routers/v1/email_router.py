@@ -24,9 +24,8 @@ class BaseEmail(BaseModel):
 class TokenResetPass(change_password_schema.ChangePassword):
     token: str
 
+
 #!! IT WILL VERIFY USER MAIL ON SIGNUP
-
-
 @router.get('/verify-email', status_code=status.HTTP_202_ACCEPTED)
 async def verify_email(token: str, db: Session = Depends(_services.get_db)):
     token = verify_token(token, is_email_verification_token=True)
