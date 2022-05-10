@@ -6,6 +6,7 @@ export function notificationToast(
 	close = false,
 	duration = 5000,
 	type = null,
+	callback = null,
 	gravity = 'top',
 	position = 'right',
 	newWindow = true,
@@ -37,6 +38,7 @@ export function notificationToast(
 		gravity,
 		//@ts-ignore
 		position,
+		callback,
 		stopOnFocus,
 		offset,
 		style

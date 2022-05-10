@@ -588,7 +588,7 @@ async def send_welcome_email(subject: str, recipients: str, token_url: str):
     fm = FastMail(conf)
     await fm.send_message(message, template_name='new-user.html')
 
-    return {"detail": "We have sent a verification mail please verify to continue"}
+    return {"detail": "We have sent a verification link on your mail please verify to continue"}
 
 
 async def send_welcome_email_admin(subject: str, recipients: str, password: str):
