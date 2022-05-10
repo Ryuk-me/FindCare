@@ -24,7 +24,7 @@
 	<title>Email Verification</title>
 </svelte:head>
 <div class="flex justify-center">
-	{#if status === status_code.HTTP_202_ACCEPTED}
+	{#if status === status_code.HTTP_202_ACCEPTED || status === status_code.HTTP_409_CONFLICT}
 		<div class="animation-ctn grid place-items-center h-80 w-3/6">
 			<div class="icon icon--order-success svg ">
 				<svg xmlns="http://www.w3.org/2000/svg" width="154px" height="154px">
