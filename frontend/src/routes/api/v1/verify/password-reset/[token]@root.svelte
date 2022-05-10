@@ -1,6 +1,6 @@
 <script context="module">
 	import { ENV, status_code } from '$lib/utils'
-	export async function load({ params, fetch }) {
+	export async function load({ params, fetch, session }) {
 		const token = params.token
 		const resp = await fetch(
 			ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/email/verify-password-reset-token?token=' + token
@@ -22,6 +22,7 @@
 	export let token
 	import { notificationToast } from '$lib/NotificationToast'
 	import { goto } from '$app/navigation'
+	import { session } from '$app/stores'
 	let password = ''
 	let show = false
 	let confirmPassword = ''
@@ -49,8 +50,12 @@
 			}
 		)
 		const data = await resp.json()
-		const toastCallbackToLogin = () => goto('/login')
 		if (resp.status === status_code.HTTP_202_ACCEPTED) {
+			const toastCallbackToLogin = () => {
+				$session = null
+				goto('/login')
+			}
+			await fetch('../../auth/logout')
 			notificationToast(data.detail, false, 3000, 'success', toastCallbackToLogin)
 		} else {
 			notificationToast(data.detail, false, 3000, 'error')
