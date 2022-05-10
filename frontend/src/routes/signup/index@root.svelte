@@ -7,13 +7,13 @@
 	let show = false
 	let firstName = ''
 	let lastName = ''
-	let email = ''.trim()
+	let email = ''
 	let password = ''
 	let confirmPassword = ''
 	let phoneNumber = ''
 	let gender = ''
 	let dob = ''.split('-')
-	// $: firstName =
+
 	const handleInput = (event) => {
 		password = event.target.value
 	}
@@ -32,6 +32,10 @@
 	}
 
 	const signUpUser = async () => {
+		if (!phoneNumber.match(/^[6-9]\d{9}$/gm)) {
+			notificationToast('Invalid Phone Number !', false, 2000, 'error')
+			return
+		}
 		if (password !== confirmPassword) {
 			notificationToast('Password do not match !', false, 2000, 'error')
 			return
