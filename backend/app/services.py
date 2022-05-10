@@ -1,5 +1,3 @@
-import json
-from typing import List
 from app.database import SessionLocal
 from app.models import user_model
 from sqlalchemy.orm import Session
@@ -588,7 +586,7 @@ async def send_welcome_email(subject: str, recipients: str, token_url: str):
     fm = FastMail(conf)
     await fm.send_message(message, template_name='new-user.html')
 
-    return {"detail": "We have sent a verification link on your mail please verify to continue"}
+    return {"detail": "We have sent a verification link on your email please verify to continue"}
 
 
 async def send_welcome_email_admin(subject: str, recipients: str, password: str):
@@ -615,7 +613,7 @@ async def send_reset_password_mail(subject: str, recipients: str, password: str)
     conf = login_mail()
     fm = FastMail(conf)
     await fm.send_message(message, template_name='reset.html')
-    return {"detail": "We have sent a temporary password on your mail."}
+    return {"detail": "We have sent a temporary password on your email."}
 
 
 async def send_email_account_activation(subject: str, recipients: str):

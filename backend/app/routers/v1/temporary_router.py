@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status, Depends
+from fastapi import APIRouter, Depends
 from app.Config import settings
 from sqlalchemy.orm import Session
 from app.oauth2 import get_current_admin

@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from app.Config import settings
 from app import services as _services
