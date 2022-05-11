@@ -8,6 +8,9 @@
 	import appointment_icon from '$lib/assets/homepage/appointment.svg'
 	import onlineConsultation_icon from '$lib/assets/homepage/onlineConsultation.svg'
 	import medical_assistance from '$lib/assets/homepage/medical-assistance.png'
+	import ellipse1 from '$lib/assets/homepage/Ellipse1.png'
+	import ellipse2 from '$lib/assets/homepage/Ellipse2.png'
+	import ellipse3 from '$lib/assets/homepage/Ellipse3.png'
 	import Footer from '$lib/components/Footer.svelte'
 </script>
 
@@ -15,8 +18,10 @@
 	<title>Findcare</title>
 </svelte:head>
 
-<div class="">
+<div class="relative">
 	<!-- Navbar -->
+	
+	<img src="{ellipse1}" alt="" class="lg:block absolute hidden w-56 top-[85vh] left-0" />
 
 	<div
 		class="navbar flex items-center flex-wrap lg:justify-between p-4 lg:px-24 lg:w-auto w-screen"
@@ -160,7 +165,8 @@
 
 	<!-- Online Consultation -->
 
-	<section class="text-gray-600 font-['Open_Sans'] lg:px-24 bg-[#f1f0ff]">
+	<section class="text-gray-600 font-['Open_Sans'] relative lg:px-24 bg-[#f1f0ff]">
+		<img src="{ellipse2}" alt="" class="lg:block absolute hidden w-24 top-6 right-0" />
 		<div
 			class="container mx-auto flex px-5 py-16 md:flex-row flex-col justify-between items-center"
 		>
@@ -182,7 +188,8 @@
 
 	<!-- Live Chat -->
 
-	<section class="text-gray-600 font-['Open_Sans'] lg:px-24">
+	<section class="text-gray-600 font-['Open_Sans'] relative lg:px-24">
+		<img src="{ellipse3}" alt="" class="lg:block absolute hidden w-24 top-6 left-0" />
 		<div
 			class="container mx-auto flex px-5 py-16 md:flex-row flex-col justify-between items-center"
 		>
@@ -202,7 +209,8 @@
 
 	<!-- Appointment -->
 
-	<section class="text-gray-600 font-['Open_Sans'] lg:px-24 bg-[#f1f0ff]">
+	<section class="text-gray-600 font-['Open_Sans'] relative lg:px-24 bg-[#f1f0ff]">
+		<img src="{ellipse2}" alt="" class="lg:block absolute hidden w-24 top-6 right-0" />
 		<div
 			class="container mx-auto flex px-5 py-16 md:flex-row flex-col justify-between items-center"
 		>
@@ -373,14 +381,14 @@
 		<div class="flex flex-col justify-center items-center px-5 py-4">
 			<div>
 				<h1
-					class="flex-grow lg:pr-0 sm:pr-16 lg:text-4xl text-3xl  font-medium title-font my-4 text-gray-900"
+					class="flex-grow lg:pr-0 sm:pr-16 lg:text-2xl text-3xl font-medium title-font mt-4 text-gray-900"
 				>
 					Need a Doctor for checkup?
 				</h1>
 			</div>
 			<div>
 				<h1
-					class="flex-grow lg:pr-0 sm:pr-16 lg:text-2xl text-xl  font-medium title-font my-4 text-gray-900"
+					class="flex-grow lg:pr-0 sm:pr-16 lg:text-3xl text-xl  font-medium title-font my-4 text-gray-900"
 				>
 					Just make an appointment and you are done!
 				</h1>
