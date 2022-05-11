@@ -1,5 +1,4 @@
 <script>
-	let menu = false
 	import homepage_doctor from '$lib/assets/homepage/homepage-doctor.png'
 	import appointment from '$lib/assets/homepage/appointment.png'
 	import livechat from '$lib/assets/homepage/livechat.png'
@@ -12,6 +11,7 @@
 	import ellipse2 from '$lib/assets/homepage/Ellipse2.png'
 	import ellipse3 from '$lib/assets/homepage/Ellipse3.png'
 	import Footer from '$lib/components/Footer.svelte'
+	import Navbar from '$lib/components/Navbar.svelte'
 </script>
 
 <svelte:head>
@@ -19,57 +19,11 @@
 </svelte:head>
 
 <div class="relative">
-	<!-- Navbar -->
-	
-	<img src="{ellipse1}" alt="" class="lg:block absolute hidden w-56 top-[85vh] left-0" />
+	<img src={ellipse1} alt="" class="lg:block absolute hidden w-56 top-[85vh] left-0" />
 
-	<div
-		class="navbar flex items-center flex-wrap lg:justify-between p-4 lg:px-24 lg:w-auto w-screen"
-	>
-		<div class="flex justify-between lg:w-auto w-full items-center">
-			<div class="flex flex-row w-full lg:w-auto">
-				<div>
-					<i
-						class="fa-solid {menu
-							? 'fa-times'
-							: 'fa-bars'} text-primary p-2 mt-2 inline-flex rounded ml-auto lg:hidden md:hidden"
-						id="menu"
-						on:click|preventDefault={() => (menu = !menu)}
-					/>
-				</div>
-				<div class="p-2 mr-4 text-primary text-3xl font-bold tracking-wide font-poppins">
-					<a href="/">Find<span class="text-[#fb3434]">Care</span></a>
-				</div>
-			</div>
-			<div class="lg:hidden">
-				<a href="/login"
-					><button
-						class="bg-primary hover:bg-[#524af4] text-white rounded-full w-full px-5 py-1.5 font-light"
-						>Login</button
-					></a
-				>
-			</div>
-		</div>
-		<div
-			class="lg:w-auto {menu
-				? 'block'
-				: 'hidden'} lg:flex md:flex lg:flex-row flex-col flex mb-5 lg:mb-0 font-semibold"
-		>
-			<a href="/" class="px-3 mx-3 hover:text-[#fb3434]">Home</a>
-			<a href="/about" class="px-3 mx-3 hover:text-[#fb3434]">About</a>
-			<a href="/support" class="px-3 mx-3 hover:text-[#fb3434]">Support</a>
-			<a href="/contact" class="px-3 mx-3 hover:text-[#fb3434]">Contact</a>
-		</div>
-		<div class="flex-col lg:flex hidden lg:flex-row mx-6 justify-center items-center">
-			<a href="/login" class="font-semibold mr-7 hover:text-[#524af4]">Login</a>
-			<a href="/signup"
-				><button
-					class="bg-primary hover:bg-[#524af4] text-white rounded-full w-full px-7 py-1 font-medium"
-					>Sign up</button
-				></a
-			>
-		</div>
-	</div>
+	<!-- Navbar -->
+
+	<Navbar />
 
 	<!-- hero section -->
 
@@ -166,7 +120,7 @@
 	<!-- Online Consultation -->
 
 	<section class="text-gray-600 font-['Open_Sans'] relative lg:px-24 bg-[#f1f0ff]">
-		<img src="{ellipse2}" alt="" class="lg:block absolute hidden w-24 top-6 right-0" />
+		<img src={ellipse2} alt="" class="lg:block absolute hidden w-24 top-6 right-0" />
 		<div
 			class="container mx-auto flex px-5 py-16 md:flex-row flex-col justify-between items-center"
 		>
@@ -189,7 +143,7 @@
 	<!-- Live Chat -->
 
 	<section class="text-gray-600 font-['Open_Sans'] relative lg:px-24">
-		<img src="{ellipse3}" alt="" class="lg:block absolute hidden w-24 top-6 left-0" />
+		<img src={ellipse3} alt="" class="lg:block absolute hidden w-24 top-6 left-0" />
 		<div
 			class="container mx-auto flex px-5 py-16 md:flex-row flex-col justify-between items-center"
 		>
@@ -210,7 +164,7 @@
 	<!-- Appointment -->
 
 	<section class="text-gray-600 font-['Open_Sans'] relative lg:px-24 bg-[#f1f0ff]">
-		<img src="{ellipse2}" alt="" class="lg:block absolute hidden w-24 top-6 right-0" />
+		<img src={ellipse2} alt="" class="lg:block absolute hidden w-24 top-6 right-0" />
 		<div
 			class="container mx-auto flex px-5 py-16 md:flex-row flex-col justify-between items-center"
 		>
