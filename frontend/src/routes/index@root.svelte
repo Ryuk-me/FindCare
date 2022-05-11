@@ -351,7 +351,9 @@
 				<a href="#hero"
 					><button
 						class="bg-primary block hover:bg-[#524af4] my-4 text-white w-full lg:px-24 px-14 rounded-md py-3 font-light"
-						>Get an appointment <i class="fa-solid fa-arrow-right" /></button
+						>Get an appointment<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2 inline-block" viewBox="0 0 24 24">
+							<path d="M5 12h14M12 5l7 7-7 7"></path>
+						  </svg></button
 					></a
 				>
 			</div>
