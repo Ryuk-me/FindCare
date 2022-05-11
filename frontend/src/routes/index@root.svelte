@@ -1,5 +1,4 @@
 <script>
-	let menu = false
 	import homepage_doctor from '$lib/assets/homepage/homepage-doctor.png'
 	import appointment from '$lib/assets/homepage/appointment.png'
 	import livechat from '$lib/assets/homepage/livechat.png'
@@ -12,6 +11,7 @@
 	import ellipse2 from '$lib/assets/homepage/Ellipse2.png'
 	import ellipse3 from '$lib/assets/homepage/Ellipse3.png'
 	import Footer from '$lib/components/Footer.svelte'
+	import Navbar from '$lib/components/Navbar.svelte'
 </script>
 
 <svelte:head>
@@ -19,57 +19,11 @@
 </svelte:head>
 
 <div class="relative">
-	<!-- Navbar -->
-	
-	<img src="{ellipse1}" alt="" class="lg:block absolute hidden w-56 top-[85vh] left-0" />
+	<img src={ellipse1} alt="" class="lg:block absolute hidden w-56 top-[85vh] left-0" />
 
-	<div
-		class="navbar flex items-center flex-wrap lg:justify-between p-4 lg:px-24 lg:w-auto w-screen"
-	>
-		<div class="flex justify-between lg:w-auto w-full items-center">
-			<div class="flex flex-row w-full lg:w-auto">
-				<div>
-					<i
-						class="fa-solid {menu
-							? 'fa-times'
-							: 'fa-bars'} text-primary p-2 mt-2 inline-flex rounded ml-auto lg:hidden md:hidden"
-						id="menu"
-						on:click|preventDefault={() => (menu = !menu)}
-					/>
-				</div>
-				<div class="p-2 mr-4 text-primary text-3xl font-bold tracking-wide font-poppins">
-					<a href="/">Find<span class="text-[#fb3434]">Care</span></a>
-				</div>
-			</div>
-			<div class="lg:hidden">
-				<a href="/login"
-					><button
-						class="bg-primary hover:bg-[#524af4] text-white rounded-full w-full px-5 py-1.5 font-light"
-						>Login</button
-					></a
-				>
-			</div>
-		</div>
-		<div
-			class="lg:w-auto {menu
-				? 'block'
-				: 'hidden'} lg:flex md:flex lg:flex-row flex-col flex mb-5 lg:mb-0 font-semibold"
-		>
-			<a href="/" class="px-3 mx-3 hover:text-[#fb3434]">Home</a>
-			<a href="/about" class="px-3 mx-3 hover:text-[#fb3434]">About</a>
-			<a href="/support" class="px-3 mx-3 hover:text-[#fb3434]">Support</a>
-			<a href="/contact" class="px-3 mx-3 hover:text-[#fb3434]">Contact</a>
-		</div>
-		<div class="flex-col lg:flex hidden lg:flex-row mx-6 justify-center items-center">
-			<a href="/login" class="font-semibold mr-7 hover:text-[#524af4]">Login</a>
-			<a href="/signup"
-				><button
-					class="bg-primary hover:bg-[#524af4] text-white rounded-full w-full px-7 py-1 font-medium"
-					>Sign up</button
-				></a
-			>
-		</div>
-	</div>
+	<!-- Navbar -->
+
+	<Navbar />
 
 	<!-- hero section -->
 
@@ -166,7 +120,7 @@
 	<!-- Online Consultation -->
 
 	<section class="text-gray-600 font-['Open_Sans'] relative lg:px-24 bg-[#f1f0ff]">
-		<img src="{ellipse2}" alt="" class="lg:block absolute hidden w-24 top-6 right-0" />
+		<img src={ellipse2} alt="" class="lg:block absolute hidden w-24 top-6 right-0" />
 		<div
 			class="container mx-auto flex px-5 py-16 md:flex-row flex-col justify-between items-center"
 		>
@@ -189,7 +143,7 @@
 	<!-- Live Chat -->
 
 	<section class="text-gray-600 font-['Open_Sans'] relative lg:px-24">
-		<img src="{ellipse3}" alt="" class="lg:block absolute hidden w-24 top-6 left-0" />
+		<img src={ellipse3} alt="" class="lg:block absolute hidden w-24 top-6 left-0" />
 		<div
 			class="container mx-auto flex px-5 py-16 md:flex-row flex-col justify-between items-center"
 		>
@@ -210,7 +164,7 @@
 	<!-- Appointment -->
 
 	<section class="text-gray-600 font-['Open_Sans'] relative lg:px-24 bg-[#f1f0ff]">
-		<img src="{ellipse2}" alt="" class="lg:block absolute hidden w-24 top-6 right-0" />
+		<img src={ellipse2} alt="" class="lg:block absolute hidden w-24 top-6 right-0" />
 		<div
 			class="container mx-auto flex px-5 py-16 md:flex-row flex-col justify-between items-center"
 		>
@@ -228,167 +182,20 @@
 		</div>
 	</section>
 
-	<!-- Team -->
-
-	<section class="text-gray-600 font-['Open_Sans'] lg:px-24">
-		<div class="container px-5 py-24 mx-auto">
-			<div class="flex flex-col text-center w-full mb-20">
-				<h1 class="text-3xl font-bold title-font mb-4 text-gray-900">OUR TEAM</h1>
-				<p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis voluptate, blanditiis
-					inventore quidem consectetur recusandae quibusdam. Nisi impedit natus veritatis, quas
-					quasi a totam tempora accusamus sapiente, modi officiis molestias.
-				</p>
-			</div>
-			<div class="flex flex-wrap -m-4">
-				<div class="p-4 lg:w-1/4 md:w-1/2">
-					<div class="h-full flex flex-col items-center text-center">
-						<img
-							alt="team"
-							class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
-							src="https://img.freepik.com/free-vector/young-anonymous-hacker-with-flat-design_23-2147879457.jpg?t=st=1652263532~exp=1652264132~hmac=5945e992471fbd1678a5e0813e946f1036c9890f3a2e7d8ce146af371f1c275b&w=740hacker-using-laptop_4090770.htm#query=coder&position=5&from_view=search"
-						/>
-						<div class="w-full">
-							<h2 class="title-font font-semibold text-lg text-gray-900">Aman Sharma</h2>
-							<h3 class="text-gray-500 mb-3">Frontend Developer</h3>
-							<p class="mb-4">To develop website features that can enhance the user experience.</p>
-							<span class="inline-flex">
-								<a href="https://github.com/adgamerx" class="text-gray-500">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="24"
-										height="24"
-										shape-rendering="geometricPrecision"
-										text-rendering="geometricPrecision"
-										image-rendering="optimizeQuality"
-										fill-rule="evenodd"
-										clip-rule="evenodd"
-										viewBox="0 0 640 640"
-										><path
-											d="M319.988 7.973C143.293 7.973 0 151.242 0 327.96c0 141.392 91.678 261.298 218.826 303.63 16.004 2.964 21.886-6.957 21.886-15.414 0-7.63-.319-32.835-.449-59.552-89.032 19.359-107.8-37.772-107.8-37.772-14.552-36.993-35.529-46.831-35.529-46.831-29.032-19.879 2.209-19.442 2.209-19.442 32.126 2.245 49.04 32.954 49.04 32.954 28.56 48.922 74.883 34.76 93.131 26.598 2.882-20.681 11.15-34.807 20.315-42.803-71.08-8.067-145.797-35.516-145.797-158.14 0-34.926 12.52-63.485 32.965-85.88-3.33-8.078-14.291-40.606 3.083-84.674 0 0 26.87-8.61 88.029 32.8 25.512-7.075 52.878-10.642 80.056-10.76 27.2.118 54.614 3.673 80.162 10.76 61.076-41.386 87.922-32.8 87.922-32.8 17.398 44.08 6.485 76.631 3.154 84.675 20.516 22.394 32.93 50.953 32.93 85.879 0 122.907-74.883 149.93-146.117 157.856 11.481 9.921 21.733 29.398 21.733 59.233 0 42.792-.366 77.28-.366 87.804 0 8.516 5.764 18.473 21.992 15.354 127.076-42.354 218.637-162.274 218.637-303.582 0-176.695-143.269-319.988-320-319.988l-.023.107z"
-										/></svg
-									>
-								</a>
-							</span>
-						</div>
-					</div>
-				</div>
-				<div class="p-4 lg:w-1/4 md:w-1/2">
-					<div class="h-full flex flex-col items-center text-center">
-						<img
-							alt="team"
-							class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
-							src="https://img.freepik.com/free-vector/young-anonymous-hacker-with-flat-design_23-2147879457.jpg?t=st=1652263532~exp=1652264132~hmac=5945e992471fbd1678a5e0813e946f1036c9890f3a2e7d8ce146af371f1c275b&w=740"
-						/>
-						<div class="w-full">
-							<h2 class="title-font font-semibold text-lg text-gray-900">Amardeep Anand</h2>
-							<h3 class="text-gray-500 mb-3">UI/UX Developer</h3>
-							<p class="mb-4">To plan and design the structure and design of web pages</p>
-							<span class="inline-flex">
-								<a href="/" class="text-gray-500">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="24"
-										height="24"
-										shape-rendering="geometricPrecision"
-										text-rendering="geometricPrecision"
-										image-rendering="optimizeQuality"
-										fill-rule="evenodd"
-										clip-rule="evenodd"
-										viewBox="0 0 640 640"
-										><path
-											d="M319.988 7.973C143.293 7.973 0 151.242 0 327.96c0 141.392 91.678 261.298 218.826 303.63 16.004 2.964 21.886-6.957 21.886-15.414 0-7.63-.319-32.835-.449-59.552-89.032 19.359-107.8-37.772-107.8-37.772-14.552-36.993-35.529-46.831-35.529-46.831-29.032-19.879 2.209-19.442 2.209-19.442 32.126 2.245 49.04 32.954 49.04 32.954 28.56 48.922 74.883 34.76 93.131 26.598 2.882-20.681 11.15-34.807 20.315-42.803-71.08-8.067-145.797-35.516-145.797-158.14 0-34.926 12.52-63.485 32.965-85.88-3.33-8.078-14.291-40.606 3.083-84.674 0 0 26.87-8.61 88.029 32.8 25.512-7.075 52.878-10.642 80.056-10.76 27.2.118 54.614 3.673 80.162 10.76 61.076-41.386 87.922-32.8 87.922-32.8 17.398 44.08 6.485 76.631 3.154 84.675 20.516 22.394 32.93 50.953 32.93 85.879 0 122.907-74.883 149.93-146.117 157.856 11.481 9.921 21.733 29.398 21.733 59.233 0 42.792-.366 77.28-.366 87.804 0 8.516 5.764 18.473 21.992 15.354 127.076-42.354 218.637-162.274 218.637-303.582 0-176.695-143.269-319.988-320-319.988l-.023.107z"
-										/></svg
-									>
-								</a>
-							</span>
-						</div>
-					</div>
-				</div>
-				<div class="p-4 lg:w-1/4 md:w-1/2">
-					<div class="h-full flex flex-col items-center text-center">
-						<img
-							alt="team"
-							class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
-							src="https://img.freepik.com/free-vector/young-anonymous-hacker-with-flat-design_23-2147879457.jpg?t=st=1652263532~exp=1652264132~hmac=5945e992471fbd1678a5e0813e946f1036c9890f3a2e7d8ce146af371f1c275b&w=740"
-						/>
-						<div class="w-full">
-							<h2 class="title-font font-semibold text-lg text-gray-900">Neeraj Kumar</h2>
-							<h3 class="text-gray-500 mb-3">Backend Developer</h3>
-							<p class="mb-4">
-								Participate in the entire application by doing coding and debugging.
-							</p>
-							<span class="inline-flex">
-								<a href="https://github.com/Ryuk-me" class="text-gray-500">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="24"
-										height="24"
-										shape-rendering="geometricPrecision"
-										text-rendering="geometricPrecision"
-										image-rendering="optimizeQuality"
-										fill-rule="evenodd"
-										clip-rule="evenodd"
-										viewBox="0 0 640 640"
-										><path
-											d="M319.988 7.973C143.293 7.973 0 151.242 0 327.96c0 141.392 91.678 261.298 218.826 303.63 16.004 2.964 21.886-6.957 21.886-15.414 0-7.63-.319-32.835-.449-59.552-89.032 19.359-107.8-37.772-107.8-37.772-14.552-36.993-35.529-46.831-35.529-46.831-29.032-19.879 2.209-19.442 2.209-19.442 32.126 2.245 49.04 32.954 49.04 32.954 28.56 48.922 74.883 34.76 93.131 26.598 2.882-20.681 11.15-34.807 20.315-42.803-71.08-8.067-145.797-35.516-145.797-158.14 0-34.926 12.52-63.485 32.965-85.88-3.33-8.078-14.291-40.606 3.083-84.674 0 0 26.87-8.61 88.029 32.8 25.512-7.075 52.878-10.642 80.056-10.76 27.2.118 54.614 3.673 80.162 10.76 61.076-41.386 87.922-32.8 87.922-32.8 17.398 44.08 6.485 76.631 3.154 84.675 20.516 22.394 32.93 50.953 32.93 85.879 0 122.907-74.883 149.93-146.117 157.856 11.481 9.921 21.733 29.398 21.733 59.233 0 42.792-.366 77.28-.366 87.804 0 8.516 5.764 18.473 21.992 15.354 127.076-42.354 218.637-162.274 218.637-303.582 0-176.695-143.269-319.988-320-319.988l-.023.107z"
-										/></svg
-									>
-								</a>
-							</span>
-						</div>
-					</div>
-				</div>
-				<div class="p-4 lg:w-1/4 md:w-1/2">
-					<div class="h-full flex flex-col items-center text-center">
-						<img
-							alt="team"
-							class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
-							src="https://img.freepik.com/free-vector/young-anonymous-hacker-with-flat-design_23-2147879457.jpg?t=st=1652263532~exp=1652264132~hmac=5945e992471fbd1678a5e0813e946f1036c9890f3a2e7d8ce146af371f1c275b&w=740"
-						/>
-						<div class="w-full">
-							<h2 class="title-font font-semibold text-lg text-gray-900">Nitin Shivam</h2>
-							<h3 class="text-gray-500 mb-3">Database Administrator</h3>
-							<p class="mb-4">Creating database design, creation, and testing activities.</p>
-							<span class="inline-flex">
-								<a href="https://github.com/nitinshivam" class="text-gray-500">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										width="24"
-										height="24"
-										shape-rendering="geometricPrecision"
-										text-rendering="geometricPrecision"
-										image-rendering="optimizeQuality"
-										fill-rule="evenodd"
-										clip-rule="evenodd"
-										viewBox="0 0 640 640"
-										><path
-											d="M319.988 7.973C143.293 7.973 0 151.242 0 327.96c0 141.392 91.678 261.298 218.826 303.63 16.004 2.964 21.886-6.957 21.886-15.414 0-7.63-.319-32.835-.449-59.552-89.032 19.359-107.8-37.772-107.8-37.772-14.552-36.993-35.529-46.831-35.529-46.831-29.032-19.879 2.209-19.442 2.209-19.442 32.126 2.245 49.04 32.954 49.04 32.954 28.56 48.922 74.883 34.76 93.131 26.598 2.882-20.681 11.15-34.807 20.315-42.803-71.08-8.067-145.797-35.516-145.797-158.14 0-34.926 12.52-63.485 32.965-85.88-3.33-8.078-14.291-40.606 3.083-84.674 0 0 26.87-8.61 88.029 32.8 25.512-7.075 52.878-10.642 80.056-10.76 27.2.118 54.614 3.673 80.162 10.76 61.076-41.386 87.922-32.8 87.922-32.8 17.398 44.08 6.485 76.631 3.154 84.675 20.516 22.394 32.93 50.953 32.93 85.879 0 122.907-74.883 149.93-146.117 157.856 11.481 9.921 21.733 29.398 21.733 59.233 0 42.792-.366 77.28-.366 87.804 0 8.516 5.764 18.473 21.992 15.354 127.076-42.354 218.637-162.274 218.637-303.582 0-176.695-143.269-319.988-320-319.988l-.023.107z"
-										/></svg
-									>
-								</a>
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
 	<!-- CTA -->
 
 	<section class="bg-[#f1f0ff]">
 		<div class="flex flex-col justify-center items-center px-5 py-4">
 			<div>
 				<h1
-					class="flex-grow lg:pr-0 sm:pr-16 lg:text-2xl text-3xl font-medium title-font mt-4 text-gray-900"
+					class="flex-grow lg:pr-0 lg:text-2xl text-3xl font-medium title-font mt-4 text-gray-900"
 				>
 					Need a Doctor for checkup?
 				</h1>
 			</div>
 			<div>
 				<h1
-					class="flex-grow lg:pr-0 sm:pr-16 lg:text-3xl text-xl  font-medium title-font my-4 text-gray-900"
+					class="flex-grow lg:pr-0 lg:text-3xl text-xl  font-medium title-font my-4 text-gray-900"
 				>
 					Just make an appointment and you are done!
 				</h1>
@@ -397,7 +204,9 @@
 				<a href="#hero"
 					><button
 						class="bg-primary block hover:bg-[#524af4] my-4 text-white w-full lg:px-24 px-14 rounded-md py-3 font-light"
-						>Get an appointment <i class="fa-solid fa-arrow-right" /></button
+						>Get an appointment<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2 inline-block" viewBox="0 0 24 24">
+							<path d="M5 12h14M12 5l7 7-7 7"></path>
+						  </svg></button
 					></a
 				>
 			</div>
