@@ -381,14 +381,14 @@
 		<div class="flex flex-col justify-center items-center px-5 py-4">
 			<div>
 				<h1
-					class="flex-grow lg:pr-0 sm:pr-16 lg:text-2xl text-3xl font-medium title-font mt-4 text-gray-900"
+					class="flex-grow lg:pr-0 lg:text-2xl text-3xl font-medium title-font mt-4 text-gray-900"
 				>
 					Need a Doctor for checkup?
 				</h1>
 			</div>
 			<div>
 				<h1
-					class="flex-grow lg:pr-0 sm:pr-16 lg:text-3xl text-xl  font-medium title-font my-4 text-gray-900"
+					class="flex-grow lg:pr-0 lg:text-3xl text-xl  font-medium title-font my-4 text-gray-900"
 				>
 					Just make an appointment and you are done!
 				</h1>
