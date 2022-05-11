@@ -1,6 +1,17 @@
 <script>
 	import Footer from '$lib/components/Footer.svelte'
 	import Navbar from '$lib/components/Navbar.svelte'
+	var Tawk_API = Tawk_API || {},
+		Tawk_LoadStart = new Date()
+	;(function () {
+		var s1 = document.createElement('script'),
+			s0 = document.getElementsByTagName('script')[0]
+		s1.async = true
+		s1.src = 'https://embed.tawk.to/627bb66d7b967b11798ed7c4/1g2pk1831'
+		s1.charset = 'UTF-8'
+		s1.setAttribute('crossorigin', '*')
+		s0.parentNode.insertBefore(s1, s0)
+	})()
 </script>
 
 <!-- Navbar -->
@@ -36,7 +47,7 @@
 				</div>
 				<div class="lg:w-1/2 px-6 mt-4 lg:mt-0">
 					<h2 class="title-font font-semibold text-gray-900 tracking-widest text-xs">EMAIL</h2>
-					<a class="text-indigo-500 leading-relaxed">support@findcare.in</a>
+					<a href="mailto:support@findcare.in" class="text-indigo-500 leading-relaxed">support@findcare.in</a>
 					<h2 class="title-font font-semibold text-gray-900 tracking-widest text-xs mt-4">PHONE</h2>
 					<p class="leading-relaxed">123-456-7890</p>
 				</div>
@@ -81,7 +92,8 @@
 		</div>
 	</div>
 </section>
-
+<!--Start of Tawk.to Script-->
+	<!--End of Tawk.to Script-->
 <!-- Footer -->
 
 <Footer />
