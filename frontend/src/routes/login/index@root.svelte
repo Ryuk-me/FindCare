@@ -21,6 +21,8 @@
 	let username = ''
 	let password = ''
 	let show = false
+	let isDoctor = false
+	$:console.log(isDoctor)
 	const handleInput = (event) => {
 		password = event.target.value
 	}
@@ -67,7 +69,9 @@
 >
 	<div class="flex justify-center items-center lg:ml-48 font-maven">
 		<div class="">
-			<h2 class="text-primary font-bold font-poppins text-3xl my-4 text-left">Find<span class="text-[#fb3434]">Care</span></h2>
+			<h2 class="text-primary font-bold font-poppins text-3xl my-4 text-left">
+				Find<span class="text-[#fb3434]">Care</span>
+			</h2>
 			<form
 				on:submit|preventDefault={handleLogin}
 				class="flex flex-col justify-center items-start w-[90vw] lg:w-[35rem] bg-white rounded drop-shadow-xl mb-6 px-8 py-7"
@@ -111,15 +115,18 @@
 				</div>
 				<div class="flex flex-col justify-center items-center w-full my-3">
 					<button
-						class="bg-primary hover:bg-[#524af4] w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
+						class="bg-primary tracking-wider text-lg hover:bg-[#524af4] w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
 						>Login</button
 					>
 					<div class="">
-					<label for="toggle-example" class="flex  flex-row  items-center cursor-pointer relative mb-4">
-						<input type="checkbox" id="toggle-example" class="sr-only">
-						<div class="toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full"></div>
-						<p class="ml-3">Are you a Doctor?</p>
-					  </label>
+						<label
+							for="toggle-example"
+							class="flex  flex-row  items-center cursor-pointer relative mb-4"
+						>
+							<input type="checkbox" id="toggle-example" class="sr-only" bind:checked={isDoctor}/>
+							<div class="toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full" />
+							<p class="ml-3">Are you a Doctor?</p>
+						</label>
 					</div>
 					<p>
 						Don't Have An Account? <a
@@ -149,16 +156,16 @@
 		top: 50%;
 	}
 	.toggle-bg:after {
-    content: '';
-    @apply absolute top-0.5 left-0.5 bg-white border border-gray-300 rounded-full h-5 w-5 transition shadow-sm;
-}
+		content: '';
+		@apply absolute top-0.5 left-0.5 bg-white border border-gray-300 rounded-full h-5 w-5 transition shadow-sm;
+	}
 
-input:checked + .toggle-bg:after {
-    transform: translateX(100%);
-    @apply border-white;
-}
+	input:checked + .toggle-bg:after {
+		transform: translateX(100%);
+		@apply border-white;
+	}
 
-input:checked + .toggle-bg {
-    @apply bg-blue-600 border-blue-600;
-}
+	input:checked + .toggle-bg {
+		@apply bg-blue-600 border-blue-600;
+	}
 </style>
