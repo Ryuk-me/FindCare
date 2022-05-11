@@ -35,7 +35,7 @@ class="navbar flex items-center flex-wrap lg:justify-between p-4 lg:px-24 lg:w-a
         : 'hidden'} lg:flex md:flex lg:flex-row flex-col flex mb-5 lg:mb-0 font-semibold"
 >
     <a href="/" class="px-3 mx-3 hover:text-[#fb3434]">Home</a>
-    <a href="/about" class="px-3 mx-3 hover:text-[#fb3434]">About</a>
+    <a href="/about-us" class="px-3 mx-3 hover:text-[#fb3434]">About</a>
     <a href="/support" class="px-3 mx-3 hover:text-[#fb3434]">Support</a>
     <a href="/contact" class="px-3 mx-3 hover:text-[#fb3434]">Contact</a>
 </div>
