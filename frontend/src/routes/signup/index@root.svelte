@@ -1,3 +1,15 @@
+<script context="module">
+	import { checkUserType } from '$lib/utils.js'
+
+	export async function load({ session }) {
+		if (session) {
+			// This function will check for route access and redirect user to their appropriate routes accordingly
+			return checkUserType(session)
+		}
+		return {}
+	}
+</script>
+
 <script>
 	import doctor_img from '$lib/assets/signup/doctor.png'
 	import { ENV, status_code, titleCase, removeAlpha, removeSpecialCharacters } from '$lib/utils'
@@ -77,12 +89,8 @@
 <div class="w-full lg:h-screen h-full flex flex-row font-maven">
 	<div class="bg-primary h-screen lg:w-1/3 flex flex-col w-0">
 		<h1 class="text-[3.5vw] mt-4 text-center text-white font-poppins font-bold">FindCare</h1>
-		<img
-			src={doctor_img}
-			alt="doctor.png"
-			class="w-[28vw] relative left-32 top-[6vh]"
-			/>
-			<!-- class="h-[60vh] w-[26vw] relative left-[12vw] top-[6vh]" -->
+		<img src={doctor_img} alt="doctor.png" class="w-[28vw] relative left-32 top-[6vh]" />
+		<!-- class="h-[60vh] w-[26vw] relative left-[12vw] top-[6vh]" -->
 	</div>
 	<form
 		on:submit|preventDefault={signUpUser}

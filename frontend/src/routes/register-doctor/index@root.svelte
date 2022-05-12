@@ -1,3 +1,14 @@
+<script context="module">
+	import { checkUserType } from '$lib/utils.js'
+	export async function load({ session }) {
+		if (session) {
+			// This function will check for route access and redirect user to their appropriate routes accordingly
+			return checkUserType(session)
+		}
+		return {}
+	}
+</script>
+
 <script>
 	import doctor_png from '$lib/assets/doctor/doctor.png'
 	import lower_png from '$lib/assets/doctor/lower.png'

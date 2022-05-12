@@ -2,9 +2,7 @@ export function post(endpoint, data) {
 	return fetch(endpoint, {
 		method: 'POST',
 		credentials: 'include',
-		body: JSON.stringify(
-			`grant_type=&username=${data.username}&password=${data.password}&scope=&client_id=&client_secret=`
-		),
+		body: JSON.stringify(data),
 		headers: {
 			'Content-Type': 'application/json'
 		}
@@ -21,6 +19,20 @@ export function titleCase(str) {
 		splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1)
 	}
 	return splitStr.join(' ')
+}
+
+export function checkUserType(session) {
+	let ACCOUNT_TYPES_FOR_PROFILE = ['user', 'doctor']
+	if (ACCOUNT_TYPES_FOR_PROFILE.includes(session?.status)) {
+		return {
+			status: 302,
+			redirect: '/profile'
+		}
+	}
+	return {
+		status: 302,
+		redirect: '/dashboard'
+	}
 }
 
 export const removeAlpha = (event) => {

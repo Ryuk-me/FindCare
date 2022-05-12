@@ -1,10 +1,9 @@
 <script context="module">
+	import { checkUserType } from '$lib/utils.js'
 	export async function load({ session }) {
 		if (session) {
-			return {
-				status: 302,
-				redirect: '/profile'
-			}
+			// This function will check for route access and redirect user to their appropriate routes accordingly
+			return checkUserType(session)
 		}
 		return {}
 	}
@@ -22,21 +21,21 @@
 	let password = ''
 	let show = false
 	let isDoctor = false
-	$:console.log(isDoctor)
+
 	const handleInput = (event) => {
 		password = event.target.value
 	}
 	async function handleLogin() {
-		const response = await post(`api/v1/auth/login`, { username, password })
+		const response = await post(`api/v1/auth/login`, { username, password, isDoctor })
 		if (response?.access_token) {
-			const t = jwt_decode(response.access_token)
+			const cookie = jwt_decode(response.access_token)
 			$session = {
 				session: response.access_token,
 				//@ts-ignore
-				status: t.status
+				status: cookie.status
 			}
 			//@ts-ignore
-			if ($session.status == 'admin') goto('/admin')
+			if ($session.status == 'admin') goto('/dashboard')
 			else goto('/profile')
 		} else {
 			if (response?.detail[0]?.msg) {
@@ -123,7 +122,7 @@
 							for="toggle-example"
 							class="flex  flex-row  items-center cursor-pointer relative mb-4"
 						>
-							<input type="checkbox" id="toggle-example" class="sr-only" bind:checked={isDoctor}/>
+							<input type="checkbox" id="toggle-example" class="sr-only" bind:checked={isDoctor} />
 							<div class="toggle-bg bg-gray-200 border-2 border-gray-200 h-6 w-11 rounded-full" />
 							<p class="ml-3">Are you a Doctor?</p>
 						</label>

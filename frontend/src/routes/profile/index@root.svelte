@@ -1,5 +1,11 @@
 <script context="module">
 	export async function load({ session }) {
+		if (session?.status === 'admin') {
+			return {
+				status: 302,
+				redirect: '/dashboard'
+			}
+		}
 		if (!session) {
 			return {
 				status: 302,
