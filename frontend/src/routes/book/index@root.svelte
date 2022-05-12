@@ -9,10 +9,10 @@
 		<Navbar />
 	</div>
 
-	<div class="w-full lg:px-24">
+	<div class="w-full lg:px-24 px-4">
 		<input type="text" class="w-full rounded-full px-8 py-3 mt-8 drop-shadow-md focus:outline-none border border-primary" placeholder="lorem ipsum"/>
 	</div>
-	<div class="flex w-full items-center font-semibold text-2xl py-8 px-24">
+	<div class="flex w-full font-semibold text-2xl py-8 lg:px-24 px-4">
 		<p>16 doctors availiable in Patna</p>
 	</div>
 	<div class="w-full flex">
@@ -60,7 +60,7 @@
 				</div>
 			</div>
 		</div>
-			<div class="w-full flex flex-wrap justify-between mx-24">
+			<div class="w-full flex flex-wrap justify-between lg:mx-24 mx-4">
 				<Card/>
 				<Card/>
 				<Card/>
