@@ -1,17 +1,6 @@
 <script>
 	import Footer from '$lib/components/Footer.svelte'
 	import Navbar from '$lib/components/Navbar.svelte'
-	var Tawk_API = Tawk_API || {},
-		Tawk_LoadStart = new Date()
-	;(function () {
-		var s1 = document.createElement('script'),
-			s0 = document.getElementsByTagName('script')[0]
-		s1.async = true
-		s1.src = 'https://embed.tawk.to/627bb66d7b967b11798ed7c4/1g2pk1831'
-		s1.charset = 'UTF-8'
-		s1.setAttribute('crossorigin', '*')
-		s0.parentNode.insertBefore(s1, s0)
-	})()
 </script>
 
 <!-- Navbar -->
