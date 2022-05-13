@@ -22,11 +22,14 @@
 	let show = false
 	let isDoctor = false
 
+	let is_loading = false
 	const handleInput = (event) => {
 		password = event.target.value
 	}
 	async function handleLogin() {
+		is_loading = true
 		const response = await post(`api/v1/auth/login`, { username, password, isDoctor })
+
 		if (response?.access_token) {
 			const cookie = jwt_decode(response.access_token)
 			$session = {
@@ -54,6 +57,7 @@
 				notificationToast(response?.detail, false, 2000, 'error')
 			}
 		}
+		is_loading = false
 	}
 </script>
 
@@ -113,10 +117,18 @@
 					</div>
 				</div>
 				<div class="flex flex-col justify-center items-center w-full my-3">
-					<button
-						class="bg-primary tracking-wider text-lg hover:bg-[#524af4] w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
-						>Login</button
-					>
+					{#if is_loading}
+						<button
+							class="bg-[#7069f5] tracking-wider text-lg w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
+							><i class="loading fa fa-spinner fa-spin relative right-2" />Login</button
+						>
+					{:else}
+						<button
+							class="bg-primary tracking-wider text-lg hover:bg-[#524af4] w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
+							>Login</button
+						>
+					{/if}
+
 					<div class="">
 						<label
 							for="toggle-example"

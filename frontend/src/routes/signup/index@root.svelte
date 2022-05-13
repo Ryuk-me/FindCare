@@ -1,5 +1,5 @@
 <script context="module">
-	import ProgressBarRound from "carbon-icons-svelte/lib/ProgressBarRound.svelte";
+	import ProgressBarRound from 'carbon-icons-svelte/lib/ProgressBarRound.svelte'
 	import { checkUserType } from '$lib/utils.js'
 
 	export async function load({ session }) {
@@ -61,7 +61,6 @@
 			})
 		})
 		const data = await resp.json()
-		is_loading = false
 		if (resp.status === status_code.HTTP_201_CREATED) {
 			const toastCallbackToLogin = () => goto('/login')
 			if (data?.detail)
@@ -78,6 +77,7 @@
 				notificationToast(data?.detail, false, 3000, 'error')
 			}
 		}
+		is_loading = false
 	}
 </script>
 
@@ -282,12 +282,21 @@
 					/>
 				</div>
 			</div>
-			
-			<button
-				class="mt-2 bg-primary hover:bg-[#524af4] lg:w-64 h-12 text-white rounded w-full lg:p-0 p-2 font-medium">
-				<i class="loading fa fa-spinner fa-spin relative right-2"></i>
-				CREATE ACCOUNT
-			</button>
+			{#if is_loading}
+				<button
+					disabled
+					class="mt-2 bg-[#7069f5] lg:w-64 h-12 text-white rounded w-full lg:p-0 p-2 font-medium"
+				>
+					<i class="loading fa fa-spinner fa-spin relative right-2" />
+					CREATE ACCOUNT
+				</button>
+			{:else}
+				<button
+					class="mt-2 bg-primary hover:bg-[#524af4] lg:w-64 h-12 text-white rounded w-full lg:p-0 p-2 font-medium"
+				>
+					CREATE ACCOUNT
+				</button>
+			{/if}
 			<p class="mt-4 text-center lg:text-left">
 				Already have an account? <a
 					href="/login"

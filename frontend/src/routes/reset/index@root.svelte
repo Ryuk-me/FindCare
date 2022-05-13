@@ -10,7 +10,9 @@
 
 	let email = ''
 
+	let is_loading = false
 	async function sendResetPassword() {
+		is_loading = true
 		const resp = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/email/reset-password', {
 			method: 'post',
 			headers: { 'Content-Type': 'application/json' },
@@ -24,6 +26,7 @@
 			return
 		}
 		notificationToast(data?.detail, false, 3000, 'error')
+		is_loading = false
 	}
 </script>
 
@@ -62,10 +65,17 @@
 					required
 					class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 				/>
-				<button
-					class="bg-primary hover:bg-[#524af4] text-white mb-3 font-medium py-2 mt-5 w-full rounded focus:outline-none focus:shadow-outline"
-					>Reset Password</button
-				>
+				{#if is_loading}
+					<button
+						class="bg-[#7069f5] text-white mb-3 font-medium py-2 mt-5 w-full rounded focus:outline-none focus:shadow-outline"
+						><i class="loading fa fa-spinner fa-spin relative right-2" />Reset Password</button
+					>
+				{:else}
+					<button
+						class="bg-primary hover:bg-[#524af4] text-white mb-3 font-medium py-2 mt-5 w-full rounded focus:outline-none focus:shadow-outline"
+						>Reset Password</button
+					>
+				{/if}
 			</form>
 			<div>
 				<p>
