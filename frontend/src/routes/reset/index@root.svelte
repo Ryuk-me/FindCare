@@ -6,6 +6,7 @@
 	import { notificationToast } from '$lib/NotificationToast'
 	import lock_svg from '$lib/assets/reset/lock.svg'
 	import { ENV, status_code } from '$lib/utils'
+	// import Locked from 'carbon-icons-svelte/lib/Locked.svelte'
 
 	let email = ''
 
@@ -37,6 +38,7 @@
 		<div id="header" class="flex flex-col justify-center items-center">
 			<div>
 				<img src={lock_svg} alt="lock svg" class="w-32" />
+				<!-- <Locked fill="#635bff" class="w-32 h-32" /> -->
 			</div>
 			<div>
 				<h2 class="text-2xl font-semibold mt-6">Trouble Logging In?</h2>
@@ -44,8 +46,8 @@
 		</div>
 		<hr class="h-2" />
 		<div id="body" class="flex flex-col justify-center items-center">
-			<div class="flex flex-col justify-center items-center">
-				<p class="font-light text-base pl-2 pr-2">
+			<div class="flex flex-col justify-center items-center mt-2">
+				<p class="font-light text-base">
 					Enter your email address associated with your account and we'll send you instruction to
 					get back into your account.
 				</p>
