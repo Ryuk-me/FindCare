@@ -9,7 +9,8 @@ module.exports = {
     },
     fontFamily: {
       poppins: ["Poppins"],
-      maven: ['Maven Pro']
+      maven: ['Maven Pro'],
+      sans: ["Open Sans"]
     }
   },
   plugins: []

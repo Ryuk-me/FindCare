@@ -31,7 +31,7 @@
 
 	<section class="text-gray-600 lg:px-24">
 		<div
-			class="container mx-auto flex px-5 py-16 font-['Open_Sans'] md:flex-row flex-col items-center"
+			class="container mx-auto flex px-5 py-16 font-sans md:flex-row flex-col items-center"
 		>
 			<div
 				class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center"
@@ -67,7 +67,7 @@
 	<!-- Features -->
 
 	<div
-		class="px-4 py-16 mx-auto sm:max-w-xl font-['Open_Sans'] md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-24 lg:py-20"
+		class="px-4 py-16 mx-auto sm:max-w-xl font-sans md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-24 lg:py-20"
 	>
 		<div class="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
 			<h2
@@ -121,7 +121,7 @@
 
 	<!-- Online Consultation -->
 
-	<section class="text-gray-600 font-['Open_Sans'] relative lg:px-24 bg-[#f1f0ff]">
+	<section class="text-gray-600 font-sans relative lg:px-24 bg-[#f1f0ff]">
 		<img src={ellipse2} alt="" class="lg:block absolute hidden w-24 top-6 right-0" />
 		<div
 			class="container mx-auto flex px-5 py-16 md:flex-row flex-col justify-between items-center"
@@ -144,7 +144,7 @@
 
 	<!-- Live Chat -->
 
-	<section class="text-gray-600 font-['Open_Sans'] relative lg:px-24">
+	<section class="text-gray-600 font-sans relative lg:px-24">
 		<img src={ellipse3} alt="" class="lg:block absolute hidden w-24 top-6 left-0" />
 		<div
 			class="container mx-auto flex px-5 py-16 md:flex-row flex-col justify-between items-center"
@@ -165,7 +165,7 @@
 
 	<!-- Appointment -->
 
-	<section class="text-gray-600 font-['Open_Sans'] relative lg:px-24 bg-[#f1f0ff]">
+	<section class="text-gray-600 font-sans relative lg:px-24 bg-[#f1f0ff]">
 		<img src={ellipse2} alt="" class="lg:block absolute hidden w-24 top-6 right-0" />
 		<div
 			class="container mx-auto flex px-5 py-16 md:flex-row flex-col justify-between items-center"
