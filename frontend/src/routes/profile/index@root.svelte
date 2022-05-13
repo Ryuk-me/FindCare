@@ -30,7 +30,7 @@
 	import { onMount } from 'svelte'
 	import Loading from '$lib/components/Loading.svelte'
 	import { session as sessionStore } from '$app/stores'
-	import { ENV } from '$lib/utils'
+	import { ENV, removeAlpha, removeSpecialCharacters } from '$lib/utils'
 	export let session
 
 	async function getUser() {
@@ -54,6 +54,24 @@
 
 	let title = 'Account Details'
 	let show = false
+
+	// USER DETAILS UPDATE
+	let name = ''
+	let email = ''
+	let dob = ''.split('-')
+	let phone = ''
+	let gender = ''
+	let profile_image = ''
+	let password = ''
+	let confirmPassword = ''
+
+	const handleInput = (event) => {
+		password = event.target.value
+	}
+	$: if (!isLoading) {
+		;(name = user?.name), (email = user?.email), (dob = user?.dob)
+		;(phone = user?.phone), (gender = user?.gender), (profile_image = user?.profile_image)
+	}
 </script>
 
 <svelte:head>
@@ -75,7 +93,7 @@
 				<div class="photo flex flex-col justify-center items-center py-7">
 					<img
 						class="object-cover w-28 h-28 m-6 rounded-full"
-						src={user.profile_image}
+						src={profile_image}
 						alt="user profile"
 					/>
 					<!-- <button
@@ -152,8 +170,10 @@
 							<input
 								type="text"
 								class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
-								value={user.name}
-								autocomplete="on"
+								bind:value={name}
+								on:keypress={removeSpecialCharacters}
+								autocomplete="off"
+								required
 							/>
 						</div>
 						<div class="relative w-full mb-4">
@@ -161,17 +181,20 @@
 							<input
 								type="email"
 								class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
-								value={user.email}
+								bind:value={email}
 								autocomplete="on"
 							/>
 						</div>
 						<div class="relative w-full mb-4">
 							<label for="phone" class="">Phone Number</label>
 							<input
-								type="number"
+								type="tel"
 								class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
-								value={user.phone}
-								autocomplete="on"
+								bind:value={phone}
+								maxlength="10"
+								minlength="10"
+								on:keypress={removeAlpha}
+								autocomplete="off"
 							/>
 						</div>
 						<div class="relative w-full mb-4">
@@ -179,8 +202,10 @@
 							<input
 								type="date"
 								class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
-								value={user.dob}
-								autocomplete="on"
+								bind:value={dob}
+								autocomplete="off"
+								min="1950-01-01"
+								max={`${new Date().getFullYear()}-01-01`}
 							/>
 						</div>
 						<button
@@ -200,6 +225,7 @@
 							<div class="relative">
 								<input
 									type={show ? 'text' : 'password'}
+									on:input={handleInput}
 									placeholder="********"
 									class="block border rounded py-2 pt-3 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 									id="password"
@@ -225,6 +251,7 @@
 								class="block border rounded py-2 pt-3 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 								id="password"
 								autocomplete="off"
+								bind:value={confirmPassword}
 							/>
 						</div>
 						<button
