@@ -46,7 +46,7 @@
 	// USER DETAILS UPDATE
 	let name = user?.name
 	let email = user?.email
-	let dob = user?.dob.split('-')
+	let dob = user?.dob
 	let phone = user?.phone
 	let gender = user?.gender
 	let profile_image = user?.profile_image
@@ -184,6 +184,7 @@
 							type="date"
 							class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 							bind:value={dob}
+							placeholder={dob}
 							autocomplete="off"
 							min="1950-01-01"
 							max={`${new Date().getFullYear()}-01-01`}
