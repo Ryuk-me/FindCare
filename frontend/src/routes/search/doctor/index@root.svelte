@@ -17,7 +17,7 @@
 		/>
 	</div>
 
-    <div class="h-full w-screen flex lg:flex-row flex-col justify-between lg:px-24 mt-8 ">
+    <div class="h-full w-screen flex lg:flex-row flex-col justify-between lg:px-24 mt-8">
         <!-- left div -->
         <div class="lg:w-[65%] flex flex-col">
             <!-- first card  -->
@@ -114,46 +114,59 @@
                     </div>
                 </div>
             </div>
-            <div class="w-full flex flex-col bg-white rounded-xl drop-shadow-md p-4 py-6 mt-8">
+            <div class="w-full flex flex-col bg-white rounded-xl drop-shadow-md p-1 py-6 mt-8">
 
-                <!-- <p class="py-4">Morning</p> -->
+                <p class="pb-4 ml-6 font-bold">Morning</p>
                 <div class="flex flex-wrap gap-2 w-auto justify-center">
 
-
-                    <button class="text-center rounded border-2 border-solid text-primary border-primary p-1">
+                    <button class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm">
                         10:40 AM
                     </button>
-                    <button class="rounded border-2 border-solid text-primary border-primary p-1">
+                    <button class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm">
                         10:40 AM
                     </button>
-                    <button class="rounded border-2 border-solid text-primary border-primary p-1">
+                    <button class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm">
                         10:40 AM
                     </button>
-                    <button class="rounded border-2 border-solid text-primary border-primary p-1">
-                        10:40 AM
-                    </button>
-                    <button class="rounded border-2 border-solid text-primary border-primary p-1">
-                        10:40 AM
-                    </button>
-                    <button class="rounded border-2 border-solid text-primary border-primary p-1">
-                        10:40 AM
-                    </button>
-                    <button class="rounded border-2 border-solid text-primary border-primary p-1">
-                        10:40 AM
-                    </button>
-                    <button class="rounded border-2 border-solid text-primary border-primary p-1">
-                        10:40 AM
-                    </button>
-                    <button class="rounded border-2 border-solid text-primary border-primary p-1">
-                        10:40 AM
-                    </button>
-                    <button class="rounded border-2 border-solid text-primary border-primary p-1">
-                        10:40 AM
-                    </button>
-                    <button class="rounded border-2 border-solid text-primary border-primary p-1">
+                    <button class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm">
                         10:40 AM
                     </button>
                 </div>
+                <p class="py-4 ml-6 font-bold">Afternoon</p>
+                <div class="flex flex-wrap gap-2 w-auto justify-center">
+
+                    <button class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm">
+                        10:40 AM
+                    </button>
+                    <button class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm">
+                        10:40 AM
+                    </button>
+                    <button class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm">
+                        10:40 AM
+                    </button>
+                    <button class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm">
+                        10:40 AM
+                    </button>
+                </div>
+                <p class="py-4 ml-6 font-bold">Evening</p>
+                <div class="flex flex-wrap gap-2 w-auto justify-center">
+
+                    <button class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm">
+                        10:40 AM
+                    </button>
+                    <button class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm">
+                        10:40 AM
+                    </button>
+                    <button class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm">
+                        10:40 AM
+                    </button>
+                    <button class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm">
+                        10:40 AM
+                    </button>
+                </div>
+            </div>
+            <div class="w-full flex justify-center items-center py-6">
+                <button class="w-full bg-primary py-4 rounded text-white">Book Appointment</button>
             </div>
         </div>
     </div>  
