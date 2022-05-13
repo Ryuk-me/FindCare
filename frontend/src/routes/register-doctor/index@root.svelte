@@ -71,7 +71,7 @@
 			})
 		})
 		const data = await resp.json()
-		is_loading = false
+
 		if (resp.status === status_code.HTTP_201_CREATED) {
 			const toastCallbackToLogin = () => goto('/login')
 			if (data?.detail)
@@ -88,6 +88,7 @@
 				notificationToast(data?.detail, false, 3000, 'error')
 			}
 		}
+		is_loading = false
 	}
 </script>
 
@@ -358,10 +359,18 @@
 					</div>
 					<div class="w-full">
 						<div class="w-full">
-							<button
-								class="bg-primary hover:bg-[#524af4] lg:w-[16vw] text-white my-3 py-2 w-full rounded focus:outline-none focus:shadow-outline font-medium"
-								>CREATE ACCOUNT</button
-							>
+							{#if is_loading}
+								<button
+									class="bg-[#7069f5] lg:w-[16vw] text-white my-3 py-2 w-full rounded focus:outline-none focus:shadow-outline font-medium"
+									><i class="loading fa fa-spinner fa-spin relative right-2" />
+									CREATE ACCOUNT</button
+								>
+							{:else}
+								<button
+									class="bg-primary hover:bg-[#524af4] lg:w-[16vw] text-white my-3 py-2 w-full rounded focus:outline-none focus:shadow-outline font-medium"
+									>CREATE ACCOUNT</button
+								>
+							{/if}
 						</div>
 						<div>
 							Already have an account? <a href="./login" class="text-primary hover:font-semibold"

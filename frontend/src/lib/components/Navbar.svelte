@@ -1,4 +1,5 @@
 <script>
+	import { goto } from '$app/navigation'
 	import { session } from '$app/stores'
 	let menu = false
 	let isProfileMenuOpen = false
@@ -237,9 +238,14 @@
 							</li>
 
 							<li class="flex">
+								<!-- svelte-ignore a11y-invalid-attribute -->
 								<a
+									href="#"
 									class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-									href="/logout"
+									on:click={() => {
+										$session = null
+										goto('/logout')
+									}}
 								>
 									<svg
 										class="w-4 h-4 mr-3"
