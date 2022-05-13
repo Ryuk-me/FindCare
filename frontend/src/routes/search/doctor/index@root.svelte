@@ -82,43 +82,44 @@
             <div class="w-full flex flex-col bg-white rounded-xl drop-shadow-md p-8">
                 <div class="flex">
                     <div class="line-none flex overflow-auto whitespace-nowrap p-2">
-                        <div class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary">
-                            <p class="text-primary font-semibold text-lg">13 May</p>
+                        <button class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary">
+                            <p class="text-primary text-sm font-semibold">13 May</p>
                             <p class="text-green-500 text-sm text-center">15 Slots</p>         
-                        </div>
-                        <div class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary">
-                            <p class="text-primary font-semibold text-lg">14 May</p>
-                            <p class="text-red-500 text-sm text-center">0 Slots</p>         
-                        </div>
-                        <div class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary">
-                            <p class="text-primary font-semibold text-lg">15 May</p>
-                            <p class="text-green-500 text-sm text-center">8 Slots</p>         
-                        </div>
-                        <div class=" flex flex-col px-4 py-2 mx-1rounded border-2 border-solid text-white border-primary">
-                            <p class="text-primary font-semibold text-lg">16 May</p>
-                            <p class="text-green-500 text-sm text-center">12 Slots</p>         
-                        </div>
-                        <div class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary">
-                            <p class="text-primary font-semibold text-lg">17 May</p>
+                        </button>
+                        <button class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary">
+                            <p class="text-primary text-sm font-semibold">14 May</p>
                             <p class="text-green-500 text-sm text-center">15 Slots</p>         
-                        </div>
-                        <div class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary">
-                            <p class="text-primary font-semibold text-lg">18 May</p>
+                        </button>
+                        <button class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary">
+                            <p class="text-primary text-sm font-semibold">15 May</p>
                             <p class="text-green-500 text-sm text-center">15 Slots</p>         
-                        </div>
-                        <div class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary">
-                            <p class="text-primary font-semibold text-lg">19 May</p>
+                        </button>
+                        <button class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary">
+                            <p class="text-primary text-sm font-semibold">16 May</p>
                             <p class="text-green-500 text-sm text-center">15 Slots</p>         
-                        </div>
+                        </button>
+                        <button class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary">
+                            <p class="text-primary text-sm font-semibold">17 May</p>
+                            <p class="text-green-500 text-sm text-center">15 Slots</p>         
+                        </button>
+                        <button class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary">
+                            <p class="text-primary text-sm font-semibold">18 May</p>
+                            <p class="text-green-500 text-sm text-center">15 Slots</p>         
+                        </button>
+                        <button class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary">
+                            <p class="text-primary text-sm font-semibold">19 May</p>
+                            <p class="text-green-500 text-sm text-center">15 Slots</p>         
+                        </button>
                    
                     </div>
                 </div>
             </div>
             <div class="w-full flex flex-col bg-white rounded-xl drop-shadow-md p-4 py-6 mt-8">
-                <!-- <div class="rounded bg-primary text-white text-center p-2 mb-4 text-xl tracking-wide">
-                    15 Slots
-                </div> -->
-                <div class="flex flex-wrap gap-4 w-auto justify-center">
+
+                <!-- <p class="py-4">Morning</p> -->
+                <div class="flex flex-wrap gap-2 w-auto justify-center">
+
+
                     <button class="text-center rounded border-2 border-solid text-primary border-primary p-1">
                         10:40 AM
                     </button>
