@@ -69,10 +69,3 @@
 	</div>
 
 </div>
-
-<!-- <h1 class="text-blue-600 text-4xl font-bold font-poppins pb-2 text-center mt-4">
-	Find<span class="text-red-500">Care</span>
-</h1> -->
-
-<!-- <h2 class="text-blue-600 font-bold text-xl py-2">| Book your Appointment</h2>
-<h2 class="text-black text-xl font-medium pt-4 pb-6">Find your doctor</h2> -->

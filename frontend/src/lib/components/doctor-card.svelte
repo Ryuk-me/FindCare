@@ -4,7 +4,7 @@
 </script>
 
 <div class="flex flex-col lg:w-[30vw] w-full h-64 bg-white rounded-2xl drop-shadow-xl my-4">
-    <div class="flex h-[75%]">
+    <div class="flex h-[75%] px-4">
         <div class="flex w-36 justify-center items-center">
             <img src={doctor_img} alt="doctor.png" class="w-24" />
             <img src={verified_img} alt="correct.png" class="relative right-5 top-5" />
