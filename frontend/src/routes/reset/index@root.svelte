@@ -21,12 +21,12 @@
 			})
 		})
 		const data = await resp.json()
+		is_loading = false
 		if (resp.status === status_code.HTTP_202_ACCEPTED) {
 			notificationToast(data?.detail, false, 3000, 'success')
 			return
 		}
 		notificationToast(data?.detail, false, 3000, 'error')
-		is_loading = false
 	}
 </script>
 

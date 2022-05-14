@@ -50,6 +50,7 @@
 			}
 		)
 		const data = await resp.json()
+		is_loading = false
 		if (resp.status === status_code.HTTP_202_ACCEPTED) {
 			const toastCallbackToLogin = () => {
 				$session = null
@@ -60,7 +61,6 @@
 		} else {
 			notificationToast(data.detail, false, 3000, 'error')
 		}
-		is_loading = false
 	}
 </script>
 
@@ -113,11 +113,19 @@
 							bind:value={confirmPassword}
 						/>
 					</div>
-					<button
-						on:click|preventDefault={changePassword}
-						class="mt-4 bg-primary hover:bg-[#524af4] py-2 text-white rounded w-full font-medium"
-						>Submit</button
-					>
+					{#if is_loading}
+						<button
+							on:click|preventDefault={changePassword}
+							class="mt-4 bg-[#7069f5] py-2 text-white rounded w-full font-medium"
+							><i class="loading fa fa-spinner fa-spin relative right-2" />Submit</button
+						>
+					{:else}
+						<button
+							on:click|preventDefault={changePassword}
+							class="mt-4 bg-primary hover:bg-[#524af4] py-2 text-white rounded w-full font-medium"
+							>Submit</button
+						>
+					{/if}
 				</form>
 			</div>
 		</div>

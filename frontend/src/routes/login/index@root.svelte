@@ -30,6 +30,7 @@
 		is_loading = true
 		const response = await post(`api/v1/auth/login`, { username, password, isDoctor })
 
+		is_loading = false
 		if (response?.access_token) {
 			const cookie = jwt_decode(response.access_token)
 			$session = {
@@ -57,7 +58,6 @@
 				notificationToast(response?.detail, false, 2000, 'error')
 			}
 		}
-		is_loading = false
 	}
 </script>
 
