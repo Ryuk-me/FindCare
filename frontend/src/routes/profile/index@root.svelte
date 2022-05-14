@@ -56,10 +56,20 @@
 	const handleInput = (event) => {
 		password = event.target.value
 	}
+	let isSomethingChanged = false
+	$: if (
+		!(name === name) ||
+		!(email === email) ||
+		!(dob === dob) ||
+		!(phone === phone) ||
+		(password && confirmPassword)
+	) {
+		isSomethingChanged = true
+	}
 </script>
 
 <svelte:head>
-	<title>{user.name}</title>
+	<title>{name}</title>
 </svelte:head>
 
 <Navbar />
@@ -178,6 +188,16 @@
 							autocomplete="off"
 						/>
 					</div>
+
+					<div class="relative w-full mb-4">
+						<label for="gender" class="">Gender</label>
+						<input
+							type="text"
+							class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary text-gray-400"
+							bind:value={gender}
+							disabled
+						/>
+					</div>
 					<div class="relative w-full mb-4">
 						<label for="dob" class="">Date Of Birth</label>
 						<input
@@ -234,10 +254,17 @@
 							bind:value={confirmPassword}
 						/>
 					</div>
-					<button
-						class="bg-primary tracking-wider text-lg hover:bg-[#524af4] w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
-						>Save Changes</button
-					>
+					{#if isSomethingChanged}
+						<button
+							class="bg-primary tracking-wider text-lg hover:bg-[#524af4] w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
+							>Save Changes</button
+						>{:else}
+						<button
+							disabled
+							class="bg-[#7069f5] tracking-wider text-lg hover:bg-[#524af4] w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
+							>Save Changes</button
+						>
+					{/if}
 				</div>
 			{/if}
 		</div>
