@@ -152,9 +152,12 @@
 							class="text-xs uppercase py-3 font-bold block  "
 							on:click={() => (selected = 'dashboard')}
 						>
-							<i class="fas fa-tv mr-2 text-sm text-blueGray-300 " />
+							<i class="fas fa-tv mr-2 text-sm text-primary " />
 							Dashboard
 						</button>
+						{#if selected == 'dashboard'}
+							<hr class="border-[1px] border-primary" />
+						{/if}
 					</li>
 
 					<li class="items-center">
@@ -162,27 +165,36 @@
 							class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
 							on:click={() => (selected = 'Account Setting')}
 						>
-							<i class="fas fa-user-circle text-blueGray-300 mr-2 text-sm" />
+							<i class="fas fa-user-circle text-primary mr-2 text-sm" />
 							Account Setting
 						</button>
+						{#if selected == 'Account Setting'}
+							<hr class="border-[1px] border-primary" />
+						{/if}
 					</li>
 					<li class="items-center">
 						<button
 							class="text-xs uppercase py-3 font-bold block"
 							on:click={() => (selected = 'clinic')}
 						>
-							<i class="fas fa-hospital mr-2 text-sm " />
+							<i class="fas fa-hospital mr-2 text-primary text-sm " />
 							Clinic
 						</button>
+						{#if selected == 'clinic'}
+							<hr class="border-[1px] border-primary" />
+						{/if}
 					</li>
 					<li class="items-center">
 						<button
-							class="text-xs uppercase py-3 font-bold block "
+							class="text-xs uppercase py-3  font-bold block"
 							on:click={() => (selected = 'changepass')}
 						>
-							<i class="fas fa-key mr-2 text-sm " />
+							<i class="fas fa-key mr-2 text-sm text-primary" />
 							Change Password
 						</button>
+						{#if selected == 'changepass'}
+							<hr class="border-[1px] border-primary" />
+						{/if}
 					</li>
 					<li class="items-center">
 						<button
@@ -192,7 +204,7 @@
 								goto('/logout')
 							}}
 						>
-							<i class="fas fa-arrow-right-from-bracket mr-2 text-sm " />
+							<i class="fas fa-arrow-right-from-bracket mr-2 text-sm text-primary" />
 							Logout
 						</button>
 					</li>
@@ -219,7 +231,7 @@
 				<Changepass />
 			{/if}
 			{#if selected == 'clinic'}
-				<ClinicDetails {response}/>
+				<ClinicDetails {response} />
 			{/if}
 
 			<Footer />
