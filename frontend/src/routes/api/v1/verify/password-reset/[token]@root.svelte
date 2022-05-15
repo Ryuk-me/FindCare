@@ -115,8 +115,9 @@
 					</div>
 					{#if is_loading}
 						<button
+							disabled
 							on:click|preventDefault={changePassword}
-							class="mt-4 bg-[#7069f5] py-2 text-white rounded w-full font-medium"
+							class="mt-4 bg-[#7069f5] py-2 cursor-not-allowed text-white rounded w-full font-medium"
 							><i class="loading fa fa-spinner fa-spin relative right-2" />Submit</button
 						>
 					{:else}

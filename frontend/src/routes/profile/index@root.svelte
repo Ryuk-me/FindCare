@@ -65,6 +65,8 @@
 		(password && confirmPassword)
 	) {
 		isSomethingChanged = true
+	} else {
+		isSomethingChanged = false
 	}
 </script>
 
@@ -193,7 +195,7 @@
 						<label for="gender" class="">Gender</label>
 						<input
 							type="text"
-							class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary text-gray-400"
+							class="block border capitalize rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary text-gray-400"
 							bind:value={gender}
 							disabled
 						/>
@@ -210,10 +212,17 @@
 							max={`${new Date().getFullYear()}-01-01`}
 						/>
 					</div>
-					<button
-						class="bg-primary tracking-wider text-lg hover:bg-[#524af4] w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
-						>Save Changes</button
-					>
+					{#if isSomethingChanged}
+						<button
+							class="bg-primary tracking-wider text-lg hover:bg-[#524af4] w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
+							>Save Changes</button
+						>{:else}
+						<button
+							disabled
+							class="bg-[#7069f5] tracking-wider text-lg cursor-not-allowed w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
+							>Save Changes</button
+						>
+					{/if}
 				</div>
 			{/if}
 
@@ -261,7 +270,7 @@
 						>{:else}
 						<button
 							disabled
-							class="bg-[#7069f5] tracking-wider text-lg hover:bg-[#524af4] w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
+							class="bg-[#7069f5] tracking-wider text-lg cursor-not-allowed w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
 							>Save Changes</button
 						>
 					{/if}

@@ -67,7 +67,8 @@
 				/>
 				{#if is_loading}
 					<button
-						class="bg-[#7069f5] text-white mb-3 font-medium py-2 mt-5 w-full rounded focus:outline-none focus:shadow-outline"
+						disabled
+						class="bg-[#7069f5] cursor-not-allowed text-white mb-3 font-medium py-2 mt-5 w-full rounded focus:outline-none focus:shadow-outline"
 						><i class="loading fa fa-spinner fa-spin relative right-2" />Reset Password</button
 					>
 				{:else}

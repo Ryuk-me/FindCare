@@ -119,7 +119,8 @@
 				<div class="flex flex-col justify-center items-center w-full my-3">
 					{#if is_loading}
 						<button
-							class="bg-[#7069f5] tracking-wider text-lg w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
+							disabled
+							class="bg-[#7069f5] cursor-not-allowed tracking-wider text-lg w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
 							><i class="loading fa fa-spinner fa-spin relative right-2" />Login</button
 						>
 					{:else}

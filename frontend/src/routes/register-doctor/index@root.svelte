@@ -71,7 +71,7 @@
 			})
 		})
 		const data = await resp.json()
-		
+
 		is_loading = false
 		if (resp.status === status_code.HTTP_201_CREATED) {
 			const toastCallbackToLogin = () => goto('/login')
@@ -361,7 +361,8 @@
 						<div class="w-full">
 							{#if is_loading}
 								<button
-									class="bg-[#7069f5] lg:w-[16vw] text-white my-3 py-2 w-full rounded focus:outline-none focus:shadow-outline font-medium"
+									disabled
+									class="bg-[#7069f5] cursor-not-allowed lg:w-[16vw] text-white my-3 py-2 w-full rounded focus:outline-none focus:shadow-outline font-medium"
 									><i class="loading fa fa-spinner fa-spin relative right-2" />
 									CREATE ACCOUNT</button
 								>

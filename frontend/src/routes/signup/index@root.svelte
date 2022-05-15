@@ -285,7 +285,7 @@
 			{#if is_loading}
 				<button
 					disabled
-					class="mt-2 bg-[#7069f5] lg:w-64 h-12 text-white rounded w-full lg:p-0 p-2 font-medium"
+					class="mt-2 bg-[#7069f5] cursor-not-allowed lg:w-64 h-12 text-white rounded w-full lg:p-0 p-2 font-medium"
 				>
 					<i class="loading fa fa-spinner fa-spin relative right-2" />
 					CREATE ACCOUNT
