@@ -1,3 +1,4 @@
+from datetime import datetime
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.Config import settings
@@ -14,6 +15,14 @@ doctor_model.Base.metadata.create_all(bind=engine)
 appointment_model.Base.metadata.create_all(bind=engine)
 
 
+# datetime object containing current date and time
+now = datetime.now()
+
+print("now =", now)
+
+# dd/mm/YY H:M:S
+dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+print("date and time =", dt_string)
 app = FastAPI(
     title="FindCare-API",
     version="1.0",

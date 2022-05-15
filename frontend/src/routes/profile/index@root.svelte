@@ -58,10 +58,10 @@
 	}
 	let isSomethingChanged = false
 	$: if (
-		!(name === name) ||
-		!(email === email) ||
-		!(dob === dob) ||
-		!(phone === phone) ||
+		!(user?.name === name) ||
+		!(user?.email === email) ||
+		!(user?.dob === dob) ||
+		!(user?.phone === phone && phone?.length === 10) ||
 		(password && confirmPassword)
 	) {
 		isSomethingChanged = true
@@ -71,7 +71,7 @@
 </script>
 
 <svelte:head>
-	<title>{name}</title>
+	<title>{user.name}</title>
 </svelte:head>
 
 <Navbar />
