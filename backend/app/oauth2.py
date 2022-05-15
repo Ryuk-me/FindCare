@@ -8,6 +8,7 @@ from app.models import user_model, doctor_model, admin_model
 from app.scheams import token_schema
 from app.Config import settings
 from app import services as _services
+from pytz import timezone
 
 
 oauth2_scheme_user = OAuth2PasswordBearer(
@@ -20,7 +21,7 @@ oauth2_scheme_admin = OAuth2PasswordBearer(
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()
-    expire = datetime.utcnow() + expires_delta
+    expire = datetime.now(timezone('Asia/Kolkata')) + expires_delta
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(
         to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)

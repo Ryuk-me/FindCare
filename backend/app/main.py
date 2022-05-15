@@ -1,4 +1,3 @@
-from datetime import datetime
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.Config import settings
@@ -8,14 +7,6 @@ from app.database import engine
 from app.routers.v1 import auth, user_router, doctor_router, clinic_router, \
     appointment_router, search_doctor_clinics_router, admin_router, email_router, temporary_router
 
-import os
-import time
-
-os.environ['TZ'] = 'Asia/Kolkata'
-try:
-    time.tzset()
-except:
-    pass
 
 user_model.Base.metadata.create_all(bind=engine)
 clinic_model.Base.metadata.create_all(bind=engine)
@@ -23,14 +14,6 @@ doctor_model.Base.metadata.create_all(bind=engine)
 appointment_model.Base.metadata.create_all(bind=engine)
 
 
-# datetime object containing current date and time
-now = datetime.now()
-
-print("now =", now)
-
-# dd/mm/YY H:M:S
-dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-print("date and time =", dt_string)
 app = FastAPI(
     title="FindCare-API",
     version="1.0",
