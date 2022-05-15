@@ -6,10 +6,13 @@
 	import { notificationToast } from '$lib/NotificationToast'
 	import lock_svg from '$lib/assets/reset/lock.svg'
 	import { ENV, status_code } from '$lib/utils'
+	// import Locked from 'carbon-icons-svelte/lib/Locked.svelte'
 
 	let email = ''
 
+	let is_loading = false
 	async function sendResetPassword() {
+		is_loading = true
 		const resp = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/email/reset-password', {
 			method: 'post',
 			headers: { 'Content-Type': 'application/json' },
@@ -18,6 +21,7 @@
 			})
 		})
 		const data = await resp.json()
+		is_loading = false
 		if (resp.status === status_code.HTTP_202_ACCEPTED) {
 			notificationToast(data?.detail, false, 3000, 'success')
 			return
@@ -37,6 +41,7 @@
 		<div id="header" class="flex flex-col justify-center items-center">
 			<div>
 				<img src={lock_svg} alt="lock svg" class="w-32" />
+				<!-- <Locked fill="#635bff" class="w-32 h-32" /> -->
 			</div>
 			<div>
 				<h2 class="text-2xl font-semibold mt-6">Trouble Logging In?</h2>
@@ -44,8 +49,8 @@
 		</div>
 		<hr class="h-2" />
 		<div id="body" class="flex flex-col justify-center items-center">
-			<div class="flex flex-col justify-center items-center">
-				<p class="font-light text-base pl-2 pr-2">
+			<div class="flex flex-col justify-center items-center mt-2">
+				<p class="font-light text-base">
 					Enter your email address associated with your account and we'll send you instruction to
 					get back into your account.
 				</p>
@@ -60,10 +65,18 @@
 					required
 					class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 				/>
-				<button
-					class="bg-primary hover:bg-[#524af4] text-white mb-3 font-medium py-2 mt-5 w-full rounded focus:outline-none focus:shadow-outline"
-					>Reset Password</button
-				>
+				{#if is_loading}
+					<button
+						disabled
+						class="bg-[#7069f5] cursor-not-allowed text-white mb-3 font-medium py-2 mt-5 w-full rounded focus:outline-none focus:shadow-outline"
+						><i class="loading fa fa-spinner fa-spin relative right-2" />Reset Password</button
+					>
+				{:else}
+					<button
+						class="bg-primary hover:bg-[#524af4] text-white mb-3 font-medium py-2 mt-5 w-full rounded focus:outline-none focus:shadow-outline"
+						>Reset Password</button
+					>
+				{/if}
 			</form>
 			<div>
 				<p>
