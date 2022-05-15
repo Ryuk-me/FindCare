@@ -1,4 +1,5 @@
 FROM mhart/alpine-node:16
+ENV TZ=Asia/Kolkata
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn
