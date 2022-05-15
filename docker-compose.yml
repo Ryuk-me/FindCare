@@ -30,7 +30,10 @@ services:
     image: postgres:latest
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/timezone:/etc/timezone:ro"
     environment:
+      - TZ=Asia/Kolkata
       - POSTGRES_PASSWORD=ryuk
       - POSTGRES_DB=nextcare
     expose:
