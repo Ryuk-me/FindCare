@@ -156,7 +156,7 @@
 							Dashboard
 						</button>
 						{#if selected == 'dashboard'}
-							<hr class="border-[1px] border-primary" />
+							<hr class="border-[1px] border-primary bg-primary" />
 						{/if}
 					</li>
 
@@ -169,7 +169,7 @@
 							Account Setting
 						</button>
 						{#if selected == 'Account Setting'}
-							<hr class="border-[1px] border-primary" />
+							<hr class="border-[1px] border-primary bg-primary" />
 						{/if}
 					</li>
 					<li class="items-center">
@@ -181,7 +181,7 @@
 							Clinic
 						</button>
 						{#if selected == 'clinic'}
-							<hr class="border-[1px] border-primary" />
+							<hr class="border-[1px] border-primary bg-primary" />
 						{/if}
 					</li>
 					<li class="items-center">
@@ -193,7 +193,7 @@
 							Change Password
 						</button>
 						{#if selected == 'changepass'}
-							<hr class="border-[1px] border-primary" />
+							<hr class="border-[1px] border-primary bg-primary" />
 						{/if}
 					</li>
 					<li class="items-center">
