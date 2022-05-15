@@ -1,29 +1,37 @@
 <script context="module">
 	export async function load({ session }) {
-		if (session?.status === 'admin') {
-			return {
-				status: 302,
-				redirect: '/dashboard'
-			}
-		}
 		if (!session) {
 			return {
 				status: 302,
 				redirect: '/login'
 			}
 		}
-		const res = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/user/', {
-			method: 'GET',
-			headers: {
-				'Content-type': 'application/json',
-				Authorization: `Bearer ${session.session}`
+		if (session?.status === 'user') {
+			const res = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/user/', {
+				method: 'GET',
+				headers: {
+					'Content-type': 'application/json',
+					Authorization: `Bearer ${session.session}`
+				}
+			})
+			const user = await res.json()
+			return {
+				props: {
+					session,
+					user
+				}
 			}
-		})
-		const user = await res.json()
-		return {
-			props: {
-				session,
-				user
+		} else {
+			if (session?.status === 'admin') {
+				return {
+					status: 302,
+					redirect: '/admin'
+				}
+			} else {
+				return {
+					status: 302,
+					redirect: '/doctor'
+				}
 			}
 		}
 	}

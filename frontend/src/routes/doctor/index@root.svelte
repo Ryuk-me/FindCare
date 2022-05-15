@@ -1,3 +1,30 @@
+<script context="module">
+	export async function load({ session }) {
+		if (!session) {
+			return {
+				status: 302,
+				redirect: '/login'
+			}
+		}
+		if (session?.status === 'doctor') {
+			// FETCH PATIENT DETAILS HERE
+			return {}
+		} else {
+			if (session?.status === 'admin') {
+				return {
+					status: 302,
+					redirect: '/admin'
+				}
+			} else {
+				return {
+					status: 302,
+					redirect: '/profile'
+				}
+			}
+		}
+	}
+</script>
+
 <script>
 	import Footer from '$lib/components/dashboard-footer.svelte'
 	import Sidebar from '$lib/components/sidebar.svelte'
@@ -5,6 +32,7 @@
 	import Header from '$lib/components/dashboard-stats.svelte'
 	import DashboardFooter from '$lib/components/dashboard-footer.svelte'
 	import Changepass from '$lib/components/Changepass.svelte'
+	import { ENV } from '$lib/utils'
 
 	import DashboardTable from '$lib/components/DashboardTable.svelte'
 	import DoctorProfile from '$lib/components/Doctor-profile.svelte'

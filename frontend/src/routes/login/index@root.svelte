@@ -41,7 +41,9 @@
 				profile_image: cookie.profile_image
 			}
 			//@ts-ignore
-			if ($session.status == 'admin') goto('/dashboard')
+			if ($session.status == 'doctor') goto('/doctor')
+			//@ts-ignore
+			else if ($session.status == 'admin') goto('/admin')
 			else goto('/profile')
 		} else {
 			if (response?.detail[0]?.msg) {

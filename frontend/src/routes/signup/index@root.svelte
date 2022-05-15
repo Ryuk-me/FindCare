@@ -1,5 +1,4 @@
 <script context="module">
-	import ProgressBarRound from 'carbon-icons-svelte/lib/ProgressBarRound.svelte'
 	import { checkUserType } from '$lib/utils.js'
 
 	export async function load({ session }) {

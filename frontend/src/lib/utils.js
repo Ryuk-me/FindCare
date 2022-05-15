@@ -22,16 +22,20 @@ export function titleCase(str) {
 }
 
 export function checkUserType(session) {
-	let ACCOUNT_TYPES_FOR_PROFILE = ['user', 'doctor']
-	if (ACCOUNT_TYPES_FOR_PROFILE.includes(session?.status)) {
+	if (session?.status === 'user') {
 		return {
 			status: 302,
 			redirect: '/profile'
 		}
+	} else if (session?.status === 'doctor') {
+		return {
+			status: 302,
+			redirect: '/doctor'
+		}
 	}
 	return {
 		status: 302,
-		redirect: '/dashboard'
+		redirect: '/admin'
 	}
 }
 

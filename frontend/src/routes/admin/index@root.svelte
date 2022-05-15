@@ -1,3 +1,30 @@
+<script context="module">
+	export async function load({ session }) {
+		if (!session) {
+			return {
+				status: 302,
+				redirect: '/login'
+			}
+		}
+		if (session?.status === 'admin') {
+			// FETCH DETAILS HERE
+			return {}
+		} else {
+			if (session?.status === 'doctor') {
+				return {
+					status: 302,
+					redirect: '/doctor'
+				}
+			} else {
+				return {
+					status: 302,
+					redirect: '/profile'
+				}
+			}
+		}
+	}
+</script>
+
 <script>
 	import Footer from '$lib/components/dashboard-footer.svelte'
 	import UserTable from '$lib/components/admin/UserTable.svelte'
@@ -7,6 +34,7 @@
 	import AccountSetting from '$lib/components/admin/AccountSetting.svelte'
 	import AddUser from '$lib/components/admin/AddUser.svelte'
 	import AddDoctor from '$lib/components/admin/AddDoctor.svelte'
+	import { ENV } from '$lib/utils'
 
 	function toggleCollapseShow(classes) {
 		collapseShow = classes
