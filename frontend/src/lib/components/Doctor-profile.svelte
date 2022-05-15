@@ -1,15 +1,14 @@
-<div class="text-xl text-center w-full font-bold border-b p-3 mb-4">
-   Edit Profile
- </div>
+<script>
+	export let response
+	let doctor = response.doctor
+</script>
+
+<div class="text-xl text-center w-full font-bold border-b p-3 mb-4">Edit Profile</div>
 <div class="form w-full">
 	<div class="relative w-full mb-4">
 		<div class="navigation px-6 mb-4 lg:mb-0 rounded-lg lg:mr-6">
 			<div class="photo flex justify-center flex-col lg:flex-row items-center py-4">
-				<img
-					class="object-cover w-28 h-28 m-6 rounded-full"
-					src="https://cdn-icons-png.flaticon.com/512/387/387569.png"
-					alt=""
-				/>
+				<img class="object-cover w-28 h-28 m-6 rounded-full" src={doctor.profile_image} alt="" />
 				<!-- <button
 						class="bg-primary hover:bg-[#524af4] text-white rounded-md w-full px-7 py-1 font-medium"
 						>Change Profile Photo</button
@@ -24,8 +23,10 @@
 	<div class="relative w-full mb-4">
 		<label for="name" class="">Name</label>
 		<input
+			disabled
+			bind:value={doctor.name}
 			type="text"
-			class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
+			class="block border rounded py-2 text-gray-400 cursor-not-allowed px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 			placeholder="your@domain.com"
 			autocomplete="on"
 		/>
@@ -33,6 +34,7 @@
 	<div class="relative w-full mb-4">
 		<label for="email" class="">Email</label>
 		<input
+			bind:value={doctor.email}
 			type="email"
 			class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 			placeholder="your@domain.com"
@@ -42,6 +44,7 @@
 	<div class="relative w-full mb-4">
 		<label for="phone" class="">Phone Number</label>
 		<input
+			bind:value={doctor.phone}
 			type="number"
 			class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 			placeholder="your@domain.com"
@@ -51,9 +54,11 @@
 	<div class="relative w-full mb-4">
 		<label for="dob" class="">Date Of Birth</label>
 		<input
+			disabled
+			bind:value={doctor.dob}
 			type="date"
-			class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
-			placeholder="your@domain.com"
+			class="block border rounded py-2 px-3 text-gray-500 cursor-not-allowed w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
+			placeholder={doctor.dob}
 			autocomplete="on"
 		/>
 	</div>
@@ -61,23 +66,24 @@
 		<label for="registrationNumber">Registration Number</label>
 		<input
 			type="text"
-			placeholder="AQ-15-XXXXX"
+			disabled
+			bind:value={doctor.registration_number}
 			name="registrationNumber"
 			title="Enter Your Registration Number"
 			id="registrationNumber"
-			class="block uppercase appearance-none border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
-			required
+			class="block uppercase appearance-none text-gray-500 cursor-not-allowed border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 			autocomplete="off"
 		/>
 	</div>
 	<div class="relative w-full mb-4">
 		<label for="speciality">Speciality</label>
 		<input
+			disabled
 			type="text"
 			name="speciality"
 			id="speciality"
-			title="Enter Your Speciality"
-			class="block border capitalize rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
+			bind:value={doctor.speciality}
+			class="block border capitalize rounded py-2 text-gray-500 cursor-not-allowed px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 			required
 			autocomplete="off"
 		/>
@@ -92,66 +98,30 @@
 			min="1"
 			max="70"
 			placeholder="20"
-			class="block appearance-none border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
+			bind:value={doctor.experience_year}
+			class="block appearance-none border  rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 			required
 			autocomplete="off"
 		/>
 	</div>
 	<div class="relative w-full mb-4">
 		<label for="gender">Gender</label>
-		<div class="flex items-center pt-2 lg:pt-5">
-			<div class="flex items-center ">
-				<input
-					id="male"
-					type="radio"
-					name="gender"
-					class="mr-2"
-					value="male"
-					required
-					autocomplete="off"
-				/>
-				<label class="form-check-label inline-block text-gray-800" for="male" value="male"
-					>Male</label
-				>
-			</div>
-			<div class="flex items-center mx-5">
-				<input
-					id="female"
-					type="radio"
-					name="gender"
-					class="mr-2"
-					value="female"
-					required
-					autocomplete="off"
-				/>
-				<label class="form-check-label inline-block text-gray-800" for="female" value="female"
-					>Female</label
-				>
-			</div>
-			<div class="flex items-center">
-				<input
-					id="other"
-					type="radio"
-					name="gender"
-					class="mr-2"
-					value="other"
-					required
-					autocomplete="off"
-				/>
-				<label class="form-check-label inline-block text-gray-800" for="other" value="other"
-					>Other</label
-				>
-			</div>
-		</div>
+		<input
+			type="text"
+			bind:value={doctor.gender}
+			disabled
+			class="block appearance-none capitalize text-gray-500 cursor-not-allowed border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
+			autocomplete="off"
+		/>
 	</div>
+
 	<div class="relative w-full mb-4">
 		<label for="about">About</label>
 		<textarea
 			type="textarea"
 			rows="3"
 			name="about"
-			placeholder="Tell us about yourself"
-			title="Enter About Yourself"
+			bind:value={doctor.about}
 			id="about"
 			class="block border text rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 			required

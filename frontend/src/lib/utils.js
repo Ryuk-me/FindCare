@@ -39,6 +39,28 @@ export function checkUserType(session) {
 	}
 }
 
+export function getFormattedDate(d) {
+	var date = new Date(d)
+
+	var month = date.getMonth() + 1
+	var day = date.getDate()
+	var hour = date.getHours()
+	var min = date.getMinutes()
+	const ampm = hour >= 12 ? 'pm' : 'am'
+	//@ts-ignore
+	month = (month < 10 ? '0' : '') + month
+	//@ts-ignore
+	day = (day < 10 ? '0' : '') + day
+	//@ts-ignore
+	hour = (hour < 10 ? '0' : '') + hour
+	//@ts-ignore
+	min = (min < 10 ? '0' : '') + min
+
+	var str = date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + min + ' ' + ampm
+
+	return str
+}
+
 export const removeAlpha = (event) => {
 	const allowedRegex = /[0-9]/g
 	if (!event.key.match(allowedRegex)) {

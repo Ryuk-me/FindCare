@@ -18,7 +18,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"neerajkr1210@gmail.com\",\r\n    \"name\" : \"Neeraj Kumar\",\r\n    \"phone\" : \"8125384522\",\r\n    \"password\" : \"123\",\r\n    \"gender\" : \"other\",\r\n    \"dob\" : \"2002-04-26\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"user@findcare.com\",\r\n    \"name\" : \"Neeraj Kumar 2\",\r\n    \"phone\" : \"8125384521\",\r\n    \"password\" : \"123\",\r\n    \"gender\" : \"male\",\r\n    \"dob\" : \"2002-04-26\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -96,12 +96,12 @@
 							"formdata": [
 								{
 									"key": "password",
-									"value": "1234",
+									"value": "123",
 									"type": "text"
 								},
 								{
 									"key": "username",
-									"value": "neerajkr1210@gmail.com",
+									"value": "user@findcare.com",
 									"type": "text"
 								},
 								{
@@ -358,7 +358,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\" :\"Dr. Neeraj Kumar\",\r\n    \"email\" : \"neerajkr1210@gmail.com\",\r\n    \"phone\" : \"8125384543\",\r\n    \"gender\" : \"male\",\r\n    \"dob\" : \"1996-04-26\",\r\n    \"password\" : \"123\",\r\n    \"about\" : \"hello adhgajhgdah djasgd gasjd\",\r\n    \"experience_year\" : 4,\r\n    \"speciality\" : \"Cardiologist\",\r\n    \"registration_number\" : \"7326473\"\r\n     \r\n}",
+							"raw": "{\r\n    \"name\" :\"Dr. Neeraj Kumar\",\r\n    \"email\" : \"doctor-findcare@gmail.com\",\r\n    \"phone\" : \"8125384543\",\r\n    \"gender\" : \"male\",\r\n    \"dob\" : \"1996-04-26\",\r\n    \"password\" : \"123\",\r\n    \"about\" : \"hello adhgajhgdah djasgd gasjd\",\r\n    \"experience_year\" : 4,\r\n    \"speciality\" : \"Cardiologist\",\r\n    \"registration_number\" : \"732647A3\"\r\n     \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -401,7 +401,7 @@
 							"formdata": [
 								{
 									"key": "username",
-									"value": "neerajkr1210@gmail.com",
+									"value": "doctor@findcare.com",
 									"type": "text"
 								},
 								{
@@ -418,33 +418,6 @@
 							],
 							"path": [
 								"auth",
-								"doctor"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getDoctorMe",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{doctor_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{URL}}/doctor",
-							"host": [
-								"{{URL}}"
-							],
-							"path": [
 								"doctor"
 							]
 						}
@@ -489,6 +462,34 @@
 					"response": []
 				},
 				{
+					"name": "getDoctorMe",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{doctor_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/doctor/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"doctor",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "getClinic of the current doctor",
 					"request": {
 						"auth": {
@@ -504,13 +505,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/doctor/clinic",
+							"raw": "{{URL}}/doctor/clinic/",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"doctor",
-								"clinic"
+								"clinic",
+								""
 							]
 						}
 					},
@@ -603,7 +605,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/doctor/clinic/appointment/completed?id=11",
+							"raw": "{{URL}}/doctor/clinic/appointment/completed?id=db39e700-c4ed-4fec-bcd4-e2dd2893a70a",
 							"host": [
 								"{{URL}}"
 							],
@@ -616,7 +618,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "11"
+									"value": "db39e700-c4ed-4fec-bcd4-e2dd2893a70a"
 								}
 							]
 						}
@@ -671,7 +673,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/email/verify-email?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaXNfdXNlciI6dHJ1ZSwiZXhwIjoxNjUxMjE1NDAyfQ.WKzBnKzS7NYzqfcRxLtT-7-Q1vlnGWlrav3b5rcA8V0",
+							"raw": "{{URL}}/email/verify-email?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZmM1M2I0LTMzNmItNDFjYy04NGFlLTQxZWUyOTQ5OTNkOCIsInN0YXR1cyI6InVzZXIiLCJlbWFpbCI6Im5lZXJhamtyMTIxMEBnbWFpbC5jb20iLCJleHAiOjE2NTIzNjYxMTJ9.Dwr0_n_tmSCffDn7xISDS0NSgpCa_efU4z43KmrHa8cASDASD",
 							"host": [
 								"{{URL}}"
 							],
@@ -682,7 +684,7 @@
 							"query": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaXNfdXNlciI6dHJ1ZSwiZXhwIjoxNjUxMjE1NDAyfQ.WKzBnKzS7NYzqfcRxLtT-7-Q1vlnGWlrav3b5rcA8V0"
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZmM1M2I0LTMzNmItNDFjYy04NGFlLTQxZWUyOTQ5OTNkOCIsInN0YXR1cyI6InVzZXIiLCJlbWFpbCI6Im5lZXJhamtyMTIxMEBnbWFpbC5jb20iLCJleHAiOjE2NTIzNjYxMTJ9.Dwr0_n_tmSCffDn7xISDS0NSgpCa_efU4z43KmrHa8cASDASD"
 								}
 							]
 						}
@@ -690,7 +692,7 @@
 					"response": []
 				},
 				{
-					"name": "reset-Email",
+					"name": "reset-Password-link-on-mail",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -704,13 +706,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/email/reset-email",
+							"raw": "{{URL}}/email/reset-password",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"email",
-								"reset-email"
+								"reset-password"
 							]
 						}
 					},
@@ -735,6 +737,57 @@
 									"key": "email",
 									"value": "neerajkr1210@gmail.com"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify-reset-pass-token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/email/verify-password-reset-token?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZmM1M2I0LTMzNmItNDFjYy04NGFlLTQxZWUyOTQ5OTNkOCIsInN0YXR1cyI6InVzZXIiLCJlbWFpbCI6Im5lZXJhamtyMTIxMEBnbWFpbC5jb20iLCJleHAiOjE2NTIzNjgwNDR9.McdpccVYd4VBKuk9NjiUZGmakU_Wmo1wiolW1DwpVUg",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"email",
+								"verify-password-reset-token"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZmM1M2I0LTMzNmItNDFjYy04NGFlLTQxZWUyOTQ5OTNkOCIsInN0YXR1cyI6InVzZXIiLCJlbWFpbCI6Im5lZXJhamtyMTIxMEBnbWFpbC5jb20iLCJleHAiOjE2NTIzNjgwNDR9.McdpccVYd4VBKuk9NjiUZGmakU_Wmo1wiolW1DwpVUg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change-password-from-reset-token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZmM1M2I0LTMzNmItNDFjYy04NGFlLTQxZWUyOTQ5OTNkOCIsInN0YXR1cyI6InVzZXIiLCJlbWFpbCI6Im5lZXJhamtyMTIxMEBnbWFpbC5jb20iLCJleHAiOjE2NTIzNjgwNDR9.McdpccVYd4VBKuk9NjiUZGmakU_Wmo1wiolW1DwpVUg\",\r\n    \"password\" : \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/email/change-password-from-reset-token",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"email",
+								"change-password-from-reset-token"
 							]
 						}
 					},
@@ -804,7 +857,7 @@
 							"formdata": [
 								{
 									"key": "username",
-									"value": "admin@gmail.com",
+									"value": "admin@findcare.com",
 									"type": "text"
 								},
 								{
@@ -923,7 +976,7 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"url": {
 							"raw": "{{URL}}/admin/doctor/verify?id=1",
@@ -995,10 +1048,10 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/admin/activate/user?id=1",
+							"raw": "{{URL}}/admin/activate/user?id=769ec13c-07cd-478e-a706-4ac58ff19915",
 							"host": [
 								"{{URL}}"
 							],
@@ -1010,7 +1063,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "1"
+									"value": "769ec13c-07cd-478e-a706-4ac58ff19915"
 								}
 							]
 						}
@@ -1030,10 +1083,10 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/admin/deactivate/user?id=1",
+							"raw": "{{URL}}/admin/deactivate/user?id=769ec13c-07cd-478e-a706-4ac58ff19915",
 							"host": [
 								"{{URL}}"
 							],
@@ -1045,7 +1098,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "1"
+									"value": "769ec13c-07cd-478e-a706-4ac58ff19915"
 								}
 							]
 						}
@@ -1065,7 +1118,7 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"url": {
 							"raw": "{{URL}}/admin/deactivate/doctor?id=1",
@@ -1100,7 +1153,7 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"url": {
 							"raw": "{{URL}}/admin/activate/doctor?id=1",
@@ -1195,15 +1248,12 @@
 			"item": [
 				{
 					"name": "deleteUser",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\" : \"c3336292-ea0e-416d-8280-fb70e1f0545b\"\r\n}",
+							"raw": "{\r\n    \"id\" : \"06194332-3c38-4afe-8bbe-691d13bc4d09\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1237,9 +1287,6 @@
 							}
 						}
 					],
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1251,7 +1298,7 @@
 								}
 							]
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -1306,15 +1353,12 @@
 				},
 				{
 					"name": "verifyMail-USER",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"neerajkr1210@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"user@findcare.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1337,15 +1381,12 @@
 				},
 				{
 					"name": "verify-Mail-DOCTOR",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"neerajkr1210@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"doctor-findcare@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

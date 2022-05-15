@@ -8,7 +8,19 @@
 		}
 		if (session?.status === 'doctor') {
 			// FETCH PATIENT DETAILS HERE
-			return {}
+			const response = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/doctor/clinic/', {
+				method: 'GET',
+				headers: {
+					'Content-type': 'application/json',
+					Authorization: `Bearer ${session.session}`
+				}
+			})
+			const data = await response.json()
+			return {
+				props: {
+					response: data
+				}
+			}
 		} else {
 			if (session?.status === 'admin') {
 				return {
@@ -44,6 +56,7 @@
 	let collapseShow = 'hidden'
 	let show = false
 	let selected = 'dashboard'
+	export let response
 </script>
 
 <!-- Navbar -->
@@ -173,14 +186,14 @@
 
 	<!-- Body -->
 	<div class="relative md:ml-64 bg-blueGray-100">
-		<Header />
+		<Header {response} />
 
 		<div class="px-4 md:px-10 mx-auto w-full m-24 mt-3">
 			{#if selected == 'dashboard'}
-				<DashboardTable />
+				<DashboardTable {response} />
 			{/if}
 			{#if selected == 'Account Setting'}
-				<DoctorProfile />
+				<DoctorProfile {response} />
 			{/if}
 			{#if selected == 'changepass'}
 				<Changepass />

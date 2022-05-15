@@ -5,7 +5,7 @@ from app.scheams import clinic_schema
 
 
 class BaseAppointment(BaseModel):
-    clinic_id: int
+    clinic_id: str
     schedule: datetime
     fees_paid: bool
 
@@ -16,9 +16,9 @@ class CreateAppointment(BaseAppointment):
 
 class AppointmentOut(BaseModel):
     id: str
-    user_id: int
-    doctor_id: int
-    clinic_id: int
+    user_id: str
+    doctor_id: str
+    clinic_id: str
     schedule: datetime
     fees_paid: bool
     is_completed: bool
@@ -32,15 +32,15 @@ class AppointmentOut(BaseModel):
 
 
 class CancelAppointment(BaseModel):
-    id: int
+    id: str
     cancellation_reason: Optional[str] = None
 
 
 class AppointmentOutUser(BaseModel):
     id: str
-    user_id: int
-    doctor_id: int
-    clinic_id: int
+    user_id: str
+    doctor_id: str
+    clinic_id: str
     schedule: datetime
     fees_paid: bool
     is_completed: bool

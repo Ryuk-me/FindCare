@@ -28,6 +28,12 @@
 - ~~FRONTEND ->  [WEBISTE](https://jazzy-starship-22dd57.netlify.app) (NETLIFY)~~
 - ~~PG4 ADMIN - > [DATABASE ONLINE](https://pgadmin-ryuk-me.cloud.okteto.net)~~
   
+> ## TEST ACCOUNTS
+
+- USER - user@findcare.com 123
+- DOCTOR - doctor@findcare.com 123
+- ADMIN - admin@findcare.com 123
+
 > ## How to connect database in pg4 admin
 
 - ~~email - > `ryuk@ryuk.com` password `ryuk`~~

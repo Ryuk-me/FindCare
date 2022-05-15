@@ -1,8 +1,19 @@
 <script>
 	// core components
 	import TableStats from '$lib/components/TableStats.svelte'
+	import { getFormattedDate } from '$lib/utils'
 	// can be one of light or dark
 	export let color = 'light'
+	export let response
+	let patients = response.patients
+	function checkAppointSatus(appointment) {
+		if (appointment.is_completed) {
+			return 'completed'
+		} else if (appointment.is_cancelled) {
+			return 'cancelled'
+		}
+		return 'pending'
+	}
 </script>
 
 <div
@@ -49,12 +60,12 @@
 						Status
 					</th>
 					<th
-						class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left {color ===
+						class="px-6 align-middle border border-solid py-3 text-xs  uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left {color ===
 						'light'
 							? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
 							: 'bg-red-700 text-red-200 border-red-600'}"
 					>
-						Approve
+						Mark as Completed
 					</th>
 					<th
 						class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left {color ===
@@ -67,16 +78,17 @@
 				</tr>
 			</thead>
 			<tbody>
-				<TableStats />
-				<TableStats patientName="Nitin Shivam" dateOfAppointment="69-21-23" status="pending" />
-				<TableStats patientName="Amardeep" dateOfAppointment="63-41-23" status="canceled" />
-				<TableStats patientName="Amardeep" dateOfAppointment="63-41-23" status="canceled" />
-				<TableStats patientName="Amardeep" dateOfAppointment="63-41-23" status="canceled" />
-				<TableStats patientName="Amardeep" dateOfAppointment="63-41-23" status="canceled" />
-				<TableStats patientName="Amardeep" dateOfAppointment="63-41-23" status="canceled" />
-				<TableStats patientName="Amardeep" dateOfAppointment="63-41-23" status="canceled" />
-				<TableStats patientName="Amardeep" dateOfAppointment="63-41-23" status="canceled" />
-				<TableStats patientName="Amardeep" dateOfAppointment="63-41-23" status="canceled" />
+				{#each patients as patient}
+					{#each patient.appointments as appointment}
+						<TableStats
+							appointment_id={appointment.id}
+							patientImg={patient.profile_image}
+							patientName={patient.name}
+							dateOfAppointment={getFormattedDate(appointment.schedule)}
+							status={checkAppointSatus(appointment)}
+						/>
+					{/each}
+				{/each}
 			</tbody>
 		</table>
 	</div>

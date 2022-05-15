@@ -1,6 +1,7 @@
 from app.database import SessionLocal
 from app.models import user_model
 from sqlalchemy.orm import Session
+from sqlalchemy import distinct, func
 from app.scheams import user_schema, doctor_schema, clinic_schema, appointment_schema, admin_schema, change_password_schema
 from passlib.hash import bcrypt
 from app.models import user_model, doctor_model, clinic_model, appointment_model, admin_model
@@ -12,9 +13,49 @@ import uuid
 from pathlib import Path
 
 
-def get_db():
+async def get_db():
     db = SessionLocal()
     create_first_admin(db)
+    user = is_user_exist(db, 'user@findcare.com')
+    doctor = is_doctor_exist(db, 'doctor@findcare.com')
+    if not user:
+        user_in = user_schema.UserCreate(
+            name="User Account",
+            email='user@findcare.com',
+            dob="2002-04-26",
+            phone="9999999999",
+            gender="male",
+            password="123"
+        )
+        await create_user(db, user_in)
+        user = is_user_exist(db, 'user@findcare.com')
+        user.is_active = True
+        db.commit()
+    if not doctor:
+        doctor_in = doctor_schema.DoctorCreate(
+            name="Dr. Doctor Account",
+            email="doctor@findcare.com",
+            phone="8125384543",
+            gender="male",
+            dob="1996-04-26",
+            password="123",
+            about="Lorem Ipsum is simply dummy text of the printing and typesetting industry. \
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, \
+                when an unknown printer took a galley of type and scrambled it to make a \
+                type specimen book. It has survived not only five centuries, but also the \
+                leap into electronic typesetting, remaining essentially unchanged. \
+                It was popularised in the 1960s with the release of Letraset sheets \
+                containing Lorem Ipsum passages, and more recently with desktop \
+                publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+            experience_year=4,
+            speciality="Cardiologist",
+            registration_number="732647A3"
+        )
+        await create_doctor(db, doctor_in)
+        doctor = is_doctor_exist(db, 'doctor@findcare.com')
+        doctor.is_active = True
+        db.commit()
+
     try:
         yield db
     finally:
@@ -106,7 +147,6 @@ async def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate, created
                                 profile = 'https://cdn-icons-png.flaticon.com/512/607/607414.png'
                             else:
                                 profile = 'https://cdn-icons-png.flaticon.com/512/253/253605.png'
-                        if created_by_admin:
                             if created_by_admin:
                                 doctor = doctor_model.Doctor(
                                     age=age, is_active=True, slug=generate_slug(doctor.name), profile_image=profile, **doctor.dict())
@@ -172,6 +212,46 @@ def get_clinic(db: Session, doctor_id: str):
     clinic = db.query(clinic_model.Clinic).filter(
         clinic_model.Clinic.doctor_id == doctor_id).first()
     if clinic:
+        clinic: clinic_schema.ClinicOut
+        clinic_id = clinic.id
+        appointments = db.query(appointment_model.Appointment).filter(
+            appointment_model.Appointment.clinic_id == clinic_id).all()
+        total_patients = db.query(appointment_model.Appointment).distinct(
+            appointment_model.Appointment.user_id).group_by(appointment_model.Appointment.id).count()
+        users = db.query(user_model.User).filter(
+            user_model.User.id == appointment_model.Appointment.user_id).all()
+        for user in users:
+            user: clinic_schema.UserOutDoctorPanel
+            appoint = db.query(appointment_model.Appointment).filter(
+                appointment_model.Appointment.user_id == user.id).all()
+            user.appointments = appoint
+        if len(appointments) > 0:
+            total_appointments = len(appointments)
+            completed_appointments = 0
+            cancelled_appointments_by_doctor = 0
+            cancelled_appointments_by_user = 0
+            today_appointments = 0
+            for appointment in appointments:
+                if appointment.is_completed:
+                    completed_appointments += 1
+                if appointment.is_cancelled == "D":
+                    cancelled_appointments_by_doctor += 1
+                if appointment.is_cancelled == "U":
+                    cancelled_appointments_by_user += 1
+                if appointment.schedule:
+                    d = datetime.fromisoformat(str(appointment.schedule))
+                    if f"{d:%Y-%m-%d}" == f"{datetime.now():%Y-%m-%d}":
+                        today_appointments += 1
+            clinic.patients = users
+            clinic.total_patients = total_patients
+            clinic.today_appointments = today_appointments
+            clinic.total_appointments = total_appointments
+            clinic.completed_appointments = completed_appointments
+            clinic.cancelled_appointments_by_user = cancelled_appointments_by_user
+            clinic.cancelled_appointments_by_doctor = cancelled_appointments_by_doctor
+            clinic.pending_appointments = total_appointments - \
+                (cancelled_appointments_by_user +
+                    cancelled_appointments_by_doctor + completed_appointments)
         return clinic
     raise errors.NOT_FOUND_ERROR
 

@@ -1,5 +1,6 @@
 <script>
 	import CardStats from '$lib/components/cardStats.svelte'
+	export let response
 </script>
 
 <!-- Header -->
@@ -11,31 +12,31 @@
 				<div class="w-full lg:w-6/12 xl:w-3/12 px-4">
 					<CardStats
 						statSubtitle="Total Appointments"
-						statTitle="350"
+						statTitle={response.total_appointments.toLocaleString()}
 						statIconName="far fa-chart-bar"
 						statIconColor="bg-red-500"
 					/>
 				</div>
 				<div class="w-full lg:w-6/12 xl:w-3/12 px-4">
 					<CardStats
-						statSubtitle="Upcoming Appointments"
-						statTitle="2,356"
+						statSubtitle="Pending Appointments"
+						statTitle={response.pending_appointments.toLocaleString()}
 						statIconName="fas  fa-calendar-alt"
 						statIconColor="bg-orange-500"
 					/>
 				</div>
-                <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-                    <CardStats
-                        statSubtitle="Today's Appointment"
-                        statTitle="2"
-                        statIconName="fas fa-calendar-plus"
-                        statIconColor="bg-emerald-500"
-                    />
-                </div>
+				<div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+					<CardStats
+						statSubtitle="Today's Appointment"
+						statTitle={response.today_appointments.toLocaleString()}
+						statIconName="fas fa-calendar-plus"
+						statIconColor="bg-emerald-500"
+					/>
+				</div>
 				<div class="w-full lg:w-6/12 xl:w-3/12 px-4">
 					<CardStats
 						statSubtitle="Total Patient"
-						statTitle="24"
+						statTitle={response.total_patients.toLocaleString()}
 						statIconName="fas fa-users"
 						statIconColor="bg-pink-500"
 					/>
