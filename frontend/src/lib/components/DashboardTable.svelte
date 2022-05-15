@@ -5,7 +5,7 @@
 	// can be one of light or dark
 	export let color = 'light'
 	export let response
-	let patients = response.patients
+	let patients = response?.patients
 	function checkAppointSatus(appointment) {
 		if (appointment.is_completed) {
 			return 'completed'
@@ -78,17 +78,19 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each patients as patient}
-					{#each patient.appointments as appointment}
-						<TableStats
-							appointment_id={appointment.id}
-							patientImg={patient.profile_image}
-							patientName={patient.name}
-							dateOfAppointment={getFormattedDate(appointment.schedule)}
-							status={checkAppointSatus(appointment)}
-						/>
+				{#if response}
+					{#each patients as patient}
+						{#each patient.appointments as appointment}
+							<TableStats
+								appointment_id={appointment.id}
+								patientImg={patient.profile_image}
+								patientName={patient.name}
+								dateOfAppointment={getFormattedDate(appointment.schedule)}
+								status={checkAppointSatus(appointment)}
+							/>
+						{/each}
 					{/each}
-				{/each}
+				{/if}
 			</tbody>
 		</table>
 	</div>

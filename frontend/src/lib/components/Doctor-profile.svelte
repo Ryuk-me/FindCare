@@ -1,6 +1,9 @@
 <script>
 	export let response
-	let doctor = response.doctor
+	export let doctor_profile
+	let doctor = null
+	if (response) doctor = response.doctor
+	else doctor = doctor_profile
 </script>
 
 <div class="text-xl text-center w-full font-bold border-b p-3 mb-4">Edit Profile</div>

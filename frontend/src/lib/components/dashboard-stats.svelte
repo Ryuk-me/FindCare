@@ -12,7 +12,7 @@
 				<div class="w-full lg:w-6/12 xl:w-3/12 px-4">
 					<CardStats
 						statSubtitle="Total Appointments"
-						statTitle={response.total_appointments.toLocaleString()}
+						statTitle={response ? response.total_appointments.toLocaleString() : 0}
 						statIconName="far fa-chart-bar"
 						statIconColor="bg-red-500"
 					/>
@@ -20,7 +20,7 @@
 				<div class="w-full lg:w-6/12 xl:w-3/12 px-4">
 					<CardStats
 						statSubtitle="Pending Appointments"
-						statTitle={response.pending_appointments.toLocaleString()}
+						statTitle={response ? response.pending_appointments.toLocaleString() : 0}
 						statIconName="fas  fa-calendar-alt"
 						statIconColor="bg-orange-500"
 					/>
@@ -28,7 +28,7 @@
 				<div class="w-full lg:w-6/12 xl:w-3/12 px-4">
 					<CardStats
 						statSubtitle="Today's Appointment"
-						statTitle={response.today_appointments.toLocaleString()}
+						statTitle={response ? response.today_appointments.toLocaleString() : 0}
 						statIconName="fas fa-calendar-plus"
 						statIconColor="bg-emerald-500"
 					/>
@@ -36,7 +36,7 @@
 				<div class="w-full lg:w-6/12 xl:w-3/12 px-4">
 					<CardStats
 						statSubtitle="Total Patient"
-						statTitle={response.total_patients.toLocaleString()}
+						statTitle={response ? response.total_patients.toLocaleString() : 0}
 						statIconName="fas fa-users"
 						statIconColor="bg-pink-500"
 					/>

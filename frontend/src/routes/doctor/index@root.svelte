@@ -15,10 +15,23 @@
 					Authorization: `Bearer ${session.session}`
 				}
 			})
-			const data = await response.json()
+			let data = await response.json()
+			let doctor_profile = null
+			if (response.status == status_code.HTTP_404_NOT_FOUND) {
+				data = null
+				let response = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/doctor/', {
+					method: 'GET',
+					headers: {
+						'Content-type': 'application/json',
+						Authorization: `Bearer ${session.session}`
+					}
+				})
+				doctor_profile = await response.json()
+			}
 			return {
 				props: {
-					response: data
+					response: data,
+					doctor_profile
 				}
 			}
 		} else {
@@ -44,7 +57,7 @@
 	import Header from '$lib/components/dashboard-stats.svelte'
 	import DashboardFooter from '$lib/components/dashboard-footer.svelte'
 	import Changepass from '$lib/components/Changepass.svelte'
-	import { ENV } from '$lib/utils'
+	import { ENV, status_code } from '$lib/utils'
 	import DashboardTable from '$lib/components/DashboardTable.svelte'
 	import DoctorProfile from '$lib/components/Doctor-profile.svelte'
 	import ClinicDetails from '$lib/components/ClinicDetails.svelte'
@@ -57,6 +70,7 @@
 	let show = false
 	let selected = 'dashboard'
 	export let response
+	export let doctor_profile
 </script>
 
 <!-- Navbar -->
@@ -199,13 +213,13 @@
 				<DashboardTable {response} />
 			{/if}
 			{#if selected == 'Account Setting'}
-				<DoctorProfile {response} />
+				<DoctorProfile {response} {doctor_profile} />
 			{/if}
 			{#if selected == 'changepass'}
 				<Changepass />
 			{/if}
 			{#if selected == 'clinic'}
-				<ClinicDetails />
+				<ClinicDetails {response}/>
 			{/if}
 
 			<Footer />
