@@ -1,7 +1,7 @@
 <script>
 	let menu = false
 	let isProfileMenuOpen = false
-	let isLoggedIn = true
+	let isLoggedIn = false
 </script>
 
 <div

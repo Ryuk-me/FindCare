@@ -1,30 +1,16 @@
+<script context="module">
+	export let selected = 'changepass'
+</script>
+
 <script>
-	import Footer from '$lib/components/dashboard-footer.svelte'
-	import Sidebar from '$lib/components/sidebar.svelte'
-	import Navbar from '$lib/components/Navbar.svelte'
-	import Header from '$lib/components/dashboard-stats.svelte'
-	import DashboardFooter from '$lib/components/dashboard-footer.svelte'
-	import Changepass from '$lib/components/Changepass.svelte'
-
-import DashboardTable from '$lib/components/DashboardTable.svelte'
-import DoctorProfile from '$lib/components/Doctor-profile.svelte'
-import ClinicDetails from '$lib/components/ClinicDetails.svelte'
-
-
 	function toggleCollapseShow(classes) {
 		collapseShow = classes
 	}
 	let collapseShow = 'hidden'
-	let show = false
-	let selected = 'dashboard'
+
 </script>
 
-<!-- Navbar -->
-
-<div class="h-screen w-screen overflow-x-hidden">
-	<!-- Sidebar -->
-
-	<nav
+<nav
 		class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
 	>
 		<div
@@ -40,7 +26,7 @@ import ClinicDetails from '$lib/components/ClinicDetails.svelte'
 			</button>
 			<!-- Brand -->
 			<a
-				class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm font-bold p-4 px-0"
+				class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
 				href="/"
 			>
 				<div class="p-2 text-primary text-3xl font-bold tracking-wide font-poppins">
@@ -88,7 +74,7 @@ import ClinicDetails from '$lib/components/ClinicDetails.svelte'
 				<h6
 					class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
 				>
-					Doctor's Admin Panel
+					Admin Layout Pages
 				</h6>
 				<!-- Navigation -->
 
@@ -104,7 +90,7 @@ import ClinicDetails from '$lib/components/ClinicDetails.svelte'
 					</li>
 
 					<li class="items-center">
-						<button
+					<button
 							class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
 							on:click={() => (selected = 'Account Setting')}
 						>
@@ -143,29 +129,3 @@ import ClinicDetails from '$lib/components/ClinicDetails.svelte'
 			</div>
 		</div>
 	</nav>
-
-	<!-- Body -->
-	<div class="relative md:ml-64 bg-blueGray-100">
-		<Header />
-	
-		<div class="px-4 md:px-10 mx-auto w-full m-24 mt-3">
-            {#if selected == 'dashboard'}
-			<DashboardTable/>
-		{/if}
-		{#if selected == 'Account Setting'}
-			<DoctorProfile/>
-		{/if}
-			{#if selected == 'changepass'}
-            <Changepass/>
-			{/if}
-			{#if selected == 'clinic'}
-				<ClinicDetails/>
-			{/if}
-            
-			<Footer />
-		</div>
-	</div>
-</div>
-
-<!-- Footer -->
-

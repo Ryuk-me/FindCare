@@ -33,8 +33,10 @@
   },
   "type": "module",
   "dependencies": {
+    "@popperjs/core": "^2.11.5",
     "cookie": "^0.5.0",
     "jwt-decode": "^3.1.2",
+    "svelte-navigator": "^3.1.5",
     "svelte-use-form": "^2.4.3",
     "toastify-js": "^1.11.2"
   }
