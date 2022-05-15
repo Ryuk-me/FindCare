@@ -17,9 +17,9 @@
 		/>
 	</div>
 
-    <div class="h-full w-screen flex lg:flex-row flex-col justify-between lg:px-24 mt-8">
+    <div class="h-full w-full flex lg:flex-row flex-col justify-between lg:px-24 mt-8">
         <!-- left div -->
-        <div class="lg:w-[65%] flex flex-col">
+        <div class="lg:w-[65%] flex flex-col mx-4 lg:mx-0">
             <!-- first card  -->
             <div class="w-full flex bg-white rounded-xl drop-shadow-md p-8 mb-8">
                 <!-- img div -->
@@ -78,7 +78,7 @@
 
         </div>
         <!-- right div  -->
-        <div class="lg:w-[30%] flex flex-col">
+        <div class="lg:w-[30%] flex flex-col mx-4 lg:mx-0">
             <div class="w-full flex flex-col bg-white rounded-xl drop-shadow-md p-8">
                 <div class="flex">
                     <div class="line-none flex overflow-auto whitespace-nowrap p-2">
