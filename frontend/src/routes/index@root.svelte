@@ -12,8 +12,9 @@
 	import ellipse3 from '$lib/assets/homepage/Ellipse3.png'
 	import Footer from '$lib/components/Footer.svelte'
 	import Navbar from '$lib/components/Navbar.svelte'
-
-
+	import SearchResult from '$lib/components/SearchResult.svelte'
+	
+	
 </script>
 
 <svelte:head>
@@ -30,9 +31,7 @@
 	<!-- hero section -->
 
 	<section class="text-gray-600 lg:px-24">
-		<div
-			class="container mx-auto flex px-5 py-16 font-sans md:flex-row flex-col items-center"
-		>
+		<div class="container mx-auto flex px-5 py-16 font-sans md:flex-row flex-col items-center">
 			<div
 				class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center"
 			>
@@ -52,10 +51,28 @@
 						placeholder="Search Doctor or Symptoms..."
 						autocomplete="on"
 						id="search"
+						
 					/>
 					<span class="search-glass">
 						<i class="fa-solid fa-magnifying-glass" />
 					</span>
+					<div
+						class="w-full overflow-auto h-40 absolute top-16 flex flex-col space-y-2 bg-[#ccc7ff] p-3 rounded-md"
+						
+					>
+						<SearchResult name="Fracture" searchType="Symptom" />
+						<SearchResult />
+						<SearchResult />
+						<SearchResult />
+						<SearchResult />
+						<SearchResult />
+						<SearchResult />
+						<SearchResult />
+						<SearchResult />
+						<SearchResult />
+						<SearchResult />
+						<SearchResult />
+					</div>
 				</div>
 			</div>
 			<div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
@@ -234,5 +251,22 @@
 		right: 16px;
 		transform: translate(0, -50%);
 		top: 60%;
+	}
+
+	.scroll-style::-webkit-scrollbar-track {
+		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		border-radius: 10px;
+		background-color: #f5f5f5;
+	}
+
+	.scroll-style::-webkit-scrollbar {
+		width: 8px;
+		background-color: #f5f5f5;
+	}
+
+	.scroll-style::-webkit-scrollbar-thumb {
+		border-radius: 10px;
+		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		background-color: #8755f2;
 	}
 </style>
