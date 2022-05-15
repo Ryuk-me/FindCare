@@ -20,8 +20,7 @@ class User(Base):
     dob = Column(Date, nullable=False)
     age = Column(Integer, nullable=False)
     password = Column(String, nullable=False)
-    profile_image = Column(
-        String, nullable=True, default='https://www.pinclipart.com/picdir/middle/351-3519728_png-file-svg-default-profile-picture-free-clipart.png')
+    profile_image = Column(String, nullable=False)
     appointments = relationship('Appointment')
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))

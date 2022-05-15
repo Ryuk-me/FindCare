@@ -6,10 +6,9 @@
 	import DashboardFooter from '$lib/components/dashboard-footer.svelte'
 	import Changepass from '$lib/components/Changepass.svelte'
 
-import DashboardTable from '$lib/components/DashboardTable.svelte'
-import DoctorProfile from '$lib/components/Doctor-profile.svelte'
-import ClinicDetails from '$lib/components/ClinicDetails.svelte'
-
+	import DashboardTable from '$lib/components/DashboardTable.svelte'
+	import DoctorProfile from '$lib/components/Doctor-profile.svelte'
+	import ClinicDetails from '$lib/components/ClinicDetails.svelte'
 
 	function toggleCollapseShow(classes) {
 		collapseShow = classes
@@ -147,25 +146,24 @@ import ClinicDetails from '$lib/components/ClinicDetails.svelte'
 	<!-- Body -->
 	<div class="relative md:ml-64 bg-blueGray-100">
 		<Header />
-	
+
 		<div class="px-4 md:px-10 mx-auto w-full m-24 mt-3">
-            {#if selected == 'dashboard'}
-			<DashboardTable/>
-		{/if}
-		{#if selected == 'Account Setting'}
-			<DoctorProfile/>
-		{/if}
+			{#if selected == 'dashboard'}
+				<DashboardTable />
+			{/if}
+			{#if selected == 'Account Setting'}
+				<DoctorProfile />
+			{/if}
 			{#if selected == 'changepass'}
-            <Changepass/>
+				<Changepass />
 			{/if}
 			{#if selected == 'clinic'}
-				<ClinicDetails/>
+				<ClinicDetails />
 			{/if}
-            
+
 			<Footer />
 		</div>
 	</div>
 </div>
 
 <!-- Footer -->
-

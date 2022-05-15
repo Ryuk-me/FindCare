@@ -1,9 +1,14 @@
 <script>
-    import { goto } from '$app/navigation'
+	import { goto } from '$app/navigation'
 	import { session } from '$app/stores'
+	import Login from 'carbon-icons-svelte/lib/Login.svelte'
 	let user = $session ? true : false
 	let menu = true
 	let profileMenu = true
+	let profile = user
+		? //@ts-ignore
+		  $session.profile_image
+		: 'https://cdn-icons-png.flaticon.com/512/4825/4825038.png'
 </script>
 
 <nav class="bg-white border-black px-2 sm:px-4 py-2.5 rounded">
@@ -25,10 +30,8 @@
 					></a
 				>
 			</div>
-            <div class="flex relative items-center md:order-2 lg:hidden">
-				<a href="/login"
-					><i class="fas fa-arrow-right-to-bracket  text-lg"></i></a
-				>
+			<div class="flex relative items-center md:order-2 lg:hidden">
+				<a href="/login"><Login class="text-lg hover:color-[#524af4] w-6 h-6" /></a>
 			</div>
 		{/if}
 
@@ -43,11 +46,7 @@
 					on:click|preventDefault={() => (profileMenu = !profileMenu)}
 				>
 					<span class="sr-only">Open user menu</span>
-					<img
-						class="w-10 h-10 rounded-full"
-						src="https://cdn-icons-png.flaticon.com/512/4825/4825038.png"
-						alt=""
-					/>
+					<img class="w-10 h-10 rounded-full" src={profile} alt="" />
 				</button>
 
 				<div
@@ -57,7 +56,6 @@
 					id="dropdown"
 					data-popper-placement="bottom"
 				>
-					
 					<ul
 						class="absolute right-0 w-40 p-2 mt-2 space-y-2 text-white bg-white border border-gray-100 rounded-md shadow-md  dark:border-indigo-700 dark:text-white dark:bg-indigo-700"
 						aria-label="submenu"
@@ -224,10 +222,10 @@
 							<a
 								href="#"
 								class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
-                                on:click={() => {
-                                    $session = null
-                                    goto('/logout')
-                                }}
+								on:click={() => {
+									$session = null
+									goto('/logout')
+								}}
 							>
 								<svg
 									class="w-4 h-4 mr-3"

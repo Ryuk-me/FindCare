@@ -35,7 +35,7 @@ services:
     environment:
       - TZ=Asia/Kolkata
       - POSTGRES_PASSWORD=ryuk
-      - POSTGRES_DB=nextcare
+      - POSTGRES_DB=findcare
     expose:
       - 5432
     networks:

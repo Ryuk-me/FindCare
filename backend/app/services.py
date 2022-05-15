@@ -37,12 +37,18 @@ async def create_user(db: Session, user: user_schema.UserCreate, created_by_admi
                         hash = hash_password(user.password)
                         temp_pass = user.password
                         user.password = hash
+                        if user.gender == 'female':
+                            profile = 'https://cdn-icons-png.flaticon.com/512/921/921009.png'
+                        elif user.gender == 'male':
+                            profile = 'https://cdn-icons-png.flaticon.com/512/4825/4825038.png'
+                        else:
+                            profile = 'https://cdn-icons-png.flaticon.com/512/4646/4646510.png'
                         if created_by_admin:
                             user = user_model.User(
-                                age=calculate_age(user.dob), is_active=True, **user.dict())
+                                age=calculate_age(user.dob), is_active=True, profile_image=profile, **user.dict())
                         else:
                             user = user_model.User(
-                                age=calculate_age(user.dob), **user.dict())
+                                age=calculate_age(user.dob), profile_image=profile, **user.dict())
                         db.add(user)
                         db.commit()
                         db.refresh(user)
@@ -94,12 +100,19 @@ async def create_doctor(db: Session, doctor: doctor_schema.DoctorCreate, created
                             hash = hash_password(doctor.password)
                             temp_pass = doctor.password
                             doctor.password = hash
+                            if doctor.gender == 'female':
+                                profile = 'https://cdn-icons-png.flaticon.com/512/3304/3304567.png'
+                            elif doctor.gender == 'male':
+                                profile = 'https://cdn-icons-png.flaticon.com/512/607/607414.png'
+                            else:
+                                profile = 'https://cdn-icons-png.flaticon.com/512/253/253605.png'
+                        if created_by_admin:
                             if created_by_admin:
                                 doctor = doctor_model.Doctor(
-                                    age=age, is_active=True, slug=generate_slug(doctor.name), **doctor.dict())
+                                    age=age, is_active=True, slug=generate_slug(doctor.name), profile_image=profile, **doctor.dict())
                             else:
                                 doctor = doctor_model.Doctor(
-                                    age=age, slug=generate_slug(doctor.name), **doctor.dict())
+                                    age=age, slug=generate_slug(doctor.name), profile_image=profile, **doctor.dict())
                             db.add(doctor)
                             db.commit()
                             db.refresh(doctor)

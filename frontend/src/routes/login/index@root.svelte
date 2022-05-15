@@ -36,7 +36,9 @@
 			$session = {
 				session: response.access_token,
 				//@ts-ignore
-				status: cookie.status
+				status: cookie.status,
+				//@ts-ignore
+				profile_image: cookie.profile_image
 			}
 			//@ts-ignore
 			if ($session.status == 'admin') goto('/dashboard')

@@ -25,7 +25,9 @@ export function getSession({ locals }) {
 		return {
 			session: session,
 			//@ts-ignore
-			status: details.status
+			status: details.status,
+			//@ts-ignore
+			profile_image: details.profile_image
 		}
 	}
 

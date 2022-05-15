@@ -20,8 +20,7 @@ class Doctor(Base):
     dob = Column(Date, nullable=False)
     age = Column(Integer, nullable=False)
     profile_image = Column(
-        String, nullable=False,
-        server_default='https://www.pinclipart.com/picdir/middle/351-3519728_png-file-svg-default-profile-picture-free-clipart.png')
+        String, nullable=False)
     about = Column(String, nullable=True)
     experience_year = Column(Integer, nullable=False)
     speciality = Column(String, nullable=False)

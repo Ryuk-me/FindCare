@@ -43,6 +43,7 @@ class DoctorOut(BaseModel):
     registration_number: str
     is_verified: bool
     slug: str
+    total_patients: int = 0
     is_active: bool
     created_at: datetime
     updated_at: datetime
