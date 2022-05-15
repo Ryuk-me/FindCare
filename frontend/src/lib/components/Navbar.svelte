@@ -3,7 +3,9 @@
 	import { session } from '$app/stores'
 	let menu = false
 	let isProfileMenuOpen = false
+
 	let isLoggedIn = $session ? true : false
+
 </script>
 
 <div class="navbar flex items-center lg:justify-between p-4 lg:px-24 lg:w-auto w-screen">
