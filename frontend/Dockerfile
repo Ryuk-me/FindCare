@@ -11,6 +11,6 @@ WORKDIR /app
 
 COPY --from=0 /app .
 COPY . .
-ENV TZ='Asia/Kolkata'
+ENV TZ=Asia/Kolkata
 EXPOSE 3000
 CMD ["node", "./build"]
