@@ -8,6 +8,14 @@ from app.database import engine
 from app.routers.v1 import auth, user_router, doctor_router, clinic_router, \
     appointment_router, search_doctor_clinics_router, admin_router, email_router, temporary_router
 
+import os
+import time
+
+os.environ['TZ'] = 'Asia/Kolkata'
+try:
+    time.tzset()
+except:
+    pass
 
 user_model.Base.metadata.create_all(bind=engine)
 clinic_model.Base.metadata.create_all(bind=engine)
