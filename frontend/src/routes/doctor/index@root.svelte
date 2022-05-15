@@ -45,11 +45,11 @@
 	import DashboardFooter from '$lib/components/dashboard-footer.svelte'
 	import Changepass from '$lib/components/Changepass.svelte'
 	import { ENV } from '$lib/utils'
-
 	import DashboardTable from '$lib/components/DashboardTable.svelte'
 	import DoctorProfile from '$lib/components/Doctor-profile.svelte'
 	import ClinicDetails from '$lib/components/ClinicDetails.svelte'
-
+	import { session } from '$app/stores'
+	import { goto } from '$app/navigation'
 	function toggleCollapseShow(classes) {
 		collapseShow = classes
 	}
@@ -171,10 +171,16 @@
 						</button>
 					</li>
 					<li class="items-center">
-						<a href="/logout" class="text-xs uppercase py-3 font-bold block ">
+						<button
+							class="text-xs uppercase py-3 font-bold block"
+							on:click={() => {
+								$session = null
+								goto('/logout')
+							}}
+						>
 							<i class="fas fa-arrow-right-from-bracket mr-2 text-sm " />
 							Logout
-						</a>
+						</button>
 					</li>
 				</ul>
 
