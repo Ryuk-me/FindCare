@@ -74,4 +74,3 @@ class UpdateDoctorDetails(BaseModel):
     phone: Optional[constr(max_length=10, min_length=10)]
     about: Optional[str]
     profile_image: Optional[str]
-    experience_year: Optional[int]

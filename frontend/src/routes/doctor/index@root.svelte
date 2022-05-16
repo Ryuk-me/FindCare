@@ -74,7 +74,9 @@
 </script>
 
 <!-- Navbar -->
-
+<svelte:head>
+	<title>{doctor_profile ? doctor_profile.name : response.doctor.name}</title>
+</svelte:head>
 <div class="h-screen w-screen overflow-x-hidden">
 	<!-- Sidebar -->
 

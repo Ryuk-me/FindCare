@@ -68,7 +68,7 @@ async def update_user_details(user: user_schema.UpdateUserDetails, db: Session =
         is_something_changed = True
 
     if user.email and user.email != current_user.email:
-        if not _services.is_user_exist(db, user.email):
+        if not _services.is_user_exist(db, user.email) and not _services.is_doctor_exist(db, user.email) and not _services.is_admin_exist(db, user.email):
             expire_time = timedelta(minutes=int(
                 settings.EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES))
             token = create_access_token(
@@ -87,7 +87,7 @@ async def update_user_details(user: user_schema.UpdateUserDetails, db: Session =
             raise errors.EMAIL_ALREADY_EXIST
 
     if user.phone and user.phone != current_user.phone:
-        if not _services.get_user_by_phone_no(db, user.phone):
+        if not _services.get_user_by_phone_no(db, user.phone) and not _services.get_doctor_by_phone_no(db, user.phone):
             current_user.phone = user.phone
             is_something_changed = True
         else:
