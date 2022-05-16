@@ -1,6 +1,7 @@
-<h1 class="bg-red-400">kaha bhai galat jagah aaye ho
-	
-</h1>
+<svelte:head>
+	<title>Error</title>
+</svelte:head>
+<h1 class="bg-red-400">kaha bhai galat jagah aaye ho</h1>
 
 <style>
 	@tailwind base;
