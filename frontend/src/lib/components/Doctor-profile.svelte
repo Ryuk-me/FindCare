@@ -1,6 +1,6 @@
 <script>
 	import { session } from '$app/stores'
-	import { ENV, status_code } from '$lib/utils'
+	import { ENV, status_code, removeAlpha } from '$lib/utils'
 	import { notificationToast } from '$lib/NotificationToast'
 	export let response
 	export let doctor_profile
@@ -18,6 +18,11 @@
 	let is_loading = false
 	async function updateDoctorProfile() {
 		is_loading = true
+		if (!phone.match(/^[6-9]\d{9}$/gm)) {
+			notificationToast('Invalid Phone Number !', false, 2000, 'error')
+			is_loading = false
+			return
+		}
 		const res = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/doctor/', {
 			method: 'PUT',
 			headers: {
@@ -131,9 +136,11 @@
 		<label for="phone" class="">Phone Number</label>
 		<input
 			bind:value={phone}
-			type="number"
+			type="tel"
+			on:keypress={removeAlpha}
+			maxlength="10"
+			minlength="10"
 			class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
-			placeholder="your@domain.com"
 			autocomplete="on"
 		/>
 	</div>
