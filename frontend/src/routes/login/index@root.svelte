@@ -38,7 +38,7 @@
 				//@ts-ignore
 				status: cookie.status,
 				//@ts-ignore
-				profile_image: cookie.profile_image
+				profile_image: 'https://cdn-icons-png.flaticon.com/512/3237/3237472.png'
 			}
 			//@ts-ignore
 			if ($session.status == 'doctor') goto('/doctor')
