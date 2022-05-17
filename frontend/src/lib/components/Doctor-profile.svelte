@@ -11,11 +11,8 @@
 	let email = doctor.email
 	let phone = doctor.phone
 	let about = doctor.about
-	let profile_image = doctor.profile_image
+	let profile_image = $userProfileStore?.profile_image
 	let isSomethingChanged = false
-	$userProfileStore = {
-		profile_image: profile_image
-	}
 	$: if (!(doctor.email === email) || !(doctor.phone === phone) || !(doctor.about === about))
 		isSomethingChanged = true
 	else isSomethingChanged = false
