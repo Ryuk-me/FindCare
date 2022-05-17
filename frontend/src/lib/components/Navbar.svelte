@@ -1,14 +1,12 @@
 <script>
 	import { goto } from '$app/navigation'
 	import { session } from '$app/stores'
+	import { user as userProfileStore } from '../../stores'
 	import Login from 'carbon-icons-svelte/lib/Login.svelte'
 	let user = $session ? true : false
 	let menu = true
 	let profileMenu = true
-	let profile = user
-		? //@ts-ignore
-		  $session.profile_image
-		: 'https://cdn-icons-png.flaticon.com/512/4825/4825038.png'
+	let profile = $userProfileStore?.profile_image
 </script>
 
 <nav class="bg-white border-black px-2 sm:px-4 py-2.5 rounded">
@@ -224,6 +222,7 @@
 								class="inline-flex items-center w-full px-2 py-1 text-sm font-semibold transition-colors duration-150 rounded-md hover:bg-gray-100 hover:text-gray-800 dark:hover:bg-gray-800 dark:hover:text-gray-200"
 								on:click={() => {
 									$session = null
+									$userProfileStore = null
 									goto('/logout')
 								}}
 							>

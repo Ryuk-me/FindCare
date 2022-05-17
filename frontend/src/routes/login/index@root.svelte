@@ -17,6 +17,7 @@
 	import shape_png from '$lib/assets/login/shape.png'
 	import medical_team_png from '$lib/assets/login/medical-team.png'
 	import jwt_decode from 'jwt-decode'
+	import { user as userProfileStore } from '../../stores'
 	let username = ''
 	let password = ''
 	let show = false
@@ -36,9 +37,7 @@
 			$session = {
 				session: response.access_token,
 				//@ts-ignore
-				status: cookie.status,
-				//@ts-ignore
-				profile_image: 'https://cdn-icons-png.flaticon.com/512/3237/3237472.png'
+				status: cookie.status
 			}
 			//@ts-ignore
 			if ($session.status == 'doctor') goto('/doctor')

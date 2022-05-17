@@ -45,6 +45,7 @@
 	import Logout from 'carbon-icons-svelte/lib/Logout.svelte'
 	import { goto } from '$app/navigation'
 	import { session as sessionStore } from '$app/stores'
+	import { user as userProfileStore } from '../../stores'
 	import { ENV, removeAlpha, removeSpecialCharacters } from '$lib/utils'
 	export let user, session
 
@@ -60,7 +61,9 @@
 	let profile_image = user?.profile_image
 	let password = ''
 	let confirmPassword = ''
-
+	$userProfileStore = {
+		profile_image: profile_image
+	}
 	const handleInput = (event) => {
 		password = event.target.value
 	}
@@ -142,6 +145,7 @@
 								class="flex items-center w-full p-2 text-base font-normal rounded-lg"
 								on:click={() => {
 									$sessionStore = null
+									$userProfileStore = null
 									goto('/logout')
 								}}
 							>

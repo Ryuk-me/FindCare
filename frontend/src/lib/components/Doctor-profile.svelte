@@ -2,6 +2,7 @@
 	import { session } from '$app/stores'
 	import { ENV, status_code, removeAlpha } from '$lib/utils'
 	import { notificationToast } from '$lib/NotificationToast'
+	import { user as userProfileStore } from '../../stores'
 	export let response
 	export let doctor_profile
 	let doctor = null
@@ -12,6 +13,9 @@
 	let about = doctor.about
 	let profile_image = doctor.profile_image
 	let isSomethingChanged = false
+	$userProfileStore = {
+		profile_image: profile_image
+	}
 	$: if (!(doctor.email === email) || !(doctor.phone === phone) || !(doctor.about === about))
 		isSomethingChanged = true
 	else isSomethingChanged = false
@@ -45,6 +49,9 @@
 			phone = data.phone
 			about = data.about
 			profile_image = data.profile_image
+			$userProfileStore = {
+				profile_image: profile_image
+			}
 			isSomethingChanged = false
 		} else if (res.status === status_code.HTTP_304_NOT_MODIFIED) {
 			notificationToast('Not Modified', false, 2000, 'error')
@@ -80,6 +87,9 @@
 			})
 				.then((res) => {
 					if (res.status === status_code.HTTP_202_ACCEPTED) {
+						$userProfileStore = {
+							profile_image: profile_image
+						}
 						notificationToast('Profile Image Updated', false, 2000, 'success')
 					}
 				})

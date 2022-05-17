@@ -63,6 +63,8 @@
 	import ClinicDetails from '$lib/components/ClinicDetails.svelte'
 	import { session } from '$app/stores'
 	import { goto } from '$app/navigation'
+	import { user as userProfileStore } from '../../stores'
+
 	function toggleCollapseShow(classes) {
 		collapseShow = classes
 	}
@@ -71,6 +73,14 @@
 	let selected = 'dashboard'
 	export let response
 	export let doctor_profile
+	if (response)
+		$userProfileStore = {
+			profile_image: response?.doctor?.profile_image
+		}
+	else
+		$userProfileStore = {
+			profile_image: doctor_profile?.profile_image
+		}
 </script>
 
 <!-- Navbar -->
@@ -203,6 +213,7 @@
 							class="text-xs uppercase py-3 font-bold block"
 							on:click={() => {
 								$session = null
+								$userProfileStore = null
 								goto('/logout')
 							}}
 						>

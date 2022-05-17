@@ -25,9 +25,7 @@ export function getSession({ locals }) {
 		return {
 			session: session,
 			//@ts-ignore
-			status: details.status,
-			//@ts-ignore
-			profile_image: 'https://cdn-icons-png.flaticon.com/512/3237/3237472.png'
+			status: details.status
 		}
 	}
 

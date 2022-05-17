@@ -18,7 +18,7 @@
 </script>
 
 <svelte:head>
-	<title>Findcare</title>
+	<title>FindCare</title>
 </svelte:head>
 
 <div class="relative">

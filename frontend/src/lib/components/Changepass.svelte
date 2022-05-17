@@ -12,7 +12,7 @@
 	const changePassword = async () => {
 		is_loading = true
 		if (!password || !confirmPassword) {
-			notificationToast('Password filed cannot be empty', false, 2000, 'error')
+			notificationToast('Password field cannot be empty', false, 2000, 'error')
 			is_loading = false
 			return
 		}
