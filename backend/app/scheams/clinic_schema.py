@@ -16,7 +16,6 @@ class AppointmentOutUser(BaseModel):
     schedule: datetime
     fees_paid: bool
     is_completed: bool
-    cancellation_reason: Union[str, None]
     is_cancelled: Union[str, None]
     when_cancelled: Union[datetime, None]
     created_at: datetime
@@ -32,7 +31,6 @@ class UserOutDoctorPanel(BaseModel):
     gender: str
     phone:  str
     profile_image: str
-    dob: date
     age: int
     appointments: List[AppointmentOutUser]
 

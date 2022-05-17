@@ -22,7 +22,6 @@ class AppointmentOut(BaseModel):
     schedule: datetime
     fees_paid: bool
     is_completed: bool
-    cancellation_reason: Union[str, None]
     is_cancelled: Union[str, None]
     when_cancelled: Union[datetime, None]
     created_at: datetime
@@ -33,7 +32,6 @@ class AppointmentOut(BaseModel):
 
 class CancelAppointment(BaseModel):
     id: str
-    cancellation_reason: Optional[str] = None
 
 
 class AppointmentOutUser(BaseModel):
@@ -44,7 +42,6 @@ class AppointmentOutUser(BaseModel):
     schedule: datetime
     fees_paid: bool
     is_completed: bool
-    cancellation_reason: Union[str, None]
     is_cancelled: Union[str, None]
     when_cancelled: Union[datetime, None]
     clinic: clinic_schema.ClinicOutUser

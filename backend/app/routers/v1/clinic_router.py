@@ -49,12 +49,12 @@ async def get_clinic_appointments(db: Session = Depends(_services.get_db), curre
 # ***********************************************************************************
 #! CANCEL A APPOINTMENT VIA DOCTOR / CLINIC
 @router.get('/appointment/cancel', status_code=status.HTTP_202_ACCEPTED)
-async def cancel_appointment(cancellation: appointment_schema.CancelAppointment, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor), access=Depends(verify_doctor_state)):
+async def cancel_appointment(id: str, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor), access=Depends(verify_doctor_state)):
     if not current_doctor.is_active:
         raise errors.PLEASE_VERIFY_YOUR_EMAIL
     appointment = _services.get_appointment_by_doctor_id(
-        db, cancellation.id, current_doctor.id)
-    return _services.cancel_appointments(db, appointment, is_User=False, reason=cancellation.cancellation_reason)
+        db, id, current_doctor.id)
+    return _services.cancel_appointments(db, appointment, is_User=False)
 
 
 # # ***********************************************************************************

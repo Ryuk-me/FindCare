@@ -28,7 +28,6 @@ class Appointment(Base):
     fees_paid = Column(Boolean, server_default='False', nullable=False)
     is_completed = Column(Boolean, server_default='False', nullable=False)
     is_cancelled = Column(String, nullable=True)
-    cancellation_reason = Column(String, nullable=True)
     when_cancelled = Column(DateTime, nullable=True)
     clinic = relationship('Clinic')
     created_at = Column(TIMESTAMP(timezone=True),

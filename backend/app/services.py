@@ -295,7 +295,7 @@ def add_appointment(db: Session, appointment: appointment_schema.CreateAppointme
     raise errors.CLINIC_NOT_FOUND
 
 
-def cancel_appointments(db: Session, appointment: appointment_schema.AppointmentOutUser | appointment_schema.AppointmentOut, reason: str = None, is_User=False):
+def cancel_appointments(db: Session, appointment: appointment_schema.AppointmentOutUser | appointment_schema.AppointmentOut, is_User=False):
     appointment: appointment_schema.AppointmentOutUser | appointment_schema.AppointmentOut = db.query(appointment_model.Appointment).filter(
         appointment_model.Appointment.id == appointment.id).first()
     if appointment.is_completed:
@@ -307,17 +307,14 @@ def cancel_appointments(db: Session, appointment: appointment_schema.Appointment
             raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
         appointment.is_cancelled = 'U'
     else:
-        if not reason:
-            raise errors.NO_CANCELLATION_REASON
         if appointment.is_cancelled == 'U':
             raise errors.APPOINTNEMT_ALREADY_CANCELLED_BY_USER
         if appointment.is_cancelled == 'D':
             raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
         appointment.is_cancelled = 'D'
-        appointment.cancellation_reason = reason
     appointment.when_cancelled = datetime.now()
     db.commit()
-    return {"detail": "Appointment cancelled sucessfully"}
+    return {"detail": "Appointment cancelled successfully"}
 
 
 def appointment_completed(db: Session, appointment: appointment_schema.AppointmentOut):
@@ -331,7 +328,7 @@ def appointment_completed(db: Session, appointment: appointment_schema.Appointme
         raise errors.APPOINTMENT_ALREADY_CANCELLED_BY_DR
     appointment.is_completed = True
     db.commit()
-    return {"detail": "Appointment completed sucessfully"}
+    return {"detail": "Appointment completed successfully"}
 
 
 def get_clinic_appointments(db: Session, doctor_id: str):
