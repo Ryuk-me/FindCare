@@ -5,7 +5,7 @@
 	// can be one of light or dark
 	export let color = 'light'
 	export let response
-	let patients = response?.patients
+	let patients = response?.patients 
 	function checkAppointSatus(appointment) {
 		if (appointment.is_completed) {
 			return 'completed'
@@ -16,7 +16,7 @@
 	}
 </script>
 
-{#if response}
+{#if response && patients}
 	<div
 		class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded {color ===
 		'light'

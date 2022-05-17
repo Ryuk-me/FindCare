@@ -62,7 +62,7 @@ class ClinicOut(BaseModel):
     is_open: bool
     address: _ClinicAddress
     doctor: doctor_schema.DoctorOut
-    patients: List[UserOutDoctorPanel]
+    patients: Union[List[UserOutDoctorPanel], None]
     total_patients: int = 0
     today_appointments: int = 0
     total_appointments: int = 0

@@ -1,7 +1,21 @@
 <script>
 	export let response
+	let name = ''
+	let address = ''
+	if (response) {
+		name = response?.name
+		address =
+			response?.address?.address +
+			', ' +
+			response?.address?.city +
+			', ' +
+			response?.address?.state +
+			', ' +
+			response?.address?.pincode
+	}
 </script>
 
+<!--! Clinic data will not be updated -->
 {#if response}
 	<div class="text-xl text-center w-full font-bold border-b p-3 mb-4">Clinic Details</div>
 	<div class="form w-full">
@@ -9,7 +23,9 @@
 			<label for="name" class="">Clinic Name</label>
 			<input
 				type="text"
-				class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
+				disabled
+				bind:value={name}
+				class="block border cursor-not-allowed text-gray-400 rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 				placeholder="your@domain.com"
 				autocomplete="on"
 			/>
@@ -19,21 +35,18 @@
 			<label for="about">Addresss</label>
 			<textarea
 				type="textarea"
+				disabled
 				rows="3"
+				bind:value={address}
 				name="about"
 				placeholder="Tell us about yourself"
 				title="Enter Address"
 				id="about"
-				class="block border text rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
+				class="block border cursor-not-allowed text-gray-400 text rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 				required
 				autocomplete="off"
 			/>
 		</div>
-		<div class="relative w-full mb-4" />
-		<button
-			class="bg-primary tracking-wider text-lg hover:bg-[#524af4] w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
-			>Save Changes</button
-		>
 	</div>
 {:else}
 	<div class="text-xl text-center w-full font-bold border-b p-3 mb-4">
