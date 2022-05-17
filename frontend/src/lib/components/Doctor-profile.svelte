@@ -60,43 +60,41 @@
 
 	// PROFILE IMAGE UPLOAD
 	let fileinput
-	const onFileSelected = (e) => {
+	const onFileProfileSelected = (e) => {
 		let image = e.target.files[0]
 		let reader = new FileReader()
 		reader.readAsDataURL(image)
 		reader.onload = (e) => {
-			profile_image = e.target.result
-		}
-	}
-	$: if (profile_image !== doctor.profile_image) {
-		let stringLength = profile_image.length - 'data:image/png;base64,'.length
-
-		let sizeInBytes = 4 * Math.ceil(stringLength / 3) * 0.5624896334383812
-		let sizeInKb = sizeInBytes / 1000
-		if (sizeInKb < 500) {
-			fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/doctor/', {
-				method: 'PUT',
-				headers: {
-					'Content-type': 'application/json',
-					//@ts-ignore
-					Authorization: `Bearer ${$session.session}`
-				},
-				body: JSON.stringify({
-					profile_image
+			let img = e.target.result
+			//@ts-ignore
+			let stringLength = img.length - 'data:image/png;base64,'.length
+			let sizeInBytes = 4 * Math.ceil(stringLength / 3) * 0.5624896334383812
+			let sizeInKb = sizeInBytes / 1000
+			if (sizeInKb < 500) {
+				profile_image = img
+				fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/doctor/', {
+					method: 'PUT',
+					headers: {
+						'Content-type': 'application/json',
+						//@ts-ignore
+						Authorization: `Bearer ${$session.session}`
+					},
+					body: JSON.stringify({
+						profile_image
+					})
 				})
-			})
-				.then((res) => {
-					if (res.status === status_code.HTTP_202_ACCEPTED) {
-						$userProfileStore = {
-							profile_image: profile_image
+					.then((res) => {
+						if (res.status === status_code.HTTP_202_ACCEPTED) {
+							$userProfileStore = {
+								profile_image: profile_image
+							}
+							notificationToast('Profile Image Updated', false, 2000, 'success')
 						}
-						notificationToast('Profile Image Updated', false, 2000, 'success')
-					}
-				})
-				.catch((error) => {})
-		} else {
-			notificationToast('Image size must be less than 500kb', false, 2000, 'error')
-			profile_image = doctor.profile_image
+					})
+					.catch((error) => {})
+			} else {
+				notificationToast('Image size must be less than 500kb', false, 2000, 'error')
+			}
 		}
 	}
 </script>
@@ -113,8 +111,8 @@
 					> -->
 				<input
 					type="file"
-					accept=".jpg, .jpeg, .png"
-					on:change={(e) => onFileSelected(e)}
+					accept=".jpg, .jpeg, .png, .gif"
+					on:change={(e) => onFileProfileSelected(e)}
 					bind:this={fileinput}
 					class="block w-full center text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-[#524af4]"
 				/>
