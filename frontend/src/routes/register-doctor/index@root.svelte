@@ -18,6 +18,7 @@
 	import { goto } from '$app/navigation'
 	import { navigating } from '$app/stores'
 	import Loading from '$lib/components/Loading.svelte'
+import Logo from '$lib/components/Logo.svelte'
 
 	let show = false
 	let firstName = ''
@@ -116,11 +117,12 @@
 		/>
 		<div class="flex justify-center items-center">
 			<div class="my-2">
-				<div class="text-primary font-bold font-poppins text-4xl mb-2 lg:pl-7">FindCare</div>
+				
+				<Logo/>
 				<div class="flex justify-center items-center font-medium font-maven">
 					<form
 						on:submit|preventDefault={signUpDoctor}
-						class="flex flex-col justify-center items-start w-[90vw] lg:w-[75vw] md:w-[70vw] bg-white lg:bg-transparent  rounded drop-shadow-xl mb-8 px-7 pb-7 pt-4 lg:border-none border border-primary"
+						class="flex flex-col justify-center items-start w-[90vw] lg:w-[75vw] md:w-[70vw] bg-white lg:bg-transparent  rounded drop-shadow-xl mb-8 px-2 pb-7 pt-4 lg:border-none border border-primary"
 					>
 						<div class=" w-full">
 							<div class="font-bold mb-3 text-2xl">
