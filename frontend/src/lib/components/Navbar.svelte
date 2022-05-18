@@ -3,6 +3,7 @@
 	import { session } from '$app/stores'
 	import { user as userProfileStore } from '../../stores'
 	import Login from 'carbon-icons-svelte/lib/Login.svelte'
+	import logo from '$lib/assets/favicon.png'
 	let user = $session ? true : false
 	let menu = true
 	let profileMenu = true
@@ -12,6 +13,7 @@
 <nav class="bg-white border-black px-2 sm:px-4 py-2.5 rounded">
 	<div class="container flex flex-wrap justify-between items-center mx-auto">
 		<a href="/" class="flex items-center">
+			<img src="{logo}" alt="" class=" hidden w-10 md:block">
 			<span class="self-center font-semibold whitespace-nowrap dark:text-white"
 				><div class="p-2 mr-4 text-primary text-4xl font-bold tracking-wide font-poppins">
 					<a href="/">Find<span class="text-[#fb3434]">Care</span></a>
