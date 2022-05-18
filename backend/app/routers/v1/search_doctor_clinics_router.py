@@ -19,7 +19,7 @@ async def search_doctors_clinics(city: Optional[str] = None, speciality: Optiona
     if city:
         city = city.capitalize()
     if speciality:
-        speciality = speciality.capitalize()
+        speciality = speciality.title()
 
     clinics = _services.search_doctor_clinics(city, speciality, db)
     return clinics

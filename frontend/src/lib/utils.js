@@ -88,19 +88,20 @@ export const specialityList = [
 	{
 		speciality: 'Cardiologist',
 		symptom: 'Fatigue'
-	},
-	{
-		speciality: 'General Physician',
-		symptom: 'Nausea'
-	},
-	{
-		speciality: 'General Physician',
-		symptom: 'Vomiting'
-	},
-	{
-		speciality: 'General Physician',
-		symptom: 'Back pain'
 	}
+	// ,
+	// {
+	// 	speciality: 'General Physician',
+	// 	symptom: 'Nausea'
+	// },
+	// {
+	// 	speciality: 'General Physician',
+	// 	symptom: 'Vomiting'
+	// },
+	// {
+	// 	speciality: 'General Physician',
+	// 	symptom: 'Back pain'
+	// }
 ]
 
 export const status_code = {
