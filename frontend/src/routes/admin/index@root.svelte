@@ -1,28 +1,28 @@
 <script context="module">
-	export async function load({ session }) {
-		if (!session) {
-			return {
-				status: 302,
-				redirect: '/login'
-			}
-		}
-		if (session?.status === 'admin') {
-			// FETCH DETAILS HERE
-			return {}
-		} else {
-			if (session?.status === 'doctor') {
-				return {
-					status: 302,
-					redirect: '/doctor'
-				}
-			} else {
-				return {
-					status: 302,
-					redirect: '/profile'
-				}
-			}
-		}
-	}
+	// export async function load({ session }) {
+	// 	if (!session) {
+	// 		return {
+	// 			status: 302,
+	// 			redirect: '/login'
+	// 		}
+	// 	}
+	// 	if (session?.status === 'admin') {
+	// 		// FETCH DETAILS HERE
+	// 		return {}
+	// 	} else {
+	// 		if (session?.status === 'doctor') {
+	// 			return {
+	// 				status: 302,
+	// 				redirect: '/doctor'
+	// 			}
+	// 		} else {
+	// 			return {
+	// 				status: 302,
+	// 				redirect: '/profile'
+	// 			}
+	// 		}
+	// 	}
+	// }
 </script>
 
 <script>
@@ -35,6 +35,7 @@
 	import AddUser from '$lib/components/admin/AddUser.svelte'
 	import AddDoctor from '$lib/components/admin/AddDoctor.svelte'
 	import { ENV } from '$lib/utils'
+import SearchSort from '$lib/components/Search-Sort.svelte';
 
 	function toggleCollapseShow(classes) {
 		collapseShow = classes
@@ -42,6 +43,7 @@
 	let collapseShow = 'hidden'
 	let show = false
 	let selected = 'dashboard'
+
 </script>
 
 <div class="h-screen w-screen overflow-x-hidden">
@@ -182,8 +184,10 @@
 		<Header />
 		<div class="px-4 md:px-10 mx-auto w-full m-24 mt-3">
 			{#if selected == 'dashboard'}
+				<SearchSort placeholderdata='Search User...'/>
 				<UserTable />
 				<hr class="my-12" />
+				<SearchSort placeholderdata='Search Doctor...'/>
 				<DoctorTable />
 			{/if}
 			{#if selected == 'Account Setting'}
