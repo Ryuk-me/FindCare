@@ -1,10 +1,24 @@
 <script>
 	// core components
-	import UserTableStats from '$lib/components/admin/UserTableStats.svelte';
-import AppointmentTableStats from './AppointmentTableStats.svelte';
+	import UserTableStats from '$lib/components/admin/UserTableStats.svelte'
+	import AppointmentTableStats from './AppointmentTableStats.svelte'
+	import { getFormattedDate } from '$lib/utils'
 	// can be one of light or dark
 	export let color = 'light'
+	export let appointments, session
+	function checkAppointSatus(appointment) {
+		if (appointment.is_completed) {
+			return 'completed'
+		} else if (appointment.is_cancelled) {
+			return 'cancelled'
+		}
+		return 'upcoming'
+	}
 </script>
+
+<svelte:head>
+	<title>Appointment</title>
+</svelte:head>
 
 <div
 	class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded {color === 'light'
@@ -49,7 +63,7 @@ import AppointmentTableStats from './AppointmentTableStats.svelte';
 					>
 						Status
 					</th>
-					
+
 					<th
 						class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left {color ===
 						'light'
@@ -58,13 +72,27 @@ import AppointmentTableStats from './AppointmentTableStats.svelte';
 					>
 						Clinic Address
 					</th>
+					<th
+						class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left {color ===
+						'light'
+							? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+							: 'bg-red-700 text-red-200 border-red-600'}"
+					>
+						Cancel
+					</th>
 				</tr>
 			</thead>
 			<tbody>
-				<AppointmentTableStats />
-				<AppointmentTableStats doctorName="Nitin Shivam" dateOfAppointment="22-05-2022" status="cancelled" clinicAddress="Boring Road, Patna" />
-				<AppointmentTableStats doctorName="Amardeep" dateOfAppointment="12-04-2022" status="completed" clinicAddress="Gandhi Maidan, Patna" />
-				
+				{#each appointments as appointment}
+					<AppointmentTableStats
+						doctorName={appointment.clinic.doctor.name}
+						dateOfAppointment={getFormattedDate(appointment.schedule)}
+						status={checkAppointSatus(appointment)}
+						clinicAddress={appointment.clinic.address}
+						slug={appointment.clinic.doctor.slug}
+						doctorImg={appointment.clinic.doctor.profile_image}
+					/>
+				{/each}
 			</tbody>
 		</table>
 	</div>

@@ -1,5 +1,5 @@
 <script context="module">
-	export async function load({ session }) {
+	export async function load({ session, fetch }) {
 		if (!session) {
 			return {
 				status: 302,
@@ -15,6 +15,13 @@
 					Authorization: `Bearer ${session.session}`
 				}
 			})
+			if (response.status === status_code.HTTP_422_UNPROCESSABLE_ENTITY) {
+				await fetch('api/v1/auth/logout')
+				return {
+					status: 302,
+					redirect: '/login'
+				}
+			}
 			let data = await response.json()
 			let doctor_profile = null
 			if (response.status == status_code.HTTP_404_NOT_FOUND) {
@@ -26,6 +33,13 @@
 						Authorization: `Bearer ${session.session}`
 					}
 				})
+				if (response.status === status_code.HTTP_422_UNPROCESSABLE_ENTITY) {
+					await fetch('api/v1/auth/logout')
+					return {
+						status: 302,
+						redirect: '/login'
+					}
+				}
 				doctor_profile = await response.json()
 			}
 			return {

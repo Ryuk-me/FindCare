@@ -12,7 +12,7 @@
 
 <nav class="bg-white border-black px-2 sm:px-4 py-2.5 rounded">
 	<div class="container flex flex-wrap justify-between items-center mx-auto">
-		<Logo/>
+		<Logo />
 		{#if !user}
 			<div class="flex-col lg:flex hidden lg:flex-row mx-6 md:order-2 justify-center items-center">
 				<a href="/login" class="font-semibold mr-7 hover:text-[#524af4]">Login</a>
@@ -206,7 +206,7 @@
 									</g></svg
 								>
 
-								<span>Appointments</span>
+								<a href="/profile/appointment"> <span>Appointments</span></a>
 							</a>
 						</li>
 
