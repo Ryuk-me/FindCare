@@ -1,5 +1,5 @@
 <script context="module">
-	export async function load({ session }) {
+	export async function load({ session, fetch }) {
 		if (!session) {
 			return {
 				status: 302,
@@ -14,6 +14,13 @@
 					Authorization: `Bearer ${session.session}`
 				}
 			})
+			if (res.status === status_code.HTTP_422_UNPROCESSABLE_ENTITY) {
+				await fetch('api/v1/auth/logout')
+				return {
+					status: 302,
+					redirect: '/login'
+				}
+			}
 			const user = await res.json()
 			return {
 				props: {
@@ -46,9 +53,8 @@
 	import { goto } from '$app/navigation'
 	import { session as sessionStore } from '$app/stores'
 	import { user as userProfileStore } from '../../stores'
-	import { ENV, removeAlpha, removeSpecialCharacters } from '$lib/utils'
+	import { ENV, removeAlpha, removeSpecialCharacters, status_code } from '$lib/utils'
 	export let user, session
-
 	let title = 'Account Details'
 	let show = false
 
