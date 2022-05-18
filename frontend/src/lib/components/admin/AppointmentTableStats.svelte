@@ -48,4 +48,16 @@
 	>
 		<span class="capitalize break-words">{address}, {city}, {state}</span>
 	</td>
+	<td>
+		<button
+			id=""
+			type="button"
+			class="text-white  focus:ring-2 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2  {status ==
+				'completed' || status == 'cancelled'
+				? 'bg-red-900 cursor-not-allowed'
+				: 'bg-red-700 hover:bg-red-800 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800'}"
+		>
+			Cancel
+		</button>
+	</td>
 </tr>
