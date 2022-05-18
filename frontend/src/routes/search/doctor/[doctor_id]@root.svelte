@@ -71,9 +71,7 @@
 				<!-- first card  -->
 				<div class="w-full flex bg-white rounded-xl drop-shadow-md p-8 mb-8">
 					<!-- img div -->
-					<div class="lg:w-full w-1/4 mr-8">
-						<img src={doctor.profile_image} alt="doctor.png" class="rounded-[50%] w-60" />
-					</div>
+					<img src={doctor.profile_image} alt="doctor.png" class="rounded-[50%] h-32 mr-8"/>
 					<!-- info div -->
 					<div>
 						<h1 class="font-bold text-2xl">{doctor.name}</h1>
