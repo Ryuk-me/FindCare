@@ -18,6 +18,7 @@
 	import medical_team_png from '$lib/assets/login/medical-team.png'
 	import jwt_decode from 'jwt-decode'
 	import Loading from '$lib/components/Loading.svelte'
+	import Logo from '$lib/components/Logo.svelte'
 	let username = ''
 	let password = ''
 	let show = false
@@ -76,9 +77,7 @@
 	>
 		<div class="flex justify-center items-center lg:ml-48 font-maven">
 			<div class="">
-				<h2 class="text-primary font-bold font-poppins text-3xl my-4 text-left">
-					Find<span class="text-[#fb3434]">Care</span>
-				</h2>
+				<Logo/>
 				<form
 					on:submit|preventDefault={handleLogin}
 					class="flex flex-col justify-center items-start w-[90vw] lg:w-[35rem] bg-white rounded drop-shadow-xl mb-6 px-8 py-7"
