@@ -14,11 +14,19 @@ router = APIRouter(
 
 # ***********************************************************************************
 #! GET ALL DOCTORS / CLINICS PUBLIC ROUTE
-@router.get('/doctors', status_code=status.HTTP_200_OK, response_model=List[clinic_schema.ClinicOut])
-async def search_doctors_clinics(city: str, speciality: Optional[str] = None, db: Session = Depends(_services.get_db)):
-    city = city.capitalize()
+@router.get('/doctors', status_code=status.HTTP_200_OK, response_model=List[clinic_schema.ClinicOutPublicRoute])
+async def search_doctors_clinics(city: Optional[str] = None, speciality: Optional[str] = None, db: Session = Depends(_services.get_db)):
+    if city:
+        city = city.capitalize()
     if speciality:
         speciality = speciality.capitalize()
 
     clinics = _services.search_doctor_clinics(city, speciality, db)
     return clinics
+
+
+# ***********************************************************************************
+#! GET DOCTORS PROFILE
+@router.get('/doctors/profile', status_code=status.HTTP_200_OK, response_model=clinic_schema.ClinicOutPublicRoute)
+async def get_doctor_profile(slug: str, db: Session = Depends(_services.get_db)):
+    return _services.get_doctor_profile(slug, db)

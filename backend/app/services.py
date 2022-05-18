@@ -365,23 +365,32 @@ def get_appointment_by_doctor_id(db: Session, id: str, doctor_id: str):
 
 # ***********************************************************************************
 #                                                                                   #
-#                              SEARCH CLINICS                                       #
+#                              PUBLIC ROUTES                                        #
 #                                                                                   #
 # ***********************************************************************************
 
 
 def search_doctor_clinics(city: str, speciality: str | None, db: Session):
-    if not speciality:
-        clinic = db.query(clinic_model.Clinic).join(doctor_model.Doctor).filter(
-            clinic_model.Clinic.address["city"].astext == city, doctor_model.Doctor.is_verified, doctor_model.Doctor.is_banned == False).all()
+    if not city:
+        clinic = db.query(clinic_model.Clinic).join(doctor_model.Doctor).filter(doctor_model.Doctor.speciality ==
+                                                                                speciality, doctor_model.Doctor.is_verified, doctor_model.Doctor.is_banned == False).all()
         if clinic:
             return clinic
         raise errors.NOT_FOUND_ERROR
+
     clinic = db.query(clinic_model.Clinic).join(doctor_model.Doctor).filter(
-        clinic_model.Clinic.address["city"].astext == city, doctor_model.Doctor.speciality == speciality, doctor_model.Doctor.is_verified, doctor_model.Doctor.is_banned == False).all()
+        clinic_model.Clinic.address["city"].astext == city, doctor_model.Doctor.is_verified, doctor_model.Doctor.is_banned == False).all()
     if clinic:
         return clinic
     raise errors.NOT_FOUND_ERROR
+
+
+def get_doctor_profile(slug: str, db: Session):
+    clinic = db.query(clinic_model.Clinic).join(doctor_model.Doctor).filter(doctor_model.Doctor.slug ==
+                                                                            slug, doctor_model.Doctor.is_verified, doctor_model.Doctor.is_banned == False).first()
+    if not clinic:
+        raise errors.DOCTOR_NOT_FOUND
+    return clinic
 
 
 # ***********************************************************************************

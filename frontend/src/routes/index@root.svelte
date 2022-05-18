@@ -15,6 +15,18 @@
 	import SearchResult from '$lib/components/SearchResult.svelte'
 	import { navigating } from '$app/stores'
 	import Loading from '$lib/components/Loading.svelte'
+	import { specialityList } from '$lib/utils'
+	
+	let is_focus = false
+	let speciality = ''
+	let filteredList = []
+	$: if (speciality) {
+		filteredList = specialityList.filter((data) =>
+			data.speciality.toLowerCase().startsWith(speciality.toLowerCase())
+		)
+	} else {
+		filteredList = [...specialityList]
+	}
 </script>
 
 <svelte:head>
@@ -47,31 +59,30 @@
 					</p>
 					<div class="flex justify-center relative lg:w-[30vw] w-[90vww]">
 						<input
+							on:focus={() => (is_focus = true)}
 							type="text"
+							bind:value={speciality}
 							class="block border rounded-full py-2 pl-3 pr-10 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary  border-primary"
 							placeholder="Search Doctor or Symptoms..."
-							autocomplete="on"
+							autocomplete="off"
 							id="search"
 						/>
 						<span class="search-glass">
 							<i class="fa-solid fa-magnifying-glass" />
 						</span>
-						<div
-							class="w-full overflow-auto h-40 absolute top-16 flex flex-col space-y-2 bg-[#ccc7ff] p-3 rounded-md"
-						>
-							<SearchResult name="Fracture" searchType="Symptom" />
-							<SearchResult />
-							<SearchResult />
-							<SearchResult />
-							<SearchResult />
-							<SearchResult />
-							<SearchResult />
-							<SearchResult />
-							<SearchResult />
-							<SearchResult />
-							<SearchResult />
-							<SearchResult />
-						</div>
+						{#if is_focus && speciality.trim()}
+							<div
+								class="w-full overflow-auto absolute top-16 flex flex-col space-y-2 bg-gray-100 p-3 rounded-md"
+							>
+								{#if filteredList.length !== 0}
+									{#each filteredList as filter}
+										<SearchResult name={filter.speciality} searchType="Symptom" />
+									{/each}
+								{:else}
+									<SearchResult name="No results Found" searchType="error" />
+								{/if}
+							</div>
+						{/if}
 					</div>
 				</div>
 				<div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">

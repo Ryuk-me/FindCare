@@ -73,6 +73,23 @@ class ClinicOut(BaseModel):
         orm_mode = True
 
 
+class ClinicOutPublicRoute(BaseModel):
+    id: str
+    doctor_id: str
+    name: str
+    fees: str
+    session_time: str
+    opens_at: time
+    closes_at: time
+    slots: int
+    is_open: bool
+    address: _ClinicAddress
+    doctor: doctor_schema.DoctorOutUser
+
+    class Config:
+        orm_mode = True
+
+
 class ClinicOutAdminPanel(BaseModel):
     id: str
     doctor_id: str

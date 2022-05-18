@@ -80,6 +80,29 @@ export const ENV = {
 	VITE_FINDCARE_API_BASE_URL: import.meta.env.VITE_FINDCARE_API_BASE_URL
 }
 
+export const specialityList = [
+	{
+		speciality: 'General Physician',
+		symptom: 'Fever'
+	},
+	{
+		speciality: 'Cardiologist',
+		symptom: 'Fatigue'
+	},
+	{
+		speciality: 'General Physician',
+		symptom: 'Nausea'
+	},
+	{
+		speciality: 'General Physician',
+		symptom: 'Vomiting'
+	},
+	{
+		speciality: 'General Physician',
+		symptom: 'Back pain'
+	}
+]
+
 export const status_code = {
 	HTTP_100_CONTINUE: 100,
 	HTTP_101_SWITCHING_PROTOCOLS: 101,

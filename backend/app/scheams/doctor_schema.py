@@ -63,7 +63,7 @@ class DoctorOutUser(BaseModel):
     speciality: str
     slug: str
     is_verified: bool
-    created_at: datetime
+    about: str
 
     class Config:
         orm_mode = True

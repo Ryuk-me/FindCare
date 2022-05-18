@@ -1,9 +1,20 @@
 <script>
-    export let name = 'Fever'
-    export let searchType = 'Symptom'
+	import { goto } from '$app/navigation'
+	export let name
+	export let searchType
+	const searchForDoctor = () => goto('/search/' + name)
 </script>
 
-<div class="results flex flex-row justify-between rounded-md bg-[#f9f3ff] py-2 px-3">
-    <p class="">{name}</p>
-    <span class="">{searchType}</span>
-</div>
+{#if searchType !== 'error'}
+	<div
+		class="results flex flex-row justify-between rounded-md hover:text-primary py-2 px-3"
+		on:click={searchForDoctor}
+	>
+		<p class="">{name}</p>
+		<span class="">{searchType}</span>
+	</div>
+{:else}
+	<div class="results flex flex-row justify-between rounded-md hover:text-primary py-2 px-3">
+		<p class="">{name}</p>
+	</div>
+{/if}
