@@ -16,7 +16,7 @@
 </script>
 
 <svelte:head>
-	<title>Findcare Password Recovery</title>
+	<title>Findcare Admin Login</title>
 </svelte:head>
 
 <div class="w-screen h-screen flex flex-col justify-center items-center font-maven">
