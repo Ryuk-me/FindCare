@@ -103,9 +103,10 @@
 					<span class="relative">Our Medical Services</span>
 				</h2>
 				<p class="text-base text-gray-700 md:text-lg">
-					Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, ipsum est
+					FindCare is an online portal for all your healthcare needs. Our team of medical experts are there for you in every step of the way, from finding the right doctor and hospital to booking appointments, from providing verified information to any kind of medical assistance in between.
+					<!-- Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, ipsum est
 					blanditiis, totam culpa id repellendus nesciunt possimus tempore a, quis molestias nam
-					animi cumque maxime commodi ea ad. Accusantium?
+					animi cumque maxime commodi ea ad. Accusantium? -->
 				</p>
 			</div>
 			<div class="upper-feature">
@@ -165,9 +166,10 @@
 						Online Consultation
 					</h1>
 					<p class="mb-8 leading-relaxed">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque libero est
+						Hassle-free video call with top doctors, with minimal waiting time, easy rescheduling, regular SMS reminders, 24x7 access to records & reports, and easy access to prescriptions as well as billing.
+						<!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque libero est
 						exercitationem asperiores rerum eius amet. Sunt suscipit amet cum ducimus hic iure eos.
-						Dolorum quidem explicabo mollitia temporibus atque unde animi!
+						Dolorum quidem explicabo mollitia temporibus atque unde animi! -->
 					</p>
 				</div>
 			</div>
@@ -183,9 +185,11 @@
 				<div class="lg:max-w-lg lg:w-full lg:text-right md:w-1/2 lg:pt-0 pt-5 w-5/6">
 					<h1 class="title-font lg:text-5xl text-4xl mb-4 font-bold text-black">Live Chat</h1>
 					<p class="mb-8 leading-relaxed">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque libero est
+						Need help? You can chat with our team directly with live chat. Our messaging assistant can quickly solve many issues or direct you to the right person or place.
+
+						<!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque libero est
 						exercitationem asperiores rerum eius amet. Sunt suscipit amet cum ducimus hic iure eos.
-						Dolorum quidem explicabo mollitia temporibus atque unde animi!
+						Dolorum quidem explicabo mollitia temporibus atque unde animi! -->
 					</p>
 				</div>
 				<div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 lg:pl-24 lg:pr-16 md:pl-16">
@@ -207,9 +211,10 @@
 				<div class="lg:max-w-lg lg:w-full lg:text-right md:w-1/2 lg:pt-0 pt-5 w-5/6">
 					<h1 class="title-font lg:text-5xl text-4xl mb-4 font-bold text-black">Appointment</h1>
 					<p class="mb-8 leading-relaxed">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque libero est
+						We introduce you to a new way of medical screening that goes beyond the conventional way of healthcare services. You can now book a clinic visit of the best nearby doctor and forget the hassle of long queues and rush.
+						<!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque libero est
 						exercitationem asperiores rerum eius amet. Sunt suscipit amet cum ducimus hic iure eos.
-						Dolorum quidem explicabo mollitia temporibus atque unde animi!
+						Dolorum quidem explicabo mollitia temporibus atque unde animi! -->
 					</p>
 				</div>
 			</div>
