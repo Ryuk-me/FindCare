@@ -2,6 +2,13 @@ from pydantic import BaseModel, EmailStr
 from datetime import datetime
 
 
+class specialistyClass(BaseModel):
+    speciality: str
+
+    class Config:
+        orm_mode = True
+
+
 class CreateAdmin(BaseModel):
     name: str
     email: EmailStr

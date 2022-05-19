@@ -1,3 +1,21 @@
+<script context="module">
+	export async function load({ fetch }) {
+		const res = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/search/speciality', {
+			headers: {
+				'Content-type': 'application/json'
+			}
+		})
+		const data = await res.json()
+		if (res.ok) {
+			return {
+				props: {
+					specialityList: data
+				}
+			}
+		}
+	}
+</script>
+
 <script>
 	import homepage_doctor from '$lib/assets/homepage/homepage-doctor.png'
 	import appointment from '$lib/assets/homepage/appointment.png'
@@ -15,17 +33,25 @@
 	import SearchResult from '$lib/components/SearchResult.svelte'
 	import { navigating } from '$app/stores'
 	import Loading from '$lib/components/Loading.svelte'
-	import { specialityList } from '$lib/utils'
-	
+	import { ENV } from '$lib/utils'
+	export let specialityList
+
 	let is_focus = false
 	let speciality = ''
 	let filteredList = []
 	$: if (speciality) {
-		filteredList = specialityList.filter((data) =>
-			data.speciality.toLowerCase().startsWith(speciality.toLowerCase())
-		)
+		filteredList = specialityList.filter((data) => {
+			const fullNameSpeciality = data.speciality.toLowerCase()
+			const reversedSpeciality = fullNameSpeciality.split('').reverse().join('').toLowerCase()
+			const trimmedSearchValue = speciality.toLowerCase()
+			return (
+				fullNameSpeciality.includes(trimmedSearchValue) ||
+				reversedSpeciality.includes(trimmedSearchValue)
+			)
+		})
 	} else {
 		filteredList = [...specialityList]
+		// is_focus = false
 	}
 </script>
 
@@ -59,9 +85,10 @@
 					</p>
 					<div class="flex justify-center relative lg:w-[30vw] w-[90vww]">
 						<input
-							on:focus={() => (is_focus = true)}
 							type="text"
+							on:focus={() => (is_focus = true)}
 							bind:value={speciality}
+							on:mouseover={() => (is_focus = false)}
 							class="block border rounded-full py-2 pl-3 pr-10 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary  border-primary"
 							placeholder="Search Doctor or Symptoms..."
 							autocomplete="off"
@@ -70,13 +97,13 @@
 						<span class="search-glass">
 							<i class="fa-solid fa-magnifying-glass" />
 						</span>
-						{#if is_focus && speciality.trim()}
+						{#if is_focus}
 							<div
 								class="w-full overflow-auto absolute top-16 flex flex-col space-y-2 bg-gray-100 p-3 rounded-md"
 							>
 								{#if filteredList.length !== 0}
 									{#each filteredList as filter}
-										<SearchResult name={filter.speciality} searchType="Symptom" />
+										<SearchResult name={filter.speciality} searchType="Specialist" />
 									{/each}
 								{:else}
 									<SearchResult name="No results Found" searchType="error" />
@@ -103,7 +130,10 @@
 					<span class="relative">Our Medical Services</span>
 				</h2>
 				<p class="text-base text-gray-700 md:text-lg">
-					FindCare is an online portal for all your healthcare needs. Our team of medical experts are there for you in every step of the way, from finding the right doctor and hospital to booking appointments, from providing verified information to any kind of medical assistance in between.
+					FindCare is an online portal for all your healthcare needs. Our team of medical experts
+					are there for you in every step of the way, from finding the right doctor and hospital to
+					booking appointments, from providing verified information to any kind of medical
+					assistance in between.
 					<!-- Lorem, ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, ipsum est
 					blanditiis, totam culpa id repellendus nesciunt possimus tempore a, quis molestias nam
 					animi cumque maxime commodi ea ad. Accusantium? -->
@@ -166,7 +196,9 @@
 						Online Consultation
 					</h1>
 					<p class="mb-8 leading-relaxed">
-						Hassle-free video call with top doctors, with minimal waiting time, easy rescheduling, regular SMS reminders, 24x7 access to records & reports, and easy access to prescriptions as well as billing.
+						Hassle-free video call with top doctors, with minimal waiting time, easy rescheduling,
+						regular SMS reminders, 24x7 access to records & reports, and easy access to
+						prescriptions as well as billing.
 						<!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque libero est
 						exercitationem asperiores rerum eius amet. Sunt suscipit amet cum ducimus hic iure eos.
 						Dolorum quidem explicabo mollitia temporibus atque unde animi! -->
@@ -185,7 +217,8 @@
 				<div class="lg:max-w-lg lg:w-full lg:text-right md:w-1/2 lg:pt-0 pt-5 w-5/6">
 					<h1 class="title-font lg:text-5xl text-4xl mb-4 font-bold text-black">Live Chat</h1>
 					<p class="mb-8 leading-relaxed">
-						Need help? You can chat with our team directly with live chat. Our messaging assistant can quickly solve many issues or direct you to the right person or place.
+						Need help? You can chat with our team directly with live chat. Our messaging assistant
+						can quickly solve many issues or direct you to the right person or place.
 
 						<!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque libero est
 						exercitationem asperiores rerum eius amet. Sunt suscipit amet cum ducimus hic iure eos.
@@ -211,7 +244,9 @@
 				<div class="lg:max-w-lg lg:w-full lg:text-right md:w-1/2 lg:pt-0 pt-5 w-5/6">
 					<h1 class="title-font lg:text-5xl text-4xl mb-4 font-bold text-black">Appointment</h1>
 					<p class="mb-8 leading-relaxed">
-						We introduce you to a new way of medical screening that goes beyond the conventional way of healthcare services. You can now book a clinic visit of the best nearby doctor and forget the hassle of long queues and rush.
+						We introduce you to a new way of medical screening that goes beyond the conventional way
+						of healthcare services. You can now book a clinic visit of the best nearby doctor and
+						forget the hassle of long queues and rush.
 						<!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque libero est
 						exercitationem asperiores rerum eius amet. Sunt suscipit amet cum ducimus hic iure eos.
 						Dolorum quidem explicabo mollitia temporibus atque unde animi! -->

@@ -187,6 +187,8 @@ PASSWORD_CANNOT_BE_SAME = HTTPException(
 ACCOUNT_NOT_FOUND_WITH_THIS_EMAIL = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND, detail="No account found with this email")
 
+NO_SPECIALITY_FOUND = HTTPException(
+    status_code=status.HTTP_404_NOT_FOUND, detail="No speciality found")
 
 # ***********************************************************************************
 #                                                                                   #

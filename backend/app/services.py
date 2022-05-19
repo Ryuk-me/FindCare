@@ -1,3 +1,4 @@
+import json
 from app.database import SessionLocal
 from app.models import user_model
 from sqlalchemy.orm import Session
@@ -373,7 +374,7 @@ def get_appointment_by_doctor_id(db: Session, id: str, doctor_id: str):
 def search_doctor_clinics(city: str, speciality: str | None, db: Session):
     if not city:
         clinic = db.query(clinic_model.Clinic).join(doctor_model.Doctor).filter(doctor_model.Doctor.speciality ==
-                                                                                speciality, doctor_model.Doctor.is_verified, doctor_model.Doctor.is_banned == False).all()
+                                                                                speciality, doctor_model.Doctor.is_verified, doctor_model.Doctor.is_active, doctor_model.Doctor.is_banned == False).all()
         if clinic:
             return clinic
         raise errors.NOT_FOUND_ERROR
@@ -387,10 +388,30 @@ def search_doctor_clinics(city: str, speciality: str | None, db: Session):
 
 def get_doctor_profile(slug: str, db: Session):
     clinic = db.query(clinic_model.Clinic).join(doctor_model.Doctor).filter(doctor_model.Doctor.slug ==
-                                                                            slug, doctor_model.Doctor.is_verified, doctor_model.Doctor.is_banned == False).first()
+                                                                            slug, doctor_model.Doctor.is_verified, doctor_model.Doctor.is_active, doctor_model.Doctor.is_banned == False).first()
     if not clinic:
         raise errors.DOCTOR_NOT_FOUND
     return clinic
+
+
+def get_all_speciality(db: Session):
+    clinics = db.query(clinic_model.Clinic).join(doctor_model.Doctor).filter(doctor_model.Doctor.is_verified, doctor_model.Doctor.is_active,
+                                                                             doctor_model.Doctor.is_banned == False).distinct(
+        doctor_model.Doctor.speciality,
+
+    ).all()
+    specialityList = []
+
+    for clinic in clinics:
+        specialityList.append(
+            {
+                'speciality': clinic.doctor.speciality
+            }
+        )
+
+    if specialityList:
+        return specialityList
+    raise errors.NO_SPECIALITY_FOUND
 
 
 # ***********************************************************************************
