@@ -11,7 +11,6 @@
 	export let color = 'light'
 	let is_loading_cancel = false
 	let is_loading_complete = false
-	const toastCallbackReloadPage = () => location.reload()
 	async function completeAppointment() {
 		is_loading_complete = true
 		const res = await fetch(
@@ -29,7 +28,7 @@
 		const data = await res.json()
 		is_loading_complete = false
 		if (res.status == status_code.HTTP_202_ACCEPTED) {
-			notificationToast(data?.detail, false, 2000, 'success', toastCallbackReloadPage)
+			notificationToast(data?.detail, false, 2000, 'success')
 			status = 'completed'
 		} else if (res.status == status_code.HTTP_409_CONFLICT)
 			notificationToast(data?.detail, false, 2000, 'error')
@@ -52,7 +51,7 @@
 		const data = await res.json()
 		is_loading_cancel = false
 		if (res.status == status_code.HTTP_202_ACCEPTED) {
-			notificationToast(data?.detail, false, 2000, 'error', toastCallbackReloadPage)
+			notificationToast(data?.detail, false, 2000, 'error')
 			status = 'cancelled'
 		} else if (res.status == status_code.HTTP_409_CONFLICT)
 			notificationToast(data?.detail, false, 2000, 'error')

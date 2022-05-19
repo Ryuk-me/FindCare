@@ -14,9 +14,9 @@
 	import { goto } from '$app/navigation'
 	import { post, capitalize } from '$lib/utils.js'
 	import { notificationToast } from '$lib/NotificationToast'
+	import jwt_decode from 'jwt-decode'
 	import shape_png from '$lib/assets/login/shape.png'
 	import medical_team_png from '$lib/assets/login/medical-team.png'
-	import jwt_decode from 'jwt-decode'
 	import Loading from '$lib/components/Loading.svelte'
 	import Logo from '$lib/components/Logo.svelte'
 	let username = ''
@@ -30,7 +30,12 @@
 	}
 	async function handleLogin() {
 		is_loading = true
-		const response = await post(`api/v1/auth/login`, { username, password, isDoctor })
+		const response = await post(`api/v1/auth/login`, {
+			username,
+			password,
+			isDoctor,
+			isAdmin: false
+		})
 
 		is_loading = false
 		if (response?.access_token) {
@@ -43,7 +48,7 @@
 			//@ts-ignore
 			if ($session.status == 'doctor') goto('/doctor')
 			//@ts-ignore
-			else if ($session.status == 'admin') goto('/admin')
+			else if ($session.status == 'admin') goto('/admin/dashboard')
 			else goto('/profile')
 		} else {
 			if (response?.detail[0]?.msg) {
@@ -77,7 +82,7 @@
 	>
 		<div class="flex justify-center items-center lg:ml-48 font-maven">
 			<div class="">
-				<Logo/>
+				<Logo />
 				<form
 					on:submit|preventDefault={handleLogin}
 					class="flex flex-col justify-center items-start w-[90vw] lg:w-[35rem] bg-white rounded drop-shadow-xl mb-6 px-8 py-7"

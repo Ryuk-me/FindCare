@@ -33,7 +33,7 @@
 			if (session?.status === 'admin') {
 				return {
 					status: 302,
-					redirect: '/admin'
+					redirect: '/admin/dashboard'
 				}
 			} else {
 				return {

@@ -8,6 +8,8 @@
 	let menu = true
 	let profileMenu = true
 	$: profile = $userProfileStore?.profile_image
+		? $userProfileStore?.profile_image
+		: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
 </script>
 
 <nav class="bg-white border-black px-2 sm:px-4 py-2.5 rounded">

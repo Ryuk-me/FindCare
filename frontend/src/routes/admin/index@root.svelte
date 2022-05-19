@@ -1,209 +1,136 @@
 <script context="module">
+	import { checkUserType } from '$lib/utils.js'
 	export async function load({ session }) {
-		if (!session) {
-			return {
-				status: 302,
-				redirect: '/login'
-			}
+		if (session) {
+			// This function will check for route access and redirect user to their appropriate routes accordingly
+			return checkUserType(session)
 		}
-		if (session?.status === 'admin') {
-			// FETCH DETAILS HERE
-			return {}
-		} else {
-			if (session?.status === 'doctor') {
-				return {
-					status: 302,
-					redirect: '/doctor'
-				}
-			} else {
-				return {
-					status: 302,
-					redirect: '/profile'
-				}
-			}
-		}
+		return {}
 	}
 </script>
 
 <script>
-	import Footer from '$lib/components/dashboard-footer.svelte'
-	import UserTable from '$lib/components/admin/UserTable.svelte'
-	import Changepass from '$lib/components/Changepass.svelte'
-	import Header from '$lib/components/admin/Header.svelte'
-	import DoctorTable from '$lib/components/admin/DoctorTable.svelte'
-	import AccountSetting from '$lib/components/admin/AccountSetting.svelte'
-	import AddUser from '$lib/components/admin/AddUser.svelte'
-	import AddDoctor from '$lib/components/admin/AddDoctor.svelte'
-	import { ENV } from '$lib/utils'
-import SearchSort from '$lib/components/Search-Sort.svelte';
+	import { notificationToast } from '$lib/NotificationToast'
+	import { session, navigating } from '$app/stores'
+	import { goto } from '$app/navigation'
+	import { post, capitalize } from '$lib/utils.js'
+	import jwt_decode from 'jwt-decode'
+	import Loading from '$root/lib/components/Loading.svelte'
+	let username = ''
+	let password = ''
 
-	function toggleCollapseShow(classes) {
-		collapseShow = classes
+	let is_loading = false
+	async function handleLogin() {
+		is_loading = true
+		const response = await post(`api/v1/auth/login`, {
+			username,
+			password,
+			isDoctor: false,
+			isAdmin: true
+		})
+
+		is_loading = false
+		if (response?.access_token) {
+			const cookie = jwt_decode(response.access_token)
+			$session = {
+				session: response.access_token,
+				//@ts-ignore
+				status: cookie.status
+			}
+			//@ts-ignore
+			if ($session.status == 'doctor') goto('/doctor')
+			//@ts-ignore
+			else if ($session.status == 'admin') goto('/admin/dashboard')
+			else goto('/profile')
+		} else {
+			if (response?.detail[0]?.msg) {
+				notificationToast(
+					capitalize(response.detail[0].loc?.slice(1).join(', ')).replace(
+						/username|Username/gm,
+						'Email'
+					) +
+						' ' +
+						response?.detail[0]?.msg,
+					false,
+					2000,
+					'error'
+				)
+			} else {
+				notificationToast(response?.detail, false, 2000, 'error')
+			}
+		}
 	}
-	let collapseShow = 'hidden'
-	let show = false
-	let selected = 'dashboard'
-
 </script>
 
-<div class="h-screen w-screen overflow-x-hidden">
-	<!-- Sidebar -->
+<svelte:head>
+	<title>Findcare Admin Login</title>
+</svelte:head>
 
-	<nav
-		class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
-	>
+{#if !$navigating}
+	<div class="w-screen h-screen flex flex-col justify-center items-center font-maven">
 		<div
-			class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto"
+			class="flex flex-col justify-center items-center w-[90vw] lg:w-[30rem] bg-white rounded drop-shadow-xl mb-8 px-8 py-7"
 		>
-			<!-- Toggler -->
-			<button
-				class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
-				type="button"
-				on:click={() => toggleCollapseShow('bg-white m-2 py-3 px-6')}
-			>
-				<i class="fas fa-bars" />
-			</button>
-			<!-- Brand -->
-			<a
-				class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-				href="/"
-			>
-				<div class="p-2 text-primary text-3xl font-bold tracking-wide font-poppins">
-					<a href="/">Find<span class="text-[#fb3434]">Care</span></a>
+			<div id="header" class="flex flex-col justify-center items-center">
+				<div>
+					<img
+						src="https://img.icons8.com/external-icongeek26-flat-icongeek26/344/external-admin-project-work-icongeek26-flat-icongeek26.png"
+						alt="lock svg"
+						class="w-32"
+					/>
+					<!-- <Locked fill="#635bff" class="w-32 h-32" /> -->
 				</div>
-			</a>
-			<!-- User -->
-			<ul class="md:hidden items-center flex flex-wrap list-none">
-				<li class="inline-block relative" />
-				<li class="inline-block relative" />
-			</ul>
-			<!-- Collapse -->
-			<div
-				class="md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded {collapseShow}"
-			>
-				<!-- Collapse header -->
-				<div
-					class="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-blueGray-200"
-				>
-					<div class="flex flex-wrap">
-						<div class="w-6/12">
-							<a
-								class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-2 px-0"
-								href="/"
-							>
-								<div class=" text-primary text-3xl font-bold tracking-wide font-poppins">
-									<a href="/">Find<span class="text-[#fb3434]">Care</span></a>
-								</div>
-							</a>
-						</div>
-						<div class="w-6/12 flex justify-end">
-							<button
-								type="button"
-								class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
-								on:click={() => toggleCollapseShow('hidden')}
-							>
-								<i class="fas fa-times" />
-							</button>
-						</div>
-					</div>
+				<div>
+					<h2 class="text-2xl font-semibold mt-6">Admin Panel</h2>
 				</div>
-				<!-- Divider -->
-				<hr class="mb-4 md:min-w-full" />
-				<!-- Heading -->
-				<h6
-					class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
-				>
-					Admin Layout Pages
-				</h6>
-				<!-- Navigation -->
-
-				<ul class="md:flex-col md:min-w-full flex flex-col list-none">
-					<li class="items-center">
+			</div>
+			<hr class="h-2" />
+			<div id="body" class="flex flex-col w-full justify-center items-center">
+				<form class="w-full mt-3 mb-2" on:submit|preventDefault={handleLogin}>
+					<label for="email" class="font-bold">Email</label>
+					<input
+						bind:value={username}
+						type="email"
+						id="email"
+						placeholder="your@domain.com"
+						required
+						class="block border rounded py-2 px-3 w-full mt-3 mb-4 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
+					/>
+					<label for="password" class="font-bold">Password</label>
+					<input
+						bind:value={password}
+						type="password"
+						id="password"
+						placeholder="************"
+						required
+						class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
+					/>
+					{#if is_loading}
 						<button
-							class="text-xs uppercase py-3 font-bold block  "
-							on:click={() => (selected = 'dashboard')}
+							disabled
+							class="bg-[#7069f5] cursor-not-allowed text-white mb-3 font-medium py-2 mt-5 w-full rounded focus:outline-none focus:shadow-outline"
+							><i class="loading fa fa-spinner fa-spin relative right-2" />Login as Admin</button
 						>
-							<i class="fas fa-tv mr-2 text-sm text-blueGray-300 " />
-							Dashboard
-						</button>
-					</li>
-
-					<li class="items-center">
+					{:else}
 						<button
-							class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-							on:click={() => (selected = 'Account Setting')}
+							class="bg-primary hover:bg-[#524af4] text-white mb-3 font-medium py-2 mt-5 w-full rounded focus:outline-none focus:shadow-outline"
+							>Login as Admin</button
 						>
-							<i class="fas fa-user-circle text-blueGray-300 mr-2 text-sm" />
-							Account Setting
-						</button>
-					</li>
-					<li class="items-center">
-						<button
-							class="text-xs uppercase py-3 font-bold block"
-							on:click={() => (selected = 'adduser')}
+					{/if}
+				</form>
+				<div>
+					<p>
+						Return to <a href="/login" class="text-primary hover:font-semibold font-medium"
+							>Login as User</a
 						>
-							<i class="fas fa-user-plus mr-2 text-sm " />
-							Add User
-						</button>
-					</li>
-					<li class="items-center">
-						<button
-							class="text-xs uppercase py-3 font-bold block"
-							on:click={() => (selected = 'adddoctor')}
-						>
-							<i class="fas fa-hospital-user mr-2 text-sm " />
-							Add Doctor
-						</button>
-					</li>
-					<li class="items-center">
-						<button
-							class="text-xs uppercase py-3 font-bold block "
-							on:click={() => (selected = 'changepass')}
-						>
-							<i class="fas fa-key mr-2 text-sm " />
-							Change Password
-						</button>
-					</li>
-					<li class="items-center">
-						<a href="/logout" class="text-xs uppercase py-3 font-bold block ">
-							<i class="fas fa-arrow-right-from-bracket mr-2 text-sm " />
-							Logout
-						</a>
-					</li>
-				</ul>
-
-				<!-- Divider -->
-				<hr class="my-4 md:min-w-full" />
+					</p>
+				</div>
 			</div>
 		</div>
-	</nav>
-
-	<!-- Body -->
-
-	<div class="relative md:ml-64 bg-blueGray-100">
-		<Header />
-		<div class="px-4 md:px-10 mx-auto w-full m-24 mt-3">
-			{#if selected == 'dashboard'}
-				<SearchSort placeholderdata='Search User...'/>
-				<UserTable />
-				<hr class="my-12" />
-				<SearchSort placeholderdata='Search Doctor...'/>
-				<DoctorTable />
-			{/if}
-			{#if selected == 'Account Setting'}
-				<AccountSetting />
-			{/if}
-			{#if selected == 'changepass'}
-				<Changepass />
-			{/if}
-			{#if selected == 'adduser'}
-				<AddUser />
-			{/if}
-			{#if selected == 'adddoctor'}
-				<AddDoctor />
-			{/if}
-
-			<Footer />
-		</div>
+		<p class="text-center">
+			&copy;2022 <a href="./" class="text-primary font-semibold">FindCare</a>. All rights reserved.
+		</p>
 	</div>
-</div>
+{:else}
+	<Loading />
+{/if}

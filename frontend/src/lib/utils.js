@@ -35,7 +35,7 @@ export function checkUserType(session) {
 	}
 	return {
 		status: 302,
-		redirect: '/admin'
+		redirect: '/admin/dashboard'
 	}
 }
 
