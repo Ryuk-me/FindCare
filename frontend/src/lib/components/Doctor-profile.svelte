@@ -102,14 +102,13 @@
 	<div class="relative w-full mb-4">
 		<div class="navigation px-6 mb-4 lg:mb-0 rounded-lg lg:mr-6">
 			<div class="photo flex justify-center flex-col lg:flex-row items-center py-4">
-				
 				<div class="flex">
 					<img class="object-cover w-28 h-28 m-6 rounded-full" src={profile_image} alt="" />
-					<img class="h-8 relative top-20 right-11" src={verified_img} alt="" />
+					{#if doctor.is_verified}
+						<img class="h-8 relative top-20 right-11" src={verified_img} alt="" />
+					{/if}
 				</div>
-				
-				
-				
+
 				<!-- <button
 						class="bg-primary hover:bg-[#524af4] text-white rounded-md w-full px-7 py-1 font-medium"
 						>Change Profile Photo</button
