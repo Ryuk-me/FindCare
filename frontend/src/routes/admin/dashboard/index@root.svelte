@@ -120,8 +120,16 @@
 		const users_temp = await resp.json()
 		const clinics_temp = await res.json()
 		is_dashboard_loading = false
-		users = users_temp
-		clinics = clinics_temp
+		if (res.ok) {
+			clinics = clinics_temp
+		} else {
+			clinics = null
+		}
+		if (resp.ok) {
+			users = users_temp
+		} else {
+			users = null
+		}
 		selected = 'dashboard'
 	}
 
