@@ -55,8 +55,9 @@
 			)
 		})
 	} else {
-		filteredList = [...specialityList]
-		// is_focus = false
+		if (specialityList) {
+			filteredList = [...specialityList]
+		}
 	}
 </script>
 

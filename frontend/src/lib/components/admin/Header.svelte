@@ -8,6 +8,7 @@
 	let pending_appointments = 0
 	let cancelled_appointments_by_user = 0
 	let cancelled_appointments_by_doctor = 0
+
 	for (let index = 0; index < clinics.length; index++) {
 		const element = clinics[index]
 		total_patients += element.total_patients
