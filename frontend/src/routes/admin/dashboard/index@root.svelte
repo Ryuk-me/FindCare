@@ -1,5 +1,5 @@
 <script context="module">
-	export async function load({ session }) {
+	export async function load({ session, fetch }) {
 		if (!session) {
 			return {
 				status: 302,
@@ -7,8 +7,29 @@
 			}
 		}
 		if (session?.status === 'admin') {
-			// FETCH DETAILS HERE
-			return {}
+			// FETCH DETAILS HERE /api/v1/admin/clinics
+			const res = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/admin/clinics', {
+				method: 'GET',
+				headers: {
+					'Content-type': 'application/json',
+					Authorization: `Bearer ${session.session}`
+				}
+			})
+			const resp = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/admin/users', {
+				method: 'GET',
+				headers: {
+					'Content-type': 'application/json',
+					Authorization: `Bearer ${session.session}`
+				}
+			})
+			const users = await resp.json()
+			const data = await res.json()
+			return {
+				props: {
+					users,
+					clinics: data
+				}
+			}
 		} else {
 			if (session?.status === 'doctor') {
 				return {
@@ -37,7 +58,12 @@
 	import { ENV } from '$lib/utils'
 	import SearchSort from '$lib/components/Search-Sort.svelte'
 	import { session } from '$app/stores'
-	import { goto } from '$app/navigation'
+	import {
+		user as userProfileStore,
+		adminQueryDoctorName,
+		adminQueryUserEmail
+	} from '../../../stores'
+	export let clinics, users
 	function toggleCollapseShow(classes) {
 		collapseShow = classes
 	}
@@ -45,8 +71,12 @@
 	let show = false
 	let selected = 'dashboard'
 	let accountSettingJson
+	let filteredUserList = []
+	let filteredDoctorList = []
+	let is_account_setting_loading = false
+	let is_dashboard_loading = false
 	const accountSettingHandler = async () => {
-		
+		is_account_setting_loading = true
 		const res = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/admin/', {
 			method: 'GET',
 			headers: {
@@ -57,7 +87,52 @@
 		})
 		const data = await res.json()
 		accountSettingJson = data
+		is_account_setting_loading = false
 		selected = 'Account Setting'
+	}
+
+	const dashboardHandler = async () => {
+		is_dashboard_loading = true
+		const res = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/admin/clinics', {
+			method: 'GET',
+			headers: {
+				'Content-type': 'application/json',
+				//@ts-ignore
+				Authorization: `Bearer ${$session.session}`
+			}
+		})
+		const resp = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/admin/users', {
+			method: 'GET',
+			headers: {
+				'Content-type': 'application/json',
+				//@ts-ignore
+				Authorization: `Bearer ${$session.session}`
+			}
+		})
+		const users_temp = await resp.json()
+		const clinics_temp = await res.json()
+		is_dashboard_loading = false
+		users = users_temp
+		clinics = clinics_temp
+		selected = 'dashboard'
+	}
+
+	$: if ($adminQueryUserEmail) {
+		filteredUserList = users.filter((data) =>
+			data.email.toLowerCase().startsWith($adminQueryUserEmail.toLowerCase())
+		)
+	} else {
+		filteredUserList = [...users]
+	}
+	$: if ($adminQueryDoctorName) {
+		filteredDoctorList = clinics.filter((data) => {
+			const fullName = data.doctor.name.toLowerCase()
+			const reversedFullName = fullName.split('').reverse().join('').toLowerCase()
+			const trimmedSearchValue = $adminQueryDoctorName.toLowerCase()
+			return fullName.includes(trimmedSearchValue) || reversedFullName.includes(trimmedSearchValue)
+		})
+	} else {
+		filteredDoctorList = [...clinics]
 	}
 </script>
 
@@ -137,11 +212,12 @@
 
 				<ul class="md:flex-col md:min-w-full flex flex-col list-none">
 					<li class="items-center">
-						<button
-							class="text-xs uppercase py-3 font-bold block  "
-							on:click={() => (selected = 'dashboard')}
-						>
-							<i class="fas fa-tv mr-2 text-sm text-primary" />
+						<button class="text-xs uppercase py-3 font-bold block  " on:click={dashboardHandler}>
+							<i
+								class="{is_dashboard_loading
+									? 'loading fa fa-spinner fa-spin ml-2 mr-2'
+									: 'fas fa-tv ml-2 mr-2'} text-sm text-primary "
+							/>
 							Dashboard
 						</button>
 						{#if selected == 'dashboard'}
@@ -154,7 +230,11 @@
 							class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
 							on:click={accountSettingHandler}
 						>
-							<i class="fas fa-user-circle text-primary mr-2 text-sm" />
+							<i
+								class="{is_account_setting_loading
+									? 'loading fa fa-spinner fa-spin'
+									: 'fas fa-user-circle'} text-primary ml-2 mr-2 text-sm"
+							/>
 							Account Setting
 						</button>
 						{#if selected == 'Account Setting'}
@@ -166,7 +246,7 @@
 							class="text-xs uppercase py-3 font-bold block"
 							on:click={() => (selected = 'adduser')}
 						>
-							<i class="fas fa-user-plus mr-2 text-sm text-primary " />
+							<i class="fas fa-user-plus ml-2 mr-2 text-sm text-primary " />
 							Add User
 						</button>
 						{#if selected == 'adduser'}
@@ -178,7 +258,7 @@
 							class="text-xs uppercase py-3 font-bold block"
 							on:click={() => (selected = 'adddoctor')}
 						>
-							<i class="fas fa-hospital-user mr-2 text-sm text-primary" />
+							<i class="fas fa-hospital-user ml-2 mr-2 text-sm text-primary" />
 							Add Doctor
 						</button>
 						{#if selected == 'adddoctor'}
@@ -190,7 +270,7 @@
 							class="text-xs uppercase py-3 font-bold block "
 							on:click={() => (selected = 'changepass')}
 						>
-							<i class="fas fa-key mr-2 text-sm text-primary" />
+							<i class="fas fa-key ml-2 mr-2 text-sm text-primary" />
 							Change Password
 						</button>
 						{#if selected == 'changepass'}
@@ -199,13 +279,14 @@
 					</li>
 					<li class="items-center">
 						<button
-							on:click={() => {
-								$session = null
-								goto('/logout')
-							}}
 							class="text-xs uppercase py-3 font-bold block "
+							on:click={async () => {
+								$session = null
+								$userProfileStore = null
+								await fetch('../../api/v1/auth/logout')
+							}}
 						>
-							<i class="fas fa-arrow-right-from-bracket mr-2 text-sm text-primary" />
+							<i class="fas fa-arrow-right-from-bracket ml-2 mr-2 text-sm text-primary" />
 							Logout
 						</button>
 					</li>
@@ -220,20 +301,20 @@
 	<!-- Body -->
 
 	<div class="relative md:ml-64 bg-blueGray-100">
-		<Header />
+		<Header {clinics} />
 		<div class="px-4 md:px-10 mx-auto w-full m-24 mt-3">
 			{#if selected == 'dashboard'}
-				<SearchSort placeholderdata="Search User..." />
-				<UserTable />
+				<SearchSort placeholderdata="Search User By Email" type="user" />
+				<UserTable users={filteredUserList} />
 				<hr class="my-12" />
-				<SearchSort placeholderdata="Search Doctor..." />
-				<DoctorTable />
+				<SearchSort placeholderdata="Search Doctor By Name" type="doctor" />
+				<DoctorTable clinics={filteredDoctorList} />
 			{/if}
 			{#if selected == 'Account Setting'}
 				<AccountSetting {accountSettingJson} />
 			{/if}
 			{#if selected == 'changepass'}
-				<Changepass />
+				<Changepass isAdmin={true} />
 			{/if}
 			{#if selected == 'adduser'}
 				<AddUser />

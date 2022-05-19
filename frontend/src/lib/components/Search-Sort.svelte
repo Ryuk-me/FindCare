@@ -1,18 +1,32 @@
 <script>
 	let sortBy = true
 	export let placeholderdata = 'Search...'
+	export let type
+	import { adminQueryDoctorName, adminQueryUserEmail } from '../../stores'
 </script>
 
 <div
 	class="flex md:flex-row flex-col justify-between lg:gap-24 relative my-4 pb-5 lg:w-[full] w-[90vww]"
 >
-	<input
-		type="text"
-		class="block border rounded-md py-2 pl-3 pr-10 w-full focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary  border-primary"
-		placeholder={placeholderdata}
-		autocomplete="off"
-		id="search"
-	/>
+	{#if type == 'user'}
+		<input
+			type="text"
+			class="block border rounded-md py-2 pl-3 pr-10 w-full focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary  border-primary"
+			placeholder={placeholderdata}
+			bind:value={$adminQueryUserEmail}
+			autocomplete="off"
+			id="search"
+		/>
+	{:else}
+		<input
+			type="text"
+			class="block border rounded-md py-2 pl-3 pr-10 w-full focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary  border-primary"
+			placeholder={placeholderdata}
+			bind:value={$adminQueryDoctorName}
+			autocomplete="off"
+			id="search"
+		/>
+	{/if}
 	<div class="search-button">
 		<button
 			class="bg-primary tracking-wider text-lg hover:bg-[#524af4] w-full text-white font-medium px-9 py-2 rounded focus:outline-none focus:shadow-outline"

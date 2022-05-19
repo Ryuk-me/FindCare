@@ -102,6 +102,7 @@ class ClinicOutAdminPanel(BaseModel):
     is_open: bool
     address: _ClinicAddress
     doctor: doctor_schema.DoctorOut
+    total_patients: int = 0
     total_appointments: int = 0
     completed_appointments: int = 0
     cancelled_appointments_by_doctor: int = 0

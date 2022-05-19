@@ -15,7 +15,7 @@
 	import { goto } from '$app/navigation'
 	import { post, capitalize } from '$lib/utils.js'
 	import jwt_decode from 'jwt-decode'
-	import Loading from '$root/lib/components/Loading.svelte'
+	import Loading from '$lib/components/Loading.svelte'
 	let username = ''
 	let password = ''
 

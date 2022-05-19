@@ -453,6 +453,8 @@ def get_all_clinics(db: Session):
             clinic_id = clinic.id
             appointments = db.query(appointment_model.Appointment).filter(
                 appointment_model.Appointment.clinic_id == clinic_id).all()
+            total_patients = db.query(appointment_model.Appointment).distinct(
+                appointment_model.Appointment.user_id).group_by(appointment_model.Appointment.id).count()
             if len(appointments) > 0:
                 total_appointments = len(appointments)
                 completed_appointments = 0
@@ -465,6 +467,7 @@ def get_all_clinics(db: Session):
                         cancelled_appointments_by_doctor += 1
                     if appointment.is_cancelled == "U":
                         cancelled_appointments_by_user += 1
+                clinic.total_patients = total_patients
                 clinic.total_appointments = total_appointments
                 clinic.completed_appointments = completed_appointments
                 clinic.cancelled_appointments_by_user = cancelled_appointments_by_user
@@ -482,6 +485,8 @@ def verify_doctor(db: Session, doctor_id: str):
     if doctor:
         if doctor.is_verified:
             raise errors.DOCTOR_IS_ALREADY_VERIFIED
+        if doctor.is_banned:
+            raise errors.DOCTOR_IS_BANNED
         doctor.is_verified = True
         db.commit()
         return {"detail": "Doctor verified successfully"}
@@ -506,11 +511,12 @@ async def deactivate_account(db: Session, id: str, is_user: bool = False):
         if not doctor:
             raise errors.DOCTOR_NOT_FOUND
         if not doctor.is_banned:
+            doctor.is_verified = False
             doctor.is_banned = True
             doctor.when_banned = datetime.now()
             db.commit()
             await send_email_account_deactivation(
-                subject="Account Deactivation", recipients=user.email)
+                subject="Account Deactivation", recipients=doctor.email)
             return {"detail": "Doctor banned successfully"}
         raise errors.DOCTOR_IS_ALREADY_BANNED
 
@@ -537,7 +543,7 @@ async def activate_account(db: Session, id: str, is_user: bool = False):
             doctor.when_banned = None
             db.commit()
             await send_email_account_activation(
-                subject="Account Activation", recipients=user.email)
+                subject="Account Activation", recipients=doctor.email)
             return {"detail": "Doctor unbanned successfully"}
         raise errors.DOCTOR_IS_ALREADY_UNBANNED
 

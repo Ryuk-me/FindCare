@@ -49,6 +49,7 @@ class UserOutAdminPanel(BaseModel):
     phone:  str
     dob: date
     age: int
+    profile_image: str
     is_active: bool
     is_banned: bool
     when_banned: Union[datetime, None]

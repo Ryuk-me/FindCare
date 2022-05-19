@@ -3,6 +3,16 @@
 	import DoctorTableStats from '$lib/components/admin/DoctorTableStats.svelte'
 	// can be one of light or dark
 	export let color = 'light'
+	export let clinics
+	function checkDoctorSatus(doctor) {
+		if (doctor.is_verified) {
+			return 'verified'
+		} else if (doctor.is_banned) {
+			return 'banned'
+		} else {
+			return 'pending'
+		}
+	}
 </script>
 
 <div
@@ -40,7 +50,7 @@
 					>
 						Number Of Appointments
 					</th>
-                    <th
+					<th
 						class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left {color ===
 						'light'
 							? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
@@ -56,7 +66,7 @@
 					>
 						Status
 					</th>
-					
+
 					<th
 						class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left {color ===
 						'light'
@@ -71,21 +81,21 @@
 							? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
 							: 'bg-red-700 text-red-200 border-red-600'}"
 					>
-						Remove Doctor
+						Ban/Unban
 					</th>
 				</tr>
 			</thead>
 			<tbody>
-				<DoctorTableStats />
-				<DoctorTableStats doctorName="Nitin Shivam" numberOfAppointment="694" numberOfPatients="45" status="verified" />
-				<DoctorTableStats doctorName="Amardeep" numberOfAppointment="634" numberOfPatients="45" status="verified" />
-				<DoctorTableStats doctorName="Amardeep" numberOfAppointment="634" numberOfPatients="45" status="pending" />
-				<DoctorTableStats doctorName="Amardeep" numberOfAppointment="634" numberOfPatients="45" status="verified" />
-				<DoctorTableStats doctorName="Amardeep" numberOfAppointment="634" numberOfPatients="45" status="removed" />
-				<DoctorTableStats doctorName="Amardeep" numberOfAppointment="634" numberOfPatients="45" status="removed" />
-				<DoctorTableStats doctorName="Amardeep" numberOfAppointment="634" numberOfPatients="45" status="removed" />
-				<DoctorTableStats doctorName="Amardeep" numberOfAppointment="634" numberOfPatients="45" status="verified" />
-				<DoctorTableStats doctorName="Amardeep" numberOfAppointment="634" numberOfPatients="45" status="verified" />
+				{#each clinics as clinic}
+					<DoctorTableStats
+						doctorName={clinic.doctor.name}
+						numberOfAppointment={clinic.total_appointments}
+						numberOfPatients={clinic.total_patients}
+						status={checkDoctorSatus(clinic.doctor)}
+						doctor_id={clinic.doctor_id}
+						doctorImg={clinic.doctor.profile_image}
+					/>
+				{/each}
 			</tbody>
 		</table>
 	</div>

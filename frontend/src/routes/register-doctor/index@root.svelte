@@ -18,7 +18,7 @@
 	import { goto } from '$app/navigation'
 	import { navigating } from '$app/stores'
 	import Loading from '$lib/components/Loading.svelte'
-import Logo from '$lib/components/Logo.svelte'
+	import Logo from '$lib/components/Logo.svelte'
 
 	let show = false
 	let firstName = ''
@@ -117,8 +117,7 @@ import Logo from '$lib/components/Logo.svelte'
 		/>
 		<div class="flex justify-center items-center">
 			<div class="my-2">
-				
-				<Logo/>
+				<Logo />
 				<div class="flex justify-center items-center font-medium font-maven">
 					<form
 						on:submit|preventDefault={signUpDoctor}

@@ -35,7 +35,7 @@ async def create_admin(admin: admin_schema.CreateAdmin, db: Session = Depends(_s
 
 # ***********************************************************************************
 #! CREATE USER BY ADMIN
-@router.post('/create/user', status_code=status.HTTP_200_OK)
+@router.post('/create/user', status_code=status.HTTP_201_CREATED)
 async def create_account_user(user: user_schema.AdminUserCreate, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     password = _services.generate_random_password()
     user = user_schema.UserCreate(**user.dict(), password=password)
@@ -45,7 +45,7 @@ async def create_account_user(user: user_schema.AdminUserCreate, db: Session = D
 
 # ***********************************************************************************
 #! CREATE DOCTOR BY ADMIN
-@router.post('/create/doctor', status_code=status.HTTP_200_OK)
+@router.post('/create/doctor', status_code=status.HTTP_201_CREATED)
 async def create_account_doctor(doctor: doctor_schema.AdminDoctorCreate, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     password = _services.generate_random_password()
     doctor = doctor_schema.DoctorCreate(**doctor.dict(), password=password)

@@ -1,8 +1,18 @@
 <script>
 	// core components
-	import UserTableStats from '$lib/components/admin/UserTableStats.svelte';
+	import UserTableStats from '$lib/components/admin/UserTableStats.svelte'
 	// can be one of light or dark
 	export let color = 'light'
+	export let users
+	function checkUserSatus(user) {
+		if (user.is_banned) {
+			return 'banned'
+		} else if (user.is_active) {
+			return 'active'
+		} else {
+			return 'pending'
+		}
+	}
 </script>
 
 <div
@@ -30,7 +40,15 @@
 							? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
 							: 'bg-red-700 text-red-200 border-red-600'}"
 					>
-						Patient's Name
+						Name
+					</th>
+					<th
+						class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left {color ===
+						'light'
+							? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+							: 'bg-red-700 text-red-200 border-red-600'}"
+					>
+						Email
 					</th>
 					<th
 						class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left {color ===
@@ -48,28 +66,28 @@
 					>
 						Status
 					</th>
-					
+
 					<th
 						class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left {color ===
 						'light'
 							? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
 							: 'bg-red-700 text-red-200 border-red-600'}"
 					>
-						Ban User
+						Ban/Unban
 					</th>
 				</tr>
 			</thead>
 			<tbody>
-				<UserTableStats />
-				<UserTableStats patientName="Nitin Shivam" dateOfAppointment="694" status="active" />
-				<UserTableStats patientName="Amardeep" dateOfAppointment="634" status="active" />
-				<UserTableStats patientName="Amardeep" dateOfAppointment="634" status="active" />
-				<UserTableStats patientName="Amardeep" dateOfAppointment="634" status="active" />
-				<UserTableStats patientName="Amardeep" dateOfAppointment="634" status="banned" />
-				<UserTableStats patientName="Amardeep" dateOfAppointment="634" status="banned" />
-				<UserTableStats patientName="Amardeep" dateOfAppointment="634" status="banned" />
-				<UserTableStats patientName="Amardeep" dateOfAppointment="634" status="active" />
-				<UserTableStats patientName="Amardeep" dateOfAppointment="634" status="active" />
+				{#each users as user}
+					<UserTableStats
+						patientName={user.name}
+						numberOfAppointment={user.total_appointments.toLocaleString()}
+						status={checkUserSatus(user)}
+						patientImg={user.profile_image}
+						id={user.id}
+						email={user.email}
+					/>
+				{/each}
 			</tbody>
 		</table>
 	</div>

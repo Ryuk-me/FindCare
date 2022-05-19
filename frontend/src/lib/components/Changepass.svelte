@@ -2,6 +2,7 @@
 	import { session } from '$app/stores'
 	import { ENV, status_code } from '$lib/utils'
 	import { notificationToast } from '$lib/NotificationToast'
+	export let isAdmin = false
 	let show = false
 	let password = ''
 	let confirmPassword = ''
@@ -21,7 +22,9 @@
 			is_loading = false
 			return
 		}
-		const res = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/doctor/change-password', {
+		let url = ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/doctor/change-password'
+		if (isAdmin) url = ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/admin/change-password'
+		const res = await fetch(url, {
 			method: 'PUT',
 			headers: {
 				'Content-type': 'application/json',
