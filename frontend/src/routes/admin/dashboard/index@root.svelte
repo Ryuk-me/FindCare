@@ -139,7 +139,7 @@
 <svelte:head>
 	<title>Admin Dashboard</title>
 </svelte:head>
-<div class="h-screen w-screen overflow-x-hidden">
+<div class="h-screen w-screen overflow-x-hidden font-maven">
 	<!-- Sidebar -->
 
 	<nav
@@ -300,7 +300,7 @@
 
 	<!-- Body -->
 
-	<div class="relative md:ml-64 bg-blueGray-100">
+	<div class="relative md:ml-64 bg-blueGray-100 font-maven">
 		<Header {clinics} />
 		<div class="px-4 md:px-10 mx-auto w-full m-24 mt-3">
 			{#if selected == 'dashboard'}

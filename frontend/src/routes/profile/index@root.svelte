@@ -227,7 +227,7 @@
 
 	<!-- Profile Page -->
 
-	<div class="overflow-hidden ">
+	<div class="overflow-hidden font-maven">
 		<div
 			class="lg:h-screen h-full flex justify-center mx-2 lg:my-0 my-3 lg:flex-row flex-col items-center"
 		>

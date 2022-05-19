@@ -21,7 +21,7 @@
 </script>
 
 <!-- Header -->
-<div class="relative bg-red-500 md:pt-28 pb-12 pt-12">
+<div class="relative bg-red-500 md:pt-28 pb-12 pt-12 font-maven">
 	<div class="px-4 md:px-10 mx-auto w-full">
 		<div>
 			<!-- Card stats -->
