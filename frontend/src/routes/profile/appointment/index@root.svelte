@@ -61,7 +61,7 @@
 
 <Navbar />
 {#if !$navigating}
-	<div class="md:m-6 md:p-6 m-1 p-1">
+	<div class="md:m-6 md:p-6 m-1 p-1 font-maven">
 		<!-- <AppointmentTable {appointments} {session} /> -->
 		{#if status === status_code.HTTP_404_NOT_FOUND}
 			<h2>No appointment Available</h2>

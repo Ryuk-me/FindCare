@@ -128,7 +128,7 @@
 	<title>{doctor_profile ? doctor_profile?.name : response?.doctor?.name}</title>
 </svelte:head>
 {#if !$navigating}
-	<div class="h-screen w-screen overflow-x-hidden">
+	<div class="h-screen w-screen overflow-x-hidden font-maven">
 		<!-- Sidebar -->
 
 		<nav

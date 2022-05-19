@@ -27,13 +27,13 @@
 			id="search"
 		/>
 	{/if}
-	<div class="search-button">
+	<!-- <div class="search-button">
 		<button
 			class="bg-primary tracking-wider text-lg hover:bg-[#524af4] w-full text-white font-medium px-9 py-2 rounded focus:outline-none focus:shadow-outline"
 			>Search</button
 		>
-	</div>
-	<div class="flex justify-center">
+	</div> -->
+	<!-- <div class="flex justify-center">
 		<div class="">
 			<div class="dropdown relative">
 				<button
@@ -143,5 +143,5 @@
 				</ul>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>
