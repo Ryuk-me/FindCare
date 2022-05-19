@@ -103,7 +103,7 @@
 						? 'loading fa fa-spinner fa-spin'
 						: status == 'completed' || status == 'cancelled'
 						? ''
-						: 'fas fa-check mr-2'}"
+						: 'fas fa-check '} mr-2"
 				/>
 				{status == 'completed'
 					? 'Completed'
@@ -132,7 +132,7 @@
 						? 'loading fa fa-spinner fa-spin'
 						: status == 'completed' || status == 'cancelled'
 						? ''
-						: 'fas fa-xmark mr-2'} "
+						: 'fas fa-xmark'} mr-2"
 				/>
 				{status == 'cancelled' ? 'Cancelled' : status == 'completed' ? 'Completed' : 'Cancel'}
 			</button>

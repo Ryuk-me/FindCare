@@ -13,6 +13,7 @@
 				}
 			}
 		}
+		return {}
 	}
 </script>
 
