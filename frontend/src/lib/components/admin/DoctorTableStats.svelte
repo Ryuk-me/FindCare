@@ -10,6 +10,7 @@
 	export let numberOfPatients
 	export let doctor_id
 	export let status
+	export let slug
 	export let color = 'light'
 	let is_verification_loading = false
 	let is_loading = false
@@ -72,9 +73,15 @@
 		class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center"
 	>
 		<img src={doctorImg} class="h-12 w-12 bg-white rounded-full border" alt="..." />
-		<span class="ml-3 font-bold {color === 'light' ? 'btext-blueGray-600' : 'text-whit'}">
-			{doctorName}
-		</span>
+		<a href={'/search/doctor/' + slug}>
+			<span
+				class="ml-3 font-bold {color === 'light'
+					? 'btext-blueGray-600'
+					: 'text-whit'} hover:text-[#0f02fa]"
+			>
+				{doctorName}
+			</span>
+		</a>
 	</th>
 	<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
 		{numberOfAppointment}

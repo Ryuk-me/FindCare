@@ -88,6 +88,7 @@
 			<tbody>
 				{#each clinics as clinic}
 					<DoctorTableStats
+						slug={clinic.doctor.slug}
 						doctorName={clinic.doctor.name}
 						numberOfAppointment={clinic.total_appointments}
 						numberOfPatients={clinic.total_patients}
