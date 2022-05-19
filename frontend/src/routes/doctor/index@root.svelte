@@ -15,7 +15,11 @@
 					Authorization: `Bearer ${session.session}`
 				}
 			})
-			if (response.status === status_code.HTTP_422_UNPROCESSABLE_ENTITY) {
+			if (
+				response.status === status_code.HTTP_422_UNPROCESSABLE_ENTITY ||
+				response.status === status_code.HTTP_403_FORBIDDEN ||
+				response.status === status_code.HTTP_401_UNAUTHORIZED
+			) {
 				await fetch('api/v1/auth/logout')
 				return {
 					status: 302,
@@ -33,7 +37,11 @@
 						Authorization: `Bearer ${session.session}`
 					}
 				})
-				if (response.status === status_code.HTTP_422_UNPROCESSABLE_ENTITY) {
+				if (
+					response.status === status_code.HTTP_422_UNPROCESSABLE_ENTITY ||
+					response.status === status_code.HTTP_403_FORBIDDEN ||
+					response.status === status_code.HTTP_401_UNAUTHORIZED
+				) {
 					await fetch('api/v1/auth/logout')
 					return {
 						status: 302,

@@ -14,7 +14,11 @@
 					Authorization: `Bearer ${session.session}`
 				}
 			})
-			if (res.status === status_code.HTTP_422_UNPROCESSABLE_ENTITY) {
+			if (
+				res.status === status_code.HTTP_422_UNPROCESSABLE_ENTITY ||
+				res.status === status_code.HTTP_403_FORBIDDEN ||
+				res.status === status_code.HTTP_401_UNAUTHORIZED
+			) {
 				await fetch('api/v1/auth/logout')
 				return {
 					status: 302,
