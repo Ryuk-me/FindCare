@@ -69,5 +69,3 @@ class UpdateUserDetails(BaseModel):
     email: Optional[str]
     profile_image: Optional[str]
     phone: Optional[constr(max_length=10, min_length=10)]
-    gender: Optional[Literal['male', 'female', 'other']]
-    dob: Optional[date]

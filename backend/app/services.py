@@ -23,7 +23,7 @@ async def get_db():
             name="User Account",
             email='user@findcare.com',
             dob="2002-04-26",
-            phone="9999999999",
+            phone="9999999998",
             gender="male",
             password="123"
         )

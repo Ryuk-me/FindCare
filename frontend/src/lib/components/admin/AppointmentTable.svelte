@@ -91,6 +91,7 @@
 						clinicAddress={appointment.clinic.address}
 						slug={appointment.clinic.doctor.slug}
 						doctorImg={appointment.clinic.doctor.profile_image}
+						appointment_id={appointment.id}
 					/>
 				{/each}
 			</tbody>

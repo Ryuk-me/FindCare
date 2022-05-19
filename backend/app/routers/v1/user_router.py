@@ -72,7 +72,7 @@ async def update_user_details(user: user_schema.UpdateUserDetails, db: Session =
             expire_time = timedelta(minutes=int(
                 settings.EMAIL_VERIFICATION_TOKEN_EXPIRE_MINUTES))
             token = create_access_token(
-                data={"id": user.id, "status": 'user', "email": user.email}, expires_delta=expire_time)
+                data={"id": current_user.id, "status": 'user', "email": user.email}, expires_delta=expire_time)
 
             token_url = f"{settings.WEBSITE_HOSTED_ROOT_URL+settings.BASE_API_V1+'/verify/token/'+token}"
 
@@ -92,15 +92,6 @@ async def update_user_details(user: user_schema.UpdateUserDetails, db: Session =
             is_something_changed = True
         else:
             raise errors.PHONE_NUMBER_ALREADY_EXIST
-
-    if user.dob and user.dob != current_user.dob:
-        current_user.dob = user.dob
-        current_user.age = _services.calculate_age(user.dob)
-        is_something_changed = True
-
-    if user.gender and user.gender != current_user.gender:
-        current_user.gender = user.gender
-        is_something_changed = True
 
     if user.profile_image:
         current_user.profile_image = user.profile_image

@@ -7,7 +7,7 @@
 	let user = $session ? true : false
 	let menu = true
 	let profileMenu = true
-	let profile = $userProfileStore?.profile_image
+	$: profile = $userProfileStore?.profile_image
 </script>
 
 <nav class="bg-white border-black px-2 sm:px-4 py-2.5 rounded">

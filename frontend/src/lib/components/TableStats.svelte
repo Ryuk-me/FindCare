@@ -52,7 +52,7 @@
 		const data = await res.json()
 		is_loading_cancel = false
 		if (res.status == status_code.HTTP_202_ACCEPTED) {
-			notificationToast(data?.detail, false, 2000, 'success', toastCallbackReloadPage)
+			notificationToast(data?.detail, false, 2000, 'error', toastCallbackReloadPage)
 			status = 'cancelled'
 		} else if (res.status == status_code.HTTP_409_CONFLICT)
 			notificationToast(data?.detail, false, 2000, 'error')
@@ -99,7 +99,18 @@
 					? 'bg-green-900  cursor-not-allowed'
 					: 'bg-green-700 hover:bg-green-800 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800'}"
 			>
-				<i class="{is_loading_complete ? 'loading fa fa-spinner fa-spin' : 'fas fa-check'} mr-2" /> Completed
+				<i
+					class="{is_loading_complete
+						? 'loading fa fa-spinner fa-spin'
+						: status == 'completed' || status == 'cancelled'
+						? ''
+						: 'fas fa-check'} mr-2"
+				/>
+				{status == 'completed'
+					? 'Completed'
+					: status == 'cancelled'
+					? 'Cancelled'
+					: 'Mark as complete'}
 			</button>
 		</div>
 	</td>
@@ -117,7 +128,14 @@
 					? 'bg-red-900 cursor-not-allowed'
 					: 'bg-red-700 hover:bg-red-800 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800'}"
 			>
-				<i class="{is_loading_cancel ? 'loading fa fa-spinner fa-spin' : 'fas fa-xmark'} mr-2" /> Cancel
+				<i
+					class="{is_loading_cancel
+						? 'loading fa fa-spinner fa-spin'
+						: status == 'completed' || status == 'cancelled'
+						? ''
+						: 'fas fa-xmark'} mr-2"
+				/>
+				{status == 'cancelled' ? 'Cancelled' : status == 'completed' ? 'Completed' : 'Cancel'}
 			</button>
 		</div>
 	</td>

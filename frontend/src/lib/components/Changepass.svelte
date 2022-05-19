@@ -36,6 +36,7 @@
 		is_loading = false
 		if (res.status === status_code.HTTP_202_ACCEPTED) {
 			notificationToast(data?.detail, false, 3000, 'success')
+			confirmPassword = ''
 		} else {
 			notificationToast(data?.detail, false, 3000, 'error')
 		}

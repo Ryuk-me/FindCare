@@ -54,6 +54,7 @@
 	import { session as sessionStore } from '$app/stores'
 	import { user as userProfileStore } from '../../stores'
 	import { ENV, removeAlpha, removeSpecialCharacters, status_code } from '$lib/utils'
+	import { notificationToast } from '$lib/NotificationToast'
 	export let user, session
 	let title = 'Account Details'
 	let show = false
@@ -67,6 +68,7 @@
 	let profile_image = user?.profile_image
 	let password = ''
 	let confirmPassword = ''
+	let temp_email = email
 	$userProfileStore = {
 		profile_image: profile_image
 	}
@@ -84,6 +86,130 @@
 		isSomethingChanged = true
 	} else {
 		isSomethingChanged = false
+	}
+	let is_loading = false
+	async function updateUserProfile() {
+		is_loading = true
+		if (!phone.match(/^[6-9]\d{9}$/gm)) {
+			notificationToast('Invalid Phone Number !', false, 2000, 'error')
+			is_loading = false
+			return
+		}
+		const res = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/user/', {
+			method: 'PUT',
+			headers: {
+				'Content-type': 'application/json',
+				//@ts-ignore
+				Authorization: `Bearer ${$sessionStore.session}`
+			},
+			body: JSON.stringify({
+				name,
+				email,
+				phone
+			})
+		})
+		const data = await res.json()
+		is_loading = false
+		if (res.status === status_code.HTTP_202_ACCEPTED) {
+			name = data.name
+			const toastCallBackToLogout = async () => {
+				$sessionStore = null
+				$userProfileStore = null
+				goto('/logout')
+			}
+			if (temp_email !== data.email) {
+				notificationToast(
+					'Email Changed Successfully please verify your mail and login again',
+					false,
+					3000,
+					'success',
+					toastCallBackToLogout
+				)
+			} else {
+				temp_email = data?.email
+				notificationToast('Profile Updated Successfully', false, 2000, 'success')
+			}
+			email = data.email
+			phone = data.phone
+			profile_image = data.profile_image
+			$userProfileStore = {
+				profile_image: profile_image
+			}
+			isSomethingChanged = false
+		} else if (res.status === status_code.HTTP_304_NOT_MODIFIED) {
+			notificationToast('Not Modified', false, 2000, 'error')
+		} else notificationToast(data?.detail, false, 2000, 'error')
+	}
+	let fileinput
+	const onFileProfileSelected = (e) => {
+		let image = e.target.files[0]
+		let reader = new FileReader()
+		reader.readAsDataURL(image)
+		reader.onload = (e) => {
+			let img = e.target.result
+			//@ts-ignore
+			let stringLength = img.length - 'data:image/png;base64,'.length
+			let sizeInBytes = 4 * Math.ceil(stringLength / 3) * 0.5624896334383812
+			let sizeInKb = sizeInBytes / 1000
+			if (sizeInKb < 500) {
+				profile_image = img
+				fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/user/', {
+					method: 'PUT',
+					headers: {
+						'Content-type': 'application/json',
+						//@ts-ignore
+						Authorization: `Bearer ${$sessionStore.session}`
+					},
+					body: JSON.stringify({
+						profile_image
+					})
+				})
+					.then((res) => {
+						if (res.status === status_code.HTTP_202_ACCEPTED) {
+							$userProfileStore = {
+								profile_image: profile_image
+							}
+							notificationToast('Profile Image Updated', false, 2000, 'success')
+						}
+					})
+					.catch((error) => {})
+			} else {
+				notificationToast('Image size must be less than 500kb', false, 2000, 'error')
+			}
+		}
+	}
+
+	const changePassword = async () => {
+		is_loading = true
+		if (!password || !confirmPassword) {
+			notificationToast('Password field cannot be empty', false, 2000, 'error')
+			is_loading = false
+			return
+		}
+		if (password !== confirmPassword) {
+			notificationToast('Password do not match !', false, 2000, 'error')
+			is_loading = false
+			return
+		}
+		const res = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/user/change-password', {
+			method: 'PUT',
+			headers: {
+				'Content-type': 'application/json',
+				//@ts-ignore
+				Authorization: `Bearer ${$sessionStore.session}`
+			},
+			body: JSON.stringify({
+				password
+			})
+		})
+		const data = await res.json()
+		is_loading = false
+		if (res.status === status_code.HTTP_202_ACCEPTED) {
+			notificationToast(data?.detail, false, 3000, 'success')
+			confirmPassword = ''
+		} else {
+			notificationToast(data?.detail, false, 3000, 'error')
+		}
 	}
 </script>
 
@@ -112,6 +238,9 @@
 						> -->
 				<input
 					type="file"
+					accept=".jpg, .jpeg, .png, .gif"
+					on:change={(e) => onFileProfileSelected(e)}
+					bind:this={fileinput}
 					class="block w-full center text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-[#524af4]"
 				/>
 			</div>
@@ -221,8 +350,9 @@
 					<div class="relative w-full mb-4">
 						<label for="dob" class="">Date Of Birth</label>
 						<input
+							disabled
 							type="date"
-							class="block border rounded py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
+							class="block border rounded text-gray-400 py-2 px-3 w-full mt-3 focus:outline-none focus:shadow-outline focus:ring-1 focus:ring-primary"
 							bind:value={dob}
 							placeholder={dob}
 							autocomplete="off"
@@ -231,10 +361,20 @@
 						/>
 					</div>
 					{#if isSomethingChanged}
-						<button
-							class="bg-primary tracking-wider text-lg hover:bg-[#524af4] w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
-							>Save Changes</button
-						>{:else}
+						{#if !is_loading}
+							<button
+								on:click={updateUserProfile}
+								class="bg-primary tracking-wider text-lg hover:bg-[#524af4] w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
+								>Save Changes</button
+							>
+						{:else}
+							<button
+								disabled
+								class="bg-[#7069f5] tracking-wider text-lg cursor-not-allowed w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
+								><i class="loading fa fa-spinner fa-spin relative right-2" />Save Changes</button
+							>
+						{/if}
+					{:else}
 						<button
 							disabled
 							class="bg-[#7069f5] tracking-wider text-lg cursor-not-allowed w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
@@ -282,10 +422,20 @@
 						/>
 					</div>
 					{#if isSomethingChanged}
-						<button
-							class="bg-primary tracking-wider text-lg hover:bg-[#524af4] w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
-							>Save Changes</button
-						>{:else}
+						{#if !is_loading}
+							<button
+								on:click={changePassword}
+								class="bg-primary tracking-wider text-lg hover:bg-[#524af4] w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
+								>Save Changes</button
+							>
+						{:else}
+							<button
+								disabled
+								class="bg-[#7069f5] tracking-wider text-lg cursor-not-allowed w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
+								><i class="loading fa fa-spinner fa-spin relative right-2" />Save Changes</button
+							>
+						{/if}
+					{:else}
 						<button
 							disabled
 							class="bg-[#7069f5] tracking-wider text-lg cursor-not-allowed w-full text-white mb-3 font-medium py-2 rounded focus:outline-none focus:shadow-outline"
