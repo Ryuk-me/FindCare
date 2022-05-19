@@ -10,13 +10,13 @@
 	let cancelled_appointments_by_doctor = 0
 	for (let index = 0; index < clinics.length; index++) {
 		const element = clinics[index]
-		totalClinics += index
 		total_patients += element.total_patients
 		completed_appointments += element.completed_appointments
 		pending_appointments += element.pending_appointments
 		total_appointments += element.total_appointments
 		cancelled_appointments_by_user += element.cancelled_appointments_by_user
 		cancelled_appointments_by_doctor += element.cancelled_appointments_by_doctor
+		totalClinics = clinics.length
 	}
 </script>
 

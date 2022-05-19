@@ -13,7 +13,11 @@
 				}
 			}
 		}
-		return {}
+		return {
+			props: {
+				specialityList: null
+			}
+		}
 	}
 </script>
 
@@ -40,7 +44,7 @@
 	let is_focus = false
 	let speciality = ''
 	let filteredList = []
-	$: if (speciality) {
+	$: if (speciality && specialityList) {
 		filteredList = specialityList.filter((data) => {
 			const fullNameSpeciality = data.speciality.toLowerCase()
 			const reversedSpeciality = fullNameSpeciality.split('').reverse().join('').toLowerCase()
@@ -98,7 +102,7 @@
 						<span class="search-glass">
 							<i class="fa-solid fa-magnifying-glass" />
 						</span>
-						{#if is_focus}
+						{#if is_focus && specialityList}
 							<div
 								class="w-full overflow-auto absolute top-16 flex flex-col space-y-2 bg-gray-100 p-3 rounded-md"
 							>
