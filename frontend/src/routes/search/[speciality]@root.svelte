@@ -87,8 +87,8 @@
 				type="text"
 				bind:value={searchQuery}
 				on:keydown={submitSearch}
-				class="w-full rounded-full px-8 py-3 mt-8 drop-shadow-md focus:outline-none border border-primary"
-				placeholder="lorem ipsum"
+				class="w-full rounded-full px-6 py-3 mt-8 drop-shadow-md focus:outline-none border border-primary"
+				placeholder="Search Doctor or Symptoms..."
 				autocomplete="on"
 			/>
 		</div>

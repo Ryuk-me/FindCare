@@ -58,8 +58,8 @@
 		<div class="w-full lg:px-24 px-4 ">
 			<input
 				type="text"
-				class="w-full rounded-full px-8 py-3 mt-8 drop-shadow-md focus:outline-none border border-primary"
-				placeholder="lorem ipsum"
+				class="w-full rounded-full px-6 py-3 mt-8 drop-shadow-md focus:outline-none border border-primary"
+				placeholder="Search Doctor or Symptoms..."
 				bind:value={searchQuery}
 				on:keydown={submitSearch}
 			/>
@@ -246,7 +246,7 @@
 					</div>
 				</div>
 				<div class="w-full flex justify-center items-center py-6">
-					<button class="w-full bg-primary py-4 rounded text-white">Book Appointment</button>
+					<button class="w-full bg-primary hover:bg-[#524af4] py-4 rounded text-white">Book Appointment</button>
 				</div>
 			</div>
 		</div>
