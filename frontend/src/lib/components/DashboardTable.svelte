@@ -1,7 +1,7 @@
 <script>
 	// core components
 	import TableStats from '$lib/components/TableStats.svelte'
-	import { getFormattedDate } from '$lib/utils'
+	import { getFormattedDateDashBoard } from '$lib/utils'
 	// can be one of light or dark
 	export let color = 'light'
 	export let response
@@ -88,7 +88,7 @@
 								appointment_id={appointment.id}
 								patientImg={patient.profile_image}
 								patientName={patient.name}
-								dateOfAppointment={getFormattedDate(appointment.schedule)}
+								dateOfAppointment={getFormattedDateDashBoard(appointment.schedule)}
 								status={checkAppointSatus(appointment)}
 							/>
 						{/each}

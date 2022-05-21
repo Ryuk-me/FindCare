@@ -13,7 +13,11 @@
 				}
 			}
 		}
-		return {}
+		return {
+			props: {
+				specialityList: null
+			}
+		}
 	}
 </script>
 
@@ -40,7 +44,7 @@
 	let is_focus = false
 	let speciality = ''
 	let filteredList = []
-	$: if (speciality) {
+	$: if (speciality && specialityList) {
 		filteredList = specialityList.filter((data) => {
 			const fullNameSpeciality = data.speciality.toLowerCase()
 			const reversedSpeciality = fullNameSpeciality.split('').reverse().join('').toLowerCase()
@@ -51,8 +55,9 @@
 			)
 		})
 	} else {
-		filteredList = [...specialityList]
-		// is_focus = false
+		if (specialityList) {
+			filteredList = [...specialityList]
+		}
 	}
 </script>
 
@@ -98,7 +103,7 @@
 						<span class="search-glass">
 							<i class="fa-solid fa-magnifying-glass" />
 						</span>
-						{#if is_focus}
+						{#if is_focus && specialityList}
 							<div
 								class="w-full overflow-auto absolute top-16 flex flex-col space-y-2 bg-gray-100 p-3 rounded-md"
 							>
@@ -131,7 +136,7 @@
 					<span class="relative">Our Medical Services</span>
 				</h2>
 				<p class="text-base text-gray-700 md:text-lg">
-					FindCare is an online portal for all your healthcare needs. Our team of medical experts
+					Findcare is an online portal for all your healthcare needs. Our team of medical experts
 					are there for you in every step of the way, from finding the right doctor and hospital to
 					booking appointments, from providing verified information to any kind of medical
 					assistance in between.
@@ -197,8 +202,8 @@
 						Online Consultation
 					</h1>
 					<p class="mb-8 leading-relaxed">
-						Hassle-free video call with top doctors, with minimal waiting time, easy rescheduling,
-						regular SMS reminders, 24x7 access to records & reports, and easy access to
+						Consult with top doctors online, with minimal waiting time, easy rescheduling,
+						regular email reminders, 24x7 access to records & reports, and easy access to
 						prescriptions as well as billing.
 						<!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque libero est
 						exercitationem asperiores rerum eius amet. Sunt suscipit amet cum ducimus hic iure eos.

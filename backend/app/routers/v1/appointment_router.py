@@ -22,7 +22,7 @@ router = APIRouter(
 async def create_appointment(appointment: appointment_schema.CreateAppointment, db: Session = Depends(_services.get_db), current_user: user_model.User = Depends(get_current_user), access=Depends(verify_user_state)):
     if not current_user.is_active:
         raise errors.PLEASE_VERIFY_YOUR_EMAIL
-    appointment = _services.add_appointment(db, appointment, current_user.id)
+    appointment = await _services.add_appointment(db, appointment, current_user.id)
     return appointment
 
 

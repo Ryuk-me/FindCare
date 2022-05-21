@@ -7,7 +7,7 @@ from app.models import admin_model, doctor_model, user_model
 from app.error_handlers import errors
 from pydantic import BaseModel
 from typing import Optional, List
-
+from datetime import datetime
 router = APIRouter(
     prefix=settings.BASE_API_V1 + '/temp',
     tags=["TEMPORARY ROUTES"]
@@ -112,3 +112,47 @@ async def verify_doctor(verify: User_Doctor, db: Session = Depends(_services.get
     doctor.is_active = True
     db.commit()
     return {"detail": "Doctor email verified successfully"}
+
+
+@router.get('/slots')
+async def slot_temp(db: Session = Depends(_services.get_db)):
+    slots = slot_model.Slot(appointment_details=[{
+        "21-09-2002": [{
+            "clinic": "Huehuehue",
+            "date": "21-09-2002"
+        }]
+    }], clinic_id="fcc2dca8-226d-40ad-92f0-af8bd53d2fd7", doctor_id="2ce3c69a-a32a-40d6-90bb-dc4068d8732e")
+    db.add(slots)
+    db.commit()
+    db.refresh(slots)
+
+
+# @router.get('/app')
+# async def get_appointmentsDateAndTimeOfAclinic(clinic_id: str, db: Session = Depends(_services.get_db)):
+#     cid = clinic_id
+#     appoit = db.query(appointment_model.Appointment).filter(
+#         appointment_model.Appointment.clinic_id == cid).all()
+#     date_and_time_list = []
+#     for appointment in appoit:
+#         d = datetime.fromisoformat(str(appointment.schedule))
+#         which_date = f"{d:%Y-%m-%d}"
+#         which_time = f"{d:%H:%M}"
+#         if not date_and_time_list:
+#             date_and_time_list.append(
+#                 {which_date: [which_time]}
+#             )
+#         else:
+#             for detail in date_and_time_list:
+#                 if which_date in detail:
+#                     list_of_num = detail[which_date]
+#                     if which_time not in list_of_num:
+#                         detail[which_date] = [*list_of_num, which_time]
+#                     else:
+#                         raise errors.TIME_SLOT_NOT_AVAILABLE
+#                 else:
+#                     date_and_time_list.append(
+#                         {which_date: [which_time]}
+#                     )
+#                     break
+
+#     return date_and_time_list

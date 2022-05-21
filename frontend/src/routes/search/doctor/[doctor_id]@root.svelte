@@ -1,5 +1,5 @@
 <script context="module">
-	import { capitalize, ENV, status_code } from '$lib/utils'
+	import { capitalize, ENV, getFormattedDate, status_code, month_name } from '$lib/utils'
 	export async function load({ params, fetch, session }) {
 		const slug = params.doctor_id
 		const resp = await fetch(
@@ -11,6 +11,7 @@
 				}
 			}
 		)
+
 		const data = await resp.json()
 		if (resp.status !== status_code.HTTP_200_OK) {
 			return {
@@ -18,10 +19,19 @@
 				redirect: '/error404'
 			}
 		}
+		const appoint_details = await fetch(
+			ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/search/slots?clinic_id=' + data.id
+		)
+		let slots = null
+		if (appoint_details.ok) {
+			slots = await appoint_details.json()
+		}
 		return {
 			props: {
 				status: resp.status,
-				clinic: data
+				clinic: data,
+				slots,
+				session
 			}
 		}
 	}
@@ -33,9 +43,91 @@
 	import { navigating } from '$app/stores'
 	import Loading from '$lib/components/Loading.svelte'
 	import { goto } from '$app/navigation'
+
 import Footer from '$lib/components/Footer.svelte'
+=======
+	import { notificationToast } from '$lib/NotificationToast'
+
 	export let clinic
 	export let status
+	export let slots
+	export let session
+	let session_time = parseInt(clinic.session_time)
+	let opens_at = clinic.opens_at.slice(0, 5)
+	let closes_at = clinic.closes_at.slice(0, 5)
+	let date_today = getFormattedDate(null, true)
+	let booked_timings
+	let morningSlots = []
+	let afternoonSlots = []
+	let eveningSlots = []
+	let slot_time = []
+	let selected = null
+	function get_am_pm_from_time(time) {
+		let new_time = parseInt(time.slice(0, 2))
+		let last_two = time.slice(2, 5)
+		if (new_time > 12) {
+			time = new_time - 12 + last_two + ' pm'
+		} else if (new_time == 12) {
+			time = new_time + time.slice(2, 5) + ' pm'
+		} else {
+			time = time + ' am'
+		}
+		return time
+	}
+	function incrementDate(dateInput, increment) {
+		var dateFormatTotime = new Date(dateInput)
+		var increasedDate = new Date(dateFormatTotime.getTime() + increment * 86400000)
+		return getFormattedDate(increasedDate, false)
+	}
+
+	function get_day_and_month_name(date_today) {
+		date_today = date_today.split('-')
+		let date = date_today[date_today.length - 1]
+		let month = parseInt(date_today[date_today.length - 2])
+		let name_of_month = month_name[month]
+		return date + ' ' + name_of_month
+	}
+
+	function addMinutesSlot(time, minsToAdd) {
+		function D(J) {
+			return (J < 10 ? '0' : '') + J
+		}
+		var piece = time.split(':')
+		var mins = piece[0] * 60 + +piece[1] + +minsToAdd
+		let addedtime = D(((mins % (24 * 60)) / 60) | 0) + ':' + D(mins % 60)
+		if (addedtime < closes_at) {
+			slot_time.push(addedtime)
+			addMinutesSlot(addedtime, session_time)
+		}
+	}
+	addMinutesSlot(opens_at, 0)
+	if (slots) {
+		for (let index = 0; index < slots.length; index++) {
+			const element = slots[index]
+			if (Object.keys(element)[0] == date_today) {
+				let booked_slot
+				booked_slot = element[Object.keys(element)[0]].length
+				booked_timings = element[Object.keys(element)[0]]
+				clinic.slots = clinic.slots >= 1 ? clinic.slots - booked_slot : clinic.slots
+			}
+		}
+		for (let index = 0; index < slot_time.length; index++) {
+			const time = parseInt(slot_time[index].slice(0, 2))
+			if (time < 12) morningSlots.push(slot_time[index])
+			if (time >= 12 && time < 17) afternoonSlots.push(slot_time[index])
+			if (time > 17) eveningSlots.push(slot_time[index])
+		}
+	}
+	function am_pm_to_full_hour(selected_time) {
+		let splitted = selected_time.split(' ')
+		let minutes = splitted.at(0).split(':').at(-1)
+		let hour = parseInt(splitted.at(0).split(':').at(0))
+		let am_or_pm = splitted.at(-1)
+		if (am_or_pm === 'pm') {
+			if (hour !== 12) hour += 12
+		}
+		return hour.toLocaleString() + ':' + minutes
+	}
 	let doctor = clinic.doctor
 	let searchQuery
 	async function submitSearch(event) {
@@ -44,6 +136,78 @@ import Footer from '$lib/components/Footer.svelte'
 				goto('/search/' + searchQuery)
 			}
 		}
+	}
+	let is_loading = false
+	const bookAppointment = () => {
+		is_loading = true
+		if (!session) {
+			is_loading = false
+			notificationToast('Please login to book appointment', false, 3000, 'error', goto('/login'))
+			return
+		}
+		if (session.status !== 'user') {
+			is_loading = false
+			notificationToast(
+				'Only users can book appointment you are a ' + capitalize(session.status),
+				true,
+				3000,
+				'error'
+			)
+			return
+		}
+		let slot_time = am_pm_to_full_hour(selected)
+		let appointment_schedule = date_today + ' ' + slot_time
+		const toastCallBackToreload = () => location.reload()
+		fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/user/appointment/', {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json',
+				Authorization: `Bearer ${session.session}`
+			},
+			body: JSON.stringify({
+				clinic_id: clinic.id,
+				schedule: appointment_schedule,
+				fees_paid: false
+			})
+		})
+			.then((r) => r.json().then((data) => ({ status_cod: r.status, data })))
+			.then((obj) => {
+				if (obj.status_cod === status_code.HTTP_201_CREATED) {
+					is_loading = false
+					selected = null
+					notificationToast(
+						'Appointment Booked Successfully',
+						true,
+						2000,
+						'success',
+						toastCallBackToreload
+					)
+				}
+				if (obj.status_cod === status_code.HTTP_403_FORBIDDEN) {
+					notificationToast(
+						'Session Expired Please Login Again',
+						false,
+						2000,
+						'error',
+						toastCallBackToreload
+					)
+					return
+				} else {
+					if (obj.data?.detail[0]?.msg) {
+						notificationToast(
+							capitalize(
+								obj.data.detail[0].loc?.slice(1).join(', ') + ' ' + obj.data?.detail[0]?.msg
+							),
+							false,
+							2000,
+							'error',
+							toastCallBackToreload
+						)
+					} else {
+						notificationToast(obj.data?.detail, false, 2000, 'error')
+					}
+				}
+			})
 	}
 </script>
 
@@ -72,7 +236,7 @@ import Footer from '$lib/components/Footer.svelte'
 				<!-- first card  -->
 				<div class="w-full flex bg-white rounded-xl drop-shadow-md p-8 mb-8">
 					<!-- img div -->
-					<img src={doctor.profile_image} alt="doctor.png" class="rounded-[50%] h-32 mr-8"/>
+					<img src={doctor.profile_image} alt="doctor.png" class="rounded-[50%] h-32 mr-8" />
 					<!-- info div -->
 					<div>
 						<h1 class="font-bold text-2xl">{doctor.name}</h1>
@@ -100,8 +264,8 @@ import Footer from '$lib/components/Footer.svelte'
 								<p class="text-primary font-bold">{clinic.name}</p>
 							</div>
 							<div>
-								<p>Mon-Sat</p>
-								<p>9:00 am to 6:00 pm</p>
+								<p>Mon-Sun</p>
+								<p>{get_am_pm_from_time(opens_at)} to {get_am_pm_from_time(closes_at)}</p>
 							</div>
 							<div>
 								<p>Rs {clinic.fees}</p>
@@ -113,13 +277,6 @@ import Footer from '$lib/components/Footer.svelte'
 									{capitalize(clinic.address.city) + ', ' + capitalize(clinic.address.state)} ({clinic
 										.address.pincode})
 								</p>
-							</div>
-							<div>
-								<p>Mon-Sat</p>
-								<p>9:00 am to 6:00 pm</p>
-							</div>
-							<div>
-								<p>Rs {clinic.fees}</p>
 							</div>
 						</div>
 					</div>
@@ -133,121 +290,93 @@ import Footer from '$lib/components/Footer.svelte'
 							<button
 								class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary"
 							>
-								<p class="text-primary text-sm font-semibold">13 May</p>
-								<p class="text-green-500 text-sm text-center">15 Slots</p>
-							</button>
-							<button
-								class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary"
-							>
-								<p class="text-primary text-sm font-semibold">14 May</p>
-								<p class="text-green-500 text-sm text-center">15 Slots</p>
-							</button>
-							<button
-								class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary"
-							>
-								<p class="text-primary text-sm font-semibold">15 May</p>
-								<p class="text-green-500 text-sm text-center">15 Slots</p>
-							</button>
-							<button
-								class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary"
-							>
-								<p class="text-primary text-sm font-semibold">16 May</p>
-								<p class="text-green-500 text-sm text-center">15 Slots</p>
-							</button>
-							<button
-								class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary"
-							>
-								<p class="text-primary text-sm font-semibold">17 May</p>
-								<p class="text-green-500 text-sm text-center">15 Slots</p>
-							</button>
-							<button
-								class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary"
-							>
-								<p class="text-primary text-sm font-semibold">18 May</p>
-								<p class="text-green-500 text-sm text-center">15 Slots</p>
-							</button>
-							<button
-								class=" flex flex-col px-4 py-2 mx-1 rounded border-2 border-solid text-white border-primary"
-							>
-								<p class="text-primary text-sm font-semibold">19 May</p>
-								<p class="text-green-500 text-sm text-center">15 Slots</p>
+								<p class="text-primary text-sm font-semibold">
+									{get_day_and_month_name(date_today)}
+								</p>
+								<p class="text-green-500 text-sm text-center">
+									{clinic.slots > 1 ? clinic.slots + ' slots' : clinic.slots + ' slot'}
+								</p>
 							</button>
 						</div>
 					</div>
 				</div>
 				<div class="w-full flex flex-col bg-white rounded-xl drop-shadow-md p-1 py-6 mt-8">
-					<p class="pb-4 ml-6 font-bold">Morning</p>
-					<div class="flex flex-wrap gap-2 w-auto justify-center">
-						<button
-							class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm"
-						>
-							10:40 AM
-						</button>
-						<button
-							class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm"
-						>
-							10:40 AM
-						</button>
-						<button
-							class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm"
-						>
-							10:40 AM
-						</button>
-						<button
-							class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm"
-						>
-							10:40 AM
-						</button>
-					</div>
-					<p class="py-4 ml-6 font-bold">Afternoon</p>
-					<div class="flex flex-wrap gap-2 w-auto justify-center">
-						<button
-							class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm"
-						>
-							10:40 AM
-						</button>
-						<button
-							class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm"
-						>
-							10:40 AM
-						</button>
-						<button
-							class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm"
-						>
-							10:40 AM
-						</button>
-						<button
-							class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm"
-						>
-							10:40 AM
-						</button>
-					</div>
-					<p class="py-4 ml-6 font-bold">Evening</p>
-					<div class="flex flex-wrap gap-2 w-auto justify-center">
-						<button
-							class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm"
-						>
-							10:40 AM
-						</button>
-						<button
-							class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm"
-						>
-							10:40 AM
-						</button>
-						<button
-							class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm"
-						>
-							10:40 AM
-						</button>
-						<button
-							class="text-center rounded border-2 border-solid text-primary border-primary p-2 text-sm"
-						>
-							10:40 AM
-						</button>
-					</div>
+					{#if morningSlots.length > 1}
+						<p class="pb-4 ml-6 font-bold">Morning</p>
+						<div class="flex flex-wrap gap-2 w-auto justify-center">
+							{#each morningSlots as slot}
+								<button
+									disabled={booked_timings && booked_timings.includes(slot) ? true : false}
+									class:select={selected === get_am_pm_from_time(slot)}
+									on:click={() => (selected = get_am_pm_from_time(slot))}
+									class="text-center rounded border-2 border-solid text-primary uppercase p-2 text-sm {booked_timings &&
+									booked_timings.includes(slot)
+										? 'bg-red-900 cursor-not-allowed border-red-900'
+										: 'border-primary'}"
+								>
+									<span class={booked_timings && booked_timings.includes(slot) ? 'text-white' : ''}
+										>{get_am_pm_from_time(slot)}</span
+									>
+								</button>
+							{/each}
+						</div>
+					{/if}
+					{#if afternoonSlots.length > 1}
+						<p class="pb-4 ml-6 font-bold">Afternoon</p>
+						<div class="flex flex-wrap gap-2 w-auto justify-center">
+							{#each afternoonSlots as slot}
+								<button
+									disabled={booked_timings && booked_timings.includes(slot) ? true : false}
+									class:select={selected === get_am_pm_from_time(slot)}
+									on:click={() => (selected = get_am_pm_from_time(slot))}
+									class="text-center rounded border-2 border-solid text-primary uppercase p-2 text-sm {booked_timings &&
+									booked_timings.includes(slot)
+										? 'bg-red-900 cursor-not-allowed border-red-900'
+										: 'border-primary'}"
+								>
+									<span class={booked_timings && booked_timings.includes(slot) ? 'text-white' : ''}
+										>{get_am_pm_from_time(slot)}</span
+									>
+								</button>
+							{/each}
+						</div>
+					{/if}
+					{#if eveningSlots.length > 0}
+						<p class="pb-4 ml-6 font-bold">Evening</p>
+						<div class="flex flex-wrap gap-2 w-auto justify-center">
+							{#each eveningSlots as slot}
+								<button
+									disabled={booked_timings && booked_timings.includes(slot) ? true : false}
+									class:select={selected === get_am_pm_from_time(slot)}
+									on:click={() => (selected = get_am_pm_from_time(slot))}
+									class="text-center rounded border-2 border-solid text-primary uppercase p-2 text-sm {booked_timings &&
+									booked_timings.includes(slot)
+										? 'bg-red-900 cursor-not-allowed border-red-900'
+										: 'border-primary'}"
+								>
+									<span class={booked_timings && booked_timings.includes(slot) ? 'text-white' : ''}
+										>{get_am_pm_from_time(slot)}</span
+									>
+								</button>
+							{/each}
+						</div>
+					{/if}
 				</div>
 				<div class="w-full flex justify-center items-center py-6">
-					<button class="w-full bg-primary hover:bg-[#524af4] py-4 rounded text-white">Book Appointment</button>
+					{#if is_loading}
+						<button disabled class="w-full bg-[#7069f5] cursor-not-allowed  py-4 rounded text-white"
+							><i class="loading fa fa-spinner fa-spin mr-2" />Book Appointment</button
+						>
+					{:else}
+						<button
+							disabled={selected ? false : true}
+							on:click={bookAppointment}
+							class="w-full {selected
+								? 'bg-primary hover:bg-[#524af4]'
+								: 'bg-[#7069f5] cursor-not-allowed'}  py-4 rounded text-white"
+							>Book Appointment</button
+						>
+					{/if}
 				</div>
 			</div>
 		</div>
@@ -256,3 +385,10 @@ import Footer from '$lib/components/Footer.svelte'
 {:else}
 	<Loading />
 {/if}
+
+<style>
+	.select {
+		background-color: #524af4;
+		color: white;
+	}
+</style>

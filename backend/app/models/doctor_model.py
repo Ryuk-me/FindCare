@@ -3,6 +3,7 @@ from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from app.database import Base
 import uuid
+from sqlalchemy.orm import relationship
 
 
 def generate_uuid():

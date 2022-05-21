@@ -24,10 +24,18 @@
 			})
 			const users = await resp.json()
 			const data = await res.json()
+			let u = null
+			let c = null
+			if (res.ok) {
+				c = data
+			}
+			if (resp.ok) {
+				u = users
+			}
 			return {
 				props: {
-					users,
-					clinics: data
+					users: u,
+					clinics: c
 				}
 			}
 		} else {
@@ -112,19 +120,27 @@
 		const users_temp = await resp.json()
 		const clinics_temp = await res.json()
 		is_dashboard_loading = false
-		users = users_temp
-		clinics = clinics_temp
+		if (res.ok) {
+			clinics = clinics_temp
+		} else {
+			clinics = null
+		}
+		if (resp.ok) {
+			users = users_temp
+		} else {
+			users = null
+		}
 		selected = 'dashboard'
 	}
 
-	$: if ($adminQueryUserEmail) {
+	$: if ($adminQueryUserEmail && users) {
 		filteredUserList = users.filter((data) =>
 			data.email.toLowerCase().startsWith($adminQueryUserEmail.toLowerCase())
 		)
 	} else {
-		filteredUserList = [...users]
+		if (users) filteredUserList = [...users]
 	}
-	$: if ($adminQueryDoctorName) {
+	$: if ($adminQueryDoctorName && clinics) {
 		filteredDoctorList = clinics.filter((data) => {
 			const fullName = data.doctor.name.toLowerCase()
 			const reversedFullName = fullName.split('').reverse().join('').toLowerCase()
@@ -132,7 +148,7 @@
 			return fullName.includes(trimmedSearchValue) || reversedFullName.includes(trimmedSearchValue)
 		})
 	} else {
-		filteredDoctorList = [...clinics]
+		if (clinics) filteredDoctorList = [...clinics]
 	}
 </script>
 
@@ -304,11 +320,15 @@
 		<Header {clinics} />
 		<div class="px-4 md:px-10 mx-auto w-full m-24 mt-3">
 			{#if selected == 'dashboard'}
-				<SearchSort placeholderdata="Search User By Email" type="user" />
-				<UserTable users={filteredUserList} />
+				{#if users}
+					<SearchSort placeholderdata="Search User By Email" type="user" />
+					<UserTable users={filteredUserList} />
+				{/if}
 				<hr class="my-12" />
-				<SearchSort placeholderdata="Search Doctor By Name" type="doctor" />
-				<DoctorTable clinics={filteredDoctorList} />
+				{#if clinics}
+					<SearchSort placeholderdata="Search Doctor By Name" type="doctor" />
+					<DoctorTable clinics={filteredDoctorList} />
+				{/if}
 			{/if}
 			{#if selected == 'Account Setting'}
 				<AccountSetting {accountSettingJson} />

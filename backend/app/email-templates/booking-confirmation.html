@@ -1,0 +1,187 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap" rel="stylesheet">
+    <title>HTML Email</title>
+    <style type="text/css">
+        body {
+            Margin: 0;
+            padding: 0;
+            /* font-family: "Maven Pro"; */
+        }
+
+        table {
+            border-spacing: 0;
+        }
+
+        td {
+            padding: 0;
+        }
+
+        img {
+            border: 0;
+        }
+
+        .wrapper {
+            width: 100%;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            /* width: 600px; */
+        }
+
+        .outer {
+            margin: 0 auto;
+            width: 100%;
+            max-width: 600px;
+            border-spacing: 0;
+        }
+
+        .findcare>td {
+            height: 150px;
+        }
+
+        .findcare>td>img {
+            width: 250px;
+        }
+
+        .welcome>td>img {
+            width: 400px;
+        }
+
+        .footer>td>a {
+            margin: 0 20px;
+            color: white;
+            font-size: 15px;
+        }
+
+        .footer>td>p {
+            font-size: 15px;
+            color: white;
+        }
+
+        .reset>td>img {
+            width: 150px;
+        }
+
+        @media screen and (max-width: 600px) {}
+
+        @media screen and (max-width: 400px) {
+            .findcare>td {
+                height: 100px !important;
+            }
+
+            .findcare>td>img {
+                width: 180px !important;
+            }
+
+            .welcome>td>img {
+                width: 280px !important;
+            }
+
+            .footer>td>a {
+                font-size: 13px !important;
+            }
+
+            .footer>td>p {
+                font-size: 13px !important;
+            }
+
+            .reset>td>img {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <center class="wrapper">
+        <div class="container">
+            <table class="outer">
+                <tr>
+                    <td>
+                        <table width="100%">
+                            <tr class="findcare">
+                                <td style="background-color: #004eff;text-align: center;">
+                                    <img src="https://findcare-ryuk-me.cloud.okteto.net/email-template-img/FindCare.png"
+                                        alt="findcare">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- <tr>
+                    <td style="text-align: center;font-size: 30px;line-height: 80px;font-weight: bold;font-size: 35px;">Welcome to FindCare</td>
+                </tr> -->
+
+
+                <tr class="reset">
+                    <td style="text-align: center;padding: 50px 0;">
+                        <img src="https://findcare-ryuk-me.cloud.okteto.net/email-template-img/checked.png" alt="reset">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center;color: black;">
+                        <p style="padding: 0 30px;font-size: 18px;font-weight: bold;">Your appointment has been
+                            booked!</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center;color: black;padding-bottom: 60px;padding-top: 20px;">
+                        <p style="padding: 0 30px;font-size: 18px;">{{time}}</p>
+                        <p style="font-size: 18px;font-weight: bold;">{{doctor}} ({{clinic}})</p>
+                        <p style="font-size: 18px;">{{address}}</p>
+                    </td>
+                </tr>
+
+
+
+                <tr>
+                    <td>
+                        <table width="100%" style="background-color: #004eff;">
+                            <tr class="footer">
+                                <td style="text-align: center;padding-top: 20px;">
+                                    <a>Contact</a>
+                                    <a>Terms of Service</a>
+                                    <a>Support</a>
+                                </td>
+                            </tr>
+                            <tr class="footer">
+                                <td style="text-align: center;padding-bottom: 6px;">
+                                    <p>© 2022 FindCare</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- <tr>
+                    <td style="text-align: center;background-color: #004eff;padding-top: 20px;">
+                        <a style="margin: 0 20px;color: white;">Contact</a>
+                        <a style="margin: 0 20px;color: white;">Terms of Service</a>
+                        <a style="margin: 0 20px;color: white;">Support</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;background-color: #004eff;color: white;padding-bottom: 6px;">
+                        <p>© 2022 FindCare</p>
+                    </td>
+                </tr> -->
+            </table>
+        </div>
+    </center>
+</body>
+
+</html>

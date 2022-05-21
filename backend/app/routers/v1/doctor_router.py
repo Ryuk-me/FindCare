@@ -63,6 +63,12 @@ async def change_password(doctor_p: change_password_schema.ChangePassword, db: S
 @router.put('/', status_code=status.HTTP_202_ACCEPTED, response_model=doctor_schema.DoctorOut)
 async def update_doctor_details(doctor: doctor_schema.UpdateDoctorDetails, db: Session = Depends(_services.get_db), current_doctor: doctor_model.Doctor = Depends(get_current_doctor), access=Depends(verify_doctor_state)):
     is_something_changed: bool = False
+    if doctor.phone and current_doctor.phone != doctor.phone:
+        if not _services.get_doctor_by_phone_no(db, doctor.phone) and not _services.get_user_by_phone_no(db, doctor.phone):
+            current_doctor.phone = doctor.phone
+            is_something_changed = True
+        else:
+            raise errors.PHONE_NUMBER_ALREADY_EXIST
     if doctor.email and current_doctor.email != doctor.email:
         if not _services.is_doctor_exist(db, doctor.email) and not _services.is_user_exist(db, doctor.email) and not _services.is_admin_exist(db, doctor.email):
             expire_time = timedelta(minutes=int(
@@ -85,12 +91,6 @@ async def update_doctor_details(doctor: doctor_schema.UpdateDoctorDetails, db: S
         current_doctor.about = doctor.about
         is_something_changed = True
 
-    if doctor.phone and current_doctor.phone != doctor.phone:
-        if not _services.get_doctor_by_phone_no(db, doctor.phone) and not _services.get_user_by_phone_no(db, doctor.phone):
-            current_doctor.phone = doctor.phone
-            is_something_changed = True
-        else:
-            raise errors.PHONE_NUMBER_ALREADY_EXIST
     if doctor.profile_image and doctor.profile_image != current_doctor.profile_image:
         current_doctor.profile_image = doctor.profile_image
         is_something_changed = True
