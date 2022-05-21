@@ -64,13 +64,12 @@
 		if (new_time > 12) {
 			time = new_time - 12 + last_two + ' pm'
 		} else if (new_time == 12) {
-			time = new_time + time.slice(2, 5) + 'pm'
+			time = new_time + time.slice(2, 5) + ' pm'
 		} else {
 			time = time + ' am'
 		}
 		return time
 	}
-
 	function incrementDate(dateInput, increment) {
 		var dateFormatTotime = new Date(dateInput)
 		var increasedDate = new Date(dateFormatTotime.getTime() + increment * 86400000)
@@ -121,7 +120,7 @@
 		let hour = parseInt(splitted.at(0).split(':').at(0))
 		let am_or_pm = splitted.at(-1)
 		if (am_or_pm === 'pm') {
-			hour += 12
+			if (hour !== 12) hour += 12
 		}
 		return hour.toLocaleString() + ':' + minutes
 	}
@@ -145,8 +144,8 @@
 		if (session.status !== 'user') {
 			is_loading = false
 			notificationToast(
-				'Only users can book appointment you are a ' + session.status,
-				false,
+				'Only users can book appointment you are a ' + capitalize(session.status),
+				true,
 				3000,
 				'error'
 			)
@@ -178,8 +177,30 @@
 						'success',
 						toastCallBackToreload
 					)
+				}
+				if (obj.status_cod === status_code.HTTP_403_FORBIDDEN) {
+					notificationToast(
+						'Session Expired Please Login Again',
+						false,
+						2000,
+						'error',
+						toastCallBackToreload
+					)
+					return
 				} else {
-					notificationToast(obj.data.detail, false, 2000, 'error', toastCallBackToreload)
+					if (obj.data?.detail[0]?.msg) {
+						notificationToast(
+							capitalize(
+								obj.data.detail[0].loc?.slice(1).join(', ') + ' ' + obj.data?.detail[0]?.msg
+							),
+							false,
+							2000,
+							'error',
+							toastCallBackToreload
+						)
+					} else {
+						notificationToast(obj.data?.detail, false, 2000, 'error')
+					}
 				}
 			})
 	}

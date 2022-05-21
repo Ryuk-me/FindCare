@@ -294,7 +294,7 @@ def is_clinic_exist_by_id(db: Session, clinic_id: str):
 # ***********************************************************************************
 
 
-def add_appointment(db: Session, appointment: appointment_schema.CreateAppointment, user_id: str):
+async def add_appointment(db: Session, appointment: appointment_schema.CreateAppointment, user_id: str):
     clinic: clinic_schema.ClinicOut = is_clinic_exist_by_id(
         db, appointment.clinic_id)
     if clinic:
@@ -317,10 +317,24 @@ def add_appointment(db: Session, appointment: appointment_schema.CreateAppointme
             db.add(appointment)
             db.commit()
             db.refresh(appointment)
+            user = get_user(db, user_id)
+            city = clinic.address['city']
+            state = clinic.address['state']
+            pincode = clinic.address['pincode']
+            address = clinic.address['address']
+            address = str(address).title() + ', ' + city + \
+                ', ' + state + ' (' + pincode + ')'
+            appointment_time = str(appointment.schedule).split(' ')[-1]
+            time_object = datetime.strptime(appointment_time, '%H:%M:%S')
+            date_object = datetime.strptime(
+                str(appointment.schedule).split(' ')[0], '%Y-%m-%d')
+            appointment_time = date_object.strftime(
+                '%d %b, %Y') + " " + str(time_object.strftime('%I:%M %p'))
+            await send_apppointment_booked_email(subject="Booking Confirmation !", recipients=user.email, time=appointment_time, doctor=clinic.doctor.name, clinic=clinic.name, address=address)
             return appointment
         raise errors.CLINIC_IS_NOT_SERVICEABLE
 
-    # raise errors.CLINIC_NOT_FOUND
+    raise errors.CLINIC_NOT_FOUND
 
 
 def cancel_appointments(db: Session, appointment: appointment_schema.AppointmentOutUser | appointment_schema.AppointmentOut, is_User=False):
@@ -814,6 +828,25 @@ async def send_email_change(subject: str, recipients: str, token_url: str):
     fm = FastMail(conf)
     await fm.send_message(message, template_name='mail-change.html')
     return {"detail": "Email changed successfully please verify to continue"}
+
+
+async def send_apppointment_booked_email(subject: str, recipients: str, time: str, doctor: str, clinic: str, address: str):
+    message = MessageSchema(
+        subject=subject,
+        recipients=[recipients],
+        template_body={
+            "time": time,
+            "doctor": doctor,
+            "clinic": clinic,
+            "address": address
+        }
+    )
+
+    conf = login_mail()
+    fm = FastMail(conf)
+    await fm.send_message(message, template_name='booking-confirmation.html')
+
+    return {"detail": "Appointment Email sent Successfully"}
 
 
 def login_mail():
