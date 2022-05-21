@@ -33,6 +33,7 @@
 	import { navigating } from '$app/stores'
 	import Loading from '$lib/components/Loading.svelte'
 	import { goto } from '$app/navigation'
+import Footer from '$lib/components/Footer.svelte'
 	export let clinic
 	export let status
 	let doctor = clinic.doctor
@@ -250,6 +251,7 @@
 				</div>
 			</div>
 		</div>
+		<Footer/>
 	</div>
 {:else}
 	<Loading />
