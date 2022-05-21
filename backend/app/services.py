@@ -460,26 +460,27 @@ def get_slots(clinic_id: str, db: Session):
         appointment_model.Appointment.clinic_id == clinic_id).all()
     date_and_time_list = []
     for appointment in appoit:
-        d = datetime.fromisoformat(str(appointment.schedule))
-        which_date = f"{d:%Y-%m-%d}"
-        which_time = f"{d:%H:%M}"
-        if not date_and_time_list:
-            date_and_time_list.append(
-                {which_date: [which_time]}
-            )
-        else:
-            for detail in date_and_time_list:
-                if which_date in detail:
-                    list_of_num = detail[which_date]
-                    if which_time not in list_of_num:
-                        detail[which_date] = [*list_of_num, which_time]
+        if not appointment.is_cancelled:
+            d = datetime.fromisoformat(str(appointment.schedule))
+            which_date = f"{d:%Y-%m-%d}"
+            which_time = f"{d:%H:%M}"
+            if not date_and_time_list:
+                date_and_time_list.append(
+                    {which_date: [which_time]}
+                )
+            else:
+                for detail in date_and_time_list:
+                    if which_date in detail:
+                        list_of_num = detail[which_date]
+                        if which_time not in list_of_num:
+                            detail[which_date] = [*list_of_num, which_time]
+                        else:
+                            raise errors.TIME_SLOT_NOT_AVAILABLE
                     else:
-                        raise errors.TIME_SLOT_NOT_AVAILABLE
-                else:
-                    date_and_time_list.append(
-                        {which_date: [which_time]}
-                    )
-                    break
+                        date_and_time_list.append(
+                            {which_date: [which_time]}
+                        )
+                        break
     return date_and_time_list
 
 
