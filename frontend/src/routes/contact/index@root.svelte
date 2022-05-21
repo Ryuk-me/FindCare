@@ -3,14 +3,43 @@
 	import Navbar from '$lib/components/Navbar.svelte'
 	import Loading from '$lib/components/Loading.svelte'
 	import { navigating } from '$app/stores'
+	import { ENV, status_code } from '$lib/utils'
+	import { notificationToast } from '$lib/NotificationToast'
+
+	let name
+	let email
+	let message
+	let is_loading = false
+
+	const sendEmail = () => {
+		is_loading = true
+		fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/search/contact-mail', {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json'
+			},
+			body: JSON.stringify({
+				name,
+				email,
+				message
+			})
+		})
+			.then((r) => r.json().then((data) => ({ status_cod: r.status, data })))
+			.then((obj) => {
+				is_loading = false
+				if (obj.status_cod === status_code.HTTP_200_OK) {
+					notificationToast(obj.data.detail, true, 3000, 'success')
+				}
+			})
+	}
 </script>
 
 <svelte:head>
 	<title>Contact</title>
 </svelte:head>
-<!-- Navbar -->
 
 {#if !$navigating}
+	<!-- Navbar -->
 	<Navbar />
 
 	<!-- Body -->
@@ -61,6 +90,8 @@
 				<div class="relative mb-4">
 					<label for="name" class="leading-7 text-sm text-gray-600">Name</label>
 					<input
+						bind:value={name}
+						required
 						type="text"
 						id="name"
 						name="name"
@@ -70,6 +101,8 @@
 				<div class="relative mb-4">
 					<label for="email" class="leading-7 text-sm text-gray-600">Email</label>
 					<input
+						bind:value={email}
+						required
 						type="email"
 						id="email"
 						name="email"
@@ -79,22 +112,26 @@
 				<div class="relative mb-4">
 					<label for="message" class="leading-7 text-sm text-gray-600">Message</label>
 					<textarea
+						bind:value={message}
+						required
 						id="message"
 						name="message"
 						class="w-full bg-white rounded border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
 					/>
 				</div>
 				<button
-					class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-[#524af4] rounded text-lg"
-					>Submit</button
+					disabled={is_loading ? true : false}
+					on:click={sendEmail}
+					class="text-white {is_loading
+						? 'bg-[#7069f5] cursor-not-allowed'
+						: 'bg-indigo-500 hover:bg-[#524af4]'}  border-0 py-2 px-6 focus:outline-none rounded text-lg"
+					><i
+						class={is_loading ? 'loading fa fa-spinner fa-spin relative right-2' : ''}
+					/>Submit</button
 				>
 			</div>
 		</div>
 	</section>
-	<!--Start of Tawk.to Script-->
-	<!--End of Tawk.to Script-->
-	<!-- Footer -->
-
 	<Footer />
 {:else}
 	<Loading />

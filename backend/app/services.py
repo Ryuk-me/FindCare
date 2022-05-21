@@ -864,6 +864,22 @@ async def send_email_doctor_verify(subject: str, recipients: str):
     return {"detail": "Doctor Verification mail sent successfully"}
 
 
+async def send_contact_mail(subject: str, recipients: str, name: str, email_from: str, message: str):
+    message = MessageSchema(
+        subject=subject,
+        recipients=[recipients],
+        template_body={
+            "name": name,
+            "email_from": email_from,
+            "message": message
+        }
+    )
+    conf = login_mail()
+    fm = FastMail(conf)
+    await fm.send_message(message, template_name='contact-email-admin.html')
+    return {"detail": "Message Sent Successfully We will contact you within 24 hours."}
+
+
 async def send_apppointment_booked_email(subject: str, recipients: str, time: str, doctor: str, clinic: str, address: str, is_cancel=False):
     message = MessageSchema(
         subject=subject,
