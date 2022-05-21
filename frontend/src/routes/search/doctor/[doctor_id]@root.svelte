@@ -79,8 +79,8 @@
 
 	function get_day_and_month_name(date_today) {
 		date_today = date_today.split('-')
-		let date = date_today.at(-1)
-		let month = parseInt(date_today.at(-2))
+		let date = date_today[date_today.length - 1]
+		let month = parseInt(date_today[date_today.length - 2])
 		let name_of_month = month_name[month]
 		return date + ' ' + name_of_month
 	}
