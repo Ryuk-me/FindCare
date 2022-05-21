@@ -43,7 +43,11 @@
 	import { navigating } from '$app/stores'
 	import Loading from '$lib/components/Loading.svelte'
 	import { goto } from '$app/navigation'
+
+import Footer from '$lib/components/Footer.svelte'
+=======
 	import { notificationToast } from '$lib/NotificationToast'
+
 	export let clinic
 	export let status
 	export let slots
@@ -376,6 +380,7 @@
 				</div>
 			</div>
 		</div>
+		<Footer/>
 	</div>
 {:else}
 	<Loading />

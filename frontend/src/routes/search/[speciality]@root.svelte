@@ -33,6 +33,7 @@
 	import Card from '$lib/components/doctor-card.svelte'
 	import { navigating } from '$app/stores'
 	import Loading from '$lib/components/Loading.svelte'
+import Footer from '$lib/components/Footer.svelte'
 	export let speciality
 	export let status
 	export let doctors
@@ -186,6 +187,7 @@
 				</div>
 			{/if}
 		</div>
+		<Footer/>
 	</div>
 {:else}
 	<Loading />
