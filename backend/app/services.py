@@ -24,7 +24,7 @@ async def get_db():
             name="User Account",
             email='user@findcare.com',
             dob="2002-04-26",
-            phone="9999999998",
+            phone="9999999999",
             gender="male",
             password="123"
         )
@@ -55,8 +55,26 @@ async def get_db():
         await create_doctor(db, doctor_in)
         doctor = is_doctor_exist(db, 'doctor@findcare.com')
         doctor.is_active = True
+        doctor.is_verified = True
         db.commit()
-
+    if doctor:
+        clinic = is_clinic_exist(db, None, doctor_id=doctor.id)
+        if not clinic:
+            clinic_in = clinic_schema.ClinicCreate(
+                name="Ohayo Clinic",
+                fees="300",
+                session_time="20",
+                opens_at="09:00:00",
+                closes_at="20:00:00",
+                is_open=True,
+                address={
+                    "pincode": "800006",
+                    "address": "jawahar nehru marg",
+                    "city": "Patna",
+                    "state": "Bihar"
+                },
+            )
+            add_clinic(db, clinic_in, doctor.id)
     try:
         yield db
     finally:
@@ -239,7 +257,7 @@ def get_clinic(db: Session, doctor_id: str):
                     cancelled_appointments_by_doctor += 1
                 if appointment.is_cancelled == "U":
                     cancelled_appointments_by_user += 1
-                if appointment.schedule:
+                if appointment.schedule and (appointment.is_cancelled != "U" or appointment.is_cancelled == "D"):
                     d = datetime.fromisoformat(str(appointment.schedule))
                     if f"{d:%Y-%m-%d}" == f"{datetime.now():%Y-%m-%d}":
                         today_appointments += 1
@@ -285,6 +303,15 @@ def add_appointment(db: Session, appointment: appointment_schema.CreateAppointme
         if clinic.doctor.is_banned:
             raise errors.DOCTOR_IS_BANNED
         if clinic.is_open:
+            d = datetime.fromisoformat(str(appointment.schedule))
+            which_date = f"{d:%Y-%m-%d}"
+            which_time = f"{d:%H:%M}"
+            list_of_appointments = get_slots(clinic_id=clinic.id, db=db)
+            if len(list_of_appointments) > 0:
+                for detail in list_of_appointments:
+                    if which_date in detail:
+                        if which_time in detail[which_date]:
+                            raise errors.TIME_SLOT_NOT_AVAILABLE
             appointment = appointment_model.Appointment(
                 user_id=user_id, doctor_id=clinic.doctor_id, cid=clinic.id, **appointment.dict())
             db.add(appointment)
@@ -293,7 +320,7 @@ def add_appointment(db: Session, appointment: appointment_schema.CreateAppointme
             return appointment
         raise errors.CLINIC_IS_NOT_SERVICEABLE
 
-    raise errors.CLINIC_NOT_FOUND
+    # raise errors.CLINIC_NOT_FOUND
 
 
 def cancel_appointments(db: Session, appointment: appointment_schema.AppointmentOutUser | appointment_schema.AppointmentOut, is_User=False):
@@ -412,6 +439,34 @@ def get_all_speciality(db: Session):
     if specialityList:
         return specialityList
     raise errors.NO_SPECIALITY_FOUND
+
+
+def get_slots(clinic_id: str, db: Session):
+    appoit = db.query(appointment_model.Appointment).filter(
+        appointment_model.Appointment.clinic_id == clinic_id).all()
+    date_and_time_list = []
+    for appointment in appoit:
+        d = datetime.fromisoformat(str(appointment.schedule))
+        which_date = f"{d:%Y-%m-%d}"
+        which_time = f"{d:%H:%M}"
+        if not date_and_time_list:
+            date_and_time_list.append(
+                {which_date: [which_time]}
+            )
+        else:
+            for detail in date_and_time_list:
+                if which_date in detail:
+                    list_of_num = detail[which_date]
+                    if which_time not in list_of_num:
+                        detail[which_date] = [*list_of_num, which_time]
+                    else:
+                        raise errors.TIME_SLOT_NOT_AVAILABLE
+                else:
+                    date_and_time_list.append(
+                        {which_date: [which_time]}
+                    )
+                    break
+    return date_and_time_list
 
 
 # ***********************************************************************************
@@ -616,36 +671,6 @@ def change_password(db: Session, password: str, obj: change_password_schema.Chan
         current_db_obj.updated_at = datetime.now()
     db.commit()
     return {"detail": "Password changed successfully"}
-
-
-# async def reset_password(db: Session, email: str):
-#     user = db.query(user_model.User).filter(
-#         user_model.User.email == email).first()
-#     doctor = db.query(doctor_model.Doctor).filter(
-#         doctor_model.Doctor.email == email).first()
-#     admin = db.query(admin_model.Admin).filter(
-#         admin_model.Admin.email == email).first()
-#     if not user or doctor:
-#         raise errors.ACCOUNT_NOT_FOUND_WITH_THIS_EMAIL
-#     if admin:
-#         raise errors.PLEASE_CONTACT_ADMIN
-
-#     # temp_gen_pass = generate_random_password()
-#     final_obj = None
-
-#     if user:
-#         final_obj = user
-#     elif doctor:
-#         final_obj = doctor
-
-#     if not final_obj.is_active:
-#         raise errors.PLEASE_VERIFY_YOUR_EMAIL
-#     elif final_obj.is_banned:
-#         raise errors.USER_IS_BANNED
-
-    # change_password(db, temp_gen_pass, final_obj, final_obj)
-    # return await send_reset_password_mail(
-    #     subject="Reset Password", recipients=final_obj.email, password=temp_gen_pass)
 
 
 def generate_random_password():

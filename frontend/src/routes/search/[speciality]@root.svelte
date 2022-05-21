@@ -37,7 +37,7 @@
 	export let status
 	export let doctors
 	let searchQuery
-	let genderFilter
+	let genderFilter = 'anyone'
 	let filteredDoctorList = []
 	$: if (genderFilter && genderFilter !== 'anyone') {
 		filteredDoctorList = doctors.filter(
@@ -100,7 +100,7 @@
 		<div class="w-full flex">
 			<!-- lg:px-20 -->
 			<div class="lg:flex flex-col lg:w-80 p-4 hidden ml-20">
-				<div class="flex flex-col bg-white h-64 rounded-xl drop-shadow-md p-4 ">
+				<!-- <div class="flex flex-col bg-white h-64 rounded-xl drop-shadow-md p-4 ">
 					<div class="flex justify-between">
 						<p class="font-bold">Filter</p>
 						<button class="text-blue-700 font-bold">clear all</button>
@@ -120,11 +120,13 @@
 							<label for="next7days">Next 7 Days</label>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<div class="flex flex-col bg-white h-64 rounded-xl drop-shadow-md p-4 mt-12">
 					<div class="flex justify-between">
 						<p class="font-bold">Gender</p>
-						<button class="text-blue-700 font-bold">clear all</button>
+						<button on:click={() => (genderFilter = 'anyone')} class="text-blue-700 font-bold"
+							>clear all</button
+						>
 					</div>
 					<div class="flex flex-col mt-6">
 						<div class="mt-4">

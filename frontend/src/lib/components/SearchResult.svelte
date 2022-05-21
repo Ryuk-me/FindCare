@@ -14,7 +14,7 @@
 		<span class="">{searchType}</span>
 	</div>
 {:else}
-	<div class="results flex flex-row justify-between rounded-md hover:text-primary py-2 px-3">
-		<p class="">{name}</p>
+	<div class="results flex flex-row justify-between rounded-md py-2 px-3">
+		<p class="text-black">{name}</p>
 	</div>
 {/if}
