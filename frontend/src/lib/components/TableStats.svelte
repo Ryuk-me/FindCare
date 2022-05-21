@@ -3,6 +3,7 @@
 	import { ENV, status_code } from '$lib/utils'
 	import { notificationToast } from '$lib/NotificationToast'
 	import TableDropdown from '$lib/components/TableDropdown.svelte'
+	import { doctorDashBoardHeader } from '../../stores'
 	export let patientImg
 	export let appointment_id
 	export let patientName
@@ -25,6 +26,17 @@
 				}
 			}
 		)
+		const resp = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/doctor/clinic/', {
+			method: 'GET',
+			headers: {
+				'Content-type': 'application/json',
+				//@ts-ignore
+				Authorization: `Bearer ${$session.session}`
+			}
+		})
+		if (resp.ok) {
+			$doctorDashBoardHeader = await resp.json()
+		}
 		const data = await res.json()
 		is_loading_complete = false
 		if (res.status == status_code.HTTP_202_ACCEPTED) {
@@ -48,6 +60,17 @@
 				}
 			}
 		)
+		const resp = await fetch(ENV.VITE_FINDCARE_API_BASE_URL + '/api/v1/doctor/clinic/', {
+			method: 'GET',
+			headers: {
+				'Content-type': 'application/json',
+				//@ts-ignore
+				Authorization: `Bearer ${$session.session}`
+			}
+		})
+		if (resp.ok) {
+			$doctorDashBoardHeader = await resp.json()
+		}
 		const data = await res.json()
 		is_loading_cancel = false
 		if (res.status == status_code.HTTP_202_ACCEPTED) {

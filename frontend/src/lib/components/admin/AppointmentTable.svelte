@@ -2,7 +2,7 @@
 	// core components
 	import UserTableStats from '$lib/components/admin/UserTableStats.svelte'
 	import AppointmentTableStats from './AppointmentTableStats.svelte'
-	import { getFormattedDate } from '$lib/utils'
+	import { getFormattedDateDashBoard } from '$lib/utils'
 	import { navigating } from '$app/stores'
 	import Loading from '$lib/components/Loading.svelte'
 	// can be one of light or dark
@@ -92,7 +92,7 @@
 					{#each appointments as appointment}
 						<AppointmentTableStats
 							doctorName={appointment.clinic.doctor.name}
-							dateOfAppointment={getFormattedDate(appointment.schedule)}
+							dateOfAppointment={getFormattedDateDashBoard(appointment.schedule)}
 							status={checkAppointSatus(appointment)}
 							clinicAddress={appointment.clinic.address}
 							slug={appointment.clinic.doctor.slug}

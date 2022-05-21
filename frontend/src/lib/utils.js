@@ -39,7 +39,30 @@ export function checkUserType(session) {
 	}
 }
 
-export function getFormattedDate(d) {
+export function getFormattedDate(d = null, only_date = false) {
+	if (d) var date = new Date(d)
+	else var date = new Date()
+
+	var month = date.getMonth() + 1
+	var day = date.getDate()
+	var hour = date.getHours()
+	var min = date.getMinutes()
+	const ampm = hour >= 12 ? 'pm' : 'am'
+	//@ts-ignore
+	month = (month < 10 ? '0' : '') + month
+	//@ts-ignore
+	day = (day < 10 ? '0' : '') + day
+	//@ts-ignore
+	hour = (hour < 10 ? '0' : '') + hour
+	//@ts-ignore
+	min = (min < 10 ? '0' : '') + min
+
+	if (only_date || d) var str = date.getFullYear() + '-' + month + '-' + day
+	else var str = date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + min + ' ' + ampm
+	return str
+}
+
+export function getFormattedDateDashBoard(d) {
 	var date = new Date(d)
 
 	var month = date.getMonth() + 1
@@ -57,7 +80,6 @@ export function getFormattedDate(d) {
 	min = (min < 10 ? '0' : '') + min
 
 	var str = date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + min + ' ' + ampm
-
 	return str
 }
 
@@ -103,6 +125,21 @@ export const specialityList = [
 	// 	symptom: 'Back pain'
 	// }
 ]
+
+export const month_name = {
+	1: 'Jan',
+	2: 'Feb',
+	3: 'Mar',
+	4: 'Apr',
+	5: 'May',
+	6: 'Jun',
+	7: 'Jul',
+	8: 'Aug',
+	9: 'Sep',
+	10: 'Oct',
+	11: 'Nov',
+	12: 'Dec'
+}
 
 export const status_code = {
 	HTTP_100_CONTINUE: 100,

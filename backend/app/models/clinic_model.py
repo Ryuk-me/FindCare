@@ -1,10 +1,9 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Time
 from sqlalchemy.sql.expression import text
-from sqlalchemy.sql.sqltypes import TIMESTAMP, JSON
+from sqlalchemy.sql.sqltypes import TIMESTAMP
 from app.database import Base
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.dialects.postgresql import UUID
 import uuid
 
 

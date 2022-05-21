@@ -31,7 +31,7 @@
 		const data = await res.json()
 		is_loading_cancel = false
 		if (res.status == status_code.HTTP_202_ACCEPTED) {
-			notificationToast(data?.detail, false, 2000, 'error')
+			notificationToast(data?.detail, true, 2000, 'error')
 			status = 'cancelled'
 		} else if (res.status == status_code.HTTP_409_CONFLICT)
 			notificationToast(data?.detail, false, 2000, 'error')

@@ -154,6 +154,9 @@ NO_APPOINTMENT_FOUND_ERROR = HTTPException(
 NO_CANCELLATION_REASON = HTTPException(
     status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Please enter a cancellation reason")
 
+TIME_SLOT_NOT_AVAILABLE = HTTPException(
+    status_code=status.HTTP_409_CONFLICT, detail="Time slot not available")
+
 
 # ***********************************************************************************
 #                                                                                   #

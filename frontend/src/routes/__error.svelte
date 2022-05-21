@@ -35,6 +35,7 @@
 </div>
 
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Maven+Pro&family=Poppins:wght@700&display=swap');
 	@tailwind base;
 	@tailwind components;
 	@tailwind utilities;

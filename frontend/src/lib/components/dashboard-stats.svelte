@@ -19,10 +19,18 @@
 				</div>
 				<div class="w-full lg:w-6/12 xl:w-3/12 px-4">
 					<CardStats
+						statSubtitle="Completed Appointments"
+						statTitle={response ? response.completed_appointments.toLocaleString() : 0}
+						statIconName="fa-solid fa-calendar-check"
+						statIconColor="bg-orange-500"
+					/>
+				</div>
+				<div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+					<CardStats
 						statSubtitle="Pending Appointments"
 						statTitle={response ? response.pending_appointments.toLocaleString() : 0}
-						statIconName="fas  fa-calendar-alt"
-						statIconColor="bg-orange-500"
+						statIconName="fa-solid fa-clock-rotate-left"
+						statIconColor="bg-[#F29339]"
 					/>
 				</div>
 				<div class="w-full lg:w-6/12 xl:w-3/12 px-4">
@@ -33,12 +41,28 @@
 						statIconColor="bg-emerald-500"
 					/>
 				</div>
-				<div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+				<div class="w-full lg:w-6/12 xl:w-3/12 px-4 sm:mt-4">
 					<CardStats
 						statSubtitle="Total Patient"
 						statTitle={response ? response.total_patients.toLocaleString() : 0}
 						statIconName="fas fa-users"
 						statIconColor="bg-pink-500"
+					/>
+				</div>
+				<div class="w-full lg:w-6/12 xl:w-3/12 px-4 sm:mt-4">
+					<CardStats
+						statSubtitle="Appointments Cancelled By User"
+						statTitle={response ? response.cancelled_appointments_by_user.toLocaleString() : 0}
+						statIconName="fa-solid fa-xmark"
+						statIconColor="bg-[#D9512C]"
+					/>
+				</div>
+				<div class="w-full lg:w-6/12 xl:w-3/12 px-4 sm:mt-4">
+					<CardStats
+						statSubtitle="Appointments Cancelled By You"
+						statTitle={response ? response.cancelled_appointments_by_doctor.toLocaleString() : 0}
+						statIconName="fa-solid fa-xmark"
+						statIconColor="bg-[#D9512C]"
 					/>
 				</div>
 			</div>
