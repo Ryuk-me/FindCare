@@ -54,7 +54,7 @@ async def cancel_appointment(id: str, db: Session = Depends(_services.get_db), c
         raise errors.PLEASE_VERIFY_YOUR_EMAIL
     appointment = _services.get_appointment_by_doctor_id(
         db, id, current_doctor.id)
-    return _services.cancel_appointments(db, appointment, is_User=False)
+    return await _services.cancel_appointments(db, appointment, is_User=False)
 
 
 # # ***********************************************************************************

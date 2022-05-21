@@ -337,7 +337,7 @@ async def add_appointment(db: Session, appointment: appointment_schema.CreateApp
     raise errors.CLINIC_NOT_FOUND
 
 
-def cancel_appointments(db: Session, appointment: appointment_schema.AppointmentOutUser | appointment_schema.AppointmentOut, is_User=False):
+async def cancel_appointments(db: Session, appointment: appointment_schema.AppointmentOutUser | appointment_schema.AppointmentOut, is_User=False):
     appointment: appointment_schema.AppointmentOutUser | appointment_schema.AppointmentOut = db.query(appointment_model.Appointment).filter(
         appointment_model.Appointment.id == appointment.id).first()
     if appointment.is_completed:
@@ -356,6 +356,24 @@ def cancel_appointments(db: Session, appointment: appointment_schema.Appointment
         appointment.is_cancelled = 'D'
     appointment.when_cancelled = datetime.now()
     db.commit()
+    clinic = get_clinic(db, appointment.doctor_id)
+    user = get_user(db, appointment.user_id)
+    city = clinic.address['city']
+    state = clinic.address['state']
+    pincode = clinic.address['pincode']
+    address = clinic.address['address']
+    address = str(address).title() + ', ' + city + \
+        ', ' + state + ' (' + pincode + ')'
+    appointment_time = str(appointment.schedule).split(' ')[-1]
+    time_object = datetime.strptime(appointment_time, '%H:%M:%S')
+    date_object = datetime.strptime(
+        str(appointment.schedule).split(' ')[0], '%Y-%m-%d')
+    appointment_time = date_object.strftime(
+        '%d %b, %Y') + " " + str(time_object.strftime('%I:%M %p'))
+    if is_User:
+        await send_apppointment_booked_email(subject="Appointment Cancelled !", recipients=user.email, time=appointment_time, doctor=clinic.doctor.name, clinic=clinic.name, address=address, is_cancel=True)
+    else:
+        await send_apppointment_booked_email(subject="Appointment Cancelled By Doctor !", recipients=user.email, time=appointment_time, doctor=clinic.doctor.name, clinic=clinic.name, address=address, is_cancel=True)
     return {"detail": "Appointment cancelled successfully"}
 
 
@@ -570,7 +588,7 @@ def get_all_clinics(db: Session):
     raise errors.CLINIC_NOT_FOUND
 
 
-def verify_doctor(db: Session, doctor_id: str):
+async def verify_doctor(db: Session, doctor_id: str):
     doctor: doctor_schema.DoctorOut = db.query(doctor_model.Doctor).filter(
         doctor_model.Doctor.id == doctor_id).first()
     if doctor:
@@ -580,6 +598,7 @@ def verify_doctor(db: Session, doctor_id: str):
             raise errors.DOCTOR_IS_BANNED
         doctor.is_verified = True
         db.commit()
+        await send_email_doctor_verify(subject="Account Verified !", recipients=doctor.email)
         return {"detail": "Doctor verified successfully"}
     raise errors.NO_DOCTOR_FOUND_WITH_THIS_ID
 
@@ -831,7 +850,21 @@ async def send_email_change(subject: str, recipients: str, token_url: str):
     return {"detail": "Email changed successfully please verify to continue"}
 
 
-async def send_apppointment_booked_email(subject: str, recipients: str, time: str, doctor: str, clinic: str, address: str):
+async def send_email_doctor_verify(subject: str, recipients: str):
+    message = MessageSchema(
+        subject=subject,
+        recipients=[recipients],
+        template_body={
+            "just_a_place_holder": "just_a_place_holder"
+        }
+    )
+    conf = login_mail()
+    fm = FastMail(conf)
+    await fm.send_message(message, template_name='doctor-verify.html')
+    return {"detail": "Doctor Verification mail sent successfully"}
+
+
+async def send_apppointment_booked_email(subject: str, recipients: str, time: str, doctor: str, clinic: str, address: str, is_cancel=False):
     message = MessageSchema(
         subject=subject,
         recipients=[recipients],
@@ -845,7 +878,10 @@ async def send_apppointment_booked_email(subject: str, recipients: str, time: st
 
     conf = login_mail()
     fm = FastMail(conf)
-    await fm.send_message(message, template_name='booking-confirmation.html')
+    if is_cancel:
+        await fm.send_message(message, template_name='booking-cancel.html')
+    else:
+        await fm.send_message(message, template_name='booking-confirmation.html')
 
     return {"detail": "Appointment Email sent Successfully"}
 

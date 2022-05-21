@@ -90,7 +90,7 @@ async def get_all_users(db: Session = Depends(_services.get_db), current_admin: 
 @router.post('/doctor/verify', status_code=status.HTTP_200_OK)
 async def verify_clinic(id: str, db: Session = Depends(_services.get_db), current_admin: admin_model.Admin = Depends(get_current_admin)):
     if current_admin.is_super_admin:
-        return _services.verify_doctor(db, id)
+        return await _services.verify_doctor(db, id)
     raise errors.NOT_A_SUPER_ADMIN
 
 

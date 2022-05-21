@@ -33,17 +33,43 @@
 	import Card from '$lib/components/doctor-card.svelte'
 	import { navigating } from '$app/stores'
 	import Loading from '$lib/components/Loading.svelte'
-import Footer from '$lib/components/Footer.svelte'
+	import Footer from '$lib/components/Footer.svelte'
 	export let speciality
 	export let status
 	export let doctors
 	let searchQuery
 	let genderFilter = 'anyone'
+	let fees_filter
 	let filteredDoctorList = []
 	$: if (genderFilter && genderFilter !== 'anyone') {
 		filteredDoctorList = doctors.filter(
 			(data) => data.doctor.gender.toLowerCase() == genderFilter.toLowerCase()
 		)
+	} else {
+		filteredDoctorList = [...doctors]
+	}
+	$: if (fees_filter) {
+		let more_than = null
+		let less_than = null
+		if (fees_filter === 'free') {
+			filteredDoctorList = doctors.filter((data) => parseInt(data.fees) === 0)
+		}
+		if (fees_filter == '1-200') {
+			less_than = 200
+			more_than = 1
+			filteredDoctorList = doctors.filter(
+				(data) => parseInt(data.fees) > more_than && parseInt(data.fees) <= less_than
+			)
+		} else if (fees_filter == '201-400') {
+			less_than = 400
+			more_than = 201
+			filteredDoctorList = doctors.filter(
+				(data) => parseInt(data.fees) > more_than && parseInt(data.fees) <= less_than
+			)
+		} else {
+			more_than = 500
+			filteredDoctorList = doctors.filter((data) => parseInt(data.fees) > more_than)
+		}
 	} else {
 		filteredDoctorList = [...doctors]
 	}
@@ -101,28 +127,63 @@ import Footer from '$lib/components/Footer.svelte'
 		<div class="w-full flex">
 			<!-- lg:px-20 -->
 			<div class="lg:flex flex-col lg:w-80 p-4 hidden ml-20">
-				<!-- <div class="flex flex-col bg-white h-64 rounded-xl drop-shadow-md p-4 ">
+				<div class="flex flex-col bg-white h-64 rounded-xl drop-shadow-md p-4 ">
 					<div class="flex justify-between">
-						<p class="font-bold">Filter</p>
-						<button class="text-blue-700 font-bold">clear all</button>
+						<p class="font-bold">Fees</p>
+						<button class="text-blue-700 font-bold" on:click={() => (fees_filter = null)}
+							>clear all</button
+						>
 					</div>
 					<div class="flex flex-col mt-6">
-						<p>Availiability</p>
 						<div class="mt-4">
-							<input type="radio" name="avail" id="today" value="today" class="mr-2" checked />
-							<label for="today">Today</label>
+							<input
+								type="radio"
+								name="fee"
+								id="free"
+								value="free"
+								class="mr-2"
+								checked
+								bind:group={fees_filter}
+							/>
+							<label for="Free">Free</label>
 						</div>
 						<div class="mt-4">
-							<input type="radio" name="avail" id="tomorrow" value="tomorrow" class="mr-2" />
-							<label for="tomorrow">Tomorrow</label>
+							<input
+								type="radio"
+								name="fee"
+								id="1-200"
+								value="1-200"
+								class="mr-2"
+								checked
+								bind:group={fees_filter}
+							/>
+							<label for="1-200">1-200</label>
 						</div>
 						<div class="mt-4">
-							<input type="radio" name="avail" id="next7days" value="next7days" class="mr-2" />
-							<label for="next7days">Next 7 Days</label>
+							<input
+								type="radio"
+								name="fee"
+								id="201-400"
+								value="201-400"
+								class="mr-2"
+								bind:group={fees_filter}
+							/>
+							<label for="201-400">201-400</label>
+						</div>
+						<div class="mt-4">
+							<input
+								type="radio"
+								name="fee"
+								id="501+"
+								value="501+"
+								class="mr-2"
+								bind:group={fees_filter}
+							/>
+							<label for="501+">501+</label>
 						</div>
 					</div>
-				</div> -->
-				<div class="flex flex-col bg-white h-64 rounded-xl drop-shadow-md p-4 mt-12">
+				</div>
+				<div class="flex flex-col bg-white h-56 rounded-xl drop-shadow-md p-4 mt-12">
 					<div class="flex justify-between">
 						<p class="font-bold">Gender</p>
 						<button on:click={() => (genderFilter = 'anyone')} class="text-blue-700 font-bold"
@@ -187,7 +248,7 @@ import Footer from '$lib/components/Footer.svelte'
 				</div>
 			{/if}
 		</div>
-		<Footer/>
+		<Footer />
 	</div>
 {:else}
 	<Loading />
