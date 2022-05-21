@@ -44,8 +44,8 @@
 	import Loading from '$lib/components/Loading.svelte'
 	import { goto } from '$app/navigation'
 
-import Footer from '$lib/components/Footer.svelte'
-=======
+	import Footer from '$lib/components/Footer.svelte'
+
 	import { notificationToast } from '$lib/NotificationToast'
 
 	export let clinic
