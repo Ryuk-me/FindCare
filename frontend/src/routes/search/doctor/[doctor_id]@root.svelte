@@ -170,6 +170,7 @@
 			.then((obj) => {
 				if (obj.status_cod === status_code.HTTP_201_CREATED) {
 					is_loading = false
+					selected = null
 					notificationToast(
 						'Appointment Booked Successfully',
 						true,
@@ -358,14 +359,20 @@
 					{/if}
 				</div>
 				<div class="w-full flex justify-center items-center py-6">
-					<button
-						disabled={selected ? false : true}
-						on:click={bookAppointment}
-						class="w-full {selected
-							? 'bg-primary hover:bg-[#524af4]'
-							: 'bg-[#7069f5] cursor-not-allowed'}  py-4 rounded text-white"
-						><i class="{is_loading ? 'loading fa fa-spinner fa-spin' : ''}  mr-2" />Book Appointment</button
-					>
+					{#if is_loading}
+						<button disabled class="w-full bg-[#7069f5] cursor-not-allowed  py-4 rounded text-white"
+							><i class="loading fa fa-spinner fa-spin mr-2" />Book Appointment</button
+						>
+					{:else}
+						<button
+							disabled={selected ? false : true}
+							on:click={bookAppointment}
+							class="w-full {selected
+								? 'bg-primary hover:bg-[#524af4]'
+								: 'bg-[#7069f5] cursor-not-allowed'}  py-4 rounded text-white"
+							>Book Appointment</button
+						>
+					{/if}
 				</div>
 			</div>
 		</div>

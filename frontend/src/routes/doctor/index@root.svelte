@@ -85,7 +85,7 @@
 	import ClinicDetails from '$lib/components/ClinicDetails.svelte'
 	import { navigating, session } from '$app/stores'
 	import { goto } from '$app/navigation'
-	import { user as userProfileStore } from '../../stores'
+	import { user as userProfileStore, doctorDashBoardHeader } from '../../stores'
 	import Loading from '$lib/components/Loading.svelte'
 
 	function toggleCollapseShow(classes) {
@@ -121,6 +121,7 @@
 		is_dashboard_loading = false
 		selected = 'dashboard'
 	}
+	$: if ($doctorDashBoardHeader) response = $doctorDashBoardHeader
 </script>
 
 <!-- Navbar -->

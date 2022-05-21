@@ -9,3 +9,4 @@ user.subscribe((profile_image) => browser && (localStorage.user = JSON.stringify
 
 export const adminQueryUserEmail = writable(null)
 export const adminQueryDoctorName = writable(null)
+export const doctorDashBoardHeader = writable(null)
