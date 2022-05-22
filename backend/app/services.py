@@ -2,7 +2,7 @@ import json
 from app.database import SessionLocal
 from app.models import user_model
 from sqlalchemy.orm import Session
-from sqlalchemy import distinct, func
+from sqlalchemy import distinct, func, null
 from app.scheams import user_schema, doctor_schema, clinic_schema, appointment_schema, admin_schema, change_password_schema
 from passlib.hash import bcrypt
 from app.models import user_model, doctor_model, clinic_model, appointment_model, admin_model
@@ -307,11 +307,9 @@ async def add_appointment(db: Session, appointment: appointment_schema.CreateApp
             which_date = f"{d:%Y-%m-%d}"
             which_time = f"{d:%H:%M}"
             list_of_appointments = get_slots(clinic_id=clinic.id, db=db)
-            if len(list_of_appointments) > 0:
-                for detail in list_of_appointments:
-                    if which_date in detail:
-                        if which_time in detail[which_date]:
-                            raise errors.TIME_SLOT_NOT_AVAILABLE
+            if which_date in list_of_appointments:
+                if which_time in list_of_appointments[which_date]:
+                    raise errors.TIME_SLOT_NOT_AVAILABLE
             appointment = appointment_model.Appointment(
                 user_id=user_id, doctor_id=clinic.doctor_id, cid=clinic.id, **appointment.dict())
             db.add(appointment)
@@ -477,7 +475,9 @@ def get_slots(clinic_id: str, db: Session):
     appoit = db.query(appointment_model.Appointment).filter(
         appointment_model.Appointment.clinic_id == clinic_id).all()
     date_and_time_list = []
+    doctor_id = null
     for appointment in appoit:
+        doctor_id = appointment.doctor_id
         if not appointment.is_cancelled:
             d = datetime.fromisoformat(str(appointment.schedule))
             which_date = f"{d:%Y-%m-%d}"
@@ -499,6 +499,21 @@ def get_slots(clinic_id: str, db: Session):
                             {which_date: [which_time]}
                         )
                         break
+
+    def merge_dictionary_list(dict_list):
+        return {
+            k: [d.get(k) for d in dict_list if k in d]  # explanation A
+            for k in set().union(*dict_list)  # explanation B
+        }
+
+    def flatten(t):
+        return [item for sublist in t for item in sublist]
+    date_and_time_list = merge_dictionary_list(date_and_time_list)
+    clinic = get_clinic(db, doctor_id)
+    for key, value in date_and_time_list.items():
+        timings_list = flatten(value)
+        date_and_time_list[key] = timings_list
+
     return date_and_time_list
 
 

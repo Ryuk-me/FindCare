@@ -102,12 +102,12 @@
 	}
 	addMinutesSlot(opens_at, 0)
 	if (slots) {
-		for (let index = 0; index < slots.length; index++) {
-			const element = slots[index]
-			if (Object.keys(element)[0] == date_today) {
+		for (let [key, value] of Object.entries(slots)) {
+			const element = key
+			if (element === date_today) {
 				let booked_slot
-				booked_slot = element[Object.keys(element)[0]].length
-				booked_timings = element[Object.keys(element)[0]]
+				booked_slot = value.length
+				booked_timings = value
 				clinic.slots = clinic.slots >= 1 ? clinic.slots - booked_slot : clinic.slots
 			}
 		}
@@ -380,7 +380,7 @@
 				</div>
 			</div>
 		</div>
-		<Footer/>
+		<Footer />
 	</div>
 {:else}
 	<Loading />
