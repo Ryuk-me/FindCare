@@ -60,7 +60,7 @@
 								<div class="h-full flex flex-col items-center text-center">
 									<img
 										alt="team"
-										class="flex-shrink-0 rounded-full w-full h-56 object-cover object-center mb-4"
+										class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
 										src="https://avatars.githubusercontent.com/u/48490538?v=4"
 									/>
 									<div class="w-full">
@@ -94,8 +94,8 @@
 								<div class="h-full flex flex-col items-center text-center">
 									<img
 										alt="team"
-										class="flex-shrink-0 rounded-full w-full h-56 object-cover object-center mb-4"
-										src="https://avatars.githubusercontent.com/u/61681057?v=4"
+										class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
+										src="https://findcare-ryuk-me.cloud.okteto.net/dev/nitin.jpg"
 									/>
 									<div class="w-full">
 										<h2 class="title-font font-semibold text-lg text-gray-900">Nitin Shivam</h2>
@@ -130,7 +130,7 @@
 								<div class="h-full flex flex-col items-center text-center">
 									<img
 										alt="team"
-										class="flex-shrink-0 rounded-full w-full h-56 object-cover object-center mb-4"
+										class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
 										src="https://findcare-ryuk-me.cloud.okteto.net/dev/amardeep.jpg"
 									/>
 									<div class="w-full">
@@ -162,8 +162,8 @@
 								<div class="h-full flex flex-col items-center text-center">
 									<img
 										alt="team"
-										class="flex-shrink-0 rounded-full w-full h-56 object-cover object-center mb-4"
-										src="https://avatars.githubusercontent.com/u/55330971?v=4"
+										class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
+										src="https://findcare-ryuk-me.cloud.okteto.net/dev/neeraj.jpg"
 									/>
 									<div class="w-full">
 										<h2 class="title-font font-semibold text-lg text-gray-900">Neeraj Kumar</h2>
