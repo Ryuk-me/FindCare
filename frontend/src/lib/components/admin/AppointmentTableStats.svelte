@@ -12,7 +12,7 @@
 	export let color = 'light'
 	export let slug
 	export let appointment_id
-	let city = capitalize(clinicAddress.address)
+	let city = capitalize(clinicAddress.city)
 	let state = capitalize(clinicAddress.state)
 	let address = clinicAddress.address
 	let is_loading_cancel = false
