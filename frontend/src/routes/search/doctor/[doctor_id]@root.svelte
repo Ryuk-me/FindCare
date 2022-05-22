@@ -119,7 +119,7 @@
 		let minutes = splitted.at(0).split(':').at(-1)
 		let hour = parseInt(splitted.at(0).split(':').at(0))
 		let am_or_pm = splitted.at(-1)
-		if (am_or_pm === 'pm') {
+		if (am_or_pm === 'PM') {
 			if (hour !== 12) hour += 12
 		}
 		return hour.toLocaleString() + ':' + minutes
