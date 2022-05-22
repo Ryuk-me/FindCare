@@ -34,14 +34,10 @@
 							class="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-gray-200 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left"
 						>
 							<p class="leading-relaxed text-lg mb-4">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio delectus sit ducimus
-								reiciendis perferendis doloribus minima nihil aliquid fugit officia aut similique
-								qui iste atque, ratione mollitia cumque aspernatur molestiae quasi recusandae
-								dolores a excepturi! Similique iusto doloribus qui nisi beatae inventore voluptas
-								fugiat sit alias ex, laudantium voluptatum odit id enim deserunt officia, tenetur
-								ipsa blanditiis aut architecto asperiores rem facilis facere! Maxime magnam
-								explicabo aspernatur eius et veniam ex doloremque? Qui voluptas quaerat, possimus
-								expedita a quidem culpa.
+								<b>FindCare</b> is an online platform to bridge the gap between patients and doctors by offering efficient, convenient and affordable way of booking appointments with the best doctors, consult them. 
+								This idea is not new in urban areas since other firms are already active there, but they are not so active in small cities and rural areas. Since, about 70% of India resides in the villages a vast population are unable to avail these kinds of online facilities due to illiteracy, lack of awareness and communication gap.
+								Moreover, a huge bunch of people are unaware of good doctors and healthcare facilities. So, our main aim is to cover these rural areas and fix the health problems in a very holistic manner by increasing the accessibility of doctors and enhancing the ability of users to communicate with doctors anytime anywhere.
+								FindCare will act as a link between the people and the doctors with ease. People can book appointments through our website with just at a click. They would not have to waste their time and money on transportations, lodging and fooding in case those people must go outstations for taking appointments.
 							</p>
 						</div>
 					</div>
@@ -56,9 +52,7 @@
 						<div class="flex flex-col text-center w-full mb-20">
 							<h1 class="text-3xl font-bold title-font mb-4 text-gray-900">OUR TEAM</h1>
 							<p class="lg:w-2/3 mx-auto leading-relaxed text-base">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis voluptate, blanditiis
-								inventore quidem consectetur recusandae quibusdam. Nisi impedit natus veritatis,
-								quas quasi a totam tempora accusamus sapiente, modi officiis molestias.
+								We are a team of young professionals who have put in efforts to solve social challenges.
 							</p>
 						</div>
 						<div class="flex flex-wrap -m-4">
@@ -66,8 +60,8 @@
 								<div class="h-full flex flex-col items-center text-center">
 									<img
 										alt="team"
-										class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
-										src="https://img.freepik.com/free-vector/young-anonymous-hacker-with-flat-design_23-2147879457.jpg?t=st=1652263532~exp=1652264132~hmac=5945e992471fbd1678a5e0813e946f1036c9890f3a2e7d8ce146af371f1c275b&w=740hacker-using-laptop_4090770.htm#query=coder&position=5&from_view=search"
+										class="flex-shrink-0 rounded-full w-full h-56 object-cover object-center mb-4"
+										src="https://avatars.githubusercontent.com/u/48490538?v=4"
 									/>
 									<div class="w-full">
 										<h2 class="title-font font-semibold text-lg text-gray-900">Aman Sharma</h2>
@@ -100,8 +94,8 @@
 								<div class="h-full flex flex-col items-center text-center">
 									<img
 										alt="team"
-										class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
-										src="https://img.freepik.com/free-vector/young-anonymous-hacker-with-flat-design_23-2147879457.jpg?t=st=1652263532~exp=1652264132~hmac=5945e992471fbd1678a5e0813e946f1036c9890f3a2e7d8ce146af371f1c275b&w=740"
+										class="flex-shrink-0 rounded-full w-full h-56 object-cover object-center mb-4"
+										src="https://findcare-ryuk-me.cloud.okteto.net/dev/amardeep.jpg"
 									/>
 									<div class="w-full">
 										<h2 class="title-font font-semibold text-lg text-gray-900">Amardeep Anand</h2>
@@ -132,8 +126,8 @@
 								<div class="h-full flex flex-col items-center text-center">
 									<img
 										alt="team"
-										class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
-										src="https://img.freepik.com/free-vector/young-anonymous-hacker-with-flat-design_23-2147879457.jpg?t=st=1652263532~exp=1652264132~hmac=5945e992471fbd1678a5e0813e946f1036c9890f3a2e7d8ce146af371f1c275b&w=740"
+										class="flex-shrink-0 rounded-full w-full h-56 object-cover object-center mb-4"
+										src="https://avatars.githubusercontent.com/u/55330971?v=4"
 									/>
 									<div class="w-full">
 										<h2 class="title-font font-semibold text-lg text-gray-900">Neeraj Kumar</h2>
@@ -166,8 +160,8 @@
 								<div class="h-full flex flex-col items-center text-center">
 									<img
 										alt="team"
-										class="flex-shrink-0 rounded-lg w-full h-56 object-cover object-center mb-4"
-										src="https://img.freepik.com/free-vector/young-anonymous-hacker-with-flat-design_23-2147879457.jpg?t=st=1652263532~exp=1652264132~hmac=5945e992471fbd1678a5e0813e946f1036c9890f3a2e7d8ce146af371f1c275b&w=740"
+										class="flex-shrink-0 rounded-full w-full h-56 object-cover object-center mb-4"
+										src="https://avatars.githubusercontent.com/u/61681057?v=4"
 									/>
 									<div class="w-full">
 										<h2 class="title-font font-semibold text-lg text-gray-900">Nitin Shivam</h2>
