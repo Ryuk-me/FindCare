@@ -66,7 +66,7 @@
 			filteredDoctorList = doctors.filter(
 				(data) => parseInt(data.fees) > more_than && parseInt(data.fees) <= less_than
 			)
-		} else {
+		} else if (fees_filter == '501+') {
 			more_than = 500
 			filteredDoctorList = doctors.filter((data) => parseInt(data.fees) > more_than)
 		}

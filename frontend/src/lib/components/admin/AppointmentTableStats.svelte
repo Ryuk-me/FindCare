@@ -2,7 +2,7 @@
 	import { session } from '$app/stores'
 
 	import TableDropdown from '$lib/components/TableDropdown.svelte'
-	import { capitalize, ENV, status_code } from '$lib/utils'
+	import { capitalize, ENV, status_code, get_am_pm_from_time } from '$lib/utils'
 	import { notificationToast } from '$lib/NotificationToast'
 	export let doctorImg
 	export let doctorName
@@ -55,7 +55,8 @@
 		>
 	</th>
 	<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-		{dateOfAppointment}
+		{dateOfAppointment.split(' ').at(0)}
+		{get_am_pm_from_time(dateOfAppointment.split(' ').at(-2))}
 	</td>
 	<td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
 		{#if status == 'completed'}

@@ -62,6 +62,19 @@ export function getFormattedDate(d = null, only_date = false) {
 	return str
 }
 
+export function get_am_pm_from_time(time) {
+	let new_time = parseInt(time.slice(0, 2))
+	let last_two = time.slice(2, 5)
+	if (new_time > 12) {
+		time = '0' + (new_time - 12 + last_two + ' PM')
+	} else if (new_time == 12) {
+		time = new_time + time.slice(2, 5) + ' PM'
+	} else {
+		time = time + ' AM'
+	}
+	return time
+}
+
 export function getFormattedDateDashBoard(d) {
 	var date = new Date(d)
 

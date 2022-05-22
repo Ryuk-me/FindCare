@@ -1,5 +1,12 @@
 <script context="module">
-	import { capitalize, ENV, getFormattedDate, status_code, month_name } from '$lib/utils'
+	import {
+		capitalize,
+		ENV,
+		getFormattedDate,
+		status_code,
+		month_name,
+		get_am_pm_from_time
+	} from '$lib/utils'
 	export async function load({ params, fetch, session }) {
 		const slug = params.doctor_id
 		const resp = await fetch(
@@ -62,18 +69,7 @@
 	let eveningSlots = []
 	let slot_time = []
 	let selected = null
-	function get_am_pm_from_time(time) {
-		let new_time = parseInt(time.slice(0, 2))
-		let last_two = time.slice(2, 5)
-		if (new_time > 12) {
-			time = new_time - 12 + last_two + ' pm'
-		} else if (new_time == 12) {
-			time = new_time + time.slice(2, 5) + ' pm'
-		} else {
-			time = time + ' am'
-		}
-		return time
-	}
+
 	function incrementDate(dateInput, increment) {
 		var dateFormatTotime = new Date(dateInput)
 		var increasedDate = new Date(dateFormatTotime.getTime() + increment * 86400000)
@@ -269,6 +265,9 @@
 							</div>
 							<div>
 								<p>Rs {clinic.fees}</p>
+							</div>
+							<div>
+								<p>{clinic.session_time} minutes (Session)</p>
 							</div>
 						</div>
 						<div class="flex w-full justify-between mt-4">

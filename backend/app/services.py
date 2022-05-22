@@ -235,14 +235,15 @@ def get_clinic(db: Session, doctor_id: str):
         clinic_id = clinic.id
         appointments = db.query(appointment_model.Appointment).filter(
             appointment_model.Appointment.clinic_id == clinic_id).all()
-        total_patients = db.query(appointment_model.Appointment).distinct(
+        total_patients = db.query(appointment_model.Appointment).filter(
+            appointment_model.Appointment.clinic_id == clinic_id).distinct(
             appointment_model.Appointment.user_id).group_by(appointment_model.Appointment.id).count()
         users = db.query(user_model.User).filter(
             user_model.User.id == appointment_model.Appointment.user_id).all()
         for user in users:
             user: clinic_schema.UserOutDoctorPanel
             appoint = db.query(appointment_model.Appointment).filter(
-                appointment_model.Appointment.user_id == user.id).all()
+                appointment_model.Appointment.user_id == user.id, appointment_model.Appointment.clinic_id == clinic_id).all()
             user.appointments = appoint
         if len(appointments) > 0:
             total_appointments = len(appointments)
@@ -509,11 +510,9 @@ def get_slots(clinic_id: str, db: Session):
     def flatten(t):
         return [item for sublist in t for item in sublist]
     date_and_time_list = merge_dictionary_list(date_and_time_list)
-    clinic = get_clinic(db, doctor_id)
     for key, value in date_and_time_list.items():
         timings_list = flatten(value)
         date_and_time_list[key] = timings_list
-
     return date_and_time_list
 
 
@@ -577,7 +576,8 @@ def get_all_clinics(db: Session):
             clinic_id = clinic.id
             appointments = db.query(appointment_model.Appointment).filter(
                 appointment_model.Appointment.clinic_id == clinic_id).all()
-            total_patients = db.query(appointment_model.Appointment).distinct(
+            total_patients = db.query(appointment_model.Appointment).filter(
+                appointment_model.Appointment.clinic_id == clinic_id).distinct(
                 appointment_model.Appointment.user_id).group_by(appointment_model.Appointment.id).count()
             if len(appointments) > 0:
                 total_appointments = len(appointments)

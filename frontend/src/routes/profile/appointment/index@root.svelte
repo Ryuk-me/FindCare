@@ -50,7 +50,7 @@
 </script>
 
 <script>
-	import { ENV, status_code } from '$lib/utils'
+	import { ENV, status_code} from '$lib/utils'
 	import Footer from '$lib/components/Footer.svelte'
 	import Navbar from '$lib/components/Navbar.svelte'
 	import AppointmentTable from '$lib/components/admin/AppointmentTable.svelte'
