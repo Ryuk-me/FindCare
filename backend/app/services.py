@@ -16,7 +16,7 @@ from pathlib import Path
 
 async def get_db():
     db = SessionLocal()
-    # create_first_admin(db)
+    create_first_admin(db)
     try:
         yield db
     finally:
