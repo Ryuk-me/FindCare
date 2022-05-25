@@ -16,65 +16,7 @@ from pathlib import Path
 
 async def get_db():
     db = SessionLocal()
-    create_first_admin(db)
-    user = is_user_exist(db, 'user@findcare.com')
-    doctor = is_doctor_exist(db, 'doctor@findcare.com')
-    if not user:
-        user_in = user_schema.UserCreate(
-            name="User Account",
-            email='user@findcare.com',
-            dob="2002-04-26",
-            phone="9999999999",
-            gender="male",
-            password="123"
-        )
-        await create_user(db, user_in)
-        user = is_user_exist(db, 'user@findcare.com')
-        user.is_active = True
-        db.commit()
-    if not doctor:
-        doctor_in = doctor_schema.DoctorCreate(
-            name="Dr. Doctor Account",
-            email="doctor@findcare.com",
-            phone="8125384543",
-            gender="male",
-            dob="1996-04-26",
-            password="123",
-            about="Lorem Ipsum is simply dummy text of the printing and typesetting industry. \
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, \
-                when an unknown printer took a galley of type and scrambled it to make a \
-                type specimen book. It has survived not only five centuries, but also the \
-                leap into electronic typesetting, remaining essentially unchanged. \
-                It was popularised in the 1960s with the release of Letraset sheets \
-                containing Lorem Ipsum passages, and more recently with desktop \
-                publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-            experience_year=4,
-            speciality="Cardiologist",
-            registration_number="732647A3"
-        )
-        await create_doctor(db, doctor_in)
-        doctor = is_doctor_exist(db, 'doctor@findcare.com')
-        doctor.is_active = True
-        doctor.is_verified = True
-        db.commit()
-    if doctor:
-        clinic = is_clinic_exist(db, None, doctor_id=doctor.id)
-        if not clinic:
-            clinic_in = clinic_schema.ClinicCreate(
-                name="Ohayo Clinic",
-                fees="300",
-                session_time="20",
-                opens_at="09:00:00",
-                closes_at="20:00:00",
-                is_open=True,
-                address={
-                    "pincode": "800006",
-                    "address": "jawahar nehru marg",
-                    "city": "Patna",
-                    "state": "Bihar"
-                },
-            )
-            add_clinic(db, clinic_in, doctor.id)
+    # create_first_admin(db)
     try:
         yield db
     finally:
