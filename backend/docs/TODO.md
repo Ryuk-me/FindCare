@@ -43,10 +43,10 @@
 1. - [x] send a welcome email to user/doctor after creation of new account by admin(it will contain temp pass user/dr wont need to verify their email)
 1. - [x] send email changed verification mail to user/doctor by admin user/dr will need to verify that mail to continue
 1. - [x] when user/doctor change their email they have to verify that email again until their state of will be is_active=False
-1. - [ ] clinic on / off flag
-1. - [ ] implemnet available_days update and remove ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
-1. - [ ] IMPLEMENT UPDATE FEATURE ON DOCTOR CLINIC (WHICH WILL CHANGE OPENS AT,CLOSES AT,SESSION_TIME,AND IS_OPEN AND SLOTS WILL BE CALCULATED ACCORDINGLY)
-1. - [ ] set password length minimun to 8 for doctor user and admin (IN LAST)
+1. - [x] clinic on / off flag
+1. - [x] implemnet available_days update and remove ["MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
+1. - [x] IMPLEMENT UPDATE FEATURE ON DOCTOR CLINIC (WHICH WILL CHANGE OPENS AT,CLOSES AT,SESSION_TIME,AND IS_OPEN AND SLOTS WILL BE CALCULATED ACCORDINGLY)
+1. - [x] set password length minimun to 8 for doctor user and admin (IN LAST)
 
 ## HOW SLOT WILL BE CALCULATED
 
@@ -64,6 +64,6 @@
 - [X] get all users for admin panel (name,email phone,number of appointments,is_banned,is_active etc details)
 - [x] admin can create user account /doctor and password will be directly sent to the user admin cant see password or set
 - [x] admin can change user/doctor email and user have to verify it
-- [ ] user can only cancel appointment upto 4 hours before appointment time [will be implemented after slot logic]
-- [ ] user can only book future appointments
-- [ ] at the time of appointment booking check that appointment date/time and slot is available/free in clinic (bascially it is a precation for external api calls)
+- [x] user can only cancel appointment upto 4 hours before appointment time [will be implemented after slot logic]
+- [x] user can only book future appointments
+- [x] at the time of appointment booking check that appointment date/time and slot is available/free in clinic (bascially it is a precation for external api calls)
