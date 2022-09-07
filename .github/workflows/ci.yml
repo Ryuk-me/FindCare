@@ -1,51 +1,3 @@
-# name: FindCare
-
-# on:
-#   push:
-#     branches: [master]
-#   pull_request:
-#     branches: [master]
-
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: Install python
-#         uses: actions/setup-python@v2
-#         with:
-#           python-version: 3.10.2
-
-#       - name: Install python dependencies
-#         working-directory: backend
-#         run: pip install -r requirements.txt
-
-#       - uses: actions/checkout@v3
-#       - name: Setup node
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: 16
-#       - name: Install Yarn dependencies
-#         working-directory: frontend
-#         run: yarn install
-
-#       - name: Login to Okteto Cloud
-#         uses: okteto/login@master
-#         with:
-#           token: ${{ secrets.OKTETO_TOKEN }}
-
-#       - name: Activate application namespace
-#         uses: okteto/namespace@master
-#         with:
-#           namespace: findcare
-
-#       - name: Build and deploy application image to Production Okteto Namespace
-#         if: ${{ github.event_name == 'push' }}
-#         uses: okteto/deploy-stack@master
-#         with:
-#           name: findcare
-#           build: true
-
 name: FindCare
 
 on:
@@ -77,27 +29,17 @@ jobs:
         working-directory: frontend
         run: yarn install
 
-      - name: Set context to Okteto Cloud
-        uses: okteto/context@latest
+      - name: Login to Okteto Cloud
+        uses: okteto/login@master
         with:
           token: ${{ secrets.OKTETO_TOKEN }}
 
-      - name: Deploy your preview environment
-        uses: okteto/deploy-preview@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Activate application namespace
+        uses: okteto/namespace@master
         with:
-          name: staging-${{ github.event.number }}-ryuk-me
-          scope: personal
-          timeout: 15m
+          namespace: findcare
 
-      - uses: nev7n/wait_for_response@v1
-        with:
-          url: https://api-staging-${{ github.event.number }}-ryuk-me.cloud.okteto.net
-          responseCode: 200
-          timeout: 4000
-        
-      - name: Build and deploy application container to Okteto FindCare Namespace
+      - name: Build and deploy application image to Production Okteto Namespace
         if: ${{ github.event_name == 'push' }}
         uses: okteto/deploy-stack@latest
         with:
