@@ -33,6 +33,14 @@ jobs:
         with:
           token: ${{ secrets.OKTETO_TOKEN }}
 
+      - name: Deploy your preview environment
+        uses: okteto/deploy-preview@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: staging-${{ github.event.number }}-ryuk-me
+          scope: personal
+          timeout: 15m
       - name: Activate application namespace
         uses: okteto/namespace@latest
         with:
