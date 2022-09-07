@@ -29,11 +29,10 @@ services:
   postgres:
     image: postgres:latest
     volumes:
-      - ${LOCAL_PATH}/postgres_data:/var/lib/postgresql/data/
-      - ${LOCAL_PATH}/etc/localtime:/etc/localtime:ro
-      - ${LOCAL_PATH}/etc/timezone:/etc/timezone:ro
+      - postgres_data:/var/lib/postgresql/data/
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/timezone:/etc/timezone:ro"
     environment:
-      - LOCAL_PATH=./local
       - TZ=Asia/Kolkata
       - POSTGRES_PASSWORD=ryuk
       - POSTGRES_DB=findcare
@@ -52,7 +51,7 @@ services:
       PGADMIN_CONFIG_SERVER_MODE: 'True'
       PGADMIN_LISTEN_PORT: 80
     volumes:
-      - ${LOCAL_PATH}/pgadmin:/var/lib/pgadmin
+      - pgadmin:/var/lib/pgadmin
     ports:
       - "5050:80"
     networks:
