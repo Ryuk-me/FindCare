@@ -29,13 +29,12 @@ jobs:
         working-directory: frontend
         run: yarn install
 
-      - name: Login to Okteto Cloud
-        uses: okteto/login@master
+      - uses: okteto/context@latest
         with:
           token: ${{ secrets.OKTETO_TOKEN }}
 
       - name: Activate application namespace
-        uses: okteto/namespace@master
+        uses: okteto/namespace@latest
         with:
           namespace: findcare
 
