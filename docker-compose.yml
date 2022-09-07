@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.10"
 
 services:
   findcare:
@@ -29,9 +29,9 @@ services:
   postgres:
     image: postgres:latest
     volumes:
-      - /home/ryuk/my-test/postgres_data:/var/lib/postgresql/data/
-      - /home/ryuk/my-test/etc/localtime:/etc/localtime:ro
-      - /home/ryuk/my-test/etc/timezone:/etc/timezone:ro
+      - postgres_data:/var/lib/postgresql/data
+      - "/etc/localtime:/etc/localtime:ro"
+      - "/etc/timezone:/etc/timezone:ro"
     environment:
       - TZ=Asia/Kolkata
       - POSTGRES_PASSWORD=ryuk
@@ -51,7 +51,7 @@ services:
       PGADMIN_CONFIG_SERVER_MODE: 'True'
       PGADMIN_LISTEN_PORT: 80
     volumes:
-      - /home/ryuk/my-test/pgadmin:/var/lib/pgadmin
+      - pgadmin:/var/lib/pgadmin
     ports:
       - "5050:80"
     networks:
@@ -67,5 +67,5 @@ networks:
         - subnet: "192.168.0.0/24"
           gateway: 192.168.0.1
 volumes:
-  postgres_data:
-  pgadmin:
+  postgres_data: {}
+  pgadmin: {}
