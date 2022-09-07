@@ -96,10 +96,10 @@ jobs:
           url: https://api-staging-${{ github.event.number }}-ryuk-me.cloud.okteto.net
           responseCode: 200
           timeout: 4000
-
+        
       - name: Build and deploy application container to Okteto FindCare Namespace
         if: ${{ github.event_name == 'push' }}
-        uses: okteto/deploy-stack@master
+        uses: okteto/deploy-stack@latest
         with:
           name: findcare
           build: true
