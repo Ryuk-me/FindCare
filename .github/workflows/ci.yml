@@ -30,18 +30,18 @@ jobs:
         run: yarn install
 
       - name: Login to Okteto Cloud
-        uses: okteto/login@master
+        uses: okteto/login@latest
         with:
           token: ${{ secrets.OKTETO_TOKEN }}
 
       - name: Activate application namespace
-        uses: okteto/namespace@master
+        uses: okteto/namespace@latest
         with:
           namespace: findcare
 
       - name: Build and deploy application image to Production Okteto Namespace
         if: ${{ github.event_name == 'push' }}
-        uses: okteto/deploy-stack@master
+        uses: okteto/deploy-stack@latest
         with:
           name: findcare
           build: true
