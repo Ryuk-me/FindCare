@@ -8,3 +8,4 @@ find-care-venv
 findcare-venv
 alembic/versions/*.py
 .env.local
+findcare
