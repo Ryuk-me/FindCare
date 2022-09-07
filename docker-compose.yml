@@ -29,9 +29,9 @@ services:
   postgres:
     image: postgres:latest
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
-      - "/etc/localtime:/etc/localtime:ro"
-      - "/etc/timezone:/etc/timezone:ro"
+      - $HOME/postgres_data:/var/lib/postgresql/data/
+      - $HOME/etc/localtime:/etc/localtime:ro
+      - $HOME/etc/timezone:/etc/timezone:ro
     environment:
       - TZ=Asia/Kolkata
       - POSTGRES_PASSWORD=ryuk
@@ -51,7 +51,7 @@ services:
       PGADMIN_CONFIG_SERVER_MODE: 'True'
       PGADMIN_LISTEN_PORT: 80
     volumes:
-      - pgadmin:/var/lib/pgadmin
+      - $HOME/pgadmin:/var/lib/pgadmin
     ports:
       - "5050:80"
     networks:
