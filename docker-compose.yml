@@ -1,4 +1,4 @@
-version: "3.10"
+version: "3.9"
 
 services:
   findcare:
@@ -29,7 +29,7 @@ services:
   postgres:
     image: postgres:latest
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data/
       - "/etc/localtime:/etc/localtime:ro"
       - "/etc/timezone:/etc/timezone:ro"
     environment:
@@ -67,5 +67,5 @@ networks:
         - subnet: "192.168.0.0/24"
           gateway: 192.168.0.1
 volumes:
-  postgres_data: {}
-  pgadmin: {}
+  postgres_data:
+  pgadmin:
