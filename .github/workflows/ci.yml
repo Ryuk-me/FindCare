@@ -37,7 +37,7 @@ jobs:
       - name: Activate application namespace
         uses: okteto/namespace@latest
         with:
-          namespace: findcare
+          namespace: findcare-ryuk-me
 
       - name: Build and deploy application image to Production Okteto Namespace
         if: ${{ github.event_name == 'push' }}
