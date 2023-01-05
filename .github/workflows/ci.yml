@@ -1,4 +1,4 @@
-name: FindCare
+name: findcare
 
 on:
   push:
@@ -30,18 +30,18 @@ jobs:
         run: yarn install
 
       - name: Login to Okteto Cloud
-        uses: okteto/login@latest
+        uses: okteto/login@master
         with:
           token: ${{ secrets.OKTETO_TOKEN }}
 
       - name: Activate application namespace
-        uses: okteto/namespace@latest
+        uses: okteto/namespace@master
         with:
-          namespace: findcare-ryuk-me
+          namespace: findcare
 
       - name: Build and deploy application image to Production Okteto Namespace
         if: ${{ github.event_name == 'push' }}
-        uses: okteto/deploy-stack@latest
+        uses: okteto/deploy-stack@master
         with:
           name: findcare
           build: true
