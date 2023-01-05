@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   findcare:
-    container_name: FindCare
+    container_name: findcare
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -13,7 +13,7 @@ services:
       - findcare-api
 
   findcare-api:
-    container_name: FindCare-API
+    container_name: findcare-api
     restart: always
     build:
       context: ./backend
