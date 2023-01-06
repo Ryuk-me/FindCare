@@ -22,4 +22,5 @@
 
 > ## Postman
 
-- Import `Nextcare.postman_collection.json` to your postman.
+- Import `FindCare.postman_collection.json` to your postman.
+- Import `fats-api-test-env.postman_environment.json` to your postman

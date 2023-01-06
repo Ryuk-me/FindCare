@@ -1,4 +1,4 @@
-name: findcare
+name: FindCare
 
 on:
   push:
@@ -10,11 +10,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
-          python-version: 3.10.2
+          python-version: "3.10"
+          architecture: "x64"
+        env:
+          AGENT_TOOLSDIRECTORY: /opt/hostedtoolcache
 
       - name: Install python dependencies
         working-directory: backend
@@ -30,18 +33,18 @@ jobs:
         run: yarn install
 
       - name: Login to Okteto Cloud
-        uses: okteto/login@master
+        uses: okteto/login@latest
         with:
           token: ${{ secrets.OKTETO_TOKEN }}
 
       - name: Activate application namespace
-        uses: okteto/namespace@master
+        uses: okteto/namespace@latest
         with:
-          namespace: findcare
+          namespace: findcare-ryuk-me
 
       - name: Build and deploy application image to Production Okteto Namespace
         if: ${{ github.event_name == 'push' }}
-        uses: okteto/deploy-stack@master
+        uses: okteto/deploy-stack@latest
         with:
           name: findcare
           build: true
